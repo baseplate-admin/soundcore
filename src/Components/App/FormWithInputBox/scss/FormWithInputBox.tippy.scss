@@ -1,0 +1,19 @@
+$attention-theme-background-color: #9c3d33;
+$attention-theme-font-color: white;
+
+.tippy-box[data-theme~='attention'] {
+    background-color: $attention-theme-background-color !important;
+    color: $attention-theme-font-color;
+}
+
+.tippy-box[data-theme~='attention'][data-placement^='top'] .tippy-arrow {
+    &::before {
+        border-top-color: $attention-theme-background-color;
+    }
+}
+
+.tippy-box[data-theme~='attention'][data-placement^='bottom'] .tippy-arrow {
+    &::before {
+        border-bottom-color: $attention-theme-background-color;
+    }
+}

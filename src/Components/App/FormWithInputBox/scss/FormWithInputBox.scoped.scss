@@ -1,0 +1,33 @@
+@import './variables';
+
+html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: $html-background-color;
+
+    body {
+        .login-hero {
+            background-color: $page-background-color;
+
+            .hero-body {
+                .container {
+                    .columns {
+                        .column {
+                            .icon-box {
+                                background-color: transparent;
+                            }
+
+                            .login-box {
+                                background-color: $login-box-color;
+
+                                .items {
+                                    padding: 0.4em;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

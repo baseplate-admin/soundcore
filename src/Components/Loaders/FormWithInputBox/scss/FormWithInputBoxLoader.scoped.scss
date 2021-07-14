@@ -1,0 +1,25 @@
+@import '../../../App/FormWithInputBox/scss/variables';
+
+html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: $html-background-color;
+
+    body {
+        .login-hero {
+            background-color: $page-background-color;
+
+            .hero-body {
+                .container {
+                    .columns {
+                        .column {
+                            .icon-box {
+                                background-color: transparent;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

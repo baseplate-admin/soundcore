@@ -1,0 +1,9 @@
+@media screen and (max-width: 767px) {
+    .search_input_wrapper {
+        display: none;
+    }
+
+    .brand_image > img {
+        transform: translateY(0.6em) translateX(20px) !important;
+    }
+}
