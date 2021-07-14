@@ -1,7 +1,6 @@
 import '../../App/Navbar/scss/Navbar.scss';
 
-import '../../../Pages/Home/scss/HomeApp.scss';
-import '../../../Pages/Home/scss/HomeApp.responsive.scss';
+import './scss/HomePageLoader.scoped.scss';
 
 import '../../App/Navbar/scss/Navbar.responsive.scss';
 import '../../App/LeftSidebar/scss/LeftSidebar.scss';

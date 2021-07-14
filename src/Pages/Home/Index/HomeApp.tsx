@@ -1,18 +1,23 @@
+import { Fragment } from 'react';
+import { Helmet } from 'react-helmet';
+
 import './scss/HomeApp.scss';
 import './scss/HomeApp.responsive.scss';
 
-import { Navbar } from '../../Components/App/Navbar/Navbar';
-import { Footer } from '../../Components/App/Footer/Footer';
-import { LeftSidebar } from '../../Components/App/LeftSidebar/LeftSidebar';
+import { Navbar } from '../../../Components/App/Navbar/Navbar';
+import { Footer } from '../../../Components/App/Footer/Footer';
+import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import { Fragment } from 'react';
+import { ApplicationName } from '../../routing';
 
 export const HomePage = () => {
     return (
         <Fragment>
+            <Helmet>
+                <title> {ApplicationName} </title>
+            </Helmet>
             <Navbar />
-
             <div className="columns is-mobile main__body">
                 <div className="column is-narrow left_menu_wrapper">
                     <LeftSidebar />

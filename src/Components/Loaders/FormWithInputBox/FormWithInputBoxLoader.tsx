@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-import './scss/FormWithInputBoxLoader.scoped.scss'
+import './scss/FormWithInputBoxLoader.scoped.scss';
 
 export const FormWithInputBoxLoader = () => {
     return (

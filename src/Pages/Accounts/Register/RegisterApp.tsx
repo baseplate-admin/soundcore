@@ -1,5 +1,5 @@
 import { Fragment } from 'react';
-
+import { Helmet } from 'react-helmet';
 // Formik Import
 import { useFormik } from 'formik';
 
@@ -22,6 +22,7 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/animations/shift-away.css';
+import { ApplicationName } from '../../routing';
 
 export const RegisterPage = () => {
     const registerSchema = yup.object().shape({
@@ -65,6 +66,9 @@ export const RegisterPage = () => {
     });
     return (
         <Fragment>
+            <Helmet>
+                <title> {ApplicationName} | Register </title>
+            </Helmet>
             <form onSubmit={handleSubmit}>
                 <div className="items field is-horizontal">
                     <div className="field-body">

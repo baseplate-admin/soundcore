@@ -1,11 +1,11 @@
 @import '../../../App/FormWithInputBox/scss/variables';
 
 html {
-    overflow-x: hidden;
-    overflow-y: hidden;
     background-color: $html-background-color;
 
     body {
+        overflow: hidden;
+
         .login-hero {
             background-color: $page-background-color;
 

@@ -1,8 +1,8 @@
 // React Import
 import { Fragment, useState, useEffect } from 'react';
-
+import { Helmet } from 'react-helmet';
 // Main SCSS import
-import './LoginApp.scoped.scss';
+import './scss/LoginApp.scoped.scss';
 
 // Spring For animation
 import { useSpring, animated } from 'react-spring';
@@ -25,19 +25,19 @@ import {
 import { MdLockOutline } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
-import { RoutingPath } from '../routing';
-import { useAppDispatch, useAppSelector } from '../../Hooks/Store/hooks';
+import { ApplicationName, RoutingPath } from '../../routing';
+import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/hooks';
 import {
     addLoginFormValues,
     clearLoginFormValues,
     selectLoginFormState,
 } from './LoginSlice';
 
-import { useAuth } from '../../Hooks/Auth/LoginHook';
+import { useAuth } from '../../../Hooks/Auth/LoginHook';
 import {
     randomSpinnerPicker,
     SpinnerComponent,
-} from '../../Components/Spinners/Spinners';
+} from '../../../Components/Spinners/Spinners';
 import { useFormik } from 'formik';
 
 export const LoginPage = () => {
@@ -130,6 +130,9 @@ export const LoginPage = () => {
     });
     return (
         <Fragment>
+            <Helmet>
+                <title> {ApplicationName} | Login </title>
+            </Helmet>
             <form onSubmit={handleSubmit}>
                 <div className="items field is-horizontal">
                     <div className="field-body">

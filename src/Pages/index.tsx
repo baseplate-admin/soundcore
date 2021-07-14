@@ -20,19 +20,19 @@ import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/F
 
 export const App = () => {
     const HomePage = lazy(() =>
-        import('./Home/HomeApp').then(({ HomePage }) => ({
+        import('./Home/Index/HomeApp').then(({ HomePage }) => ({
             default: HomePage,
         }))
     );
 
     const LoginPage = lazy(() =>
-        import('./Login/LoginApp').then(({ LoginPage }) => ({
+        import('./Accounts/Login/LoginApp').then(({ LoginPage }) => ({
             default: LoginPage,
         }))
     );
 
     const RegisterPage = lazy(() =>
-        import('./Register/RegisterApp').then(({ RegisterPage }) => ({
+        import('./Accounts/Register/RegisterApp').then(({ RegisterPage }) => ({
             default: RegisterPage,
         }))
     );
