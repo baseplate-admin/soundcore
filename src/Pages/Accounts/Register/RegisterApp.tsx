@@ -46,6 +46,10 @@ export const RegisterPage = () => {
         password: yup
             .string()
             .min(8, 'Password must be more than 8 Characters')
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
+            )
             .max(1024, 'Password must be less than 1024 Characters'),
         confirmPassword: yup
             .string()

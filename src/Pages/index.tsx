@@ -17,10 +17,11 @@ import { FormWithInputBoxComponent } from '../Components/App/FormWithInputBox/Fo
 // Loaders
 import { HomePageLoaderApp } from '../Components/Loaders/HomePageLoader/HomePageLoader';
 import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/FormWithInputBoxLoader';
+import { UploadSongApp } from './Upload/Song/UploadSongApp';
 
 export const App = () => {
     const HomePage = lazy(() =>
-        import('./Home/Index/HomeApp').then(({ HomePage }) => ({
+        import('./Home/Root/HomeApp').then(({ HomePage }) => ({
             default: HomePage,
         }))
     );
@@ -47,18 +48,22 @@ export const App = () => {
                         </Suspense>
                     </Route>
                     <Route path={RoutingPath.LOGIN_PAGE} exact>
-                        <Suspense fallback={<FormWithInputBoxLoader />}>
+                        <Suspense fallback={FormWithInputBoxLoader}>
                             <FormWithInputBoxComponent children={LoginPage} />
                         </Suspense>
                     </Route>
                     <Route path={RoutingPath.REGISTER_PAGE} exact>
-                        <Suspense fallback={<FormWithInputBoxLoader />}>
+                        <Suspense fallback={FormWithInputBoxLoader}>
                             <FormWithInputBoxComponent
                                 children={RegisterPage}
                             />
                         </Suspense>
                     </Route>
-                    {/* <Route path="/loader" component={HashLoader} /> */}
+                    <Route path={RoutingPath.UPLOAD_SONG_PAGE}>
+                        <Suspense fallback={FormWithInputBoxComponent}>
+                            <UploadSongApp />
+                        </Suspense>
+                    </Route>
                 </Switch>
             </Router>
         </Fragment>

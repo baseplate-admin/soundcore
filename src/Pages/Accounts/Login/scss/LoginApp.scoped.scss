@@ -1,26 +1,14 @@
 @import '../../../../Components/App/FormWithInputBox/scss/variables';
 
-.field {
-    .field-body {
-        .field {
-            .control {
-                .icon {
-                    pointer-events: initial !important;
-                }
+.input {
+    background-color: $input-field-color !important;
+    border: 1px solid $input-border-color !important;
+    color: $main-font-color !important;
 
-                .input {
-                    background-color: $input-field-color !important;
-                    border: 1px solid $input-border-color !important;
-                    color: $main-font-color !important;
-
-                    &::placeholder {
-                        color: $main-font-color;
-                        opacity: 0.5;
-                        font-family: $input-placeholder-font;
-                    }
-                }
-            }
-        }
+    &::placeholder {
+        color: $main-font-color;
+        opacity: 0.5;
+        font-family: $input-placeholder-font;
     }
 }
 .items {
@@ -39,34 +27,15 @@
         font-family: $button-font;
     }
 }
-.level {
-    .level-left {
-        .level-item {
-            .href_tag {
-                text-decoration: none;
-                font-family: $tag-font;
+.href_tag {
+    text-decoration: none;
+    font-family: $tag-font;
 
-                &:hover {
-                    color: $tag-href-hover-color;
-                }
-            }
-        }
+    &:hover {
+        color: $tag-href-hover-color;
     }
-    .level-right {
-        .level-item {
-            .new_here_tag {
-                font-family: $tag-font;
-                color: $tag-font-color;
-            }
-
-            .href_tag {
-                text-decoration: none;
-                font-family: $tag-font;
-
-                &:hover {
-                    color: $tag-href-hover-color;
-                }
-            }
-        }
-    }
+}
+.new_here_tag {
+    font-family: $tag-font;
+    color: $tag-font-color;
 }
