@@ -8,6 +8,7 @@
         "@tippyjs/react": "^4.2.5",
         "axios": "^0.21.1",
         "bulma": "^0.9.3",
+        "craco-plugin-scoped-css": "^1.1.1",
         "formik": "^2.2.9",
         "lodash": "^4.17.21",
         "react": "^17.0.2",
@@ -36,8 +37,8 @@
         "@types/react-responsive": "^8.0.3",
         "@types/react-router-dom": "^5.1.8",
         "react-scripts": "4.0.3",
-        "typescript": "^4.3.5",
-        "sass": "^1.35.2"
+        "sass": "^1.35.2",
+        "typescript": "^4.3.5"
     },
     "scripts": {
         "start": "craco start",
