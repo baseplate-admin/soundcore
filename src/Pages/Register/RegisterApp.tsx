@@ -28,15 +28,15 @@ export const RegisterPage = () => {
         firstName: yup
             .string()
             .required('Please Enter First Name')
-            .max(10, 'First name must be less than 10 Characters'),
+            .max(20, 'First name must be less than 20 Characters'),
         lastName: yup
             .string()
             .required('Please Enter Last Name')
-            .max(10, 'Last name must be less than 10 Characters'),
+            .max(20, 'Last name must be less than 20 Characters'),
         userName: yup
             .string()
             .required('Please Enter User Name')
-            .min(6, 'User name must be more than 6 Characters')
+            .min(0)
             .max(50, 'User name must be less than 50 Characters'),
         email: yup
             .string()

@@ -88,7 +88,7 @@ export const LoginPage = () => {
     const loginSchema = Yup.object().shape({
         username: Yup.string()
             .required('Username is required.')
-            .min(5, 'Username must be more than 5 charaters')
+            .min(0)
             .max(50, 'Username must be less than 50 characters'),
         password: Yup.string()
             .required('Password is required.')
