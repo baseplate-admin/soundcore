@@ -12,7 +12,7 @@ import {
     leftMenuHidden,
     leftMenuShown,
     selectLeftMenuState,
-} from './NavbarSlice';
+} from '../../../Store/slices/NavbarSlice';
 import { RoutingPath } from '../../../Pages/routing';
 
 export const Navbar = () => {

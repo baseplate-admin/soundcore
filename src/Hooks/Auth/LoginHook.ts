@@ -6,7 +6,7 @@ import {
     postLoginFormErrorAndHasErrorMessage,
     postLoginFormSuccess,
     selectLoginFormState,
-} from '../../Pages/Accounts/Login/LoginSlice';
+} from '../../Store/slices/LoginSlice';
 
 export const useAuth = () => {
     const dispatch = useAppDispatch();
@@ -38,7 +38,7 @@ export const useAuth = () => {
                 postLoginFormErrorAndHasErrorMessage(e.message);
             });
     };
-    const Logout = async () => {
+    const Logout = () => {
         localStorage.clear();
     };
     return [Login, Logout];

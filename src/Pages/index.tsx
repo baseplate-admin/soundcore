@@ -61,7 +61,9 @@ export const App = () => {
                     </Route>
                     <Route path={RoutingPath.UPLOAD_SONG_PAGE}>
                         <Suspense fallback={FormWithInputBoxComponent}>
-                            <UploadSongApp />
+                            <FormWithInputBoxComponent
+                                children={UploadSongApp}
+                            />
                         </Suspense>
                     </Route>
                 </Switch>

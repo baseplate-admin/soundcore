@@ -1,0 +1,45 @@
+@import './variables';
+
+.icon-box {
+    background-color: transparent;
+}
+
+.file-cta {
+    background-color: $upload-hero-color;
+    color: $main-font-color;
+    border: 1px solid $upload-hero-border-color !important;
+}
+
+.file {
+    transform: translateY(-0.8em);
+}
+
+.file-label:hover .file-cta {
+    background-color: #292d32;
+    border-color: transparent;
+    color: $main-font-color;
+}
+
+.file_list_box {
+    background: #1d2124;
+}
+
+#upload_box {
+    max-height: 10em;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+#upload_box::-webkit-scrollbar {
+    display: none;
+}
+
+#upload_box {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.uploaded_items {
+    color: $main-font-color;
+    text-align: center;
+}

@@ -1,5 +1,6 @@
 // React Import
 import { Fragment, useState, useEffect } from 'react';
+import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
 // Main SCSS import
 import './scss/LoginApp.scoped.scss';
@@ -31,14 +32,13 @@ import {
     addLoginFormValues,
     clearLoginFormValues,
     selectLoginFormState,
-} from './LoginSlice';
+} from '../../../Store/slices/LoginSlice';
 
 import { useAuth } from '../../../Hooks/Auth/LoginHook';
 import {
     randomSpinnerPicker,
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
-import { useFormik } from 'formik';
 
 export const LoginPage = () => {
     const [Login] = useAuth();
@@ -101,10 +101,10 @@ export const LoginPage = () => {
     });
 
     useEffect(() => {
-        if (loginFormState.isSuccess) {
+        if (loginFormState.promise.success.value) {
             setModalShown(false);
         }
-    }, [loginFormState.isSuccess]);
+    }, [loginFormState.promise.success.value]);
 
     const modalStyle = useSpring({
         backgroundColor: '#191b1f',
@@ -124,9 +124,12 @@ export const LoginPage = () => {
                 setModalShown(true);
             }
 
-            dispatch(clearLoginFormValues());
             const username = values.username;
             const password = values.password;
+
+            if (loginFormState.username && loginFormState.password) {
+                dispatch(clearLoginFormValues());
+            }
 
             dispatch(addLoginFormValues({ username, password }));
             Login();
@@ -305,19 +308,6 @@ export const LoginPage = () => {
                                             <SpinnerComponent type={spinner} />
                                         </div>
                                     </div>
-                                    {/* <div className="columns is-centered">
-                                    <div className="column is-narrow">
-                                        <p
-                                            className="subtitle"
-                                            style={{
-                                                color: '#e2dfda',
-                                                fontFamily: 'Nunito',
-                                            }}
-                                        >
-                                            Logging In
-                                        </p>
-                                    </div>
-                                </div> */}
                                 </animated.div>
                             </div>
                         </div>

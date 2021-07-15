@@ -13,7 +13,7 @@ import {
     leftMenuHidden,
     leftMenuShown,
     selectLeftMenuState,
-} from '../Navbar/NavbarSlice';
+} from '../../../Store/slices/NavbarSlice';
 
 import { RoutingPath } from '../../../Pages/routing';
 
