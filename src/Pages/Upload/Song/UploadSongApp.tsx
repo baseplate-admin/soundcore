@@ -88,13 +88,11 @@ export const UploadSongApp = () => {
                             </div>
                         </nav>
                     </div>
-                    <div
-                        className="column is-narrow"
-                        onClick={() => {
-                            onDelete(file.file);
-                        }}
-                    >
+                    <div className="column is-narrow">
                         <IoCloseCircleOutline
+                            onClick={() => {
+                                onDelete(file.file);
+                            }}
                             style={{
                                 height: 20,
                                 width: 20,
