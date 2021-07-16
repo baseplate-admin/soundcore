@@ -1,5 +1,7 @@
 @import './variables';
-
+.navbar {
+    background-color: $page-background-color;
+}
 .icon-box {
     background-color: transparent;
 }
@@ -7,7 +9,8 @@
 .file-cta {
     background-color: $upload-hero-color;
     color: $main-font-color;
-    border: 1px solid $upload-hero-border-color !important;
+    border: 2px dotted $upload-hero-border-color !important;
+    transition: 0.3s;
 }
 
 .file {
@@ -15,7 +18,7 @@
 }
 
 .file-label:hover .file-cta {
-    background-color: #292d32;
+    background-color: $hero-hover-color;
     border-color: transparent;
     color: $main-font-color;
 }
@@ -24,22 +27,74 @@
     background: #1d2124;
 }
 
-#upload_box {
-    max-height: 10em;
-    overflow: scroll;
-    overflow-x: hidden;
-}
-
-#upload_box::-webkit-scrollbar {
-    display: none;
-}
-
-#upload_box {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
 .uploaded_items {
     color: $main-font-color;
     text-align: center;
+}
+
+.upload-hero {
+    background-color: $page-background-color;
+    max-height: 68vh;
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+
+    &::-webkit-scrollbar {
+        /* WebKit */
+        width: 0;
+        height: 0;
+    }
+}
+.song-item {
+    height: 65px;
+    background-color: $upload-hero-color;
+    border: 1px solid $upload-hero-border-color !important;
+    border-radius: 3px;
+}
+.song_name {
+    width: 35vw;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Roboto' !important;
+}
+.brand-logo {
+    height: 48px;
+    width: auto;
+}
+.upload-box {
+    background-color: $upload-hero-color;
+    border: 1px solid $upload-hero-border-color;
+}
+.project-name {
+    color: $main-font-color;
+}
+.item-box {
+    background-color: transparent;
+
+    margin-bottom: 0px;
+
+    &:first-of-type {
+        margin-top: 0.5em;
+    }
+    &:last-of-type {
+        margin-bottom: 0.5em;
+    }
+}
+.info_level {
+    color: $main-font-color;
+}
+
+.button {
+    background-color: $button-background-color;
+    border: 1px solid $upload-hero-border-color !important;
+    color: $main-font-color;
+    transition: 0.4s;
+    font-family: $button-font;
+
+    &:hover {
+        background-color: $button-hover-background-color;
+        color: $button-hover-font-color;
+        font-family: $button-font;
+    }
 }

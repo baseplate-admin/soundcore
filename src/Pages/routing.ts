@@ -22,4 +22,6 @@ export enum APIPath {
     LOGIN_ENDPOINT = '/login',
     REFRESH_ENDPOINT = '/refresh',
     TOKEN_JAIL_ENDPOINT = '/token/blacklist',
+
+    UPLOAD_MUSIC_PATH = '/upload',
 }

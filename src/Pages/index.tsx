@@ -1,6 +1,9 @@
 // Bulma Import
 import 'bulma/bulma.sass';
 
+// GLobal Scss import
+import './index.scss';
+
 // Font Import
 import '../Extras/Font.scss';
 
@@ -10,9 +13,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Routing Enum Function
 import { RoutingPath } from './routing';
-
-// Components
-import { FormWithInputBoxComponent } from '../Components/App/FormWithInputBox/FormWithInputBox';
 
 // Loaders
 import { HomePageLoaderApp } from '../Components/Loaders/HomePageLoader/HomePageLoader';
@@ -37,7 +37,13 @@ export const App = () => {
             default: RegisterPage,
         }))
     );
-
+    const FormWithInputBoxComponent = lazy(() =>
+        import('../Components/App/FormWithInputBox/FormWithInputBox').then(
+            ({ FormWithInputBoxComponent }) => ({
+                default: FormWithInputBoxComponent,
+            })
+        )
+    );
     return (
         <Fragment>
             <Router>
@@ -60,10 +66,8 @@ export const App = () => {
                         </Suspense>
                     </Route>
                     <Route path={RoutingPath.UPLOAD_SONG_PAGE}>
-                        <Suspense fallback={FormWithInputBoxComponent}>
-                            <FormWithInputBoxComponent
-                                children={UploadSongApp}
-                            />
+                        <Suspense fallback={FormWithInputBoxLoader}>
+                            <UploadSongApp />
                         </Suspense>
                     </Route>
                 </Switch>

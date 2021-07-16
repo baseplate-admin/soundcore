@@ -32,7 +32,7 @@ import {
     addLoginFormValues,
     clearLoginFormValues,
     selectLoginFormState,
-} from '../../../Store/slices/LoginSlice';
+} from '../../../Store/Slices/LoginSlice';
 
 import { useAuth } from '../../../Hooks/Auth/LoginHook';
 import {

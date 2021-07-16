@@ -6,7 +6,7 @@ import {
     postLoginFormErrorAndHasErrorMessage,
     postLoginFormSuccess,
     selectLoginFormState,
-} from '../../Store/slices/LoginSlice';
+} from '../../Store/Slices/LoginSlice';
 
 export const useAuth = () => {
     const dispatch = useAppDispatch();

@@ -1,7 +1,7 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import navbarReducer from './slices/NavbarSlice';
-import loginReducer from './slices/LoginSlice';
-import registerReducer from './slices/RegisterSlice';
+import navbarReducer from './Slices/NavbarSlice';
+import loginReducer from './Slices/LoginSlice';
+import registerReducer from './Slices/RegisterSlice';
 
 export const store = configureStore({
     reducer: {
