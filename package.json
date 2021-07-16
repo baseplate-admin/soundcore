@@ -2,6 +2,7 @@
     "name": "soundcore_frontend",
     "version": "0.1.1",
     "private": true,
+    "license": "GPL-v3",
     "dependencies": {
         "@craco/craco": "^6.2.0",
         "@reduxjs/toolkit": "^1.6.0",
@@ -9,6 +10,7 @@
         "axios": "^0.21.1",
         "bulma": "^0.9.3",
         "formik": "^2.2.9",
+        "music-metadata-browser": "^2.2.7",
         "pretty-bytes": "^5.6.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
