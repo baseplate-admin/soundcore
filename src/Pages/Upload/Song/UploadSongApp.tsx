@@ -122,6 +122,7 @@ export const UploadSongApp = () => {
             imageRefArray.current.push(el);
         }
     };
+
     const mappedSongs = files.map((file, index) => {
         getAlbumArtFromBlob(file.file, index, imageRefArray);
 
@@ -129,7 +130,14 @@ export const UploadSongApp = () => {
             <div className="box item-box">
                 <div className="columns song-item is-mobile">
                     <div className="column is-narrow">
-                        <img ref={addRef} src="" alt="" />
+                        <figure className="image is-48x48 ">
+                            <img
+                                className="is-rounded"
+                                ref={addRef}
+                                src=""
+                                alt=""
+                            />
+                        </figure>
                         {/* <BsFileEarmarkArrowUp
                                     color="white"
                                     style={{ height: 32, width: 32 }}
