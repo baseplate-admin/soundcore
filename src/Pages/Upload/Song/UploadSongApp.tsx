@@ -384,7 +384,7 @@ export const UploadSongApp = () => {
                                                         {' '}
                                                         Failed Upload{' '}
                                                     </p>
-                                                    <p className="file_uploaded_text header">
+                                                    <p className="file_uploaded_text heading">
                                                         {' '}
                                                         Failed Files :{' '}
                                                         {erroredFiles.length}

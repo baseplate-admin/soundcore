@@ -255,7 +255,7 @@ export const LoginPage = () => {
                 <div className="level">
                     <div className="level-left">
                         <div className="level-item is-size-7">
-                            <span className="has-text-link">
+                            <span className="has-text-link heading">
                                 <Link
                                     to={RoutingPath.FORGET_PASSWORD_PAGE}
                                     className="href_tag"
@@ -267,9 +267,9 @@ export const LoginPage = () => {
                     </div>
                     <div className="level-right">
                         <div className="level-item is-size-7 ">
-                            <p className="new_here_tag">
-                                New here? &nbsp;
-                                <span className="has-text-link">
+                            <p className="new_here_tag heading">
+                                New here?{' '}
+                                <span className="has-text-link ">
                                     <Link
                                         to={RoutingPath.REGISTER_PAGE}
                                         className="href_tag"
