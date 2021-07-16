@@ -16,6 +16,8 @@ import { useUpload } from '../../../Hooks/Upload/MusicUpload';
 import logo from '../../../Assets/Images/brand_logo.png';
 import prettyBytes from 'pretty-bytes';
 import { useEffect } from 'react';
+import { getAlbumArtFromBlob } from '../../../Helpers/ExtractAlbumArt';
+import { useRef } from 'react';
 
 interface IUploadFiles {
     file: File;
@@ -112,16 +114,26 @@ export const UploadSongApp = () => {
         });
         setIsUploading(true);
     };
+    const imageRefArray = useRef([]);
+    imageRefArray.current = [];
 
-    const mappedSongs = files.map((file) => {
+    const addRef = (el: never) => {
+        if (el && !imageRefArray.current.includes(el)) {
+            imageRefArray.current.push(el);
+        }
+    };
+    const mappedSongs = files.map((file, index) => {
+        getAlbumArtFromBlob(file.file, index, imageRefArray);
+
         return (
             <div className="box item-box">
                 <div className="columns song-item is-mobile">
                     <div className="column is-narrow">
-                        <BsFileEarmarkArrowUp
-                            color="white"
-                            style={{ height: 32, width: 32 }}
-                        />
+                        <img ref={addRef} src="" alt="" />
+                        {/* <BsFileEarmarkArrowUp
+                                    color="white"
+                                    style={{ height: 32, width: 32 }}
+                                /> */}
                     </div>
                     <div className="column">
                         <nav className="level is-mobile">
@@ -391,7 +403,6 @@ export const UploadSongApp = () => {
                                                 </div>
                                             </div>
                                             {/* Complete file */}
-                                            {console.log(formHasErroredFile)}
                                             <div
                                                 className={`${
                                                     !formHasErroredFile &&
