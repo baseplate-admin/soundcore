@@ -8,7 +8,7 @@ import {
     selectLoginFormState,
 } from '../../Store/Slices/LoginSlice';
 
-export const useAuth = () => {
+export const useAuthLogin = () => {
     const dispatch = useAppDispatch();
 
     const loginFormState = useAppSelector(selectLoginFormState);

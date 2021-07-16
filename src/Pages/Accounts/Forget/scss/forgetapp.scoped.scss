@@ -1,0 +1,43 @@
+@import '../../../../Components/App/FormWithInputBox/scss/variables';
+
+.items {
+    padding: 0.4em;
+}
+
+.input {
+    background-color: $input-field-color;
+    border: 1px solid $input-border-color !important;
+    color: $main-font-color;
+
+    &::placeholder {
+        color: $main-font-color;
+        opacity: 0.3;
+        font-family: $button-font;
+    }
+}
+
+.button {
+    background-color: $button-background-color !important;
+    border: 1px solid $input-border-color !important;
+    color: $main-font-color !important;
+    transition: 0.4s;
+    font-family: $button-font !important;
+
+    &:hover {
+        background-color: $button-hover-background-color !important;
+        color: $button-hover-font-color;
+        font-family: $button-font;
+    }
+}
+.new_here_tag {
+    font-family: $tag-font;
+    color: gray;
+}
+.href_tag {
+    text-decoration: none;
+    font-family: $tag-font;
+
+    &:hover {
+        color: $tag-href-hover-color;
+    }
+}

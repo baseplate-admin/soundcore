@@ -34,14 +34,14 @@ import {
     selectLoginFormState,
 } from '../../../Store/Slices/LoginSlice';
 
-import { useAuth } from '../../../Hooks/Auth/LoginHook';
+import { useAuthLogin } from '../../../Hooks/Auth/LoginHook';
 import {
     randomSpinnerPicker,
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
 
 export const LoginPage = () => {
-    const [Login] = useAuth();
+    const [Login] = useAuthLogin();
     const dispatch = useAppDispatch();
 
     const loginFormState = useAppSelector(selectLoginFormState);

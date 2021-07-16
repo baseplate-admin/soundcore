@@ -4,6 +4,7 @@ import { Fragment, useState, useCallback } from 'react';
 
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { ApplicationName } from '../../routing';
+
 import {
     IoCloseCircleOutline,
     IoCloudDoneOutline,
@@ -223,7 +224,7 @@ export const UploadSongApp = () => {
                         <div className="columns is-centered is-desktop">
                             <div className="column is-half-desktop is-full-mobile is-narrow-tablet">
                                 <div className="columns is-mobile is-centered">
-                                    <div className="column">
+                                    <div className="column upload-box-wrapper">
                                         <div className="box upload-box">
                                             <div
                                                 className={`${
@@ -275,73 +276,70 @@ export const UploadSongApp = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div>
+                                                <div
+                                                    className={`hero upload-hero-wrapper ${
+                                                        !formHasErroredFile &&
+                                                        files.length !== 0
+                                                            ? ''
+                                                            : 'is-hidden'
+                                                    }`}
+                                                >
                                                     <div
-                                                        className={`hero upload-hero-wrapper ${
-                                                            !formHasErroredFile &&
-                                                            files.length !== 0
-                                                                ? ''
-                                                                : 'is-hidden'
-                                                        }`}
+                                                        className="upload-hero"
+                                                        {...getRootProps()}
                                                     >
-                                                        <div
-                                                            className="upload-hero"
-                                                            {...getRootProps()}
-                                                        >
-                                                            <input
-                                                                type="file"
-                                                                name="file_field"
-                                                                className="file-input"
-                                                                id="file_input"
-                                                                {...getInputProps()}
-                                                            />
-                                                            {mappedSongs}
+                                                        <input
+                                                            type="file"
+                                                            name="file_field"
+                                                            className="file-input"
+                                                            id="file_input"
+                                                            {...getInputProps()}
+                                                        />
+                                                        {mappedSongs}
+                                                    </div>
+                                                    <div className="columns is-mobile is-centered ">
+                                                        <div className="column is-narrow">
+                                                            <p className="heading is-size-7 ">
+                                                                <span className="total_song">
+                                                                    Total Songs:{' '}
+                                                                    {
+                                                                        files.length
+                                                                    }
+                                                                </span>
+                                                            </p>
                                                         </div>
-                                                        <div className="columns is-mobile is-centered ">
-                                                            <div className="column is-narrow">
-                                                                <p className="heading is-size-7 ">
-                                                                    <span className="total_song">
-                                                                        Total
-                                                                        Songs:{' '}
-                                                                        {
-                                                                            files.length
+                                                        <div className="column" />
+                                                        <div className="column is-narrow">
+                                                            <p className="heading">
+                                                                <span className="total_size">
+                                                                    {' '}
+                                                                    Size :{' '}
+                                                                    {prettyBytes(
+                                                                        totalSongSize
+                                                                    )}
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="columns is-mobile is-centered">
+                                                        <div className="column is-narrow">
+                                                            <div className="control">
+                                                                <div
+                                                                    className="box"
+                                                                    style={{
+                                                                        backgroundColor:
+                                                                            'transparent',
+                                                                    }}
+                                                                >
+                                                                    <button
+                                                                        id="button"
+                                                                        className="button is-rounded is-dark is-centered"
+                                                                        onClick={
+                                                                            handleSubmit
                                                                         }
-                                                                    </span>
-                                                                </p>
-                                                            </div>
-                                                            <div className="column" />
-                                                            <div className="column is-narrow">
-                                                                <p className="heading">
-                                                                    <span className="total_size">
-                                                                        {' '}
-                                                                        Size :{' '}
-                                                                        {prettyBytes(
-                                                                            totalSongSize
-                                                                        )}
-                                                                    </span>
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div className="columns is-mobile is-centered">
-                                                            <div className="column is-narrow">
-                                                                <div className="control">
-                                                                    <div
-                                                                        className="box"
-                                                                        style={{
-                                                                            backgroundColor:
-                                                                                'transparent',
-                                                                        }}
                                                                     >
-                                                                        <button
-                                                                            id="button"
-                                                                            className="button is-rounded is-dark is-centered"
-                                                                            onClick={
-                                                                                handleSubmit
-                                                                            }
-                                                                        >
-                                                                            Upload
-                                                                        </button>
-                                                                    </div>
+                                                                        Upload
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </div>

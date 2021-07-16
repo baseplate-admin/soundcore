@@ -3,6 +3,7 @@ import { RootState } from '../store';
 
 export interface IForgetPasswordState {
     email: string;
+    password: string;
     promise: {
         success: {
             value: boolean;
@@ -16,6 +17,7 @@ export interface IForgetPasswordState {
 
 const initialState: IForgetPasswordState = {
     email: '',
+    password: '',
     promise: {
         success: {
             value: false,
@@ -32,10 +34,10 @@ interface IAddForgetFormValues {
 }
 
 export const forgetSlice = createSlice({
-    name: 'login_form',
+    name: 'forms/login_form',
     initialState,
     reducers: {
-        addForgetFormValues: (
+        addForgetFormEmailValue: (
             state,
             action: PayloadAction<IAddForgetFormValues>
         ) => {
@@ -58,7 +60,7 @@ export const forgetSlice = createSlice({
 });
 
 export const {
-    addForgetFormValues,
+    addForgetFormEmailValue,
     clearForgetFormValues,
     postForgetFormValues,
     postForgetFormErrorAndHasErrorMessage,

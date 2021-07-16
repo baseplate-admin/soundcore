@@ -63,6 +63,9 @@
     height: 48px;
     width: auto;
 }
+.upload-box-wrapper {
+    transition: height 2s;
+}
 .upload-box {
     background-color: $upload-hero-color;
     border: 1px solid $upload-hero-border-color;
