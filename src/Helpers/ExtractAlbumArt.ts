@@ -1,28 +1,17 @@
-import * as musicMetadata from 'music-metadata-browser';
+import * as mm from 'music-metadata-browser';
 import { MutableRefObject } from 'react';
-import _ from 'lodash';
 
-export const getAlbumArtFromBlob = (
+export const getAlbumArtFromBlob = async (
     blob: File,
     i: number,
     imageRefArray: MutableRefObject<any>
 ) => {
-    (async () => {
-        const metadata = await musicMetadata.parseBlob(blob);
-        const item: any = await _.first(metadata.common.picture);
-
-        const base64Str = JSON.stringify(item);
-        const base64Object = Buffer.from(base64Str).toString('base64');
-
-        const base64Response = `data:${item.format};base64,${base64Object}`;
-
-        imageRefArray.current[i].src = base64Response;
-
-        // metadata has all the metadata found in the blob or file
-    })();
-
-    // let data = await Promise.resolve(metadata.common.picture);
-    // console.log(data);
-    // Promise.resolve(data).then((res) => {
-    // });
+    // const item: any = await _.first(metadata.common.picture);
+    // reader.onload = (res) => console.log(res);
+    // console.log(base64Object);
+    const metadata = await mm.parseBlob(blob);
+    const cover = mm.selectCover(metadata.common.picture); // pick the cover image
+   
+    imageRefArray.current[i].src = `data:${cover?.format};base64,${cover?.data.toString('base64')}`;
+    
 };
