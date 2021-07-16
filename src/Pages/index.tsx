@@ -9,18 +9,14 @@ import '../Extras/Font.scss';
 
 // React import
 import { Fragment, lazy, Suspense } from 'react';
-import {
-    BrowserRouter as Router,
-    Route,
-    Switch,
-    HashRouter,
-} from 'react-router-dom';
+import { Route, Switch, HashRouter } from 'react-router-dom';
 
 // Routing Enum Function
 import { RoutingPath } from './routing';
 // Loaders
 import { HomePageLoaderApp } from '../Components/Loaders/HomePageLoader/HomePageLoader';
 import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/FormWithInputBoxLoader';
+import { ForgetPage } from './Accounts/Forget/ForgetApp';
 
 export const App = () => {
     const HomePage = lazy(() =>
@@ -73,6 +69,11 @@ export const App = () => {
                             <FormWithInputBoxComponent
                                 children={RegisterPage}
                             />
+                        </Suspense>
+                    </Route>
+                    <Route path={RoutingPath.FORGET_PASSWORD_PAGE} exact>
+                        <Suspense fallback={FormWithInputBoxLoader}>
+                            <FormWithInputBoxComponent children={ForgetPage} />
                         </Suspense>
                     </Route>
                     <Route path={RoutingPath.UPLOAD_SONG_PAGE}>

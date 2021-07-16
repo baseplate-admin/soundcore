@@ -1,3 +1,3 @@
-export const ForgetApp = () => {
+export const ForgetPage = () => {
     return <></>;
 };
