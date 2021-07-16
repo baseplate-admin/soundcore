@@ -3,17 +3,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Main app import
-import { App } from './Pages';
+import { App } from './Views';
 
 // Redux import
 import { Provider } from 'react-redux';
 
 // Store import
 import { store } from './Store/store';
-// const container = document.getElementById('react-root');
-// const root = ReactDOM.createRoot(container);
-
-// root.render(<App />);
 
 ReactDOM.render(
     <React.StrictMode>

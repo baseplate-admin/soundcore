@@ -15,7 +15,7 @@ import {
     selectLeftMenuState,
 } from '../../../Store/Slices/NavbarSlice';
 
-import { RoutingPath } from '../../../Pages/routing';
+import { RoutingPath } from '../../../Routes';
 
 export const LeftSidebar = () => {
     const leftMenuState = useAppSelector(selectLeftMenuState);

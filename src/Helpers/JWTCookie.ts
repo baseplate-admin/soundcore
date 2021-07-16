@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIPath, APIUrl, JWTTokenExpireTime } from '../Pages/routing';
+import { APIPath, APIUrl, JWTTokenExpireTime } from '../Routes';
 
 export const SetJWTTokenInLocalStorage = async (
     jwtToken: string,

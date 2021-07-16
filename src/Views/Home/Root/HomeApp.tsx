@@ -9,7 +9,7 @@ import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import { ApplicationName } from '../../routing';
+import { ApplicationName } from '../../../Routes';
 
 export const HomePage = () => {
     return (

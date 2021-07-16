@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIPath, APIUrl } from '../../Pages/routing';
+import { APIPath, APIUrl } from '../../Routes';
 
 // import { SetJWTTokenInLocalStorage } from '../../Helpers/JWTCookie';
 

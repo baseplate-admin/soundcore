@@ -26,7 +26,7 @@ import {
 import { MdLockOutline } from 'react-icons/md';
 
 import { Link } from 'react-router-dom';
-import { ApplicationName, RoutingPath } from '../../routing';
+import { ApplicationName, RoutingPath } from '../../../Routes';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/hooks';
 import {
     addLoginFormValues,

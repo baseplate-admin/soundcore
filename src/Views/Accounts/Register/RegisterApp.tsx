@@ -22,7 +22,7 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/animations/shift-away.css';
-import { ApplicationName } from '../../routing';
+import { ApplicationName } from '../../../Routes';
 
 export const RegisterPage = () => {
     const registerSchema = yup.object().shape({

@@ -12,7 +12,7 @@ import { Fragment, lazy, Suspense } from 'react';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
 // Routing Enum Function
-import { RoutingPath } from './routing';
+import { RoutingPath } from '../Routes';
 // Loaders
 import { HomePageLoaderApp } from '../Components/Loaders/HomePageLoader/HomePageLoader';
 import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/FormWithInputBoxLoader';

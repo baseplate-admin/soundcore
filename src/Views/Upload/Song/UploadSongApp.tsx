@@ -3,7 +3,7 @@ import './scss/uploadsongapp.scoped.scss';
 import { Fragment, useState, useCallback } from 'react';
 
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
-import { ApplicationName } from '../../routing';
+import { ApplicationName } from '../../../Routes';
 
 import {
     IoCloseCircleOutline,
