@@ -2,14 +2,13 @@ import axios from 'axios';
 import { APIPath, APIUrl } from '../../Pages/routing';
 
 // import { SetJWTTokenInLocalStorage } from '../../Helpers/JWTCookie';
-import { useState } from 'react';
 
 export const useUpload = () => {
     // const dispatch = useAppDispatch();
 
     let axiosArray: Array<any> = [];
 
-    const MusicUpload = (filesArray: Array<File>) => {
+    const MusicUpload = (filesArray: Array<object>) => {
         const base = APIUrl;
         const endPoint = APIPath.UPLOAD_MUSIC_PATH;
 

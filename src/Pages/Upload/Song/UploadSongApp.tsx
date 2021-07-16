@@ -7,10 +7,8 @@ import { ApplicationName } from '../../routing';
 import { IoCloseCircleOutline, IoCloudUploadOutline } from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';
 import { useUpload } from '../../../Hooks/Upload/MusicUpload';
-import { useFormik } from 'formik';
 import logo from '../../../Assets/Images/brand_logo.png';
 import prettyBytes from 'pretty-bytes';
-import { useEffect } from 'react';
 
 interface IUploadFiles {
     file: File;
@@ -23,38 +21,37 @@ export const UploadSongApp = () => {
     const [files, setFiles] = useState<IUploadFiles[]>([]);
     const [totalSongSize, setTotalSongSize] = useState(0);
 
-    const { handleSubmit, handleChange, errors } = useFormik({
-        initialValues: {
-            files: File,
-        },
-        onSubmit(values) {
-            // Success
-        },
-    });
     const onDelete = (file: File) => {
         setFiles((currentFile) => {
             return currentFile.filter(
                 (fileWrapper) => fileWrapper.file !== file
             );
         });
+        setTotalSongSize((currentValue) => currentValue - file.size);
         // ExtractAlbumArtFromStream(file);
     };
 
     const onDrop = useCallback(
         (acceptedFiles: File[], rejectedFile: FileRejection[]) => {
+            // Do something with the files
+
             acceptedFiles.forEach((file) => {
-                // Do something with the files
-                const mappedFiles = acceptedFiles.map((file) => ({
-                    file,
-                    errors: [],
-                }));
-                // setTotalSongSize(totalSongSize + )
-                setFiles((currentFiles) => [
-                    ...currentFiles,
-                    ...mappedFiles,
-                    ...rejectedFile,
-                ]);
+                const binarySize = file.size;
+                setTotalSongSize((currentValue) => currentValue + binarySize);
             });
+
+            const mappedAcceptedFiles = acceptedFiles.map((file) => ({
+                file,
+                errors: [],
+            }));
+            const mappedRejectedFiles = rejectedFile.map((r) => ({
+                ...r,
+            }));
+            setFiles((currentFiles) => [
+                ...currentFiles,
+                ...mappedAcceptedFiles,
+                ...mappedRejectedFiles,
+            ]);
         },
         []
     );
@@ -62,6 +59,10 @@ export const UploadSongApp = () => {
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
     });
+
+    const handleSubmit = async () => {
+        await MusicUpload(files);
+    };
 
     const mappedSongs = files.map((file) => {
         return (
@@ -137,8 +138,7 @@ export const UploadSongApp = () => {
                                 <div className="columns is-mobile is-centered">
                                     <div className="column">
                                         <div className="box upload-box">
-                                            <form
-                                                onSubmit={handleSubmit}
+                                            <div
                                                 className={`${
                                                     files.length === 0
                                                         ? ''
@@ -155,9 +155,6 @@ export const UploadSongApp = () => {
                                                                         name="file_field"
                                                                         className="file-input"
                                                                         id="file_input"
-                                                                        onChange={
-                                                                            handleChange
-                                                                        }
                                                                         {...getInputProps()}
                                                                     />
                                                                     <span
@@ -183,40 +180,49 @@ export const UploadSongApp = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <form onSubmit={handleSubmit}>
+                                            </div>
+                                            <div>
                                                 <div
                                                     className={`hero upload-hero-wrapper ${
                                                         files.length !== 0
                                                             ? ''
                                                             : 'is-hidden'
                                                     }`}
-                                                    {...getRootProps()}
                                                 >
-                                                    <input
-                                                        type="file"
-                                                        name="file_field"
-                                                        className="file-input"
-                                                        id="file_input"
-                                                        onChange={handleChange}
-                                                        {...getInputProps()}
-                                                    />
-                                                    <span className="upload-hero">
+                                                    <div
+                                                        className="upload-hero"
+                                                        {...getRootProps()}
+                                                    >
+                                                        <input
+                                                            type="file"
+                                                            name="file_field"
+                                                            className="file-input"
+                                                            id="file_input"
+                                                            {...getInputProps()}
+                                                        />
                                                         {mappedSongs}
-                                                    </span>
+                                                    </div>
                                                     <div className="columns is-mobile is-centered ">
                                                         <div className="column is-narrow">
-                                                            <p className="heading is-size-7">
-                                                                Total Songs:{' '}
-                                                                {files.length}
+                                                            <p className="heading is-size-7 ">
+                                                                <span className="total_song">
+                                                                    Total Songs:{' '}
+                                                                    {
+                                                                        files.length
+                                                                    }
+                                                                </span>
                                                             </p>
                                                         </div>
                                                         <div className="column" />
                                                         <div className="column is-narrow">
                                                             <p className="heading">
-                                                                {' '}
-                                                                Size :{' '}
-                                                                {totalSongSize}
+                                                                <span className="total_size">
+                                                                    {' '}
+                                                                    Size :{' '}
+                                                                    {prettyBytes(
+                                                                        totalSongSize
+                                                                    )}
+                                                                </span>
                                                             </p>
                                                         </div>
                                                     </div>
@@ -233,15 +239,18 @@ export const UploadSongApp = () => {
                                                                     <button
                                                                         id="button"
                                                                         className="button is-rounded is-dark is-centered"
+                                                                        onClick={
+                                                                            handleSubmit
+                                                                        }
                                                                     >
-                                                                        Sign in
+                                                                        Upload
                                                                     </button>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
