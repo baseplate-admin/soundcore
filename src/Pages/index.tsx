@@ -17,7 +17,6 @@ import { RoutingPath } from './routing';
 // Loaders
 import { HomePageLoaderApp } from '../Components/Loaders/HomePageLoader/HomePageLoader';
 import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/FormWithInputBoxLoader';
-import { UploadSongApp } from './Upload/Song/UploadSongApp';
 
 export const App = () => {
     const HomePage = lazy(() =>
@@ -44,6 +43,13 @@ export const App = () => {
             })
         )
     );
+
+    const UploadSongApp = lazy(() =>
+        import('./Upload/Song/UploadSongApp').then(({ UploadSongApp }) => ({
+            default: UploadSongApp,
+        }))
+    );
+
     return (
         <Fragment>
             <Router>

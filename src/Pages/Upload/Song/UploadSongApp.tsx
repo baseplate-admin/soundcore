@@ -4,11 +4,17 @@ import { Fragment, useState, useCallback } from 'react';
 
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { ApplicationName } from '../../routing';
-import { IoCloseCircleOutline, IoCloudUploadOutline } from 'react-icons/io5';
+import {
+    IoCloseCircleOutline,
+    IoCloudDoneOutline,
+    IoCloudOfflineOutline,
+    IoCloudUploadOutline,
+} from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';
 import { useUpload } from '../../../Hooks/Upload/MusicUpload';
 import logo from '../../../Assets/Images/brand_logo.png';
 import prettyBytes from 'pretty-bytes';
+import { useEffect } from 'react';
 
 interface IUploadFiles {
     file: File;
@@ -16,8 +22,14 @@ interface IUploadFiles {
 }
 
 export const UploadSongApp = () => {
-    const [MusicUpload] = useUpload();
+    const [MusicUploadSingle] = useUpload();
 
+    const [uploadDone, setUploadDone] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
+    const [formHasErroredFile, setFormHasErroredFile] = useState(false);
+
+    const [doneArray, setDoneArray] = useState<Array<object>>([]);
+    const [erroredFiles, setErroredFiles] = useState<IUploadFiles[]>([]);
     const [files, setFiles] = useState<IUploadFiles[]>([]);
     const [totalSongSize, setTotalSongSize] = useState(0);
 
@@ -60,11 +72,88 @@ export const UploadSongApp = () => {
         onDrop,
     });
 
+    useEffect(() => {
+        if (isUploading && erroredFiles.length !== 0) {
+            setFormHasErroredFile(true);
+        }
+    }, [isUploading, erroredFiles]);
+
+    useEffect(() => {
+        if (isUploading && doneArray.length === files.length) {
+            setUploadDone(true);
+        }
+    }, [doneArray, files, isUploading]);
+
     const handleSubmit = async () => {
-        await MusicUpload(files);
+        files.forEach(async (file) => {
+            try {
+                const data = await MusicUploadSingle(file.file);
+
+                switch (data.status) {
+                    case 201: {
+                        setDoneArray((currentFiles) => [...currentFiles, file]);
+                        break;
+                    }
+                    case 400: {
+                        setErroredFiles((currentFiles) => [
+                            ...currentFiles,
+                            file,
+                        ]);
+                        break;
+                    }
+                    default: {
+                        break;
+                    }
+                }
+            } catch {
+                setErroredFiles((currentFiles) => [...currentFiles, file]);
+            }
+        });
+        setIsUploading(true);
     };
 
     const mappedSongs = files.map((file) => {
+        return (
+            <div className="box item-box">
+                <div className="columns song-item is-mobile">
+                    <div className="column is-narrow">
+                        <BsFileEarmarkArrowUp
+                            color="white"
+                            style={{ height: 32, width: 32 }}
+                        />
+                    </div>
+                    <div className="column">
+                        <nav className="level is-mobile">
+                            <div className="level-item has-text-centered info_level">
+                                <div>
+                                    <p className="heading song_name">
+                                        {file.file.name}
+                                    </p>
+                                    <p className="heading">
+                                        Size : {prettyBytes(file.file.size)}
+                                    </p>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <div className="column is-narrow">
+                        <IoCloseCircleOutline
+                            onClick={() => {
+                                onDelete(file.file);
+                            }}
+                            style={{
+                                height: 20,
+                                width: 20,
+                            }}
+                            color="white"
+                        />
+                    </div>
+                </div>
+            </div>
+        );
+    });
+
+    const mappedErrorFiles = erroredFiles.map((file) => {
         return (
             <div className="box item-box">
                 <div className="columns song-item is-mobile">
@@ -138,115 +227,237 @@ export const UploadSongApp = () => {
                                         <div className="box upload-box">
                                             <div
                                                 className={`${
-                                                    files.length === 0
-                                                        ? ''
-                                                        : 'is-hidden'
+                                                    uploadDone
+                                                        ? 'is-hidden'
+                                                        : ''
                                                 }`}
                                             >
-                                                <div className="hero">
-                                                    <div className="hero-body">
-                                                        <div className="container">
-                                                            <div className="is-justify-content-center file is-large is-boxed has-name">
-                                                                <label className="file-label">
-                                                                    <input
-                                                                        type="file"
-                                                                        name="file_field"
-                                                                        className="file-input"
-                                                                        id="file_input"
-                                                                        {...getInputProps()}
-                                                                    />
-                                                                    <span
-                                                                        className="file-cta"
-                                                                        {...getRootProps()}
-                                                                    >
-                                                                        <span className="file-icon">
-                                                                            <IoCloudUploadOutline
-                                                                                style={{
-                                                                                    transform:
-                                                                                        'scale(1.8)',
-                                                                                }}
-                                                                                color="white"
-                                                                            />
+                                                <div
+                                                    className={`${
+                                                        files.length === 0
+                                                            ? ''
+                                                            : 'is-hidden'
+                                                    }`}
+                                                >
+                                                    <div className="hero">
+                                                        <div className="hero-body">
+                                                            <div className="container">
+                                                                <div className="is-justify-content-center file is-large is-boxed has-name">
+                                                                    <label className="file-label">
+                                                                        <input
+                                                                            type="file"
+                                                                            name="file_field"
+                                                                            className="file-input"
+                                                                            id="file_input"
+                                                                            {...getInputProps()}
+                                                                        />
+                                                                        <span
+                                                                            className="file-cta"
+                                                                            {...getRootProps()}
+                                                                        >
+                                                                            <span className="file-icon">
+                                                                                <IoCloudUploadOutline
+                                                                                    style={{
+                                                                                        transform:
+                                                                                            'scale(1.8)',
+                                                                                    }}
+                                                                                    color="white"
+                                                                                />
+                                                                            </span>
+                                                                            <span className="file-label">
+                                                                                Upload
+                                                                                File
+                                                                            </span>
                                                                         </span>
-                                                                        <span className="file-label">
-                                                                            Upload
-                                                                            File
-                                                                        </span>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div
+                                                        className={`hero upload-hero-wrapper ${
+                                                            !formHasErroredFile &&
+                                                            files.length !== 0
+                                                                ? ''
+                                                                : 'is-hidden'
+                                                        }`}
+                                                    >
+                                                        <div
+                                                            className="upload-hero"
+                                                            {...getRootProps()}
+                                                        >
+                                                            <input
+                                                                type="file"
+                                                                name="file_field"
+                                                                className="file-input"
+                                                                id="file_input"
+                                                                {...getInputProps()}
+                                                            />
+                                                            {mappedSongs}
+                                                        </div>
+                                                        <div className="columns is-mobile is-centered ">
+                                                            <div className="column is-narrow">
+                                                                <p className="heading is-size-7 ">
+                                                                    <span className="total_song">
+                                                                        Total
+                                                                        Songs:{' '}
+                                                                        {
+                                                                            files.length
+                                                                        }
                                                                     </span>
-                                                                </label>
+                                                                </p>
+                                                            </div>
+                                                            <div className="column" />
+                                                            <div className="column is-narrow">
+                                                                <p className="heading">
+                                                                    <span className="total_size">
+                                                                        {' '}
+                                                                        Size :{' '}
+                                                                        {prettyBytes(
+                                                                            totalSongSize
+                                                                        )}
+                                                                    </span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="columns is-mobile is-centered">
+                                                            <div className="column is-narrow">
+                                                                <div className="control">
+                                                                    <div
+                                                                        className="box"
+                                                                        style={{
+                                                                            backgroundColor:
+                                                                                'transparent',
+                                                                        }}
+                                                                    >
+                                                                        <button
+                                                                            id="button"
+                                                                            className="button is-rounded is-dark is-centered"
+                                                                            onClick={
+                                                                                handleSubmit
+                                                                            }
+                                                                        >
+                                                                            Upload
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div>
+                                            {/* Error File */}
+                                            <div
+                                                className={`${
+                                                    formHasErroredFile
+                                                        ? ''
+                                                        : 'is-hidden'
+                                                }`}
+                                            >
                                                 <div
-                                                    className={`hero upload-hero-wrapper ${
-                                                        files.length !== 0
-                                                            ? ''
-                                                            : 'is-hidden'
-                                                    }`}
+                                                    className="box"
+                                                    style={{
+                                                        backgroundColor:
+                                                            'transparent',
+                                                        boxShadow: 'none',
+                                                    }}
                                                 >
-                                                    <div
-                                                        className="upload-hero"
-                                                        {...getRootProps()}
-                                                    >
-                                                        <input
-                                                            type="file"
-                                                            name="file_field"
-                                                            className="file-input"
-                                                            id="file_input"
-                                                            {...getInputProps()}
-                                                        />
-                                                        {mappedSongs}
-                                                    </div>
-                                                    <div className="columns is-mobile is-centered ">
-                                                        <div className="column is-narrow">
-                                                            <p className="heading is-size-7 ">
-                                                                <span className="total_song">
-                                                                    Total Songs:{' '}
-                                                                    {
-                                                                        files.length
-                                                                    }
-                                                                </span>
-                                                            </p>
+                                                    <IoCloudOfflineOutline
+                                                        style={{
+                                                            transform:
+                                                                'scale(3)',
+                                                        }}
+                                                        color="white"
+                                                    />
+                                                </div>
+                                                <div
+                                                    className="box"
+                                                    style={{
+                                                        backgroundColor:
+                                                            'transparent',
+                                                        boxShadow: 'none',
+                                                    }}
+                                                >
+                                                    <p className="file_uploaded_text">
+                                                        {' '}
+                                                        Failed Upload{' '}
+                                                    </p>
+                                                    <p className="file_uploaded_text header">
+                                                        {' '}
+                                                        Failed Files :{' '}
+                                                        {erroredFiles.length}
+                                                    </p>
+                                                    {mappedErrorFiles}
+                                                </div>
+                                            </div>
+                                            {/* Complete file */}
+                                            {console.log(formHasErroredFile)}
+                                            <div
+                                                className={`${
+                                                    !formHasErroredFile &&
+                                                    doneArray.length !== 0
+                                                        ? ''
+                                                        : 'is-hidden'
+                                                }`}
+                                            >
+                                                <div
+                                                    className="box"
+                                                    style={{
+                                                        boxShadow: 'none',
+                                                        backgroundColor:
+                                                            'transparent',
+                                                    }}
+                                                >
+                                                    <p className="file_uploaded">
+                                                        <div
+                                                            className="box"
+                                                            style={{
+                                                                boxShadow:
+                                                                    'none',
+                                                                backgroundColor:
+                                                                    'transparent',
+                                                            }}
+                                                        >
+                                                            <IoCloudDoneOutline
+                                                                style={{
+                                                                    transform:
+                                                                        'scale(3)',
+                                                                }}
+                                                                color="white"
+                                                            />
                                                         </div>
-                                                        <div className="column" />
-                                                        <div className="column is-narrow">
-                                                            <p className="heading">
-                                                                <span className="total_size">
-                                                                    {' '}
-                                                                    Size :{' '}
+                                                        <div
+                                                            className="box"
+                                                            style={{
+                                                                boxShadow:
+                                                                    'none',
+                                                                backgroundColor:
+                                                                    'transparent',
+                                                            }}
+                                                        >
+                                                            <span className="file_uploaded_text is-size-4">
+                                                                Files Uploaded
+                                                            </span>
+                                                            <div
+                                                                className="box"
+                                                                style={{
+                                                                    backgroundColor:
+                                                                        'transparent',
+                                                                    boxShadow:
+                                                                        'none',
+                                                                }}
+                                                            >
+                                                                <span className="heading file_uploaded_text">
+                                                                    Total Size:{' '}
                                                                     {prettyBytes(
                                                                         totalSongSize
                                                                     )}
                                                                 </span>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="columns is-mobile is-centered">
-                                                        <div className="column is-narrow">
-                                                            <div className="control">
-                                                                <div
-                                                                    className="box"
-                                                                    style={{
-                                                                        backgroundColor:
-                                                                            'transparent',
-                                                                    }}
-                                                                >
-                                                                    <button
-                                                                        id="button"
-                                                                        className="button is-rounded is-dark is-centered"
-                                                                        onClick={
-                                                                            handleSubmit
-                                                                        }
-                                                                    >
-                                                                        Upload
-                                                                    </button>
-                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
