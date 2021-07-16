@@ -9,11 +9,15 @@ import '../Extras/Font.scss';
 
 // React import
 import { Fragment, lazy, Suspense } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    HashRouter,
+} from 'react-router-dom';
 
 // Routing Enum Function
 import { RoutingPath } from './routing';
-
 // Loaders
 import { HomePageLoaderApp } from '../Components/Loaders/HomePageLoader/HomePageLoader';
 import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/FormWithInputBoxLoader';
@@ -52,7 +56,7 @@ export const App = () => {
 
     return (
         <Fragment>
-            <Router>
+            <HashRouter>
                 <Switch>
                     <Route path={RoutingPath.HOME_PAGE} exact>
                         <Suspense fallback={HomePageLoaderApp}>
@@ -77,7 +81,7 @@ export const App = () => {
                         </Suspense>
                     </Route>
                 </Switch>
-            </Router>
+            </HashRouter>
         </Fragment>
     );
 };
