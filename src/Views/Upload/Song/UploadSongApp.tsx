@@ -13,9 +13,11 @@ import { BsFileEarmarkArrowUp } from 'react-icons/bs';
 
 import prettyBytes from 'pretty-bytes';
 import { getAlbumArtFromBlob } from '../../../Helpers/ExtractAlbumArt';
-import { SuccessPromiseChildComponent } from './Components/SuccessPromise/SuccessPromise';
+
+// Child Components
+import { PromiseSuccessChildComponent } from './Components/PromiseSuccess/PromiseSuccess';
 import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
-import { ErrorPromiseChildComponent } from './Components/ErrorPromise/ErrorPromise';
+import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
 
@@ -216,7 +218,7 @@ export const UploadSongPage = () => {
                                             <Fragment>
                                                 {/* If Errored File Length is less than 0,and Upload is not Done . Show this element */}
                                                 {/* This means this Div has Success Promise */}
-                                                <SuccessPromiseChildComponent
+                                                <PromiseSuccessChildComponent
                                                     fileLength={files.length}
                                                     totalSongSize={
                                                         totalSongSize
@@ -227,7 +229,7 @@ export const UploadSongPage = () => {
                                             <Fragment>
                                                 {/* If Errored File Length is greater than 0, and Upload is Not Done . Show this element.  */}
                                                 {/* This means this Div has errored files */}
-                                                <ErrorPromiseChildComponent />
+                                                <PromiseErrorChildComponent />
                                             </Fragment>
                                         )}
                                     </Fragment>

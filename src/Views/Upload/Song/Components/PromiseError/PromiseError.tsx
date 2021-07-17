@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-export const ErrorPromiseChildComponent = () => {
+export const PromiseErrorChildComponent = () => {
     return (
         <Fragment>
             <div

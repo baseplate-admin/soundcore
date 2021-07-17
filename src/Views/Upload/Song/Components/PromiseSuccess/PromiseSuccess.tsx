@@ -11,7 +11,7 @@ interface ISuccessPromiseChildComponentProps {
     totalSongSize: number;
 }
 
-export const SuccessPromiseChildComponent = (
+export const PromiseSuccessChildComponent = (
     props: ISuccessPromiseChildComponentProps
 ) => {
     return (
