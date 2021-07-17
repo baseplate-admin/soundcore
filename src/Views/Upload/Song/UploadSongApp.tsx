@@ -1,4 +1,5 @@
-import './scss/uploadsongapp.scoped.scss';
+import './UploadSongApp.scoped.scss';
+import './UploadSongApp.scss';
 
 import { Fragment, useState, useCallback } from 'react';
 
@@ -18,6 +19,7 @@ import prettyBytes from 'pretty-bytes';
 import { useEffect } from 'react';
 import { getAlbumArtFromBlob } from '../../../Helpers/ExtractAlbumArt';
 import { useRef } from 'react';
+import { useSpring, animated } from 'react-spring';
 
 interface IUploadFiles {
     file: File;
@@ -25,8 +27,12 @@ interface IUploadFiles {
 }
 
 export const UploadSongApp = () => {
+    const imageRefArray = useRef([]);
+    const uploadBoxRef = useRef<HTMLDivElement>(null);
+
     const [MusicUploadSingle] = useUpload();
 
+    const [isFileDropped, setIsFileDropped] = useState(false);
     const [uploadDone, setUploadDone] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
     const [formHasErroredFile, setFormHasErroredFile] = useState(false);
@@ -36,15 +42,22 @@ export const UploadSongApp = () => {
     const [files, setFiles] = useState<IUploadFiles[]>([]);
     const [totalSongSize, setTotalSongSize] = useState(0);
 
-    const onDelete = (file: File) => {
-        setFiles((currentFile) => {
-            return currentFile.filter(
-                (fileWrapper) => fileWrapper.file !== file
-            );
-        });
-        setTotalSongSize((currentValue) => currentValue - file.size);
-        // ExtractAlbumArtFromStream(file);
-    };
+    useEffect(() => {
+        if (isUploading && erroredFiles.length !== 0) {
+            setFormHasErroredFile(true);
+        }
+    }, [isUploading, erroredFiles]);
+
+    useEffect(() => {
+        if (isUploading && doneArray.length === files.length) {
+            setUploadDone(true);
+        }
+    }, [doneArray, files, isUploading]);
+
+    const uploadBoxStyle = useSpring({
+        width: uploadBoxRef.current?.clientWidth,
+        minWidth: isFileDropped ? 650 : 490,
+    });
 
     const onDrop = useCallback(
         (acceptedFiles: File[], rejectedFile: FileRejection[]) => {
@@ -67,25 +80,10 @@ export const UploadSongApp = () => {
                 ...mappedAcceptedFiles,
                 ...mappedRejectedFiles,
             ]);
+            setIsFileDropped((v) => !v);
         },
         []
     );
-
-    const { getRootProps, getInputProps } = useDropzone({
-        onDrop,
-    });
-
-    useEffect(() => {
-        if (isUploading && erroredFiles.length !== 0) {
-            setFormHasErroredFile(true);
-        }
-    }, [isUploading, erroredFiles]);
-
-    useEffect(() => {
-        if (isUploading && doneArray.length === files.length) {
-            setUploadDone(true);
-        }
-    }, [doneArray, files, isUploading]);
 
     const handleSubmit = async () => {
         files.forEach(async (file) => {
@@ -114,14 +112,24 @@ export const UploadSongApp = () => {
         });
         setIsUploading(true);
     };
-    const imageRefArray = useRef([]);
-    imageRefArray.current = [];
+    const onDelete = (file: File) => {
+        setFiles((currentFile) => {
+            return currentFile.filter(
+                (fileWrapper) => fileWrapper.file !== file
+            );
+        });
+        setTotalSongSize((currentValue) => currentValue - file.size);
+    };
 
     const addRef = (el: never) => {
         if (el && !imageRefArray.current.includes(el)) {
             imageRefArray.current.push(el);
         }
     };
+
+    const { getRootProps, getInputProps } = useDropzone({
+        onDrop,
+    });
 
     const mappedSongs = files.map((file, index) => {
         getAlbumArtFromBlob(file.file, index, imageRefArray);
@@ -245,7 +253,11 @@ export const UploadSongApp = () => {
                             <div className="column is-half-desktop is-full-mobile is-narrow-tablet">
                                 <div className="columns is-mobile is-centered">
                                     <div className="column upload-box-wrapper">
-                                        <div className="box upload-box">
+                                        <animated.div
+                                            style={uploadBoxStyle}
+                                            className="box upload-box"
+                                            ref={uploadBoxRef}
+                                        >
                                             <div
                                                 className={`${
                                                     uploadDone
@@ -365,119 +377,123 @@ export const UploadSongApp = () => {
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            {/* Error File */}
-                                            <div
-                                                className={`${
-                                                    formHasErroredFile
-                                                        ? ''
-                                                        : 'is-hidden'
-                                                }`}
-                                            >
+                                                {/* Error File */}
                                                 <div
-                                                    className="box"
-                                                    style={{
-                                                        backgroundColor:
-                                                            'transparent',
-                                                        boxShadow: 'none',
-                                                    }}
+                                                    className={`${
+                                                        formHasErroredFile
+                                                            ? ''
+                                                            : 'is-hidden'
+                                                    }`}
                                                 >
-                                                    <IoCloudOfflineOutline
+                                                    <div
+                                                        className="box"
                                                         style={{
-                                                            transform:
-                                                                'scale(3)',
+                                                            backgroundColor:
+                                                                'transparent',
+                                                            boxShadow: 'none',
                                                         }}
-                                                        color="white"
-                                                    />
-                                                </div>
-                                                <div
-                                                    className="box"
-                                                    style={{
-                                                        backgroundColor:
-                                                            'transparent',
-                                                        boxShadow: 'none',
-                                                    }}
-                                                >
-                                                    <p className="file_uploaded_text">
-                                                        {' '}
-                                                        Failed Upload{' '}
-                                                    </p>
-                                                    <p className="file_uploaded_text heading">
-                                                        {' '}
-                                                        Failed Files :{' '}
-                                                        {erroredFiles.length}
-                                                    </p>
-                                                    {mappedErrorFiles}
-                                                </div>
-                                            </div>
-                                            {/* Complete file */}
-                                            <div
-                                                className={`${
-                                                    !formHasErroredFile &&
-                                                    doneArray.length !== 0
-                                                        ? ''
-                                                        : 'is-hidden'
-                                                }`}
-                                            >
-                                                <div
-                                                    className="box"
-                                                    style={{
-                                                        boxShadow: 'none',
-                                                        backgroundColor:
-                                                            'transparent',
-                                                    }}
-                                                >
-                                                    <p className="file_uploaded">
-                                                        <div
-                                                            className="box"
+                                                    >
+                                                        <IoCloudOfflineOutline
                                                             style={{
-                                                                boxShadow:
-                                                                    'none',
-                                                                backgroundColor:
-                                                                    'transparent',
+                                                                transform:
+                                                                    'scale(3)',
                                                             }}
-                                                        >
-                                                            <IoCloudDoneOutline
-                                                                style={{
-                                                                    transform:
-                                                                        'scale(3)',
-                                                                }}
-                                                                color="white"
-                                                            />
-                                                        </div>
-                                                        <div
-                                                            className="box"
-                                                            style={{
-                                                                boxShadow:
-                                                                    'none',
-                                                                backgroundColor:
-                                                                    'transparent',
-                                                            }}
-                                                        >
-                                                            <span className="file_uploaded_text is-size-4">
-                                                                Files Uploaded
-                                                            </span>
+                                                            color="white"
+                                                        />
+                                                    </div>
+                                                    <div
+                                                        className="box"
+                                                        style={{
+                                                            backgroundColor:
+                                                                'transparent',
+                                                            boxShadow: 'none',
+                                                        }}
+                                                    >
+                                                        <p className="file_uploaded_text">
+                                                            {' '}
+                                                            Failed Upload{' '}
+                                                        </p>
+                                                        <p className="file_uploaded_text heading">
+                                                            {' '}
+                                                            Failed Files :{' '}
+                                                            {
+                                                                erroredFiles.length
+                                                            }
+                                                        </p>
+                                                        {mappedErrorFiles}
+                                                    </div>
+                                                </div>
+                                                {/* Complete file */}
+                                                <div
+                                                    className={`${
+                                                        !formHasErroredFile &&
+                                                        doneArray.length !== 0
+                                                            ? ''
+                                                            : 'is-hidden'
+                                                    }`}
+                                                >
+                                                    <div
+                                                        className="box"
+                                                        style={{
+                                                            boxShadow: 'none',
+                                                            backgroundColor:
+                                                                'transparent',
+                                                        }}
+                                                    >
+                                                        <p className="file_uploaded">
                                                             <div
                                                                 className="box"
                                                                 style={{
-                                                                    backgroundColor:
-                                                                        'transparent',
                                                                     boxShadow:
                                                                         'none',
+                                                                    backgroundColor:
+                                                                        'transparent',
                                                                 }}
                                                             >
-                                                                <span className="heading file_uploaded_text">
-                                                                    Total Size:{' '}
-                                                                    {prettyBytes(
-                                                                        totalSongSize
-                                                                    )}
-                                                                </span>
+                                                                <IoCloudDoneOutline
+                                                                    style={{
+                                                                        transform:
+                                                                            'scale(3)',
+                                                                    }}
+                                                                    color="white"
+                                                                />
                                                             </div>
-                                                        </div>
-                                                    </p>
+                                                            <div
+                                                                className="box"
+                                                                style={{
+                                                                    boxShadow:
+                                                                        'none',
+                                                                    backgroundColor:
+                                                                        'transparent',
+                                                                }}
+                                                            >
+                                                                <span className="file_uploaded_text is-size-4">
+                                                                    Files
+                                                                    Uploaded
+                                                                </span>
+                                                                <div
+                                                                    className="box"
+                                                                    style={{
+                                                                        backgroundColor:
+                                                                            'transparent',
+                                                                        boxShadow:
+                                                                            'none',
+                                                                    }}
+                                                                >
+                                                                    <span className="heading file_uploaded_text">
+                                                                        Total
+                                                                        Size:{' '}
+                                                                        {prettyBytes(
+                                                                            totalSongSize
+                                                                        )}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </animated.div>
                                     </div>
                                 </div>
                             </div>
