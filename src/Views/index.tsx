@@ -44,9 +44,9 @@ export const App = () => {
         )
     );
 
-    const UploadSongApp = lazy(() =>
-        import('./Upload/Song/UploadSongApp').then(({ UploadSongApp }) => ({
-            default: UploadSongApp,
+    const UploadSongPage = lazy(() =>
+        import('./Upload/Song/UploadSongApp').then(({ UploadSongPage }) => ({
+            default: UploadSongPage,
         }))
     );
 
@@ -78,7 +78,9 @@ export const App = () => {
                     </Route>
                     <Route path={RoutingPath.UPLOAD_SONG_PAGE}>
                         <Suspense fallback={FormWithInputBoxLoader}>
-                            <UploadSongApp />
+                            <FormWithInputBoxComponent
+                                children={UploadSongPage}
+                            />
                         </Suspense>
                     </Route>
                 </Switch>

@@ -1,0 +1,12 @@
+@import '../../../scss/variables.scss';
+
+.href_tag {
+    text-decoration: none;
+
+    &:hover {
+        color: $tag-href-hover-color;
+    }
+}
+.file_uploaded_text {
+    color: $main-font-color;
+}

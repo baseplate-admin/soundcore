@@ -1,0 +1,63 @@
+@import './variables';
+
+@media screen and (max-width: 767px) {
+    .song_name {
+        width: 140px !important;
+    }
+}
+
+.uploaded_items {
+    color: $main-font-color;
+    text-align: center;
+}
+
+.song-item {
+    height: 65px;
+    background-color: $upload-hero-color;
+    border: 1px solid $upload-hero-border-color !important;
+    border-radius: 3px;
+}
+.song_name {
+    width: 200px;
+    transform: translateY(8px);
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Roboto' !important;
+}
+
+.project-name {
+    color: $main-font-color;
+}
+
+.button {
+    background-color: $button-background-color;
+    border: 1px solid $upload-hero-border-color !important;
+    color: $main-font-color;
+    transition: 0.4s;
+    font-family: $button-font;
+
+    &:hover {
+        background-color: $button-hover-background-color;
+        color: $button-hover-font-color;
+        font-family: $button-font;
+    }
+}
+
+.item-box {
+    background-color: transparent;
+    margin-bottom: 0px;
+    margin-top: 0px;
+
+    &:not(:first-of-type :last-of-type) {
+        padding-bottom: 0.2em;
+    }
+
+    &:first-of-type {
+        margin-top: 0.5em !important;
+    }
+    &:last-of-type {
+        margin-bottom: 0.5em !important;
+    }
+}

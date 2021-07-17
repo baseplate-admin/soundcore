@@ -1,0 +1,35 @@
+@import '../../../scss/variables.scss';
+
+.button {
+    background-color: $button-background-color;
+    border: 1px solid $upload-hero-border-color !important;
+    color: $main-font-color;
+    transition: 0.4s;
+    font-family: $button-font;
+
+    &:hover {
+        background-color: $button-hover-background-color;
+        color: $button-hover-font-color;
+        font-family: $button-font;
+    }
+}
+
+.item-box {
+    background-color: transparent;
+    margin-bottom: 0px;
+    margin-top: 0px;
+
+    &:not(:first-of-type :last-of-type) {
+        padding-bottom: 0.2em;
+    }
+
+    &:first-of-type {
+        margin-top: 0.5em !important;
+    }
+    &:last-of-type {
+        margin-bottom: 0.5em !important;
+    }
+}
+.file_uploaded_text {
+    color: $main-font-color;
+}
