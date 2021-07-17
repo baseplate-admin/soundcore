@@ -1,4 +1,4 @@
-import './scss/forgetapp.scoped.scss';
+import './scss/ForgetApp.scoped.scss';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
