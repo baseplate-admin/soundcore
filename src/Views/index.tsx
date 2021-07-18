@@ -1,11 +1,12 @@
 // Bulma Import
 import 'bulma/bulma.sass';
 
+//Font Import
+import { nunitoFontStyle } from '../Extras/Fonts/Nunito';
+import { robotoFontStyle } from '../Extras/Fonts/Roboto';
+
 // GLobal Scss import
 import './index.scss';
-
-// Font Import
-import '../Extras/Fonts/Font.scss';
 
 // React import
 import { Fragment, lazy, Suspense } from 'react';
@@ -19,6 +20,10 @@ import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/F
 import { ForgetPage } from './Accounts/Forget/ForgetApp';
 
 export const App = () => {
+    // Init Font
+    nunitoFontStyle();
+    robotoFontStyle();
+
     const HomePage = lazy(() =>
         import('./Home/Root/HomeApp').then(({ HomePage }) => ({
             default: HomePage,

@@ -9,7 +9,7 @@ import { App } from './Views';
 import { Provider } from 'react-redux';
 
 // Store import
-import { store } from './Store/store';
+import { store } from './Store/Store';
 
 ReactDOM.render(
     <React.StrictMode>

@@ -21,8 +21,6 @@
         "react-responsive": "^8.2.0",
         "react-router-dom": "^5.2.0",
         "react-spring": "^9.2.4",
-        "typeface-nunito": "^1.1.13",
-        "typeface-roboto": "^1.1.13",
         "yup": "^0.32.9"
     },
     "devDependencies": {
