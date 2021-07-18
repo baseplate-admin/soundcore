@@ -1,5 +1,6 @@
 import './scss/Front.scoped.scss';
 import { Fragment } from 'react';
+import { ImFileMusic } from 'react-icons/im';
 
 interface IFrontPageChildComponentProps {
     getRootProps: Function;
@@ -26,7 +27,19 @@ export const FrontPageChildComponent = (
                                 />
                                 <span className="file-cta">
                                     <span className="file-icon">
-                                        <i></i>
+                                        <i>
+                                            <ImFileMusic
+                                                color="white"
+                                                style={{
+                                                    transform: 'scale(1.5)',
+                                                }}
+                                            />
+                                        </i>
+                                    </span>
+                                    <span className="file-label is-size-5">
+                                        <br />
+
+                                        <p>Upload </p>
                                     </span>
                                 </span>
                             </label>
