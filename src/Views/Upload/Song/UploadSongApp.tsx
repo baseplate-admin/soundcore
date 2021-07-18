@@ -1,3 +1,8 @@
+import _ from 'lodash';
+
+// CSS Variables
+import { UploadSongVariables } from './variables';
+
 import { Fragment, useState, useCallback, useRef, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useMusicUpload } from '../../../Hooks/Upload/MusicUpload';
@@ -18,9 +23,6 @@ import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
 import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
-
-import _ from 'lodash';
-import { UploadSongVariables } from './variables';
 
 interface IUploadFiles {
     file: File;
@@ -45,7 +47,7 @@ export const UploadSongPage = () => {
     const [totalSongSize, setTotalSongSize] = useState(0);
 
     useEffect(() => {
-        if (isUploading && doneArray.length === files.length) {
+        if (isUploading && _.size(doneArray) === _.size(files)) {
             setUploadDone(true);
         }
     }, [doneArray, files, isUploading]);
@@ -210,7 +212,7 @@ export const UploadSongPage = () => {
                                     mappedSongs={mappedSongs}
                                     getInputProps={getInputProps}
                                     getRootProps={getRootProps}
-                                    fileLength={files.length}
+                                    fileLength={_.size(files)}
                                     totalSongSize={totalSongSize}
                                     handleSubmit={handleSubmit}
                                 />
@@ -227,7 +229,7 @@ export const UploadSongPage = () => {
                                                 {/* If Errored File Length is less than 0,and Upload is not Done . Show this element */}
                                                 {/* This means this Div has Success Promise */}
                                                 <PromiseSuccessChildComponent
-                                                    fileLength={files.length}
+                                                    fileLength={_.size(files)}
                                                     totalSongSize={
                                                         totalSongSize
                                                     }
