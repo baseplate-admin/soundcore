@@ -1,18 +1,18 @@
 import { createUseStyles } from 'react-jss';
 
+const HashColor: string = 'rgba(54, 215, 183, 0.75)';
+
 export const HashLoader = () => {
     const classes = useStyles();
     return (
-        <div className="hash_loader">
-            <span className="wrapper">
+        <div className="container">
+            <span className={classes.wrapper}>
                 <span className={classes.style1} />
                 <span className={classes.style2} />
             </span>
         </div>
     );
 };
-
-const HashColor: string = 'rgba(54, 215, 183, 0.75)';
 
 const useStyles = createUseStyles({
     '@keyframes animation-1': {
@@ -72,5 +72,12 @@ const useStyles = createUseStyles({
         borderRadius: '5px',
         transform: 'translate(-50%, -50%)',
         animation: '2s ease 0s infinite normal none running $animation-2',
+    },
+    wrapper: {
+        position: 'relative',
+        width: 50,
+        height: 50,
+        transform: 'rotate(165deg)',
+        display: 'inline-block',
     },
 });
