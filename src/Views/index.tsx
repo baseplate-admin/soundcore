@@ -1,3 +1,7 @@
+// PolyFill
+import 'react-app-polyfill/ie9';
+import 'react-app-polyfill/stable';
+
 // Bulma Import
 import 'bulma/bulma.sass';
 
@@ -5,7 +9,7 @@ import 'bulma/bulma.sass';
 import './index.scss';
 
 // Font Import
-import '../Extras/Font.scss';
+import '../Extras/Fonts/Font.scss';
 
 // React import
 import { Fragment, lazy, Suspense } from 'react';

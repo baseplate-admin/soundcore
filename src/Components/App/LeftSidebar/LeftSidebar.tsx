@@ -8,7 +8,7 @@ import { useSpring, animated } from 'react-spring';
 
 import { IoHomeOutline } from 'react-icons/io5';
 import { MdLibraryMusic, MdLibraryAdd } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     leftMenuHidden,
     leftMenuShown,

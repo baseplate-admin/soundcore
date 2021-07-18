@@ -8,7 +8,9 @@ export const PromiseErrorChildComponent = () => {
                 style={{
                     backgroundColor: 'transparent',
                 }}
-            ></div>
+            >
+                Error
+            </div>
         </Fragment>
     );
 };

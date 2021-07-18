@@ -3,7 +3,7 @@ import './scss/UploadSongApp.scoped.scss';
 
 import { Fragment, useState, useCallback, useRef, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
-import { useUpload } from '../../../Hooks/Upload/MusicUpload';
+import { useMusicUpload } from '../../../Hooks/Upload/MusicUpload';
 
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { ApplicationName } from '../../../Routes';
@@ -20,6 +20,7 @@ import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
 import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
+import _ from 'lodash';
 
 interface IUploadFiles {
     file: File;
@@ -30,7 +31,7 @@ export const UploadSongPage = () => {
     const imageRefArray = useRef([]);
     const uploadBoxRef = useRef<HTMLDivElement>(null);
 
-    const [MusicUploadSingle] = useUpload();
+    const [MusicUploadSingle] = useMusicUpload();
 
     const [isFileDropped, setIsFileDropped] = useState(false);
     const [uploadDone, setUploadDone] = useState(false);
@@ -103,6 +104,7 @@ export const UploadSongPage = () => {
                 }
             } catch {
                 setErroredFiles((currentFiles) => [...currentFiles, file]);
+                setUploadDone(true);
             }
         });
         setIsUploading(true);
@@ -214,7 +216,7 @@ export const UploadSongPage = () => {
                                 Layman's term : True : Show promise page,  False: Show Spinners */}
                                 {uploadDone ? (
                                     <Fragment>
-                                        {erroredFiles.length === 0 ? (
+                                        {_.size(erroredFiles) === 0 ? (
                                             <Fragment>
                                                 {/* If Errored File Length is less than 0,and Upload is not Done . Show this element */}
                                                 {/* This means this Div has Success Promise */}

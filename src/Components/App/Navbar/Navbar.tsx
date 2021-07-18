@@ -7,7 +7,7 @@ import brandLogo from '../../../Assets/Images/brand_logo.png';
 
 import { IoMenuSharp } from 'react-icons/io5';
 import { MdSearch } from 'react-icons/md';
-import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     leftMenuHidden,
     leftMenuShown,

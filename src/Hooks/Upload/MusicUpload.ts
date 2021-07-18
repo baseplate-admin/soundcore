@@ -3,7 +3,7 @@ import { APIPath, APIUrl } from '../../Routes';
 
 // import { SetJWTTokenInLocalStorage } from '../../Helpers/JWTCookie';
 
-export const useUpload = () => {
+export const useMusicUpload = () => {
     // const dispatch = useAppDispatch();
 
     const MusicUploadSingle = async (files: object) => {
