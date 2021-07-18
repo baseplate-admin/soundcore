@@ -2,8 +2,9 @@
 import { Fragment, useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
+
 // Main SCSS import
-import './scss/LoginApp.scoped.scss';
+import { createUseStyles } from 'react-jss';
 
 // Spring For animation
 import { useSpring, animated } from 'react-spring';
@@ -39,8 +40,11 @@ import {
     randomSpinnerPicker,
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
+import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 
 export const LoginPage = () => {
+    const classes = useStyles();
+
     const [Login] = useAuthLogin();
     const dispatch = useAppDispatch();
 
@@ -135,13 +139,14 @@ export const LoginPage = () => {
             Login();
         },
     });
+
     return (
         <Fragment>
             <Helmet>
                 <title> {ApplicationName} | Login </title>
             </Helmet>
             <form onSubmit={handleSubmit}>
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -156,7 +161,7 @@ export const LoginPage = () => {
                                         type="text"
                                         name="username"
                                         onChange={handleChange}
-                                        className="input "
+                                        className={`input ${classes.input}`}
                                         placeholder="Username"
                                         required
                                     />
@@ -173,7 +178,7 @@ export const LoginPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -193,7 +198,7 @@ export const LoginPage = () => {
                                         onFocus={handlePasswordInputFocus}
                                         onBlur={handlePasswordInputBlur}
                                         name="password"
-                                        className="input "
+                                        className={`input ${classes.input}`}
                                         placeholder="Password"
                                         required
                                     />
@@ -240,12 +245,13 @@ export const LoginPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="items columns is-mobile is-centered">
+                <div
+                    className={`columns is-mobile is-centered ${classes.items}`}
+                >
                     <div className="column is-narrow">
                         <div className="control">
                             <button
-                                id="button"
-                                className="button is-rounded is-dark is-centered"
+                                className={`button is-rounded is-dark is-centered ${classes.button}`}
                             >
                                 Sign in
                             </button>
@@ -258,7 +264,7 @@ export const LoginPage = () => {
                             <span className="has-text-link heading">
                                 <Link
                                     to={RoutingPath.FORGET_PASSWORD_PAGE}
-                                    className="href_tag"
+                                    className={classes.href_tag}
                                 >
                                     Forgot password?
                                 </Link>
@@ -267,12 +273,12 @@ export const LoginPage = () => {
                     </div>
                     <div className="level-right">
                         <div className="level-item is-size-7 ">
-                            <p className="new_here_tag heading">
+                            <p className={`heading ${classes.new_here_tag}`}>
                                 New here?{' '}
-                                <span className="has-text-link ">
+                                <span className="has-text-link">
                                     <Link
                                         to={RoutingPath.REGISTER_PAGE}
-                                        className="href_tag"
+                                        className={classes.href_tag}
                                     >
                                         Register an account
                                     </Link>
@@ -281,39 +287,92 @@ export const LoginPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className={`modal ${modalShown ? 'is-active' : ''}`}>
-                    <div
-                        className="modal-background"
-                        onClick={() => {
-                            if (modalShown) {
-                                setModalShown(false);
-                            }
-                        }}
-                    />
-                    <div
-                        className="modal-content"
-                        style={{
-                            overflow: 'hidden',
-                        }}
-                    >
-                        <div className="columns is-mobile is-centered">
-                            <div className="column is-half-desktop is-half-mobile is-narrow-tablet">
-                                <animated.div
-                                    className="box"
-                                    style={modalStyle}
-                                >
-                                    {/* https://www.davidhu.io/react-spinners/ */}
-                                    <div className="columns is-centered">
-                                        <div className="column is-narrow">
-                                            <SpinnerComponent type={spinner} />
+                {/* If true Show Modal.
+                Else show blank page */}
+                {modalShown ? (
+                    <div className="modal">
+                        <div
+                            className="modal-background"
+                            onClick={() => {
+                                if (modalShown) {
+                                    setModalShown(false);
+                                }
+                            }}
+                        />
+                        <div
+                            className="modal-content"
+                            style={{
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <div className="columns is-mobile is-centered">
+                                <div className="column is-half-desktop is-half-mobile is-narrow-tablet">
+                                    <animated.div
+                                        className="box"
+                                        style={modalStyle}
+                                    >
+                                        {/* https://www.davidhu.io/react-spinners/ */}
+                                        <div className="columns is-centered">
+                                            <div className="column is-narrow">
+                                                <SpinnerComponent
+                                                    type={spinner}
+                                                />
+                                            </div>
                                         </div>
-                                    </div>
-                                </animated.div>
+                                    </animated.div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                ) : (
+                    <Fragment></Fragment>
+                )}
             </form>
         </Fragment>
     );
 };
+const useStyles = createUseStyles({
+    input: {
+        backgroundColor: `${formWithInputBoxVariables.inputFieldColor} !important`,
+        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
+        color: `${formWithInputBoxVariables.mainFontColor} !important`,
+
+        '&::placeholder': {
+            color: formWithInputBoxVariables.mainFontColor,
+            opacity: 0.5,
+            fontFamily: formWithInputBoxVariables.inputPlaceholderFont,
+        },
+    },
+
+    items: {
+        paddingTop: '1em',
+    },
+
+    button: {
+        backgroundColor: `${formWithInputBoxVariables.buttonBackgroundColor} !important`,
+        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
+        color: formWithInputBoxVariables.mainFontColor,
+        transition: '0.4s',
+        fontFamily: formWithInputBoxVariables.buttonFont,
+
+        '&:hover': {
+            backgroundColor: `${formWithInputBoxVariables.buttonHoverBackgroundColor} !important`,
+            color: formWithInputBoxVariables.buttonHoverFontColor,
+            fontFamily: formWithInputBoxVariables.buttonFont,
+        },
+    },
+
+    href_tag: {
+        textDecoration: 'none',
+        fontFamily: formWithInputBoxVariables.tagFont,
+
+        '&:hover': {
+            color: formWithInputBoxVariables.tagHrefHoverColor,
+        },
+    },
+
+    new_here_tag: {
+        fontFamily: formWithInputBoxVariables.tagFont,
+        color: formWithInputBoxVariables.tagFontColor,
+    },
+});

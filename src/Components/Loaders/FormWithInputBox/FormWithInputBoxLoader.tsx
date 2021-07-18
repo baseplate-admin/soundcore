@@ -1,15 +1,18 @@
 import { Fragment } from 'react';
-import './scss/FormWithInputBoxLoader.scoped.scss';
+import { createUseStyles } from 'react-jss';
+import { formWithInputBoxVariables } from '../../App/FormWithInputBox/variables';
 
 export const FormWithInputBoxLoader = () => {
+    const classes = useStyles();
+
     return (
         <Fragment>
-            <section className="hero login-hero is-fullheight">
+            <section className={`hero is-fullheight ${classes['login-hero']}`}>
                 <div className="hero-body">
                     <div className="container">
                         <div className="columns is-centered is-desktop">
                             <div className="column is-half-desktop is-full-mobile is-narrow-tablet">
-                                <div className="icon-box box">
+                                <div className={`box ${classes['icon-box']}`}>
                                     <div className="columns is-mobile is-centered">
                                         <div className="column is-narrow">
                                             {/* <img
@@ -39,3 +42,9 @@ export const FormWithInputBoxLoader = () => {
         </Fragment>
     );
 };
+const useStyles = createUseStyles({
+    'login-hero': {
+        backgroundColor: formWithInputBoxVariables.pageBackgroundColor,
+    },
+    'icon-box': { backgroundColor: 'transparent' },
+});

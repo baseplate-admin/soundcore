@@ -1,6 +1,5 @@
 import './scss/HomePageLoader.scoped.scss';
-
-import '../../App/LeftSidebar/scss/LeftSidebar.scss';
+// import '../../App/LeftSidebar/scss/LeftSidebar.scss';
 
 export const HomePageLoaderApp = () => {
     return (
@@ -152,15 +151,13 @@ export const HomePageLoaderApp = () => {
                                                         <div
                                                             className="dropdown-item"
                                                             style={{
-                                                                color:
-                                                                    'rgb(224, 224, 236)',
+                                                                color: 'rgb(224, 224, 236)',
                                                             }}
                                                         />
                                                         <div
                                                             className="dropdown-item"
                                                             style={{
-                                                                color:
-                                                                    'rgb(224, 224, 236)',
+                                                                color: 'rgb(224, 224, 236)',
                                                             }}
                                                         />
                                                     </div>

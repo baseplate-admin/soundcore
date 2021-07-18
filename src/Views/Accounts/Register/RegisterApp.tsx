@@ -1,10 +1,8 @@
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
+
 // Formik Import
 import { useFormik } from 'formik';
-
-// Scss Import
-import './scss/RegisterApp.scoped.scss';
 
 // Icons import
 import { IoMailOutline, IoPersonCircleOutline } from 'react-icons/io5';
@@ -23,8 +21,11 @@ import 'tippy.js/dist/tippy.css'; // optional
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/animations/shift-away.css';
 import { ApplicationName } from '../../../Routes';
+import { createUseStyles } from 'react-jss';
+import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 
 export const RegisterPage = () => {
+    const classes = useStyles();
     const registerSchema = yup.object().shape({
         firstName: yup
             .string()
@@ -74,7 +75,7 @@ export const RegisterPage = () => {
                 <title> {ApplicationName} | Register </title>
             </Helmet>
             <form onSubmit={handleSubmit}>
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -87,12 +88,14 @@ export const RegisterPage = () => {
                                 <p className="control is-expanded has-icons-left">
                                     <input
                                         type="text"
-                                        className="input"
+                                        className={`input ${classes.input}`}
                                         name="firstName"
                                         placeholder="First Name"
                                         onInput={handleChange}
                                     />
-                                    <span className="icon is-small is-left">
+                                    <span
+                                        className={`is-small is-left icon ${classes.icon}`}
+                                    >
                                         <CharacterAIcon
                                             style={{
                                                 transform: 'scale(.8)',
@@ -105,7 +108,7 @@ export const RegisterPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -118,12 +121,14 @@ export const RegisterPage = () => {
                                 <p className="control is-expanded has-icons-left">
                                     <input
                                         type="text"
-                                        className="input"
+                                        className={`input ${classes.input}`}
                                         name="lastName"
                                         placeholder="Last Name"
                                         onInput={handleChange}
                                     />{' '}
-                                    <span className="icon is-small is-left">
+                                    <span
+                                        className={`is-small is-left icon ${classes.icon}`}
+                                    >
                                         <CharacterZIcon
                                             style={{
                                                 transform: 'scale(.8)',
@@ -136,7 +141,7 @@ export const RegisterPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -149,12 +154,14 @@ export const RegisterPage = () => {
                                 <p className="control is-expanded has-icons-left">
                                     <input
                                         type="text"
-                                        className="input"
+                                        className={`input ${classes.input}`}
                                         name="userName"
                                         placeholder="Username"
                                         onInput={handleChange}
                                     />
-                                    <span className="icon is-small is-left">
+                                    <span
+                                        className={`icon is-small is-left ${classes.icon}`}
+                                    >
                                         <IoPersonCircleOutline
                                             color="white"
                                             style={{
@@ -168,7 +175,7 @@ export const RegisterPage = () => {
                     </div>
                 </div>
 
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -181,12 +188,14 @@ export const RegisterPage = () => {
                                 <p className="control is-expanded has-icons-left">
                                     <input
                                         type="email"
-                                        className="input"
+                                        className={`input ${classes.input}`}
                                         name="email"
                                         placeholder="Email"
                                         onInput={handleChange}
                                     />
-                                    <span className="icon is-small is-left">
+                                    <span
+                                        className={`icon is-small is-left ${classes.icon}`}
+                                    >
                                         <IoMailOutline
                                             color="white"
                                             style={{
@@ -200,7 +209,7 @@ export const RegisterPage = () => {
                     </div>
                 </div>
 
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -213,12 +222,14 @@ export const RegisterPage = () => {
                                 <p className="control is-expanded has-icons-left ">
                                     <input
                                         type="password"
-                                        className="input"
+                                        className={`input ${classes.input}`}
                                         name="password"
                                         placeholder="Password"
                                         onInput={handleChange}
                                     />
-                                    <span className="icon is-small is-left">
+                                    <span
+                                        className={`icon is-small is-left ${classes.icon}`}
+                                    >
                                         <MdLockOpen
                                             style={{
                                                 transform: 'scale(1.5)',
@@ -231,7 +242,7 @@ export const RegisterPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="items field is-horizontal">
+                <div className={`field is-horizontal ${classes.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
@@ -244,12 +255,14 @@ export const RegisterPage = () => {
                                 <p className="control is-expanded has-icons-left">
                                     <input
                                         type="password"
-                                        className="input"
+                                        className={`input ${classes.input}`}
                                         name="confirmPassword"
                                         placeholder="Confirm Password"
                                         onInput={handleChange}
                                     />
-                                    <span className="icon is-small is-left">
+                                    <span
+                                        className={`icon is-small is-left ${classes.icon}`}
+                                    >
                                         <MdLockOutline
                                             style={{
                                                 transform: 'scale(1.5)',
@@ -263,11 +276,12 @@ export const RegisterPage = () => {
                     </div>
                 </div>
 
-                <div className="items columns is-mobile is-centered">
+                <div
+                    className={`columns is-mobile is-centered ${classes.items}`}
+                >
                     <div className="column is-narrow">
                         <button
-                            id="button"
-                            className="button is-rounded is-centered"
+                            className={`button is-rounded is-centered ${classes.button}`}
                         >
                             Register
                         </button>
@@ -277,3 +291,39 @@ export const RegisterPage = () => {
         </Fragment>
     );
 };
+const useStyles = createUseStyles({
+    icon: {
+        pointerEvents: 'initial !important',
+    },
+
+    input: {
+        backgroundColor: `${formWithInputBoxVariables.inputFieldColor} !important`,
+        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
+        color: `${formWithInputBoxVariables.mainFontColor} !important`,
+
+        '&::placeholder': {
+            color: formWithInputBoxVariables.mainFontColor,
+            opacity: 0.5,
+            fontFamily: formWithInputBoxVariables.inputPlaceholderFont,
+        },
+    },
+
+    items: {
+        paddingTop: '1em',
+    },
+
+    button: {
+        backgroundColor: `${formWithInputBoxVariables.buttonBackgroundColor} !important`,
+        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
+        color: formWithInputBoxVariables.mainFontColor,
+        transition: '0.4s',
+        fontFamily: formWithInputBoxVariables.buttonFont,
+
+        '&:hover': {
+            backgroundColor:
+                formWithInputBoxVariables.buttonHoverBackgroundColor,
+            color: formWithInputBoxVariables.buttonHoverFontColor,
+            fontFamily: formWithInputBoxVariables.buttonFont,
+        },
+    },
+});

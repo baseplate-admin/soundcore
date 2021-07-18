@@ -1,6 +1,3 @@
-import './scss/LeftSidebar.scss';
-import './scss/LeftSidebar.scoped.icons.scss';
-
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
@@ -16,8 +13,10 @@ import {
 } from '../../../Store/Slices/NavbarSlice';
 
 import { RoutingPath } from '../../../Routes';
+import { createUseStyles } from 'react-jss';
 
 export const LeftSidebar = () => {
+    const classes = useStyles();
     const leftMenuState = useAppSelector(selectLeftMenuState);
 
     const dispatch = useAppDispatch();
@@ -45,42 +44,62 @@ export const LeftSidebar = () => {
     });
 
     return (
-        <animated.aside className="menu left-menu" style={leftMenuItem}>
-            <div className="icons">
+        <animated.aside
+            className={`menu ${classes['left-menu']}`}
+            style={leftMenuItem}
+        >
+            <div className={classes.icons}>
                 <Link to={RoutingPath.HOME_PAGE}>
-                    <div className="box icon_box">
+                    <div className={`box ${classes.icon_box}`}>
                         {/* Add is_icon_active */}
-                        <div className="columns is-mobile icon_box_column">
+                        <div
+                            className={`columns is-mobile ${classes.icon_box_column}`}
+                        >
                             <div className="column is-2 is-offset-1">
-                                <IoHomeOutline className="home__icon" />
+                                <IoHomeOutline
+                                    color="white"
+                                    style={{ transform: 'scale(1.4)' }}
+                                />
                             </div>
-                            <div className="column icon_text">Home</div>
+                            <div className={`column ${classes.icon_text}`}>
+                                Home
+                            </div>
                         </div>
                     </div>
                 </Link>
                 <Link to={RoutingPath.LIBRARY_PAGE}>
-                    <div className="box icon_box">
+                    <div className={`box ${classes.icon_box}`}>
                         {/* Add is_icon_active */}
-                        <div className="columns is-mobile icon_box_column">
+                        <div
+                            className={`columns is-mobile ${classes.icon_box_column}`}
+                        >
                             <div className="column is-2 is-offset-1">
-                                <MdLibraryMusic className="library__icon" />
+                                <MdLibraryMusic
+                                    color="white"
+                                    style={{ transform: 'scale(1.4)' }}
+                                />
                             </div>
-                            <div className="column icon_text">Library</div>
+                            <div className={`column ${classes.icon_text}`}>
+                                Library
+                            </div>
                         </div>
                     </div>
                 </Link>
             </div>
-            <div className="playlist-wrapper">
-                <div className="playlist-add">
-                    <div className="columns is-centered">
-                        <div className="column">
-                            <Link
-                                className="add-icon-wrapper"
-                                to={RoutingPath.CREATE_LIBRARY_PAGE}
-                            >
-                                <MdLibraryAdd className="add__icon" />
-                            </Link>
-                        </div>
+            <div className={classes['playlist-wrapper']}>
+                <div className="columns is-centered">
+                    <div className="column">
+                        <Link
+                            className={classes['add-icon-wrapper']}
+                            to={RoutingPath.CREATE_LIBRARY_PAGE}
+                        >
+                            <MdLibraryAdd
+                                color="white"
+                                style={{
+                                    transform: 'scale(1.3) translateX(3px)',
+                                }}
+                            />
+                        </Link>
                     </div>
                 </div>
                 {/* {% get_total_playlist %} */}
@@ -88,3 +107,46 @@ export const LeftSidebar = () => {
         </animated.aside>
     );
 };
+const useStyles = createUseStyles({
+    'left-menu': {
+        backgroundColor: '#161616 !important',
+        height: '100vh',
+    },
+    icons: {
+        borderBottom: '1px solid #313131',
+        paddingBottom: '0.5em',
+    },
+    icon_box: {
+        width: '240px',
+        backgroundColor: 'transparent !important',
+        WebkitUserSelect: 'none',
+        MozUserSelect: 'none',
+        msUserSelect: 'none',
+        userSelect: 'none',
+        height: '10px',
+        borderRadius: '0',
+
+        '&:hover': {
+            backgroundColor: '#404040 !important',
+        },
+    },
+    icon_box_column: {
+        transform: 'translateY(-12px)',
+    },
+
+    icon_text: {
+        color: '#e0e0ec',
+    },
+    is_icon_active: {
+        backgroundColor: '#242424',
+    },
+    'playlist-wrapper': {
+        paddingTop: '0.5em',
+    },
+    'add-icon-wrapper': {
+        display: 'flex',
+        justifyContent: 'center',
+        padding: '0.5em',
+        transform: 'translateX(-25px)',
+    },
+});
