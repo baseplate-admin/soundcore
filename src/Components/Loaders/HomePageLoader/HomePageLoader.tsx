@@ -1,8 +1,5 @@
-import '../../App/Navbar/scss/Navbar.scss';
-
 import './scss/HomePageLoader.scoped.scss';
 
-import '../../App/Navbar/scss/Navbar.responsive.scss';
 import '../../App/LeftSidebar/scss/LeftSidebar.scss';
 
 export const HomePageLoaderApp = () => {

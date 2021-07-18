@@ -46,9 +46,9 @@
         "@vue/component-compiler-utils": "^3.2.2"
     },
     "scripts": {
-        "start": "craco start",
-        "build": "craco build",
-        "test": "craco test",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
         "eject": "craco eject",
         "serve": "serve -s ./build"
     },
