@@ -1,5 +1,4 @@
 import { createUseStyles } from 'react-jss';
-import './scss/HashLoader.scoped.scss';
 
 export const HashLoader = () => {
     const classes = useStyles();
