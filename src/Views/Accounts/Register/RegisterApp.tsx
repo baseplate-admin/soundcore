@@ -11,8 +11,8 @@ import { IoMailOutline, IoPersonCircleOutline } from 'react-icons/io5';
 import { MdLockOpen, MdLockOutline } from 'react-icons/md';
 
 // SVG React Component
-import { CharacterAIcon } from './icons/CharacterA';
-import { CharacterZIcon } from './icons/CharacterZ';
+import { CharacterAIcon } from './Icons/CharacterA';
+import { CharacterZIcon } from './Icons/CharacterZ';
 
 // Yup for form validation
 import * as yup from 'yup';
