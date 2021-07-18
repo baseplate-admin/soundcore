@@ -286,7 +286,7 @@ const useStyles = createUseStyles({
         marginTop: '0 !important',
 
         '&:not(:first-of-type :last-of-type)': {
-            paddingBottom: '0.2em',
+            paddingBottom: '0.2em !important',
         },
 
         '&:first-of-type': {

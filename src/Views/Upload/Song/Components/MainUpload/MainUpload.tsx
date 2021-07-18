@@ -185,5 +185,8 @@ const useStyles = createUseStyles({
             width: '0',
             height: '0',
         },
+        '@media screen and (max-width: 767px)': {
+            maxHeight: '30vh !important',
+        },
     },
 });
