@@ -320,9 +320,8 @@ const useStyles = createUseStyles({
         fontFamily: formWithInputBoxVariables.buttonFont,
 
         '&:hover': {
-            backgroundColor:
-                formWithInputBoxVariables.buttonHoverBackgroundColor,
-            color: formWithInputBoxVariables.buttonHoverFontColor,
+            backgroundColor: `${formWithInputBoxVariables.buttonHoverBackgroundColor} !important`,
+            color: `${formWithInputBoxVariables.buttonHoverFontColor} !important`,
             fontFamily: formWithInputBoxVariables.buttonFont,
         },
     },

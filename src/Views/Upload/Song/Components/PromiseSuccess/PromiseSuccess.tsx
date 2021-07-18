@@ -101,22 +101,14 @@ export const PromiseSuccessChildComponent = (
                             </tbody>
                         </table>
                     </div>
-                    <div
-                        className="box"
-                        style={{
-                            boxShadow: 'none',
-                            backgroundColor: 'transparent',
-                        }}
-                    >
-                        <div className="columns is-mobile is-centered">
-                            <div className="column is-narrow">
-                                <Link
-                                    className={`${classes['href_tag']}`}
-                                    to={RoutingPath.HOME_PAGE}
-                                >
-                                    Return to home?
-                                </Link>
-                            </div>
+                    <div className="columns is-mobile is-centered">
+                        <div className="column is-narrow">
+                            <Link
+                                className={`${classes['href_tag']}`}
+                                to={RoutingPath.HOME_PAGE}
+                            >
+                                Return to home?
+                            </Link>
                         </div>
                     </div>
                 </div>
