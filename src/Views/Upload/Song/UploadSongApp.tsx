@@ -1,10 +1,8 @@
-import './scss/UploadSongApp.scss';
-import './scss/UploadSongApp.scoped.scss';
-
 import { Fragment, useState, useCallback, useRef, useEffect } from 'react';
 import { useSpring, animated } from 'react-spring';
 import { useMusicUpload } from '../../../Hooks/Upload/MusicUpload';
 
+import { createUseStyles } from 'react-jss';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { ApplicationName } from '../../../Routes';
 
@@ -20,7 +18,9 @@ import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
 import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
+
 import _ from 'lodash';
+import { UploadSongVariables } from './variables';
 
 interface IUploadFiles {
     file: File;
@@ -28,6 +28,8 @@ interface IUploadFiles {
 }
 
 export const UploadSongPage = () => {
+    const classes = useStyles();
+
     const imageRefArray = useRef([]);
     const uploadBoxRef = useRef<HTMLDivElement>(null);
 
@@ -133,10 +135,10 @@ export const UploadSongPage = () => {
         return (
             <>
                 <div
-                    className="box item-box"
+                    className={`box ${classes['item-box']}`}
                     style={{ backgroundColor: 'transparent' }}
                 >
-                    <article className="media song-item">
+                    <article className={`media ${classes['song-item']}`}>
                         <figure className="media-left">
                             <figure
                                 className="image is-48x48"
@@ -156,10 +158,14 @@ export const UploadSongPage = () => {
                         <div className="media-content">
                             <div className="content">
                                 <p className=" has-text-centered">
-                                    <span className="title is-size-6 song_name file_uploaded_text">
+                                    <span
+                                        className={`title is-size-6 ${classes.file_uploaded_text} ${classes.song_name}`}
+                                    >
                                         {file.file.name}
                                     </span>
-                                    <span className="heading file_uploaded_text song_item_size">
+                                    <span
+                                        className={`heading  ${classes.song_item_size} ${classes.file_uploaded_text}`}
+                                    >
                                         Size : {prettyBytes(file.file.size)}
                                     </span>
                                 </p>
@@ -256,3 +262,48 @@ export const UploadSongPage = () => {
         </Fragment>
     );
 };
+
+const useStyles = createUseStyles({
+    song_name: {
+        width: 200,
+        transform: 'translateY(8px)',
+        display: 'inline-block',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        fontFamily: "'Roboto' !important",
+
+        '@media screen and (max-width: 767px)': {
+            width: '140px !important',
+        },
+    },
+
+    'item-box': {
+        backgroundColor: 'transparent',
+        marginBottom: '0 !important',
+        marginTop: '0 !important',
+
+        '&:not(:first-of-type :last-of-type)': {
+            paddingBottom: '0.2em',
+        },
+
+        '&:first-of-type': {
+            marginTop: ' 0.5em !important',
+        },
+        '&:last-of-type': {
+            marginBottom: '0.5em !important',
+        },
+    },
+    'song-item': {
+        height: 65,
+        backgroundColor: UploadSongVariables.uploadHeroColor,
+        border: `1px solid ${UploadSongVariables.uploadHeroBorderColor} !important`,
+        borderRadius: 3,
+    },
+    file_uploaded_text: {
+        color: UploadSongVariables.mainFontColor,
+    },
+    song_item_size: {
+        transform: 'translateY(-10px)',
+    },
+});

@@ -1,6 +1,7 @@
-import './scss/Front.scoped.scss';
 import { Fragment } from 'react';
+import { createUseStyles } from 'react-jss';
 import { ImFileMusic } from 'react-icons/im';
+import { UploadSongVariables } from '../../variables';
 
 interface IFrontPageChildComponentProps {
     getRootProps: Function;
@@ -10,6 +11,7 @@ interface IFrontPageChildComponentProps {
 export const FrontPageChildComponent = (
     props: IFrontPageChildComponentProps
 ) => {
+    const classes = useStyle();
     return (
         <Fragment>
             <section className="hero">
@@ -17,7 +19,7 @@ export const FrontPageChildComponent = (
                     <div className="container">
                         <div className="is-justify-content-center file is-large is-boxed has-name">
                             <label
-                                className="file-label"
+                                className={`file-label ${classes['file-label']}`}
                                 {...props.getRootProps()}
                             >
                                 <input
@@ -25,7 +27,9 @@ export const FrontPageChildComponent = (
                                     name="file_field"
                                     {...props.getInputProps()}
                                 />
-                                <span className="file-cta">
+                                <span
+                                    className={`file-cta ${classes['file-cta']}`}
+                                >
                                     <span className="file-icon">
                                         <i>
                                             <ImFileMusic
@@ -36,7 +40,9 @@ export const FrontPageChildComponent = (
                                             />
                                         </i>
                                     </span>
-                                    <span className="file-label is-size-5">
+                                    <span
+                                        className={`is-size-5 file-label ${classes['file-label']}`}
+                                    >
                                         <br />
 
                                         <p>Upload </p>
@@ -50,3 +56,22 @@ export const FrontPageChildComponent = (
         </Fragment>
     );
 };
+
+const useStyle = createUseStyles({
+    file: {
+        transform: 'translateY(-0.8em)',
+    },
+    'file-label': { color: `${UploadSongVariables.mainFontColor} !important` },
+    'file-cta': {
+        backgroundColor: UploadSongVariables.uploadHeroColor,
+        color: UploadSongVariables.mainFontColor,
+        border: `2px dotted ${UploadSongVariables.uploadHeroBorderColor} !important`,
+        transition: '0.3s',
+
+        '&:hover': {
+            backgroundColor: `${UploadSongVariables.heroHoverColor} !important`,
+            borderColor: 'transparent',
+            color: '#e2dfda',
+        },
+    },
+});

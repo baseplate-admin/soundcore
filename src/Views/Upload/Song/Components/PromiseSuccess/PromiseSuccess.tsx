@@ -1,10 +1,10 @@
-import './scss/SuccessPromise.scoped.scss';
-
 import prettyBytes from 'pretty-bytes';
 import { Fragment } from 'react';
 import { IoCloudDoneOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import { RoutingPath } from '../../../../../Routes';
+import { createUseStyles } from 'react-jss';
+import { UploadSongVariables } from '../../variables';
 
 interface ISuccessPromiseChildComponentProps {
     fileLength: number;
@@ -14,6 +14,7 @@ interface ISuccessPromiseChildComponentProps {
 export const PromiseSuccessChildComponent = (
     props: ISuccessPromiseChildComponentProps
 ) => {
+    const classes = useStyle();
     return (
         <Fragment>
             <div className="columns is-mobile is-centered">
@@ -52,34 +53,46 @@ export const PromiseSuccessChildComponent = (
                             <tbody>
                                 <tr>
                                     <td>
-                                        <span className="heading file_uploaded_text has-text-centered">
+                                        <span
+                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                        >
                                             Total Songs &nbsp;
                                         </span>
                                     </td>
                                     <td>
-                                        <span className="heading file_uploaded_text has-text-centered">
+                                        <span
+                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                        >
                                             :
                                         </span>
                                     </td>
                                     <td>
-                                        <span className="heading file_uploaded_text has-text-centered">
+                                        <span
+                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                        >
                                             {props.fileLength}
                                         </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span className="heading file_uploaded_text">
+                                        <span
+                                            className={`heading ${classes.file_uploaded_text}`}
+                                        >
                                             Total Payload &nbsp;
                                         </span>
                                     </td>
                                     <td>
-                                        <span className="file_uploaded_text heading">
+                                        <span
+                                            className={`heading ${classes.file_uploaded_text}`}
+                                        >
                                             :
                                         </span>
                                     </td>
                                     <td>
-                                        <span className="heading file_uploaded_text has-text-centered">
+                                        <span
+                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                        >
                                             &nbsp; &nbsp;
                                             {prettyBytes(props.totalSongSize)}
                                         </span>
@@ -98,7 +111,7 @@ export const PromiseSuccessChildComponent = (
                         <div className="columns is-mobile is-centered">
                             <div className="column is-narrow">
                                 <Link
-                                    className="href_tag"
+                                    className={`${classes['href_tag']}`}
                                     to={RoutingPath.HOME_PAGE}
                                 >
                                     Return to home?
@@ -111,3 +124,16 @@ export const PromiseSuccessChildComponent = (
         </Fragment>
     );
 };
+const useStyle = createUseStyles({
+    href_tag: {
+        textDecoration: 'none',
+
+        '&:hover': {
+            color: UploadSongVariables.tagHrefHoverColor,
+        },
+    },
+
+    file_uploaded_text: {
+        color: UploadSongVariables.mainFontColor,
+    },
+});

@@ -10,8 +10,8 @@ export const useMusicUpload = () => {
         const base = APIUrl;
         const endPoint = APIPath.UPLOAD_MUSIC_PATH;
 
-        const url = `${base}${endPoint}`;
-        // const url = `https://jsonplaceholder.typicode.com/posts`;
+        // const url = `${base}${endPoint}`;
+        const url = `https://jsonplaceholder.typicode.com/posts`;
 
         const data = {
             files: files,
