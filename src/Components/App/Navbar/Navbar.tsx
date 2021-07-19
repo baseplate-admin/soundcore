@@ -33,7 +33,7 @@ export const Navbar = () => {
         <>
             <div className={`columns is-mobile is-centered ${classes.navbar}`}>
                 <div
-                    className="column is-2 is-one-fifth-mobile
+                    className="column is-narrow
 "
                 >
                     <div className="columns is-mobile is-centered">
