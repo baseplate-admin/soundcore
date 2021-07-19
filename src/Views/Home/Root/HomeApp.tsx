@@ -101,15 +101,13 @@ export const HomePage = () => {
                                                         <div
                                                             className="dropdown-item"
                                                             style={{
-                                                                color:
-                                                                    '#e0e0ec',
+                                                                color: '#e0e0ec',
                                                             }}
                                                         />
                                                         <div
                                                             className="dropdown-item"
                                                             style={{
-                                                                color:
-                                                                    '#e0e0ec',
+                                                                color: '#e0e0ec',
                                                             }}
                                                         />
 

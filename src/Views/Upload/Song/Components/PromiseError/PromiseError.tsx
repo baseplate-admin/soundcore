@@ -1,16 +1,29 @@
 import { Fragment } from 'react';
+import { IoCloudOfflineOutline } from 'react-icons/io5';
 
-export const PromiseErrorChildComponent = () => {
+interface IPromiseErrorChildComponent {
+    errorFiles: Array<Object>;
+}
+
+export const PromiseErrorChildComponent = (
+    props: IPromiseErrorChildComponent
+) => {
     return (
         <Fragment>
-            <div
-                className="box"
-                style={{
-                    backgroundColor: 'transparent',
-                }}
-            >
-                Error
+            <div className="columns is-mobile is-centered">
+                <div className="column is-narrow">
+                    <div
+                        className="box"
+                        style={{ backgroundColor: 'transparent' }}
+                    >
+                        <IoCloudOfflineOutline
+                            color="white"
+                            style={{ transform: 'scale(4)' }}
+                        />
+                    </div>
+                </div>
             </div>
+            <div>{props.errorFiles}</div>
         </Fragment>
     );
 };

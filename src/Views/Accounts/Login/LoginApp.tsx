@@ -251,6 +251,8 @@ export const LoginPage = () => {
                     <div className="column is-narrow">
                         <div className="control">
                             <button
+                                id="button"
+                                type="submit"
                                 className={`button is-rounded is-dark is-centered ${classes.button}`}
                             >
                                 Sign in
@@ -290,7 +292,7 @@ export const LoginPage = () => {
                 {/* If true Show Modal.
                 Else show blank page */}
                 {modalShown ? (
-                    <div className="modal">
+                    <div className="modal is-active">
                         <div
                             className="modal-background"
                             onClick={() => {

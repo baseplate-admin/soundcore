@@ -15,7 +15,7 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';
 
 import prettyBytes from 'pretty-bytes';
-import { getAlbumArtFromBlob } from '../../../Helpers/ExtractAlbumArt';
+import { getAlbumArtFromBlob } from '../../../Functions/Helpers/ExtractAlbumArt';
 
 // Child Components
 import { PromiseSuccessChildComponent } from './Components/PromiseSuccess/PromiseSuccess';
@@ -192,7 +192,57 @@ export const UploadSongPage = () => {
     });
 
     const mappedErrorFiles = erroredFiles.map((file) => {
-        return <></>;
+        return (
+            <div
+                className={`box ${classes['item-box']}`}
+                style={{ backgroundColor: 'transparent' }}
+            >
+                <article className={`media ${classes['song-item']}`}>
+                    <figure className="media-left">
+                        <figure
+                            className="image is-48x48"
+                            style={{
+                                transform: 'translateY(10px) translateX(15px)',
+                            }}
+                        >
+                            <BsFileEarmarkArrowUp
+                                color="white"
+                                className={classes.upload_icon}
+                                style={{ transform: 'scale(2)' }}
+                            />
+                        </figure>
+                    </figure>
+                    <div className="media-content">
+                        <div className="content">
+                            <p className=" has-text-centered">
+                                <span
+                                    className={`title is-size-6 ${classes.file_uploaded_text} ${classes.song_name}`}
+                                >
+                                    {file.file.name}
+                                </span>
+                                <span
+                                    className={`heading  ${classes.song_item_size} ${classes.file_uploaded_text}`}
+                                >
+                                    Size : {prettyBytes(file.file.size)}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                    <div className="media-right">
+                        <IoCloseCircleOutline
+                            color="white"
+                            onClick={() => {
+                                onDelete(file.file);
+                            }}
+                            style={{
+                                transform:
+                                    'translateY(20px) translateX(-10px) scale(1.7)',
+                            }}
+                        />
+                    </div>
+                </article>
+            </div>
+        );
     });
 
     return (
@@ -239,7 +289,11 @@ export const UploadSongPage = () => {
                                             <Fragment>
                                                 {/* If Errored File Length is greater than 0, and Upload is Not Done . Show this element.  */}
                                                 {/* This means this Div has errored files */}
-                                                <PromiseErrorChildComponent />
+                                                <PromiseErrorChildComponent
+                                                    errorFiles={
+                                                        mappedErrorFiles
+                                                    }
+                                                />
                                             </Fragment>
                                         )}
                                     </Fragment>
@@ -307,5 +361,8 @@ const useStyles = createUseStyles({
     },
     song_item_size: {
         transform: 'translateY(-10px)',
+    },
+    upload_icon: {
+        transform: 'translate(3px)',
     },
 });
