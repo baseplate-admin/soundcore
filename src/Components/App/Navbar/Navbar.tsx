@@ -92,9 +92,8 @@ export const Navbar = () => {
                         </table>
                     </div>
                 </div>
-                <div className="column is-narrow"></div>
-                <div className="column is-1"></div>
-                <div className="column">
+                <div className="column "></div>
+                <div className="column is-half">
                     <div className={classes.items_translated_nav}>
                         <div className="field">
                             <div
@@ -118,7 +117,7 @@ export const Navbar = () => {
                         </div>
                     </div>
                 </div>
-                <div className="column is-1"></div>
+                <div className="column"></div>
 
                 <div className="column is-narrow">
                     <div className={` ${classes.items_translated_nav}`}>

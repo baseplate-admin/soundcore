@@ -10,8 +10,18 @@ import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import { ApplicationName } from '../../../Routes';
+import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
+import { useEffect } from 'react';
 
 export const HomePage = () => {
+    const { data, error, isLoading } = useGetSongsQuery();
+
+    useEffect(() => {
+        if (!isLoading) {
+            console.log(data);
+        }
+    }, [isLoading]);
+
     return (
         <Fragment>
             <Helmet>

@@ -1,5 +1,10 @@
 import './scss/footer.scss';
 import './scss/footer.responsive.scss';
+import {
+    IoPauseCircleOutline,
+    IoPlayCircleOutline,
+    IoPlaySkipForwardCircleOutline,
+} from 'react-icons/io5';
 
 export const Footer = () => {
     return (
@@ -41,52 +46,28 @@ export const Footer = () => {
                             className="column is-1 has-text-centered previous_song_wrapper footer_control_column_items"
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
-                            {/* <ion-icon className="previous_icon" name="play-skip-back-circle-outline"></ion-icon>
-                        <script async>
-                            anime({
-                                targets: '.previous_icon',
-                                scale: 2,
-                                color: "#FFFFFF",
-                                duration: 1,
-                                translateY: 2,
-                                easing: 'linear',
-                            })
-                        </script> */}
+                            <IoPlayCircleOutline
+                                color="white"
+                                style={{ transform: 'scale(2)' }}
+                            />
                         </div>
                         <div
                             className="column is-1 is-offset-1 has-text-centered play_pause_wrapper footer_control_column_items"
                             // onclick="howlerJsPlayPause()"
                         >
-                            {/* <ion-icon className="play_icon" id="play_icon"
-                                  name="play-circle-outline"></ion-icon>
-                        <ion-icon name="pause-circle-outline" id="pause_icon"
-                                  className="pause_icon"></ion-icon>
-                        <script async>
-                            anime({
-                                targets: '.play_icon, .pause_icon',
-                                scale: 2,
-                                color: "#FFFFFF",
-                                duration: 1,
-                                translateY: 2,
-                                easing: 'linear',
-                            })
-                        </script> */}
+                            <IoPauseCircleOutline
+                                color="white"
+                                style={{ transform: 'scale(2)' }}
+                            />
                         </div>
                         <div
                             className="column is-1 is-offset-1 next_song_wrapper has-text-centered footer_control_column_items"
                             //  onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')"
                         >
-                            {/* <ion-icon className="skip_icon" name="play-skip-forward-circle-outline"></ion-icon>
-                        <script async>
-                            anime({
-                                targets: '.skip_icon',
-                                scale: 2,
-                                color: "#FFFFFF",
-                                duration: 1,
-                                translateY: 2,
-                                easing: 'linear',
-                            })
-                        </script> */}
+                            <IoPlaySkipForwardCircleOutline
+                                color="white"
+                                style={{ transform: 'scale(2)' }}
+                            />
                         </div>
                     </div>
                     <div className="columns is-mobile">

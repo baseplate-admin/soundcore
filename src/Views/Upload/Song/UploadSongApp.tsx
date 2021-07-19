@@ -150,15 +150,12 @@ export const UploadSongPage = () => {
                                         'translateY(10px) translateX(15px)',
                                 }}
                             >
-                                <ProgressiveImage
-                                    ref={addRef}
+                                <img
+                                    className="is-rounded"
                                     src=""
-                                    placeholder="https://via.placeholder.com/20"
-                                >
-                                    {(src: string) => (
-                                        <img src={src} alt="an_image"></img>
-                                    )}
-                                </ProgressiveImage>
+                                    alt="Icon"
+                                    ref={addRef}
+                                />
                             </figure>
                         </figure>
                         <div className="media-content">
