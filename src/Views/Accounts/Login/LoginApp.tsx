@@ -314,11 +314,20 @@ export const LoginPage = () => {
                                         style={modalStyle}
                                     >
                                         {/* https://www.davidhu.io/react-spinners/ */}
-                                        <div className="columns is-centered">
+                                        <div className="columns is-mobile is-centered">
                                             <div className="column is-narrow">
-                                                <SpinnerComponent
-                                                    type={spinner}
-                                                />
+                                                <div
+                                                    className="box"
+                                                    style={{
+                                                        backgroundColor:
+                                                            'transparent',
+                                                        boxShadow: 'none',
+                                                    }}
+                                                >
+                                                    <SpinnerComponent
+                                                        type={spinner}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </animated.div>

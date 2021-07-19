@@ -25,6 +25,7 @@
         "yup": "^0.32.9"
     },
     "devDependencies": {
+        "@fullhuman/postcss-purgecss": "^4.0.3",
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^12.0.0",
         "@testing-library/user-event": "^13.2.0",
@@ -46,6 +47,7 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "craco eject",
+        "postbuild": "purgecss --css build/static/css/*.css --content build/index.html build/static/js/*.js --output build/static/css",
         "serve": "serve -s ./build"
     },
     "eslintConfig": {
