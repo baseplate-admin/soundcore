@@ -1,35 +1,21 @@
 import axios from 'axios';
 import { APIPath, APIUrl, JWTTokenExpireTime } from '../../Routes';
 
+// Access -> Longer Token
+// Refresh -> Shorter Token.
+// Refresh -> Expires
+// Access -> Stays
+
 export const SetJWTTokenInLocalStorage = async (
     jwtToken: string,
     refreshToken: string
 ) => {
     const now = new Date();
 
-    const firstRefreshToken = localStorage.getItem('refreshToken');
-    const secondRefreshToken = localStorage.getItem('secondRefreshToken');
-
-    console.log(firstRefreshToken);
-    const base = APIUrl;
-    const endPoint = APIPath.TOKEN_JAIL_ENDPOINT;
-
-    const url = `${base}${endPoint}`;
-
-    const config = {
-        headers: {
-            'Content-Type': `application/json`,
-        },
-    };
-
-    await axios.put(url, secondRefreshToken, config);
-
-    localStorage.removeItem('secondRefreshToken');
-
     localStorage.setItem(
         'accessToken',
         JSON.stringify({
-            jwt: jwtToken,
+            access: jwtToken,
         })
     );
 
@@ -40,56 +26,42 @@ export const SetJWTTokenInLocalStorage = async (
             expire: now.getTime() + JWTTokenExpireTime,
         })
     );
-
-    localStorage.setItem(
-        'secondRefreshToken',
-        JSON.stringify({
-            refresh: jwtToken,
-        })
-    );
 };
 
-export const GetJWTTokenInLocalStorage = async () => {
+export const GetJWTTokenInLocalStorage = () => {
     const now = new Date();
 
-    const firstJWTTokenValue = localStorage.getItem('jwtToken');
-    const secondJWTTokenValue = localStorage.getItem('secondJwtToken');
+    const accessToken = localStorage.getItem('accessToken');
 
-    if (firstJWTTokenValue === '') {
+    if (accessToken) {
         const base = APIUrl;
-        const endPoint = APIPath.TOKEN_JAIL_ENDPOINT;
+        const endPoint = APIPath.REFRESH_ENDPOINT;
 
         const url = `${base}${endPoint}`;
 
-        await axios.post(url, secondJWTTokenValue);
+        const config = {
+            headers: {
+                'Content-Type': `application/json`,
+            },
+        };
+        const refresh = JSON.parse(accessToken).access;
+        const data = { refresh: refresh };
 
-        localStorage.removeItem('secondJwtToken');
+        axios
+            .post(url, data, config)
+            .then((res) => {
+                localStorage.setItem(
+                    'refreshToken',
+                    JSON.stringify({
+                        refresh: res.data.access,
+                        expire: now.getTime() + JWTTokenExpireTime,
+                    })
+                );
+            })
+            .catch((e) => {
+                localStorage.removeItem('accessToken');
+            });
     }
 
-    const refreshToken = localStorage.getItem('refreshToken');
-    const base = APIUrl;
-    const endPoint = APIPath.REFRESH_ENDPOINT;
-
-    const url = `${base}${endPoint}`;
-
-    await axios
-        .post(url, refreshToken)
-        .then((res) =>
-            localStorage.setItem(
-                'jwtToken',
-                JSON.stringify({
-                    jwt: res.data.token,
-                    expire: now.getTime() + JWTTokenExpireTime,
-                })
-            )
-        )
-        .catch((e) => {
-            console.error(
-                `
-                Error in JWTCookie GetJWTTokenInLocalStorage function.
-                    Reason:${e}
-                `
-            );
-        });
-    return localStorage.getItem('jwtToken');
+    return localStorage.getItem('refreshToken');
 };

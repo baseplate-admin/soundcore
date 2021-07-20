@@ -26,5 +26,5 @@ export enum APIPath {
 
     FETCH_SONG_ENDPOINT = '/song',
 
-    UPLOAD_MUSIC_PATH = '/music/upload/',
+    UPLOAD_MUSIC_PATH = '/music/',
 }

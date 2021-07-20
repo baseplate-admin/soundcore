@@ -37,6 +37,7 @@ import {
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
+import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/JWTCookie';
 
 export const LoginPage = () => {
     const classes = useStyles();
@@ -99,6 +100,13 @@ export const LoginPage = () => {
         //     'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
         // ),
     });
+
+    useEffect(() => {
+        const data = GetJWTTokenInLocalStorage();
+        if (data) {
+            history.push(RoutingPath.HOME_PAGE);
+        }
+    }, [history]);
 
     useEffect(() => {
         if (loginFormState.promise.success.value) {
