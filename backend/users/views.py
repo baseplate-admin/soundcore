@@ -1,4 +1,5 @@
 import json
+from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
@@ -8,6 +9,8 @@ from rest_framework_simplejwt.backends import TokenBackend
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.authentication import JWTAuthentication
+
+from users.serializers import UserSerializer
 
 # Create your views here.
 
@@ -30,14 +33,6 @@ class UserInfo(APIView):
     ]
 
     def get(self, request):
-        token = request.META.get("HTTP_AUTHORIZATION", " ").split(" ")[1]
-        try:
-            valid_data = TokenBackend(algorithm="HS256").decode(token, verify=False)
-            user = valid_data["user"]
-            request.user = user
-            user_object = User.objects.get(username=user)
-            return Response(user_object, 200)
-
-        except ValidationError as v:
-            print("validation error", v)
-            return Response(401, v)
+        data = User.objects.get(id=request.user.id)
+        serializer = UserSerializer(data, many=False)
+        return Response(serializer.data)

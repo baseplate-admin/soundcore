@@ -5,6 +5,7 @@ import registerReducer from './Slices/RegisterSlice';
 import ForgetReducer from './Slices/ForgetSlice';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { songsApi } from './Services/GetSongService';
+import { userApi } from './Services/GetUserService';
 
 export const store = configureStore({
     reducer: {
@@ -13,9 +14,10 @@ export const store = configureStore({
         registerForm: registerReducer,
         forgetForm: ForgetReducer,
         [songsApi.reducerPath]: songsApi.reducer,
+        [userApi.reducerPath]: userApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(songsApi.middleware),
+        getDefaultMiddleware().concat(songsApi.middleware, userApi.middleware),
 });
 
 export type AppDispatch = typeof store.dispatch;

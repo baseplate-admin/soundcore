@@ -27,8 +27,8 @@ export const useAuthLogin = () => {
                 dispatch(postLoginFormSuccess());
                 console.log(res);
                 await SetJWTTokenInLocalStorage(
-                    res.data.refresh,
-                    res.data.access
+                    res.data.access,
+                    res.data.refresh
                 );
             })
             .catch((e) => {

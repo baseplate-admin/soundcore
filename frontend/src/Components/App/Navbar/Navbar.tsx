@@ -10,9 +10,20 @@ import {
     selectLeftMenuState,
 } from '../../../Store/Slices/NavbarSlice';
 import { useMediaQuery } from 'react-responsive';
-import { Fragment } from 'react';
+import { Fragment, useEffect } from 'react';
+import { useGetUserQuery } from '../../../Store/Services/GetUserService';
 
 export const Navbar = () => {
+    const { data, error, isLoading } = useGetUserQuery(null, {
+        pollingInterval: 3000,
+    });
+
+    useEffect(() => {
+        if (!isLoading) {
+            console.log(data);
+        }
+    }, [isLoading]);
+
     const classes = useStyles();
 
     const isMobile = useMediaQuery({
