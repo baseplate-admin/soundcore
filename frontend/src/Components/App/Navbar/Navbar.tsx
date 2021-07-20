@@ -10,21 +10,16 @@ import {
     selectLeftMenuState,
 } from '../../../Store/Slices/NavbarSlice';
 import { useMediaQuery } from 'react-responsive';
-import { Fragment, useEffect } from 'react';
+import { Fragment, useState } from 'react';
 import { useGetUserQuery } from '../../../Store/Services/GetUserService';
+import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/GetImageFromLibravatar';
+import { useSpring, animated } from 'react-spring';
 
 export const Navbar = () => {
-    const { data, error, isLoading } = useGetUserQuery(null, {
-        pollingInterval: 3000,
-    });
-
-    useEffect(() => {
-        if (!isLoading) {
-            console.log(data);
-        }
-    }, [isLoading]);
+    const { data, isLoading } = useGetUserQuery(null);
 
     const classes = useStyles();
+    const [imageDropdownShown, setImageDropdownShown] = useState(false);
 
     const isMobile = useMediaQuery({
         query: '(max-width: 767px)',
@@ -32,6 +27,7 @@ export const Navbar = () => {
 
     const leftMenuState = useAppSelector(selectLeftMenuState);
     const dispatch = useAppDispatch();
+
     const handleHamburgerIconClick = () => {
         // Always returns true
         if (!leftMenuState.isHidden) {
@@ -40,6 +36,11 @@ export const Navbar = () => {
             dispatch(leftMenuHidden());
         }
     };
+    const imageDropDownItem = useSpring({
+        height: imageDropdownShown ? 120 : 0,
+        opacity: imageDropdownShown ? 1 : 0.1,
+    });
+
     return (
         <>
             <div className={`columns is-mobile is-centered ${classes.navbar}`}>
@@ -129,17 +130,88 @@ export const Navbar = () => {
                     </div>
                 </div>
                 <div className="column"></div>
-
-                <div className="column is-narrow">
-                    <div className={` ${classes.items_translated_nav}`}>
-                        <Link
-                            className={`button is-rounded ${classes.button}`}
-                            to={RoutingPath.LOGIN_PAGE}
-                        >
-                            Login
-                        </Link>
-                    </div>
-                </div>
+                {isLoading ? (
+                    ''
+                ) : (
+                    <>
+                        {data.username === '' ? (
+                            <div className="column is-narrow">
+                                <div
+                                    className={` ${classes.items_translated_nav}`}
+                                >
+                                    <Link
+                                        className={`button is-rounded ${classes.button}`}
+                                        to={RoutingPath.LOGIN_PAGE}
+                                    >
+                                        Login
+                                    </Link>
+                                </div>
+                            </div>
+                        ) : (
+                            <div
+                                className="column is-narrow"
+                                onClick={() => {
+                                    setImageDropdownShown((v) => !v);
+                                }}
+                            >
+                                <div className="dropdown is-right   is-active">
+                                    <figure
+                                        className="image is-48x48 dropdown-trigger"
+                                        style={{
+                                            transform:
+                                                'translateX(-10px) translateY(2px)',
+                                        }}
+                                    >
+                                        <img
+                                            className="is-rounded"
+                                            alt="profile_image"
+                                            src={GetImageFromLibravatarByEmail(
+                                                data.email
+                                            )}
+                                        />
+                                    </figure>
+                                    <span className="icon is-small">
+                                        <i
+                                            className="fas fa-angle-down"
+                                            aria-hidden="true"
+                                        ></i>
+                                    </span>
+                                    {imageDropdownShown ? (
+                                        <div
+                                            className="dropdown-menu"
+                                            role="menu"
+                                        >
+                                            <animated.div
+                                                style={imageDropDownItem}
+                                                className="dropdown-content"
+                                            >
+                                                <div className="dropdown-item">
+                                                    <p className="is-size-7">
+                                                        Username :{' '}
+                                                        {data.username}
+                                                    </p>
+                                                </div>
+                                                {data.is_superuser ? (
+                                                    <>
+                                                        <div className="dropdown-item">
+                                                            <p className="is-size-7 has-text-centered">
+                                                                Power : Admin
+                                                            </p>
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </animated.div>
+                                        </div>
+                                    ) : (
+                                        ''
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </>
+                )}
             </div>
         </>
     );

@@ -6,8 +6,10 @@
     "dependencies": {
         "@reduxjs/toolkit": "^1.6.1",
         "@tippyjs/react": "^4.2.5",
+        "@types/crypto-js": "^4.0.2",
         "axios": "^0.21.1",
         "bulma": "^0.9.3",
+        "crypto-js": "^4.0.0",
         "form-data": "^4.0.0",
         "formik": "^2.2.9",
         "lodash": "^4.17.21",
