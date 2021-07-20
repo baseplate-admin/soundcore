@@ -6,7 +6,7 @@ export const songsApi = createApi({
         baseUrl: 'https://jsonplaceholder.typicode.com/todos',
     }),
     endpoints: (builder) => ({
-        getSongs: builder.query<Array<object>, void>({
+        getSongs: builder.query({
             query: () => ``,
         }),
     }),

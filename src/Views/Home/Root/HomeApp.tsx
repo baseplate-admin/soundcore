@@ -14,7 +14,10 @@ import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
 import { useEffect } from 'react';
 
 export const HomePage = () => {
-    const { data, error, isLoading } = useGetSongsQuery();
+    // const { data, error, isLoading } = useGetSongsQuery(null, {
+    //     pollingInterval: 1,
+    // });
+    const { data, error, isLoading } = useGetSongsQuery(null);
 
     useEffect(() => {
         if (!isLoading) {
