@@ -1,6 +1,6 @@
 export const APIUrl: string = 'http://127.0.0.1:8000/api/v1';
 export const ApplicationName: string = 'SoundCore';
-
+// http://127.0.0.1:8000/api/v1/music/upload/
 // Set Login Token expiery time : (in-seconds)
 export const JWTTokenExpireTime: number = 50000;
 
@@ -20,11 +20,11 @@ export enum RoutingPath {
 }
 
 export enum APIPath {
-    LOGIN_ENDPOINT = '/login',
-    REFRESH_ENDPOINT = '/refresh',
-    TOKEN_JAIL_ENDPOINT = '/token/blacklist',
+    LOGIN_ENDPOINT = '/users/token/',
+    REFRESH_ENDPOINT = '/users/token/refresh/',
+    TOKEN_JAIL_ENDPOINT = '/users/token/blacklist/',
 
     FETCH_SONG_ENDPOINT = '/song',
 
-    UPLOAD_MUSIC_PATH = '/upload',
+    UPLOAD_MUSIC_PATH = '/music/upload/',
 }

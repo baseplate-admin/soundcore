@@ -1,28 +1,28 @@
 import axios from 'axios';
 import { APIPath, APIUrl } from '../../Routes';
-
+import FormData from 'form-data';
 // import { SetJWTTokenInLocalStorage } from '../../Helpers/JWTCookie';
 
 export const useMusicUpload = () => {
     // const dispatch = useAppDispatch();
 
-    const MusicUploadSingle = async (files: object) => {
+    const MusicUploadSingle = async (file: File) => {
         const base = APIUrl;
         const endPoint = APIPath.UPLOAD_MUSIC_PATH;
 
         const url = `${base}${endPoint}`;
         // const url = `https://jsonplaceholder.typicode.com/posts`;
 
-        const data = {
-            files: files,
-        };
+        let data = new FormData();
+        data.append('file', file, file.name);
+
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data',
+                'Content-Type': `multipart/form-data`,
             },
         };
 
-        const res = await axios.post(url, data, config);
+        const res = await axios.put(url, data, config);
 
         return await res;
     };
