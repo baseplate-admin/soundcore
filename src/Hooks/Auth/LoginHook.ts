@@ -1,37 +1,34 @@
 import axios from 'axios';
 import { APIPath, APIUrl } from '../../Routes';
-import { useAppDispatch, useAppSelector } from '../Store/Hooks';
+import { useAppDispatch } from '../Store/Hooks';
 import { SetJWTTokenInLocalStorage } from '../../Functions/Helpers/JWTCookie';
 import {
     postLoginFormErrorAndHasErrorMessage,
     postLoginFormSuccess,
-    selectLoginFormState,
 } from '../../Store/Slices/LoginSlice';
 
 export const useAuthLogin = () => {
     const dispatch = useAppDispatch();
 
-    const loginFormState = useAppSelector(selectLoginFormState);
-
-    const Login = async () => {
+    const Login = async (username: string, password: string) => {
         const base = APIUrl;
         const endPoint = APIPath.LOGIN_ENDPOINT;
 
         const url = `${base}${endPoint}`;
 
         const data = {
-            username: loginFormState.username,
-            password: loginFormState.password,
+            username: username,
+            password: password,
         };
 
         await axios
             .post(url, data)
             .then(async (res) => {
                 dispatch(postLoginFormSuccess());
-
+                console.log(res);
                 await SetJWTTokenInLocalStorage(
-                    res.data.token,
-                    res.data.refresh
+                    res.data.refresh,
+                    res.data.access
                 );
             })
             .catch((e) => {

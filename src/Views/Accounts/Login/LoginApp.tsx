@@ -26,14 +26,10 @@ import {
 } from 'react-icons/io5';
 import { MdLockOutline } from 'react-icons/md';
 
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ApplicationName, RoutingPath } from '../../../Routes';
-import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
-import {
-    addLoginFormValues,
-    clearLoginFormValues,
-    selectLoginFormState,
-} from '../../../Store/Slices/LoginSlice';
+import { useAppSelector } from '../../../Hooks/Store/Hooks';
+import { selectLoginFormState } from '../../../Store/Slices/LoginSlice';
 
 import { useAuthLogin } from '../../../Hooks/Auth/LoginHook';
 import {
@@ -46,7 +42,7 @@ export const LoginPage = () => {
     const classes = useStyles();
 
     const [Login] = useAuthLogin();
-    const dispatch = useAppDispatch();
+    const history = useHistory();
 
     const loginFormState = useAppSelector(selectLoginFormState);
 
@@ -106,9 +102,9 @@ export const LoginPage = () => {
 
     useEffect(() => {
         if (loginFormState.promise.success.value) {
-            setModalShown(false);
+            history.push(RoutingPath.HOME_PAGE);
         }
-    }, [loginFormState.promise.success.value]);
+    }, [history, loginFormState.promise.success.value]);
 
     const modalStyle = useSpring({
         backgroundColor: '#191b1f',
@@ -131,12 +127,7 @@ export const LoginPage = () => {
             const username = values.username;
             const password = values.password;
 
-            if (loginFormState.username && loginFormState.password) {
-                dispatch(clearLoginFormValues());
-            }
-
-            dispatch(addLoginFormValues({ username, password }));
-            Login();
+            Login(username, password);
         },
     });
 

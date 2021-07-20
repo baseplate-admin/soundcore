@@ -2,8 +2,6 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../Store';
 
 export interface LoginState {
-    username: string;
-    password: string;
     promise: {
         success: {
             value: boolean;
@@ -16,8 +14,6 @@ export interface LoginState {
 }
 
 const initialState: LoginState = {
-    username: '',
-    password: '',
     promise: {
         success: {
             value: false,
@@ -29,25 +25,10 @@ const initialState: LoginState = {
     },
 };
 
-interface addLoginFormValuesInterface {
-    username: string;
-    password: string;
-}
-
 export const loginSlice = createSlice({
     name: 'login_form',
     initialState,
     reducers: {
-        addLoginFormValues: (
-            state,
-            action: PayloadAction<addLoginFormValuesInterface>
-        ) => {
-            state.username = action.payload.username;
-            state.password = action.payload.password;
-        },
-        clearLoginFormValues: (state) => {
-            Object.assign(state, initialState);
-        },
         postLoginFormSuccess: (state) => {
             state.promise.success.value = true;
         },
@@ -61,12 +42,8 @@ export const loginSlice = createSlice({
     },
 });
 
-export const {
-    addLoginFormValues,
-    clearLoginFormValues,
-    postLoginFormSuccess,
-    postLoginFormErrorAndHasErrorMessage,
-} = loginSlice.actions;
+export const { postLoginFormSuccess, postLoginFormErrorAndHasErrorMessage } =
+    loginSlice.actions;
 
 export const selectLoginFormState = (state: RootState) => state.loginForm;
 

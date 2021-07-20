@@ -7,25 +7,29 @@ export const SetJWTTokenInLocalStorage = async (
 ) => {
     const now = new Date();
 
-    const firstJWTTokenValue = localStorage.getItem('jwtToken');
-    const secondJWTTokenValue = localStorage.getItem('secondJwtToken');
+    const firstRefreshToken = localStorage.getItem('refreshToken');
+    const secondRefreshToken = localStorage.getItem('secondRefreshToken');
 
-    if (firstJWTTokenValue === '') {
-        const base = APIUrl;
-        const endPoint = APIPath.TOKEN_JAIL_ENDPOINT;
+    console.log(firstRefreshToken);
+    const base = APIUrl;
+    const endPoint = APIPath.TOKEN_JAIL_ENDPOINT;
 
-        const url = `${base}${endPoint}`;
+    const url = `${base}${endPoint}`;
 
-        await axios.post(url, secondJWTTokenValue);
+    const config = {
+        headers: {
+            'Content-Type': `application/json`,
+        },
+    };
 
-        localStorage.removeItem('secondJwtToken');
-    }
+    await axios.put(url, secondRefreshToken, config);
+
+    localStorage.removeItem('secondRefreshToken');
 
     localStorage.setItem(
-        'jwtToken',
+        'accessToken',
         JSON.stringify({
             jwt: jwtToken,
-            expire: now.getTime() + JWTTokenExpireTime,
         })
     );
 
@@ -33,13 +37,14 @@ export const SetJWTTokenInLocalStorage = async (
         'refreshToken',
         JSON.stringify({
             refresh: refreshToken,
+            expire: now.getTime() + JWTTokenExpireTime,
         })
     );
 
     localStorage.setItem(
-        'secondJwtToken',
+        'secondRefreshToken',
         JSON.stringify({
-            jwt: jwtToken,
+            refresh: jwtToken,
         })
     );
 };
