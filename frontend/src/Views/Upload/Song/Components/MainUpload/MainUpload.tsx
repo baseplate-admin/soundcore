@@ -3,6 +3,9 @@ import { Fragment } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { createUseStyles } from 'react-jss';
 import { UploadSongVariables } from '../../variables';
+import { animated, useSpring } from 'react-spring';
+import { useMediaQuery } from 'react-responsive';
+import useWindowDimensions from '../../../../../Hooks/Responsive/WindowDimensions';
 
 interface IMainUploadChildComponentProps {
     mappedSongs: Array<Object>;
@@ -17,10 +20,23 @@ export const MainUploadChildComponent = (
     props: IMainUploadChildComponentProps
 ) => {
     const classes = useStyles();
+    const { height, width } = useWindowDimensions();
+
+    const isMobile = useMediaQuery({
+        query: '(max-width: 767px)',
+    });
+
+    const uploadItem = useSpring({
+        maxHeight: isMobile ? (height * 30) / 100 : (height * 50) / 100, // 30 vw mobile | 50 vw web
+    });
+
     return (
         <Fragment>
             <section className="hero">
-                <div className={`${classes['upload-hero']}`}>
+                <animated.div
+                    className={`${classes['upload-hero']}`}
+                    style={uploadItem}
+                >
                     <span>
                         <div className="container">
                             <div className="is-justify-content-center">
@@ -28,7 +44,7 @@ export const MainUploadChildComponent = (
                             </div>
                         </div>
                     </span>
-                </div>
+                </animated.div>
                 <div
                     className="box"
                     style={{
@@ -177,7 +193,7 @@ const useStyles = createUseStyles({
     },
     'upload-hero': {
         backgroundColor: UploadSongVariables.pageBackgroundColor,
-        maxHeight: '50vh',
+        // maxHeight: '50vh',
         overflowY: 'scroll',
         scrollbarWidth: 'none',
 
@@ -185,8 +201,8 @@ const useStyles = createUseStyles({
             width: '0',
             height: '0',
         },
-        '@media screen and (max-width: 767px)': {
-            maxHeight: '30vh !important',
-        },
+        // '@media screen and (max-width: 767px)': {
+        //     maxHeight: '30vh !important',
+        // },
     },
 });

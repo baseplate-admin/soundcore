@@ -14,9 +14,12 @@ import { Fragment, useState } from 'react';
 import { useGetUserQuery } from '../../../Store/Services/GetUserService';
 import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/GetImageFromLibravatar';
 import { useSpring, animated } from 'react-spring';
+import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
 
 export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { height, width } = useWindowDimensions();
 
     const classes = useStyles();
     const [imageDropdownShown, setImageDropdownShown] = useState(false);
@@ -38,9 +41,9 @@ export const Navbar = () => {
     };
     const imageDropDownItem = useSpring({
         height: imageDropdownShown ? 120 : 0,
-        opacity: imageDropdownShown ? 1 : 0.1,
+        opacity: imageDropdownShown ? 1 : 0.0,
+        width: isMobile ? (width * 50) / 100 : (width * 30) / 100, // 50vw Mobile | 30vw Web
     });
-
     return (
         <>
             <div className={`columns is-mobile is-centered ${classes.navbar}`}>
@@ -134,7 +137,7 @@ export const Navbar = () => {
                     ''
                 ) : (
                     <>
-                        {data.username === '' ? (
+                        {data === undefined ? (
                             <div className="column is-narrow">
                                 <div
                                     className={` ${classes.items_translated_nav}`}
@@ -148,13 +151,8 @@ export const Navbar = () => {
                                 </div>
                             </div>
                         ) : (
-                            <div
-                                className="column is-narrow"
-                                onClick={() => {
-                                    setImageDropdownShown((v) => !v);
-                                }}
-                            >
-                                <div className="dropdown is-right   is-active">
+                            <div className="column is-narrow">
+                                <div className="dropdown is-right is-active">
                                     <figure
                                         className="image is-48x48 dropdown-trigger"
                                         style={{
@@ -163,6 +161,11 @@ export const Navbar = () => {
                                         }}
                                     >
                                         <img
+                                            onClick={() => {
+                                                setImageDropdownShown(
+                                                    (v) => !v
+                                                );
+                                            }}
                                             className="is-rounded"
                                             alt="profile_image"
                                             src={GetImageFromLibravatarByEmail(
@@ -170,43 +173,39 @@ export const Navbar = () => {
                                             )}
                                         />
                                     </figure>
-                                    <span className="icon is-small">
-                                        <i
-                                            className="fas fa-angle-down"
-                                            aria-hidden="true"
-                                        ></i>
-                                    </span>
-                                    {imageDropdownShown ? (
-                                        <div
-                                            className="dropdown-menu"
-                                            role="menu"
+
+                                    <div className="dropdown-menu" role="menu">
+                                        <animated.div
+                                            style={imageDropDownItem}
+                                            className="dropdown-content"
                                         >
-                                            <animated.div
-                                                style={imageDropDownItem}
-                                                className="dropdown-content"
-                                            >
-                                                <div className="dropdown-item">
-                                                    <p className="is-size-7">
-                                                        Username :{' '}
-                                                        {data.username}
-                                                    </p>
+                                            <div className="dropdown-item">
+                                                <div className="columns is-mobile">
+                                                    <div className="column is-narrow ">
+                                                        <figure className="image">
+                                                            <img
+                                                                alt="profile_image"
+                                                                src={GetImageFromLibravatarByEmail(
+                                                                    data.email
+                                                                )}
+                                                            />
+                                                        </figure>
+                                                    </div>
+                                                    <div className="column">
+                                                        <p>
+                                                            {data.first_name}{' '}
+                                                            {data.last_name}
+                                                        </p>
+                                                        <p className="is-size-7">
+                                                            {data.username}
+                                                        </p>
+                                                        <p>{data.email}</p>
+                                                    </div>
                                                 </div>
-                                                {data.is_superuser ? (
-                                                    <>
-                                                        <div className="dropdown-item">
-                                                            <p className="is-size-7 has-text-centered">
-                                                                Power : Admin
-                                                            </p>
-                                                        </div>
-                                                    </>
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </animated.div>
-                                        </div>
-                                    ) : (
-                                        ''
-                                    )}
+                                            </div>
+                                            <hr className="dropdown-divider" />
+                                        </animated.div>
+                                    </div>
                                 </div>
                             </div>
                         )}

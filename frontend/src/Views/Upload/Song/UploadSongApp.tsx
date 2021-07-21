@@ -23,7 +23,6 @@ import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
 import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
-import ProgressiveImage from 'react-progressive-image';
 
 interface IUploadFiles {
     file: File;

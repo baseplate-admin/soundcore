@@ -13,8 +13,10 @@ export const getAlbumArtFromBlob = async (
     const cover = mm.selectCover(metadata.common.picture); // pick the cover image
 
     try {
-        imageRefArray.current[i].src = `data:${
-            cover?.format
-        };base64,${cover?.data.toString('base64')}`;
+        if (imageRefArray.current[i].currentSrc === '') {
+            imageRefArray.current[i].src = `data:${
+                cover?.format
+            };base64,${cover?.data.toString('base64')}`;
+        }
     } catch {}
 };
