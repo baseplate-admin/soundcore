@@ -15,6 +15,7 @@ import { useGetUserQuery } from '../../../Store/Services/GetUserService';
 import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/GetImageFromLibravatar';
 import { useSpring, animated } from 'react-spring';
 import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
+import voca from 'voca';
 
 export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
@@ -192,14 +193,50 @@ export const Navbar = () => {
                                                         </figure>
                                                     </div>
                                                     <div className="column">
-                                                        <p>
-                                                            {data.first_name}{' '}
-                                                            {data.last_name}
-                                                        </p>
-                                                        <p className="is-size-7">
-                                                            {data.username}
-                                                        </p>
-                                                        <p>{data.email}</p>
+                                                        {/* If mobile Turncate the values */}
+                                                        {isMobile ? (
+                                                            <Fragment>
+                                                                <p>
+                                                                    {voca.truncate(
+                                                                        `${data.first_name} ${data.last_name}`,
+                                                                        12
+                                                                    )}
+                                                                </p>
+                                                                <p className="is-size-7">
+                                                                    {voca.truncate(
+                                                                        data.username,
+                                                                        12
+                                                                    )}
+                                                                </p>
+                                                                <p>
+                                                                    {voca.truncate(
+                                                                        data.email,
+                                                                        12
+                                                                    )}
+                                                                </p>
+                                                            </Fragment>
+                                                        ) : (
+                                                            <Fragment>
+                                                                <p>
+                                                                    {voca.truncate(
+                                                                        `${data.first_name} ${data.last_name}`,
+                                                                        50
+                                                                    )}
+                                                                </p>
+                                                                <p className="is-size-7">
+                                                                    {voca.truncate(
+                                                                        data.username,
+                                                                        50
+                                                                    )}
+                                                                </p>
+                                                                <p>
+                                                                    {voca.truncate(
+                                                                        data.email,
+                                                                        50
+                                                                    )}
+                                                                </p>
+                                                            </Fragment>
+                                                        )}
                                                     </div>
                                                 </div>
                                             </div>
