@@ -17,18 +17,20 @@ import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/F
 import { ForgetPage } from './Accounts/Forget/ForgetApp';
 
 export const App = () => {
-    // Lazy Imports
+    // Lazy Import for Fonts
     const nunitoFontStyle = () => {
         import('../Functions/Fonts/Nunito').then(({ nunitoFontStyle }) => ({
             default: nunitoFontStyle,
         }));
     };
+
     const robotoFontStyle = () => {
         import('../Functions/Fonts/Roboto').then(({ robotoFontStyle }) => ({
             default: robotoFontStyle,
         }));
     };
 
+    //  Lazy Import for Pages
     const HomePage = lazy(() =>
         import('./Home/Root/HomeApp').then(({ HomePage }) => ({
             default: HomePage,

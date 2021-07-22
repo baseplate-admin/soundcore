@@ -15,9 +15,6 @@ import 'tippy.js/dist/tippy.css'; // optional
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/animations/shift-away.css';
 
-// Yup for form validation
-import * as Yup from 'yup';
-
 // Icons import
 import {
     IoEyeOffOutline,
@@ -38,6 +35,9 @@ import {
 } from '../../../Components/Spinners/Spinners';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/JWTCookie';
+
+// Yup for form validation
+import * as Yup from 'yup';
 
 export const LoginPage = () => {
     const classes = useStyles();

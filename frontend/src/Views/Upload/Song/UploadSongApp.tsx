@@ -1,5 +1,3 @@
-import _ from 'lodash';
-
 // CSS Variables
 import { UploadSongVariables } from './variables';
 
@@ -47,7 +45,7 @@ export const UploadSongPage = () => {
     const [totalSongSize, setTotalSongSize] = useState(0);
 
     useEffect(() => {
-        if (isUploading && _.size(doneArray) === _.size(files)) {
+        if (isUploading && doneArray.length === files.length) {
             setUploadDone(true);
         }
     }, [doneArray, files, isUploading]);
@@ -262,7 +260,7 @@ export const UploadSongPage = () => {
                                     mappedSongs={mappedSongs}
                                     getInputProps={getInputProps}
                                     getRootProps={getRootProps}
-                                    fileLength={_.size(files)}
+                                    fileLength={files.length}
                                     totalSongSize={totalSongSize}
                                     handleSubmit={handleSubmit}
                                 />
@@ -274,12 +272,12 @@ export const UploadSongPage = () => {
                                 Layman's term : True : Show promise page,  False: Show Spinners */}
                                 {uploadDone ? (
                                     <Fragment>
-                                        {_.size(erroredFiles) === 0 ? (
+                                        {erroredFiles.length === 0 ? (
                                             <Fragment>
                                                 {/* If Errored File Length is less than 0,and Upload is not Done . Show this element */}
                                                 {/* This means this Div has Success Promise */}
                                                 <PromiseSuccessChildComponent
-                                                    fileLength={_.size(files)}
+                                                    fileLength={files.length}
                                                     totalSongSize={
                                                         totalSongSize
                                                     }
