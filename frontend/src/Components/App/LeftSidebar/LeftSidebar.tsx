@@ -119,9 +119,6 @@ const useStyles = createUseStyles({
     icon_box: {
         width: '240px',
         backgroundColor: 'transparent !important',
-        WebkitUserSelect: 'none',
-        MozUserSelect: 'none',
-        msUserSelect: 'none',
         userSelect: 'none',
         height: '10px',
         borderRadius: '0',

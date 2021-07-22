@@ -35,8 +35,6 @@ export const useAuthLogin = () => {
                 postLoginFormErrorAndHasErrorMessage(e.message);
             });
     };
-    const Logout = () => {
-        localStorage.clear();
-    };
-    return [Login, Logout];
+
+    return [Login];
 };

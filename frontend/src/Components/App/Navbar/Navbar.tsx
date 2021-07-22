@@ -1,6 +1,10 @@
-import { IoMenuOutline, IoSearchOutline } from 'react-icons/io5';
+import {
+    IoLogOutOutline,
+    IoMenuOutline,
+    IoSearchOutline,
+} from 'react-icons/io5';
 import { createUseStyles } from 'react-jss';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import { RoutingPath } from '../../../Routes';
@@ -18,13 +22,17 @@ import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
 import voca from 'voca';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
+import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
 
 export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { height, width } = useWindowDimensions();
+    const [Logout] = useAuthLogout();
 
+    const history = useHistory();
     const classes = useStyles();
+
     const [imageDropdownShown, setImageDropdownShown] = useState(false);
 
     const isMobile = useMediaQuery({
@@ -52,16 +60,21 @@ export const Navbar = () => {
     };
 
     const imageDropDownItem = useSpring({
-        height: imageDropdownShown ? 120 : 0,
+        height: imageDropdownShown ? 180 : 0,
         opacity: imageDropdownShown ? 1 : 0.0,
         width: isMobile
             ? (width * 53) / 100
             : isFullHD
-            ? (width * 25) / 100
+            ? (width * 23) / 100
             : (width * 15) / 100, // 53vw Mobile | 25vw Low Res Display | 15vw High Res Display
     });
+    const handleLogout = () => {
+        Logout();
+        history.go(0); // Refresh the page ? (Update Needed)
+    };
+
     return (
-        <>
+        <Fragment>
             <div className={`columns is-mobile is-centered ${classes.navbar}`}>
                 <div
                     className="column is-narrow
@@ -93,7 +106,7 @@ export const Navbar = () => {
                                         </div>
                                     </td>
                                     <td>
-                                        {/* If mobile Hide the image */}
+                                        {/* If mobile Hide the Brand Logo */}
                                         {/* Else Show empty div  */}
                                         {isMobile ? (
                                             <Fragment></Fragment>
@@ -152,7 +165,7 @@ export const Navbar = () => {
                 {isLoading ? (
                     ''
                 ) : (
-                    <>
+                    <Fragment>
                         {data === undefined ? (
                             <div className="column is-narrow">
                                 <div
@@ -224,7 +237,7 @@ export const Navbar = () => {
                                                                     >
                                                                         {voca.truncate(
                                                                             `${data.first_name} ${data.last_name}`,
-                                                                            12
+                                                                            10
                                                                         )}
                                                                     </p>
                                                                     <p
@@ -232,7 +245,7 @@ export const Navbar = () => {
                                                                     >
                                                                         {voca.truncate(
                                                                             data.username,
-                                                                            12
+                                                                            10
                                                                         )}
                                                                     </p>
                                                                     <p
@@ -240,14 +253,14 @@ export const Navbar = () => {
                                                                     >
                                                                         {voca.truncate(
                                                                             data.email,
-                                                                            12
+                                                                            10
                                                                         )}
                                                                     </p>
                                                                 </div>
                                                             </Fragment>
                                                         ) : (
                                                             // Desktop Version
-                                                            <>
+                                                            <Fragment>
                                                                 {isTablet ? (
                                                                     <Fragment>
                                                                         <div
@@ -357,7 +370,7 @@ export const Navbar = () => {
                                                                         </div>
                                                                     </Fragment>
                                                                 )}
-                                                            </>
+                                                            </Fragment>
                                                         )}
                                                     </div>
                                                 </div>
@@ -367,15 +380,47 @@ export const Navbar = () => {
                                                     classes['dropdown-divider']
                                                 }
                                             />
+                                            <div className="dropdown-item">
+                                                <div
+                                                    className={`box ${classes['icon-box']}`}
+                                                >
+                                                    <div
+                                                        className={`columns is-mobile ${classes['icon-box-column']}`}
+                                                        onClick={() => {
+                                                            handleLogout();
+                                                        }}
+                                                    >
+                                                        <div className="column is-narrow">
+                                                            <IoLogOutOutline
+                                                                color="white"
+                                                                style={{
+                                                                    transform:
+                                                                        'scale(2)',
+                                                                }}
+                                                            />
+                                                        </div>
+                                                        <div className="column">
+                                                            <p
+                                                                className={`is-size-6 
+                                                                    ${classes.dropdown_content_text_items} 
+                                                                    ${classes.dropdown_content_text_items_with_icons}
+                                                                `}
+                                                            >
+                                                                Log Out
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </animated.div>
                                     </div>
                                 </div>
                             </div>
                         )}
-                    </>
+                    </Fragment>
                 )}
             </div>
-        </>
+        </Fragment>
     );
 };
 
@@ -435,5 +480,21 @@ const useStyles = createUseStyles({
         marginRight: 0,
         marginBottom: '0.5rem',
         marginLeft: 0,
+    },
+    dropdown_content_text_items_with_icons: {
+        transform: 'translateY(-5px)',
+        userSelect: 'none',
+    },
+    'icon-box-column': {
+        transform: 'translateY(-10px)',
+    },
+    'icon-box': {
+        backgroundColor: 'transparent !important',
+        userSelect: 'none',
+        borderRadius: '0',
+        height: 10,
+        '&:hover': {
+            backgroundColor: '#404040 !important',
+        },
     },
 });
