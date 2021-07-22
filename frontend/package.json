@@ -1,14 +1,13 @@
 {
     "name": "soundcore_frontend",
-    "version": "0.1.1",
-    "private": true,
-    "license": "GPL-v3",
+    "version": "0.1.2",
+    "license": "GPL-3.0-only",
     "dependencies": {
         "@reduxjs/toolkit": "^1.6.1",
         "@tippyjs/react": "^4.2.5",
         "axios": "^0.21.1",
+        "blueimp-md5": "^2.18.0",
         "bulma": "^0.9.3",
-        "crypto-js": "^4.0.0",
         "form-data": "^4.0.0",
         "formik": "^2.2.9",
         "lodash": "^4.17.21",
@@ -24,6 +23,7 @@
         "react-responsive": "^8.2.0",
         "react-router-dom": "^5.2.0",
         "react-spring": "^9.2.4",
+        "typescript": "^4.3.5",
         "voca": "^1.4.0",
         "yup": "^0.32.9"
     },
@@ -32,7 +32,7 @@
         "@testing-library/jest-dom": "^5.14.1",
         "@testing-library/react": "^12.0.0",
         "@testing-library/user-event": "^13.2.0",
-        "@types/crypto-js": "^4.0.2",
+        "@types/blueimp-md5": "^2.18.0",
         "@types/jest": "^26.0.24",
         "@types/node": "^16.4.0",
         "@types/react": "^17.0.14",
@@ -44,16 +44,15 @@
         "@types/voca": "^1.4.1",
         "react-scripts": "4.0.3",
         "sass": "^1.35.2",
-        "typescript": "^4.4.0-dev.20210718",
         "web-vitals": "^2.1.0"
     },
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
-        "eject": "craco eject",
         "postbuild": "purgecss --css build/static/css/*.css --content build/index.html build/static/js/*.js --output build/static/css",
-        "serve": "serve -s ./build"
+        "serve": "serve -s ./build",
+        "bundle-wizard": "npx bundle-wizard localhost:5000"
     },
     "eslintConfig": {
         "extends": [

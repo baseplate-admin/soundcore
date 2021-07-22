@@ -1,6 +1,6 @@
 import {
     IoPauseCircleOutline,
-    IoPlayBackCircleOutline,
+    IoPlaySkipBackCircleOutline,
     IoPlayCircleOutline,
     IoPlaySkipForwardCircleOutline,
 } from 'react-icons/io5';
@@ -56,7 +56,7 @@ export const Footer = () => {
                             className={`column is-1 has-text-centered ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
-                            <IoPlayBackCircleOutline
+                            <IoPlaySkipBackCircleOutline
                                 color="white"
                                 style={{ transform: 'scale(2)' }}
                             />
@@ -102,7 +102,7 @@ export const Footer = () => {
                         <div className="column ">
                             <div className={classes.footer_input_anchor}>
                                 <progress
-                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress}`}
+                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
                                     value="0"
                                     max="100"
                                 />
@@ -145,7 +145,7 @@ export const Footer = () => {
                         <div className="column ">
                             <div className={classes.volume_anchor}>
                                 <progress
-                                    className={`progress is-small is-info ${classes.volume_progress}`}
+                                    className={`progress is-small is-info ${classes.volume_progress} ${classes.progress_item}`}
                                     value="0"
                                     max="100"
                                 />
@@ -287,5 +287,9 @@ const useStyles = createUseStyles({
         '@media screen and (max-width: 767px)': {
             width: '50px !important',
         },
+    },
+    progress_item: {
+        height: '0.35rem !important',
+        transform: 'translateY(1px) !important',
     },
 });

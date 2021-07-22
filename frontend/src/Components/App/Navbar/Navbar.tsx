@@ -28,6 +28,7 @@ export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { height, width } = useWindowDimensions();
+
     const [Logout] = useAuthLogout();
 
     const history = useHistory();
@@ -163,7 +164,18 @@ export const Navbar = () => {
                 </div>
                 <div className="column"></div>
                 {isLoading ? (
-                    ''
+                    <figure
+                        className="image is-48x48"
+                        style={{
+                            transform: 'translateX(-20px) translateY(15px)',
+                        }}
+                    >
+                        <img
+                            className="is-rounded"
+                            src={ProfilePicturePlaceholder}
+                            alt="profile_picture"
+                        />
+                    </figure>
                 ) : (
                     <Fragment>
                         {data === undefined ? (
@@ -196,7 +208,7 @@ export const Navbar = () => {
                                                 );
                                             }}
                                             className="is-rounded"
-                                            alt={ProfilePicturePlaceholder}
+                                            alt="profile_picture"
                                             src={GetImageFromLibravatarByEmail(
                                                 data.email
                                             )}
@@ -213,9 +225,7 @@ export const Navbar = () => {
                                                     <div className="column is-narrow ">
                                                         <figure className="image">
                                                             <img
-                                                                alt={
-                                                                    ProfilePicturePlaceholder
-                                                                }
+                                                                alt="profile_picture"
                                                                 src={GetImageFromLibravatarByEmail(
                                                                     data.email
                                                                 )}
