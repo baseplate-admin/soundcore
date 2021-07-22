@@ -1,6 +1,10 @@
 // Bulma Import
 import 'bulma/bulma.sass';
 
+//Font Import
+import { nunitoFontStyle } from '../Functions/Fonts/Nunito';
+import { robotoFontStyle } from '../Functions/Fonts/Roboto';
+
 // GLobal Scss import
 import './index.scss';
 
@@ -17,18 +21,9 @@ import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/F
 import { ForgetPage } from './Accounts/Forget/ForgetApp';
 
 export const App = () => {
-    // Lazy Import for Fonts
-    const nunitoFontStyle = () => {
-        import('../Functions/Fonts/Nunito').then(({ nunitoFontStyle }) => ({
-            default: nunitoFontStyle,
-        }));
-    };
-
-    const robotoFontStyle = () => {
-        import('../Functions/Fonts/Roboto').then(({ robotoFontStyle }) => ({
-            default: robotoFontStyle,
-        }));
-    };
+    // Init Font
+    nunitoFontStyle();
+    robotoFontStyle();
 
     //  Lazy Import for Pages
     const HomePage = lazy(() =>
@@ -61,10 +56,6 @@ export const App = () => {
             default: UploadSongPage,
         }))
     );
-
-    // Init the Fonts
-    robotoFontStyle();
-    nunitoFontStyle();
 
     return (
         <Fragment>
