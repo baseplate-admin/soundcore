@@ -7,7 +7,7 @@ import { createUseStyles } from 'react-jss';
 import { Link, useHistory } from 'react-router-dom';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
-import { ProfilePicturePlaceholder, RoutingPath } from '../../../Routes';
+import { RoutingPath } from '../../../Routes';
 import {
     leftMenuHidden,
     leftMenuShown,
@@ -23,6 +23,7 @@ import voca from 'voca';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
+import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 
 export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
@@ -172,7 +173,7 @@ export const Navbar = () => {
                     >
                         <img
                             className="is-rounded"
-                            src={ProfilePicturePlaceholder}
+                            src={profilePlaceholder}
                             alt="profile_picture"
                         />
                     </figure>
@@ -181,7 +182,7 @@ export const Navbar = () => {
                         {data === undefined ? (
                             <div className="column is-narrow">
                                 <div
-                                    className={` ${classes.items_translated_nav}`}
+                                    className={`${classes.items_translated_nav}`}
                                 >
                                     <Link
                                         className={`button is-rounded ${classes.button}`}
