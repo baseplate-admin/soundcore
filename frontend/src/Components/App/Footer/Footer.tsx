@@ -1,21 +1,25 @@
-import './scss/footer.scss';
-import './scss/footer.responsive.scss';
 import {
     IoPauseCircleOutline,
+    IoPlayBackCircleOutline,
     IoPlayCircleOutline,
     IoPlaySkipForwardCircleOutline,
 } from 'react-icons/io5';
+import { useState } from 'react';
+import { createUseStyles } from 'react-jss';
 
 export const Footer = () => {
+    const classes = useStyles();
+    const [playPauseButtonClicked, setPlayPauseButtonClicked] = useState(false);
     return (
-        <footer className="footer_item">
+        <footer className={classes.footer_item}>
             <div className="columns is-mobile footer_column">
-                <div className="column footer_info_column  is-3">
+                <div className={`column is-3 ${classes.footer_info_column}`}>
                     <article className="media">
                         <figure className="media-left">
                             <p className="image is-64x64">
                                 <img
                                     id="footer-song-image"
+                                    className={classes.song_image}
                                     alt=""
                                     src="https://bulma.io/images/placeholders/128x128.png"
                                 />
@@ -23,16 +27,22 @@ export const Footer = () => {
                         </figure>
                         <div className="media-content">
                             <div className="content">
-                                <p className="footer_info">
-                                    <strong id="footer-song-name">
+                                <p className={classes.footer_info}>
+                                    <strong
+                                        className={classes['footer-song-info']}
+                                    >
                                         Song Name
                                     </strong>{' '}
                                     |{' '}
-                                    <small id="footer-song-artist">
+                                    <small
+                                        className={classes['footer-song-info']}
+                                    >
                                         Artist
                                     </small>{' '}
                                     |{' '}
-                                    <small id="footer-song-sample-rate">
+                                    <small
+                                        className={classes['footer-song-info']}
+                                    >
                                         Sample Rate{' '}
                                     </small>
                                 </p>
@@ -40,25 +50,38 @@ export const Footer = () => {
                         </div>
                     </article>
                 </div>
-                <div className="column footer_control_column">
+                <div className={`column ${classes.footer_control_column}`}>
                     <div className="columns is-mobile is-centered footer_control_column_wrapper">
                         <div
-                            className="column is-1 has-text-centered previous_song_wrapper footer_control_column_items"
+                            className={`column is-1 has-text-centered ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
-                            <IoPlayCircleOutline
+                            <IoPlayBackCircleOutline
                                 color="white"
                                 style={{ transform: 'scale(2)' }}
                             />
                         </div>
                         <div
-                            className="column is-1 is-offset-1 has-text-centered play_pause_wrapper footer_control_column_items"
+                            className="column is-1 is-offset-1 has-text-centered  footer_control_column_items"
                             // onclick="howlerJsPlayPause()"
                         >
-                            <IoPauseCircleOutline
-                                color="white"
-                                style={{ transform: 'scale(2)' }}
-                            />
+                            {playPauseButtonClicked ? (
+                                <IoPauseCircleOutline
+                                    color="white"
+                                    style={{ transform: 'scale(2)' }}
+                                    onClick={() => {
+                                        setPlayPauseButtonClicked((v) => !v);
+                                    }}
+                                />
+                            ) : (
+                                <IoPlayCircleOutline
+                                    color="white"
+                                    style={{ transform: 'scale(2)' }}
+                                    onClick={() => {
+                                        setPlayPauseButtonClicked((v) => !v);
+                                    }}
+                                />
+                            )}
                         </div>
                         <div
                             className="column is-1 is-offset-1 next_song_wrapper has-text-centered footer_control_column_items"
@@ -71,20 +94,22 @@ export const Footer = () => {
                         </div>
                     </div>
                     <div className="columns is-mobile">
-                        <div className="column is-narrow pre_input">0:00</div>
+                        <div
+                            className={`column is-narrow ${classes.pre_input}`}
+                        >
+                            0:00
+                        </div>
                         <div className="column ">
-                            <div className="footer_input_anchor">
+                            <div className={classes.footer_input_anchor}>
                                 <progress
-                                    id="slider_progress"
-                                    className="progress is-small is-info"
+                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress}`}
                                     value="0"
                                     max="100"
                                 />
                                 <input
-                                    id="transparent_slider"
                                     //    onchange="handleSliderInputChange(this.value)"
                                     //    oninput="handleSliderInputChange(this.value)"
-                                    className="slider"
+                                    className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
                                     step=".01"
                                     min="0"
                                     max="100"
@@ -94,7 +119,7 @@ export const Footer = () => {
                             </div>
                         </div>
                         <div
-                            className="column is-narrow post_input"
+                            className={`column is-narrow ${classes.post_input}`}
                             id="total_duration"
                         >
                             0:00
@@ -102,7 +127,9 @@ export const Footer = () => {
                     </div>
                 </div>
                 <div className="column is-hidden-mobile is-3 ">
-                    <div className="columns is-mobile volume_control_column">
+                    <div
+                        className={`columns is-mobile ${classes.volume_control_column}`}
+                    >
                         <div className="column is-2 is-offset-2">
                             {/* <ion-icon className="volume__icon" name="volume-high-outline"></ion-icon> */}
                             {/* <script async>
@@ -116,14 +143,14 @@ export const Footer = () => {
                         </script> */}
                         </div>
                         <div className="column ">
-                            <div className="volume_anchor">
+                            <div className={classes.volume_anchor}>
                                 <progress
-                                    className="progress is-small volume_progress is-info"
+                                    className={`progress is-small is-info ${classes.volume_progress}`}
                                     value="0"
                                     max="100"
                                 />
                                 <input
-                                    className="slider volume_slider"
+                                    className={`${classes.slider} ${classes.volume_slider}  slider`}
                                     // oninput="handleVolumeInputChange(this.value)"
                                     //    onchange="handleVolumeInputChange(this.value)"
                                     step="1"
@@ -141,3 +168,124 @@ export const Footer = () => {
         </footer>
     );
 };
+
+const useStyles = createUseStyles({
+    footer_item: {
+        backgroundColor: '#161616',
+
+        '@media screen and (max-width: 767px)': {
+            position: 'absolute',
+            bottom: '0px',
+            left: '0',
+            right: '0',
+            height: '120px',
+        },
+    },
+    slider: {
+        WebkitAppearance: 'none',
+        width: '100%',
+        height: '15px',
+        borderRadius: '5px',
+        background: 'transparent',
+        outline: 'none',
+
+        '&::-webkit-slider-thumb': {
+            WebkitAppearance: 'none',
+            appearance: 'none',
+            width: '15px',
+            height: '15px',
+            borderRadius: '50%',
+            background: '#485fc7',
+            cursor: 'pointer',
+        },
+
+        '&::-moz-range-thumb': {
+            width: '15px',
+            height: '15px',
+            border: 'black',
+            borderRadius: '50%',
+            background: '#485fc7',
+            cursor: 'pointer',
+        },
+    },
+
+    footer_info_column: {
+        marginLeft: '3vw',
+    },
+
+    song_image: {
+        height: '60px',
+        width: '60px',
+    },
+
+    'footer-song-info': {
+        color: 'white',
+        opacity: 0.85,
+    },
+
+    pre_input: {
+        transform: 'translateY(-9px)',
+        color: 'white',
+        opacity: 0.85,
+    },
+
+    footer_input_anchor: {
+        position: 'relative',
+    },
+
+    footer_input_anchor_progress: {
+        position: 'absolute',
+        width: '98%',
+        transform: 'translateX(1%)',
+    },
+
+    footer_input_anchor_input: {
+        position: 'absolute',
+        transform: 'translateY(-4px) !important',
+    },
+
+    post_input: {
+        transform: 'translateY(-9px)',
+        color: 'white',
+        opacity: 0.85,
+    },
+
+    volume_control_column: {
+        transform: 'translateY(40px)',
+    },
+
+    volume_anchor: {
+        position: 'relative',
+    },
+
+    volume_progress: {
+        position: 'absolute',
+        width: '98%',
+        transform: 'translateX(2%)',
+    },
+
+    volume_slider: {
+        position: 'absolute',
+        transform: 'translateY(-4px)',
+    },
+
+    footer_control_column: {
+        '@media screen and (max-width: 767px)': {
+            marginRight: '1em !important',
+        },
+    },
+
+    footer_info: {
+        '@media screen and (max-width: 767px)': {
+            position: 'absolute',
+            bottom: '10px',
+            maxHeight: '3em',
+        },
+    },
+
+    footer_control_column_items: {
+        '@media screen and (max-width: 767px)': {
+            width: '50px !important',
+        },
+    },
+});
