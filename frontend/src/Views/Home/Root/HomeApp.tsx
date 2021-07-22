@@ -9,9 +9,12 @@ import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import { ApplicationName } from '../../../Routes';
+import { APIUrl, ApplicationName, MediaUrl } from '../../../Routes';
 import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
-import { getAlbumArtFromBlob } from '../../../Functions/Helpers/ExtractAlbumArt';
+import {
+    getAlbumArtFromBlob,
+    getAlbumArtFromUrl,
+} from '../../../Functions/Helpers/ExtractAlbumArt';
 
 export const HomePage = () => {
     // const { data, error, isLoading } = useGetSongsQuery(null, {
@@ -53,12 +56,11 @@ export const HomePage = () => {
                         ) : (
                             <>
                                 {data.map((music: any, index: number) => {
-                                    getAlbumArtFromBlob(
-                                        music,
+                                    getAlbumArtFromUrl(
+                                        `${MediaUrl}${music.music}`,
                                         index,
                                         imageRefArray
                                     );
-                                    console.log(music.music);
                                     return (
                                         // getAlbumArtFromBlob(file.file, index, imageRefArray);
                                         <div className="grid-item">
