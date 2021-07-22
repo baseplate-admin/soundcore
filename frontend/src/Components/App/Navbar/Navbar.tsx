@@ -16,6 +16,8 @@ import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/GetIma
 import { useSpring, animated } from 'react-spring';
 import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
 import voca from 'voca';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
 
 export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
@@ -29,6 +31,14 @@ export const Navbar = () => {
         query: '(max-width: 767px)',
     });
 
+    const isTablet = useMediaQuery({
+        query: '(max-width: 768px)',
+    });
+
+    const isFullHD = useMediaQuery({
+        query: '(max-width: 1408px)',
+    });
+
     const leftMenuState = useAppSelector(selectLeftMenuState);
     const dispatch = useAppDispatch();
 
@@ -40,10 +50,15 @@ export const Navbar = () => {
             dispatch(leftMenuHidden());
         }
     };
+
     const imageDropDownItem = useSpring({
         height: imageDropdownShown ? 120 : 0,
         opacity: imageDropdownShown ? 1 : 0.0,
-        width: isMobile ? (width * 50) / 100 : (width * 30) / 100, // 50vw Mobile | 30vw Web
+        width: isMobile
+            ? (width * 53) / 100
+            : isFullHD
+            ? (width * 25) / 100
+            : (width * 15) / 100, // 53vw Mobile | 25vw Low Res Display | 15vw High Res Display
     });
     return (
         <>
@@ -178,7 +193,7 @@ export const Navbar = () => {
                                     <div className="dropdown-menu" role="menu">
                                         <animated.div
                                             style={imageDropDownItem}
-                                            className="dropdown-content"
+                                            className={`dropdown-content ${classes.dropdown_content}`}
                                         >
                                             <div className="dropdown-item">
                                                 <div className="columns is-mobile">
@@ -195,52 +210,163 @@ export const Navbar = () => {
                                                     <div className="column">
                                                         {/* If mobile Turncate the values */}
                                                         {isMobile ? (
+                                                            // Mobile Version
                                                             <Fragment>
-                                                                <p>
-                                                                    {voca.truncate(
-                                                                        `${data.first_name} ${data.last_name}`,
-                                                                        12
-                                                                    )}
-                                                                </p>
-                                                                <p className="is-size-7">
-                                                                    {voca.truncate(
-                                                                        data.username,
-                                                                        12
-                                                                    )}
-                                                                </p>
-                                                                <p>
-                                                                    {voca.truncate(
-                                                                        data.email,
-                                                                        12
-                                                                    )}
-                                                                </p>
+                                                                <div
+                                                                    className={
+                                                                        imageDropdownShown
+                                                                            ? ''
+                                                                            : 'is-hidden'
+                                                                    }
+                                                                >
+                                                                    <p
+                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                    >
+                                                                        {voca.truncate(
+                                                                            `${data.first_name} ${data.last_name}`,
+                                                                            12
+                                                                        )}
+                                                                    </p>
+                                                                    <p
+                                                                        className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                    >
+                                                                        {voca.truncate(
+                                                                            data.username,
+                                                                            12
+                                                                        )}
+                                                                    </p>
+                                                                    <p
+                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                    >
+                                                                        {voca.truncate(
+                                                                            data.email,
+                                                                            12
+                                                                        )}
+                                                                    </p>
+                                                                </div>
                                                             </Fragment>
                                                         ) : (
-                                                            <Fragment>
-                                                                <p>
-                                                                    {voca.truncate(
-                                                                        `${data.first_name} ${data.last_name}`,
-                                                                        50
-                                                                    )}
-                                                                </p>
-                                                                <p className="is-size-7">
-                                                                    {voca.truncate(
-                                                                        data.username,
-                                                                        50
-                                                                    )}
-                                                                </p>
-                                                                <p>
-                                                                    {voca.truncate(
-                                                                        data.email,
-                                                                        50
-                                                                    )}
-                                                                </p>
-                                                            </Fragment>
+                                                            // Desktop Version
+                                                            <>
+                                                                {isTablet ? (
+                                                                    <Fragment>
+                                                                        <div
+                                                                            className={
+                                                                                imageDropdownShown
+                                                                                    ? ''
+                                                                                    : 'is-hidden'
+                                                                            }
+                                                                        >
+                                                                            <Tippy
+                                                                                placement="left"
+                                                                                content={`${data.first_name} ${data.last_name}`}
+                                                                            >
+                                                                                <p
+                                                                                    className={`${classes.dropdown_content_text_items}`}
+                                                                                >
+                                                                                    {voca.truncate(
+                                                                                        `${data.first_name} ${data.last_name}`,
+                                                                                        13
+                                                                                    )}
+                                                                                </p>
+                                                                            </Tippy>
+                                                                            <Tippy
+                                                                                placement="left"
+                                                                                content={
+                                                                                    data.username
+                                                                                }
+                                                                            >
+                                                                                <p
+                                                                                    className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                >
+                                                                                    {voca.truncate(
+                                                                                        data.username,
+                                                                                        13
+                                                                                    )}
+                                                                                </p>
+                                                                            </Tippy>
+                                                                            <Tippy
+                                                                                placement="left"
+                                                                                content={
+                                                                                    data.email
+                                                                                }
+                                                                            >
+                                                                                <p
+                                                                                    className={`${classes.dropdown_content_text_items}`}
+                                                                                >
+                                                                                    {voca.truncate(
+                                                                                        data.email,
+                                                                                        13
+                                                                                    )}
+                                                                                </p>
+                                                                            </Tippy>
+                                                                        </div>
+                                                                    </Fragment>
+                                                                ) : (
+                                                                    <Fragment>
+                                                                        <div
+                                                                            className={
+                                                                                imageDropdownShown
+                                                                                    ? ''
+                                                                                    : 'is-hidden'
+                                                                            }
+                                                                        >
+                                                                            <Tippy
+                                                                                placement="left"
+                                                                                content={`${data.first_name} ${data.last_name}`}
+                                                                            >
+                                                                                <p
+                                                                                    className={`${classes.dropdown_content_text_items}`}
+                                                                                >
+                                                                                    {voca.truncate(
+                                                                                        `${data.first_name} ${data.last_name}`,
+                                                                                        25
+                                                                                    )}
+                                                                                </p>
+                                                                            </Tippy>
+                                                                            <Tippy
+                                                                                placement="left"
+                                                                                content={
+                                                                                    data.username
+                                                                                }
+                                                                            >
+                                                                                <p
+                                                                                    className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                >
+                                                                                    {voca.truncate(
+                                                                                        data.username,
+                                                                                        25
+                                                                                    )}
+                                                                                </p>
+                                                                            </Tippy>
+                                                                            <Tippy
+                                                                                placement="left"
+                                                                                content={
+                                                                                    data.email
+                                                                                }
+                                                                            >
+                                                                                <p
+                                                                                    className={`${classes.dropdown_content_text_items}`}
+                                                                                >
+                                                                                    {voca.truncate(
+                                                                                        data.email,
+                                                                                        25
+                                                                                    )}
+                                                                                </p>
+                                                                            </Tippy>
+                                                                        </div>
+                                                                    </Fragment>
+                                                                )}
+                                                            </>
                                                         )}
                                                     </div>
                                                 </div>
                                             </div>
-                                            <hr className="dropdown-divider" />
+                                            <hr
+                                                className={
+                                                    classes['dropdown-divider']
+                                                }
+                                            />
                                         </animated.div>
                                     </div>
                                 </div>
@@ -293,5 +419,21 @@ const useStyles = createUseStyles({
             opacity: 0.5,
             fontFamily: 'Nunito',
         },
+    },
+    dropdown_content: {
+        backgroundColor: '#161616',
+    },
+    dropdown_content_text_items: {
+        color: '#e2dfda !important',
+    },
+    'dropdown-divider': {
+        backgroundColor: '#313131',
+        border: 'none',
+        display: 'block',
+        height: 1,
+        marginTop: '0.5rem',
+        marginRight: 0,
+        marginBottom: '0.5rem',
+        marginLeft: 0,
     },
 });
