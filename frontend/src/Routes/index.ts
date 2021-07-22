@@ -24,7 +24,9 @@ export enum APIPath {
     REFRESH_ENDPOINT = '/users/token/refresh/',
     TOKEN_JAIL_ENDPOINT = '/users/token/blacklist/',
 
-    FETCH_SONG_ENDPOINT = '/song',
+    FETCH_SONG_ENDPOINT = '/music/',
 
     UPLOAD_MUSIC_PATH = '/music/',
+
+    USER_INFO_ENDPOINT = '/users/info/',
 }

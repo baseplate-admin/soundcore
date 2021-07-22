@@ -1,13 +1,10 @@
 import json
-from rest_framework.serializers import Serializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from rest_framework_simplejwt.backends import TokenBackend
 from django.contrib.auth.models import User
-from rest_framework.exceptions import ValidationError
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from users.serializers import UserSerializer

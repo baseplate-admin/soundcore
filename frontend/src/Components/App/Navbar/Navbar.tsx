@@ -22,6 +22,7 @@ import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
 import voca from 'voca';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
+
 import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
 import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 
@@ -138,8 +139,8 @@ export const Navbar = () => {
                         </table>
                     </div>
                 </div>
-                <div className="column "></div>
-                <div className="column is-half">
+                <div className="column"></div>
+                <div className="column is-two-fifths">
                     <div className={classes.items_translated_nav}>
                         <div className="field">
                             <div

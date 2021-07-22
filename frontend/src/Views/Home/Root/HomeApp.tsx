@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useRef, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 
 import './scss/HomeApp.scss';
@@ -11,19 +11,29 @@ import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import { ApplicationName } from '../../../Routes';
 import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
-import { useEffect } from 'react';
+import { getAlbumArtFromBlob } from '../../../Functions/Helpers/ExtractAlbumArt';
 
 export const HomePage = () => {
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
+    const imageRefArray = useRef([]);
+
     const { data, error, isLoading } = useGetSongsQuery(null);
+
+    // data.music <-- File
 
     useEffect(() => {
         if (!isLoading) {
             console.log(data);
         }
     }, [isLoading]);
+
+    const addRef = (el: never) => {
+        if (el && !imageRefArray.current.includes(el)) {
+            imageRefArray.current.push(el);
+        }
+    };
 
     return (
         <Fragment>
@@ -38,101 +48,116 @@ export const HomePage = () => {
                 <div className="column right-column">
                     <div className="grid-container">
                         {/* {% for i in musics %} */}
-                        <div className="grid-item">
-                            <div
-                                className="box grid-box"
-                                //  onmouseleave="handleDropdownHide({{ i.id }})"
-                                //      onmouseenter="handleDropdownShow({{ i.id }})"
-                            >
-                                <figure
-                                    className="image song-image-figure"
-                                    // onclick="handleSongItemClick({{ i.id }})"
-                                >
-                                    {/* {% thumbnail i.album_art "200x200" crop="center" as im %}
+                        {isLoading ? (
+                            <></>
+                        ) : (
+                            <>
+                                {data.map((music: any, index: number) => {
+                                    getAlbumArtFromBlob(
+                                        music,
+                                        index,
+                                        imageRefArray
+                                    );
+                                    console.log(music.music);
+                                    return (
+                                        // getAlbumArtFromBlob(file.file, index, imageRefArray);
+                                        <div className="grid-item">
+                                            <div className="box grid-box">
+                                                <figure className="image song-image-figure">
+                                                    {/* {% thumbnail i.album_art "200x200" crop="center" as im %}
                                 <a id="song-image-{{ i.id }}"
                                    href="{{ im.url }}"
                                    className="progressive replace disabled_link">
                             {% endthumbnail %}
                             {% thumbnail i.album_art "20x20" crop="center" as im %} */}
 
-                                    {/* <img height="{{ im.height }}"
+                                                    {/* <img height="{{ im.height }}"
                                      width="{{ im.width }}" className="song-image preview"
                                      alt="song-image"
                                      src="{{ im.url }}">
                                 </a>
                             {% endthumbnail %} */}
-                                </figure>
-                                <div className="song-description">
-                                    <div
-                                        className="columns is-mobile"
-                                        style={{ width: 200 }}
-                                    >
-                                        <div className="column is-11 ">
-                                            <div
-                                                className="box"
-                                                style={{
-                                                    backgroundColor:
-                                                        'transparent',
-                                                    paddingRight: 0,
-                                                }}
-                                            >
-                                                <p
-                                                    className="title is-size-5 song-title"
-                                                    id="song-name-{{ i.id }}"
-                                                >
-                                                    {/* {{ i.song_name }} */}
-                                                </p>
-                                                <p
-                                                    className="subtitle is-size-6 song-artist"
-                                                    id="song-artist-{{ i.id }}"
-                                                >
-                                                    {/* {{ i.artist }} */}
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <div className="column is-1 is-hidden dropdown-icon-wrapper-{{ i.id }}">
-                                            <div className="dropdown is-right song-dropdown-{{ i.id }}">
-                                                <div className="dropdown-trigger">
-                                                    <span
-                                                        id="dropdown-icon-wrapper-{{ i.id }}"
-                                                        //   onclick="handleDropdownClick({{ i.id }})"
-                                                    >
-                                                        <IoEllipsisVerticalSharp className="dropdown__icon" />
-                                                    </span>
-                                                </div>
-                                                <div
-                                                    className="dropdown-menu"
-                                                    role="menu"
-                                                >
+                                                    <img
+                                                        className="song-image preview"
+                                                        alt="song_image"
+                                                        ref={addRef}
+                                                    />
+                                                </figure>
+                                                <div className="song-description">
                                                     <div
-                                                        className="dropdown-content"
-                                                        style={{
-                                                            backgroundColor:
-                                                                '#161616',
-                                                        }}
+                                                        className="columns is-mobile"
+                                                        style={{ width: 200 }}
                                                     >
-                                                        <div
-                                                            className="dropdown-item"
-                                                            style={{
-                                                                color: '#e0e0ec',
-                                                            }}
-                                                        />
-                                                        <div
-                                                            className="dropdown-item"
-                                                            style={{
-                                                                color: '#e0e0ec',
-                                                            }}
-                                                        />
+                                                        <div className="column is-11 ">
+                                                            <div
+                                                                className="box"
+                                                                style={{
+                                                                    backgroundColor:
+                                                                        'transparent',
+                                                                    paddingRight: 0,
+                                                                }}
+                                                            >
+                                                                <p
+                                                                    className="title is-size-5 song-title"
+                                                                    id="song-name-{{ i.id }}"
+                                                                >
+                                                                    {/* {{ i.song_name }} */}
+                                                                </p>
+                                                                <p
+                                                                    className="subtitle is-size-6 song-artist"
+                                                                    id="song-artist-{{ i.id }}"
+                                                                >
+                                                                    {/* {{ i.artist }} */}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="column is-1 is-hidden dropdown-icon-wrapper-{{ i.id }}">
+                                                            <div className="dropdown is-right song-dropdown-{{ i.id }}">
+                                                                <div className="dropdown-trigger">
+                                                                    <span
+                                                                        id="dropdown-icon-wrapper-{{ i.id }}"
+                                                                        //   onclick="handleDropdownClick({{ i.id }})"
+                                                                    >
+                                                                        <IoEllipsisVerticalSharp className="dropdown__icon" />
+                                                                    </span>
+                                                                </div>
+                                                                <div
+                                                                    className="dropdown-menu"
+                                                                    role="menu"
+                                                                >
+                                                                    <div
+                                                                        className="dropdown-content"
+                                                                        style={{
+                                                                            backgroundColor:
+                                                                                '#161616',
+                                                                        }}
+                                                                    >
+                                                                        <div
+                                                                            className="dropdown-item"
+                                                                            style={{
+                                                                                color: '#e0e0ec',
+                                                                            }}
+                                                                        />
+                                                                        <div
+                                                                            className="dropdown-item"
+                                                                            style={{
+                                                                                color: '#e0e0ec',
+                                                                            }}
+                                                                        />
 
-                                                        {/* <!--<hr className="dropdown-divider">--> */}
+                                                                        {/* <!--<hr className="dropdown-divider">--> */}
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                    );
+                                })}
+                            </>
+                        )}
                         {/* {% endfor %} */}
                     </div>
                 </div>

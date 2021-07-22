@@ -1,4 +1,4 @@
 from django.urls import path
-from music.views import FileUploadView
+from music.views import MusicView
 
-urlpatterns = [path("", FileUploadView.as_view())]
+urlpatterns = [path("", MusicView.as_view())]
