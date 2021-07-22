@@ -4,6 +4,9 @@ export const ApplicationName: string = 'SoundCore';
 // Set Login Token expiery time : (in-miliseconds)
 export const JWTTokenExpireTime: number = 50000;
 
+export const ProfilePicturePlaceholder: string =
+    'https://via.placeholder.com/90x90?text=%20';
+
 export enum RoutingPath {
     // Main Page
     HOME_PAGE = '/',

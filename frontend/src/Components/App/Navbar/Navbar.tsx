@@ -7,7 +7,7 @@ import { createUseStyles } from 'react-jss';
 import { Link, useHistory } from 'react-router-dom';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
-import { RoutingPath } from '../../../Routes';
+import { ProfilePicturePlaceholder, RoutingPath } from '../../../Routes';
 import {
     leftMenuHidden,
     leftMenuShown,
@@ -196,7 +196,7 @@ export const Navbar = () => {
                                                 );
                                             }}
                                             className="is-rounded"
-                                            alt="profile_image"
+                                            alt={ProfilePicturePlaceholder}
                                             src={GetImageFromLibravatarByEmail(
                                                 data.email
                                             )}
@@ -213,7 +213,9 @@ export const Navbar = () => {
                                                     <div className="column is-narrow ">
                                                         <figure className="image">
                                                             <img
-                                                                alt="profile_image"
+                                                                alt={
+                                                                    ProfilePicturePlaceholder
+                                                                }
                                                                 src={GetImageFromLibravatarByEmail(
                                                                     data.email
                                                                 )}
@@ -470,6 +472,7 @@ const useStyles = createUseStyles({
     },
     dropdown_content_text_items: {
         color: '#e2dfda !important',
+        userSelect: 'none',
     },
     'dropdown-divider': {
         backgroundColor: '#313131',
@@ -484,6 +487,7 @@ const useStyles = createUseStyles({
     dropdown_content_text_items_with_icons: {
         transform: 'translateY(-5px)',
         userSelect: 'none',
+        cursor: 'pointer',
     },
     'icon-box-column': {
         transform: 'translateY(-10px)',
