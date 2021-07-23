@@ -1,5 +1,6 @@
 import * as mm from 'music-metadata-browser';
 import { MutableRefObject } from 'react';
+import { resizeImage } from './ResizeImage';
 
 export const getAlbumArtFromBlob = async (
     blob: File,
@@ -33,13 +34,8 @@ export const getAlbumArtFromUrl = async (
     // console.log(base64Object);
     const metadata = await mm.fetchFromUrl(url);
     const cover = mm.selectCover(metadata.common.picture); // pick the cover image
-    const base64 = `data:${cover?.format};base64,${cover?.data.toString(
-        'base64'
-    )}`;
 
-    try {
-        if (imageRefArray.current[i].currentSrc !== base64) {
-            imageRefArray.current[i].src = base64;
-        }
-    } catch {}
+    if (cover !== null) {
+        await resizeImage(cover, '200x200', i, imageRefArray);
+    }
 };
