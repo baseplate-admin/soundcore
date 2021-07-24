@@ -3,7 +3,7 @@ import { MutableRefObject } from 'react';
 
 export const ExtractSongName = async (
     url: string,
-    artistRefArray: MutableRefObject<any>,
+    artistRefArray: MutableRefObject<Array<HTMLDivElement>>,
     i: number
 ) => {
     const metadata = await mm.fetchFromUrl(url);
@@ -21,7 +21,7 @@ export const ExtractSongName = async (
 
 export const ExtractArtistName = async (
     url: string,
-    artistRefArray: MutableRefObject<any>,
+    artistRefArray: MutableRefObject<Array<HTMLDivElement>>,
     i: number
 ) => {
     const metadata = await mm.fetchFromUrl(url);
@@ -40,7 +40,7 @@ export const ExtractArtistName = async (
 export const getAlbumArtFromBlob = async (
     blob: File,
     i: number,
-    imageRefArray: MutableRefObject<any>
+    imageRefArray: MutableRefObject<Array<HTMLImageElement>>
 ) => {
     // const item: any = await _.first(metadata.common.picture);
     // reader.onload = (res) => console.log(res);
@@ -62,7 +62,7 @@ export const getAlbumArtFromBlob = async (
 export const getAlbumArtFromUrl = async (
     url: string,
     i: number,
-    imageRefArray: MutableRefObject<any>
+    imageRefArray: MutableRefObject<Array<HTMLDivElement>>
 ) => {
     // const item: any = await _.first(metadata.common.picture);
     // reader.onload = (res) => console.log(res);
