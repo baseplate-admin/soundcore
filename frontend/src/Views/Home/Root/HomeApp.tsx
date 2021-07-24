@@ -16,11 +16,16 @@ import {
     ExtractSongName,
     getAlbumArtFromUrl,
 } from '../../../Functions/Helpers/ExtractSongMetadata';
+import { useAppDispatch } from '../../../Hooks/Store/Hooks';
+import { setHowlerObject } from '../../../Store/Slices/HowlerSlice';
+import { Howl } from 'howler';
 
 export const HomePage = () => {
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
+    const dispatch = useAppDispatch();
+
     const imageRefArray = useRef<Array<HTMLDivElement>>([]);
     const artistRefArray = useRef<Array<HTMLDivElement>>([]);
     const songRefArray = useRef<Array<HTMLDivElement>>([]);
@@ -28,8 +33,6 @@ export const HomePage = () => {
     const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);
 
     const { data, error, isLoading } = useGetSongsQuery(null);
-
-    // data.music <-- File
 
     const addImageRef = (el: never) => {
         if (el && !imageRefArray.current.includes(el)) {
@@ -67,9 +70,6 @@ export const HomePage = () => {
         ) {
             dropDownElipsisIconArray.current[id].classList.remove('is-hidden');
         }
-        // if (dropDownRefArray.current[id].classList.contains('is-hidden')) {
-        //     dropDownRefArray.current[id].classList.remove('is-hidden');
-        // }
     };
     const handleBoxMouseLeave = (id: number) => {
         if (
@@ -89,6 +89,16 @@ export const HomePage = () => {
             dropDownRefArray.current[id].classList.add('is-active');
         }
     };
+
+    // const handleBoxClick = (id: number, src: string) => {
+    //     const soundObject = new Howl({
+    //         src: src,
+    //         html5: true,
+    //         preload: true,
+    //         autoplay: false,
+    //     });
+    //     dispatch(setHowlerObject({soundObject,}));
+    // };
 
     return (
         <Fragment>
@@ -138,6 +148,12 @@ export const HomePage = () => {
                                                             onMouseLeave={() => {
                                                                 handleBoxMouseLeave(
                                                                     index
+                                                                );
+                                                            }}
+                                                            onClick={() => {
+                                                                handleBoxClick(
+                                                                    index,
+                                                                    `${MediaUrl}${music.music}`
                                                                 );
                                                             }}
                                                         >
