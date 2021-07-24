@@ -6,10 +6,25 @@ import {
 } from 'react-icons/io5';
 import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
+import { useAppSelector } from '../../../Hooks/Store/Hooks';
+import { selectHowlerState } from '../../../Store/Slices/HowlerSlice';
+import { Howl, Howler } from 'howler';
 
 export const Footer = () => {
     const classes = useStyles();
+    const howlerState = useAppSelector(selectHowlerState);
     const [playPauseButtonClicked, setPlayPauseButtonClicked] = useState(false);
+
+    const handlePlayPauseClick = () => {
+        const howl: any = howlerState.howler;
+
+        if (howl.playing() && playPauseButtonClicked) {
+            howl.pause();
+        } else if (!howl.playing() && !playPauseButtonClicked) {
+            howl.play();
+        }
+    };
+
     return (
         <footer className={classes.footer_item}>
             <div className="columns is-mobile footer_column">
@@ -61,16 +76,14 @@ export const Footer = () => {
                                 style={{ transform: 'scale(2)' }}
                             />
                         </div>
-                        <div
-                            className="column is-1 is-offset-1 has-text-centered  footer_control_column_items"
-                            // onclick="howlerJsPlayPause()"
-                        >
+                        <div className="column is-1 is-offset-1 has-text-centered  footer_control_column_items">
                             {playPauseButtonClicked ? (
                                 <IoPauseCircleOutline
                                     color="white"
                                     style={{ transform: 'scale(2)' }}
                                     onClick={() => {
                                         setPlayPauseButtonClicked((v) => !v);
+                                        handlePlayPauseClick();
                                     }}
                                 />
                             ) : (
@@ -79,6 +92,7 @@ export const Footer = () => {
                                     style={{ transform: 'scale(2)' }}
                                     onClick={() => {
                                         setPlayPauseButtonClicked((v) => !v);
+                                        handlePlayPauseClick();
                                     }}
                                 />
                             )}

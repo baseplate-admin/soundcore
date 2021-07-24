@@ -66,6 +66,6 @@ export const {
     postForgetFormErrorAndHasErrorMessage,
 } = forgetSlice.actions;
 
-export const selectLoginFormState = (state: RootState) => state.forgetForm;
+export const selectForgetFormState = (state: RootState) => state.forgetForm;
 
 export default forgetSlice.reducer;

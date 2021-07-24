@@ -28,6 +28,7 @@ import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 
 export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
+
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { height, width } = useWindowDimensions();
 

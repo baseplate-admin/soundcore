@@ -90,15 +90,17 @@ export const HomePage = () => {
         }
     };
 
-    // const handleBoxClick = (id: number, src: string) => {
-    //     const soundObject = new Howl({
-    //         src: src,
-    //         html5: true,
-    //         preload: true,
-    //         autoplay: false,
-    //     });
-    //     dispatch(setHowlerObject({soundObject,}));
-    // };
+    const handleBoxClick = (id: number, src: string) => {
+        const soundObject = new Howl({
+            src: src,
+            html5: true,
+            preload: true,
+            autoplay: false,
+        });
+        // console.log(soundObject);
+        dispatch(setHowlerObject(soundObject));
+        console.log(id, src);
+    };
 
     return (
         <Fragment>

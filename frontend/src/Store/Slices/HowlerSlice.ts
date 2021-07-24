@@ -1,29 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Howl } from 'howler';
 import { RootState } from '../Store';
 
-export interface IHowlerState {
+interface IHowlerState {
     howler: object;
-    added: Boolean;
 }
 
 const initialState: IHowlerState = {
     howler: Object,
-    added: false,
 };
 
 export const howlerSlice = createSlice({
     name: 'howler',
     initialState,
     reducers: {
-        setHowlerObject: (state, action: PayloadAction<IHowlerState>) => {
-            state.howler = action.payload.howler;
-            state.added = !state.added;
+        setHowlerObject: (state, action: PayloadAction<Howl>) => {
+            state.howler = action.payload;
         },
     },
 });
 
 export const { setHowlerObject } = howlerSlice.actions;
 
-export const selectLoginFormState = (state: RootState) => state.howlerState;
+export const selectHowlerState = (state: RootState) => state.howlerState;
 
 export default howlerSlice.reducer;
