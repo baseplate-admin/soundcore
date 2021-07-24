@@ -13,7 +13,7 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';
 
 import prettyBytes from 'pretty-bytes';
-import { getAlbumArtFromBlob } from '../../../Functions/Helpers/ExtractAlbumArt';
+import { getAlbumArtFromBlob } from '../../../Functions/Helpers/ExtractSongMetadata';
 
 // Child Components
 import { PromiseSuccessChildComponent } from './Components/PromiseSuccess/PromiseSuccess';

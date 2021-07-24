@@ -3,8 +3,8 @@ import { APIPath, APIUrl, JWTTokenExpireTime } from '../../Routes';
 
 // Access -> Longer Token
 // Refresh -> Shorter Token.
-// Refresh -> Stays
 // Access -> Expires
+// Refresh -> Stays
 
 export const SetJWTTokenInLocalStorage = async (
     access: string,

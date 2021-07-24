@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { GetJWTTokenInLocalStorage } from '../../Functions/Helpers/JWTCookie';
 import { APIPath, APIUrl } from '../../Routes';
+
 export const userApi = createApi({
     reducerPath: 'user',
     baseQuery: fetchBaseQuery({
@@ -14,7 +15,6 @@ export const userApi = createApi({
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             }
-            console.log(`${APIUrl}${APIPath.USER_INFO_ENDPOINT}`);
 
             return headers;
         },
