@@ -21,11 +21,11 @@ export const HomePage = () => {
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
-    const imageRefArray = useRef([]);
-    const artistRefArray = useRef([]);
-    const songRefArray = useRef([]);
-    const dropDownRefArray = useRef<any>([]);
-    const dropDownElipsisIconArray = useRef<any>([]);
+    const imageRefArray = useRef<Array<HTMLDivElement>>([]);
+    const artistRefArray = useRef<Array<HTMLDivElement>>([]);
+    const songRefArray = useRef<Array<HTMLDivElement>>([]);
+    const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
+    const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);
 
     const { data, error, isLoading } = useGetSongsQuery(null);
 
