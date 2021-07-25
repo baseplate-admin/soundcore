@@ -8,7 +8,6 @@ import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import { useAppSelector } from '../../../Hooks/Store/Hooks';
 import { selectHowlerState } from '../../../Store/Slices/HowlerSlice';
-import { Howl, Howler } from 'howler';
 
 export const Footer = () => {
     const classes = useStyles();

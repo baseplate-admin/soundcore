@@ -19,8 +19,12 @@ export const store = configureStore({
         [songsApi.reducerPath]: songsApi.reducer,
         [userApi.reducerPath]: userApi.reducer,
     },
+
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(songsApi.middleware, userApi.middleware),
+        getDefaultMiddleware({
+            thunk: { extraArgument: songsApi, userApi },
+            serializableCheck: false, // Disable Serializable Check because we are storing howler object in database.
+        }),
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -3,11 +3,11 @@ import { Howl } from 'howler';
 import { RootState } from '../Store';
 
 interface IHowlerState {
-    howler: object;
+    howler: Array<object>;
 }
 
 const initialState: IHowlerState = {
-    howler: Object,
+    howler: [],
 };
 
 export const howlerSlice = createSlice({
@@ -15,7 +15,7 @@ export const howlerSlice = createSlice({
     initialState,
     reducers: {
         setHowlerObject: (state, action: PayloadAction<Howl>) => {
-            state.howler = action.payload;
+            state.howler.push(action.payload);
         },
     },
 });

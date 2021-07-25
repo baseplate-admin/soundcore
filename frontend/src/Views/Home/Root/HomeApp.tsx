@@ -97,9 +97,8 @@ export const HomePage = () => {
             preload: true,
             autoplay: false,
         });
-        // console.log(soundObject);
+
         dispatch(setHowlerObject(soundObject));
-        console.log(id, src);
     };
 
     return (
