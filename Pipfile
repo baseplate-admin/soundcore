@@ -4,6 +4,8 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+mutagen = "*"
+pillow = "*"
 django = "*"
 djangorestframework = "*"
 whitenoise = {extras = ["brotli"], version = "*"}
@@ -11,11 +13,16 @@ django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 
 [dev-packages]
+black = "*"
 
 [requires]
 python_version = "3.9"
 
 [scripts]
-dev = "python manage.py runserver"
-sync = "python manage.py migrate"
-mksync = "python manage.py makemigrations"
+dev-server = "python ./backend/manage.py runserver"
+dev-frontend = "cd frontend && yarn start"
+sync = "python ./backend/manage.py migrate"
+mksync = "python ./backend/manage.py makemigrations"
+
+[pipenv]
+allow_prereleases = true

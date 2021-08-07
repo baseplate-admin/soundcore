@@ -23,15 +23,14 @@ export const Footer = (props: IFooterProps) => {
         dispatch(updatePlayStatus());
 
         // Create a new howler object
-
+        let sound: any = props.howlerState[0];
         // Song might be null if User didn't click anything
-        if (footerState.playing) {
+        if (footerState.playing && sound.playing()) {
             // Means playing
-            let sound: any = props.howlerState[0];
+
             sound.pause();
-        } else if (!footerState.playing) {
+        } else if (!footerState.playing && !sound.playing()) {
             // Means paused
-            let sound: any = props.howlerState[0];
             sound.play();
         }
     };

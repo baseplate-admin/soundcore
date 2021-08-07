@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FileUploadParser
 from music.models import Upload
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from .utils import flac_upload_handler
 
 # Create your views here.
 
@@ -20,8 +21,10 @@ class MusicView(APIView):
         return Response(serailizer.data, 200)
 
     def put(self, request):
-        file_obj = request.data["file"]
-        Upload.objects.create(music=file_obj).save()
+        file = request.data["file"]
+        if file.name.endswith(".flac"):
+            flac_upload_handler(file)
+        elif file.name.endswith("mp3"):
+            pass
 
         return Response(status=201)
-    

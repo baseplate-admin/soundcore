@@ -1,5 +1,7 @@
 import { Fragment, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 import './scss/HomeApp.scss';
 import './scss/HomeApp.responsive.scss';
@@ -11,8 +13,7 @@ import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import { ApplicationName, MediaUrl, RoutingPath } from '../../../Routes';
 import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
-import { getAlbumArtFromUrl } from '../../../Functions/Helpers/ExtractSongMetadata';
-import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
+import { useAppDispatch } from '../../../Hooks/Store/Hooks';
 import { Howl } from 'howler';
 import { Link } from 'react-router-dom';
 import { updatePlayStatus } from '../../../Store/Slices/FooterSlice';
@@ -24,31 +25,10 @@ export const HomePage = () => {
     const dispatch = useAppDispatch();
     const [howlerState, setHowlerState] = useState<Array<Object>>([]);
 
-    const imageRefArray = useRef<Array<HTMLDivElement>>([]);
-    const artistRefArray = useRef<Array<HTMLDivElement>>([]);
-    const songRefArray = useRef<Array<HTMLDivElement>>([]);
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
     const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);
 
     const { data, error, isLoading } = useGetSongsQuery(null);
-
-    const addImageRef = (el: never) => {
-        if (el && !imageRefArray.current.includes(el)) {
-            imageRefArray.current.push(el);
-        }
-    };
-
-    const addArtistRef = (el: never) => {
-        if (el && !artistRefArray.current.includes(el)) {
-            artistRefArray.current.push(el);
-        }
-    };
-
-    const addSongRef = (el: never) => {
-        if (el && !songRefArray.current.includes(el)) {
-            songRefArray.current.push(el);
-        }
-    };
 
     const addDropDownRef = (el: never) => {
         if (el && !dropDownRefArray.current.includes(el)) {
@@ -101,7 +81,7 @@ export const HomePage = () => {
             dispatch(updatePlayStatus());
         } else {
             const previousSound: any = howlerState;
-            previousSound.pause();
+            previousSound[0].pause();
             setHowlerState([]);
 
             const sound = new Howl({
@@ -135,13 +115,6 @@ export const HomePage = () => {
                                     <Fragment>
                                         {data.map(
                                             (music: any, index: number) => {
-                                                getAlbumArtFromUrl(
-                                                    `${MediaUrl}${music.music}`,
-                                                    index,
-                                                    imageRefArray,
-                                                    songRefArray,
-                                                    artistRefArray
-                                                );
                                                 return (
                                                     <div className="grid-item">
                                                         <div
@@ -158,17 +131,24 @@ export const HomePage = () => {
                                                             }}
                                                             onClick={() => {
                                                                 handleBoxClick(
-                                                                    `${MediaUrl}${music.music}`
+                                                                    `${MediaUrl}${music.song_file}`
                                                                 );
                                                             }}
                                                         >
                                                             <figure className="image song-image-figure">
-                                                                <div
-                                                                    className="song-image preview"
-                                                                    ref={
-                                                                        addImageRef
-                                                                    }
-                                                                />
+                                                                <div className="song-image preview">
+                                                                    <LazyLoadImage
+                                                                        src={`${MediaUrl}${music.album_art}`}
+                                                                        effect="blur"
+                                                                        className="song-image-figure"
+                                                                        width={
+                                                                            200
+                                                                        }
+                                                                        height={
+                                                                            200
+                                                                        }
+                                                                    />
+                                                                </div>
                                                             </figure>
                                                             <div className="song-description">
                                                                 <div
@@ -186,18 +166,16 @@ export const HomePage = () => {
                                                                                 paddingRight: 0,
                                                                             }}
                                                                         >
-                                                                            <p
-                                                                                className="title is-size-5 song-title"
-                                                                                ref={
-                                                                                    addSongRef
+                                                                            <p className="title is-size-5 song-title">
+                                                                                {
+                                                                                    music.song_name
                                                                                 }
-                                                                            ></p>
-                                                                            <p
-                                                                                ref={
-                                                                                    addArtistRef
+                                                                            </p>
+                                                                            <p className="subtitle is-size-6 song-artist">
+                                                                                {
+                                                                                    music.artist
                                                                                 }
-                                                                                className="subtitle is-size-6 song-artist"
-                                                                            ></p>
+                                                                            </p>
                                                                         </div>
                                                                     </div>
                                                                     <div className="column is-1">
