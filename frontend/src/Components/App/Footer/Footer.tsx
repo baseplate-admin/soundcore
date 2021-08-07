@@ -6,41 +6,34 @@ import {
 } from 'react-icons/io5';
 import { createUseStyles } from 'react-jss';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
-import { selectHowlerState } from '../../../Store/Slices/HowlerSlice';
 import {
     selectFooterState,
     updatePlayStatus,
 } from '../../../Store/Slices/FooterSlice';
-import { Howl } from 'howler';
-
-export const Footer = () => {
+interface IFooterProps {
+    howlerState: Array<object>;
+}
+export const Footer = (props: IFooterProps) => {
     const dispatch = useAppDispatch();
     const classes = useStyles();
 
-    const howlerState = useAppSelector(selectHowlerState);
     const footerState = useAppSelector(selectFooterState);
 
     const handlePlayPauseClick = () => {
         dispatch(updatePlayStatus());
 
         // Create a new howler object
-        let sound = new Howl({});
 
-        // The id in Number
-        let song = howlerState.howler[0];
-
-        // console.log(song);
-
-        // // Song might be null if User didn't click anything
-        // if (song !== undefined) {
-        //     if (footerState.playing) {
-        //         // Means playing
-        //         sound.pause(song);
-        //     } else if (!footerState.playing) {
-        //         // Means paused
-        //         sound.play(song);
-        //     }
-        // }
+        // Song might be null if User didn't click anything
+        if (footerState.playing) {
+            // Means playing
+            let sound: any = props.howlerState[0];
+            sound.pause();
+        } else if (!footerState.playing) {
+            // Means paused
+            let sound: any = props.howlerState[0];
+            sound.play();
+        }
     };
 
     return (

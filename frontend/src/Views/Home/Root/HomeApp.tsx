@@ -1,4 +1,4 @@
-import { Fragment, useRef } from 'react';
+import { Fragment, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 
 import './scss/HomeApp.scss';
@@ -11,17 +11,8 @@ import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
 import { ApplicationName, MediaUrl, RoutingPath } from '../../../Routes';
 import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
-import {
-    ExtractArtistName,
-    ExtractSongName,
-    getAlbumArtFromUrl,
-} from '../../../Functions/Helpers/ExtractSongMetadata';
+import { getAlbumArtFromUrl } from '../../../Functions/Helpers/ExtractSongMetadata';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
-import {
-    clearHowlerObjects,
-    selectHowlerState,
-    setHowlerObject,
-} from '../../../Store/Slices/HowlerSlice';
 import { Howl } from 'howler';
 import { Link } from 'react-router-dom';
 import { updatePlayStatus } from '../../../Store/Slices/FooterSlice';
@@ -31,8 +22,7 @@ export const HomePage = () => {
     //     pollingInterval: 1,
     // });
     const dispatch = useAppDispatch();
-
-    const howlerState = useAppSelector(selectHowlerState);
+    const [howlerState, setHowlerState] = useState<Array<Object>>([]);
 
     const imageRefArray = useRef<Array<HTMLDivElement>>([]);
     const artistRefArray = useRef<Array<HTMLDivElement>>([]);
@@ -99,19 +89,29 @@ export const HomePage = () => {
     };
 
     const handleBoxClick = (src: string) => {
-        if (howlerState.howler.length === 0) {
-            let sound = new Howl({});
-            sound.pause(howlerState.howler[0]);
-        } else {
+        if (howlerState.length === 0) {
             const sound = new Howl({
                 src: src,
                 html5: true,
                 preload: true,
                 autoplay: false,
             });
-            let id = sound.play();
-            dispatch(setHowlerObject(id));
+            sound.play();
+            setHowlerState([sound]);
             dispatch(updatePlayStatus());
+        } else {
+            const previousSound: any = howlerState;
+            previousSound.pause();
+            setHowlerState([]);
+
+            const sound = new Howl({
+                src: src,
+                html5: true,
+                preload: true,
+                autoplay: false,
+            });
+            sound.play();
+            setHowlerState([sound]);
         }
     };
 
@@ -138,19 +138,10 @@ export const HomePage = () => {
                                                 getAlbumArtFromUrl(
                                                     `${MediaUrl}${music.music}`,
                                                     index,
-                                                    imageRefArray
-                                                );
-                                                ExtractArtistName(
-                                                    `${MediaUrl}${music.music}`,
-                                                    artistRefArray,
-                                                    index
-                                                );
-                                                ExtractSongName(
-                                                    `${MediaUrl}${music.music}`,
+                                                    imageRefArray,
                                                     songRefArray,
-                                                    index
+                                                    artistRefArray
                                                 );
-
                                                 return (
                                                     <div className="grid-item">
                                                         <div
@@ -313,7 +304,7 @@ export const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <Footer />
+            <Footer howlerState={howlerState} />
         </Fragment>
     );
 };

@@ -1,42 +1,6 @@
 import * as mm from 'music-metadata-browser';
 import { MutableRefObject } from 'react';
 
-export const ExtractSongName = async (
-    url: string,
-    artistRefArray: MutableRefObject<Array<HTMLDivElement>>,
-    i: number
-) => {
-    const metadata = await mm.fetchFromUrl(url);
-
-    if (metadata.common.title) {
-        const p = document.createElement('p');
-        const text = document.createTextNode(metadata.common.title);
-
-        if (artistRefArray.current[i].childElementCount === 0) {
-            p.appendChild(text);
-            artistRefArray.current[i].appendChild(p);
-        }
-    }
-};
-
-export const ExtractArtistName = async (
-    url: string,
-    artistRefArray: MutableRefObject<Array<HTMLDivElement>>,
-    i: number
-) => {
-    const metadata = await mm.fetchFromUrl(url);
-
-    if (metadata.common.artist) {
-        const p = document.createElement('p');
-        const text = document.createTextNode(metadata.common.artist);
-
-        if (artistRefArray.current[i].childElementCount === 0) {
-            p.appendChild(text);
-            artistRefArray.current[i].appendChild(p);
-        }
-    }
-};
-
 export const getAlbumArtFromBlob = async (
     blob: File,
     i: number,
@@ -62,7 +26,9 @@ export const getAlbumArtFromBlob = async (
 export const getAlbumArtFromUrl = async (
     url: string,
     i: number,
-    imageRefArray: MutableRefObject<Array<HTMLDivElement>>
+    imageRefArray: MutableRefObject<Array<HTMLDivElement>>,
+    songNameRefArray: MutableRefObject<Array<HTMLDivElement>>,
+    artistRefArray: MutableRefObject<Array<HTMLDivElement>>
 ) => {
     const metadata = await mm.fetchFromUrl(url);
     const cover = mm.selectCover(metadata.common.picture); // pick the cover image
@@ -91,4 +57,24 @@ export const getAlbumArtFromUrl = async (
     };
 
     image.src = base64;
+
+    if (metadata.common.title) {
+        const p = document.createElement('p');
+        const text = document.createTextNode(metadata.common.title);
+
+        if (songNameRefArray.current[i].childElementCount === 0) {
+            p.appendChild(text);
+            songNameRefArray.current[i].appendChild(p);
+        }
+    }
+
+    if (metadata.common.artist) {
+        const p = document.createElement('p');
+        const text = document.createTextNode(metadata.common.artist);
+
+        if (artistRefArray.current[i].childElementCount === 0) {
+            p.appendChild(text);
+            artistRefArray.current[i].appendChild(p);
+        }
+    }
 };
