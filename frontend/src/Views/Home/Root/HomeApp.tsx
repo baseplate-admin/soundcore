@@ -9,22 +9,30 @@ import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import { ApplicationName, MediaUrl } from '../../../Routes';
+import { ApplicationName, MediaUrl, RoutingPath } from '../../../Routes';
 import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
 import {
     ExtractArtistName,
     ExtractSongName,
     getAlbumArtFromUrl,
 } from '../../../Functions/Helpers/ExtractSongMetadata';
-import { useAppDispatch } from '../../../Hooks/Store/Hooks';
-import { setHowlerObject } from '../../../Store/Slices/HowlerSlice';
+import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
+import {
+    clearHowlerObjects,
+    selectHowlerState,
+    setHowlerObject,
+} from '../../../Store/Slices/HowlerSlice';
 import { Howl } from 'howler';
+import { Link } from 'react-router-dom';
+import { updatePlayStatus } from '../../../Store/Slices/FooterSlice';
 
 export const HomePage = () => {
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
     const dispatch = useAppDispatch();
+
+    const howlerState = useAppSelector(selectHowlerState);
 
     const imageRefArray = useRef<Array<HTMLDivElement>>([]);
     const artistRefArray = useRef<Array<HTMLDivElement>>([]);
@@ -90,15 +98,21 @@ export const HomePage = () => {
         }
     };
 
-    const handleBoxClick = (id: number, src: string) => {
-        const soundObject = new Howl({
-            src: src,
-            html5: true,
-            preload: true,
-            autoplay: false,
-        });
-
-        dispatch(setHowlerObject(soundObject));
+    const handleBoxClick = (src: string) => {
+        if (howlerState.howler.length === 0) {
+            let sound = new Howl({});
+            sound.pause(howlerState.howler[0]);
+        } else {
+            const sound = new Howl({
+                src: src,
+                html5: true,
+                preload: true,
+                autoplay: false,
+            });
+            let id = sound.play();
+            dispatch(setHowlerObject(id));
+            dispatch(updatePlayStatus());
+        }
     };
 
     return (
@@ -153,7 +167,6 @@ export const HomePage = () => {
                                                             }}
                                                             onClick={() => {
                                                                 handleBoxClick(
-                                                                    index,
                                                                     `${MediaUrl}${music.music}`
                                                                 );
                                                             }}
@@ -264,7 +277,36 @@ export const HomePage = () => {
                                         )}
                                     </Fragment>
                                 ) : (
-                                    <Fragment>{error}</Fragment>
+                                    <Fragment>
+                                        {/* If user is not logged in show a prompt to login */}
+                                        <section className="hero is-large">
+                                            <div className="hero-body">
+                                                <div className="columns is-mobile is-centered">
+                                                    <div className="column is-narrow">
+                                                        <div className="title">
+                                                            <p>
+                                                                You are not
+                                                                logged in.
+                                                            </p>
+                                                        </div>
+                                                        <div className="columns is-mobile is-centered">
+                                                            <div className="column is-narrow">
+                                                                <div className="subtitle">
+                                                                    <Link
+                                                                        to={
+                                                                            RoutingPath.LOGIN_PAGE
+                                                                        }
+                                                                    >
+                                                                        Log-in?
+                                                                    </Link>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </Fragment>
                                 )}
                             </Fragment>
                         )}

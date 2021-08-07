@@ -42,9 +42,6 @@ export const getAlbumArtFromBlob = async (
     i: number,
     imageRefArray: MutableRefObject<Array<HTMLImageElement>>
 ) => {
-    // const item: any = await _.first(metadata.common.picture);
-    // reader.onload = (res) => console.log(res);
-    // console.log(base64Object);
     const metadata = await mm.parseBlob(blob);
     const cover = mm.selectCover(metadata.common.picture); // pick the cover image
 
@@ -53,7 +50,10 @@ export const getAlbumArtFromBlob = async (
     )}`;
 
     try {
-        if (imageRefArray.current[i].currentSrc !== base64) {
+        if (
+            imageRefArray !== undefined &&
+            imageRefArray.current[i].currentSrc !== base64
+        ) {
             imageRefArray.current[i].src = base64;
         }
     } catch {}
@@ -64,9 +64,6 @@ export const getAlbumArtFromUrl = async (
     i: number,
     imageRefArray: MutableRefObject<Array<HTMLDivElement>>
 ) => {
-    // const item: any = await _.first(metadata.common.picture);
-    // reader.onload = (res) => console.log(res);
-    // console.log(base64Object);
     const metadata = await mm.fetchFromUrl(url);
     const cover = mm.selectCover(metadata.common.picture); // pick the cover image
 
@@ -85,7 +82,10 @@ export const getAlbumArtFromUrl = async (
 
         ctx?.drawImage(image, 0, 0, 200, 200);
 
-        if (imageRefArray.current[i].childElementCount === 0) {
+        if (
+            imageRefArray !== undefined &&
+            imageRefArray.current[i].childElementCount === 0
+        ) {
             imageRefArray.current[i].appendChild(canvas);
         }
     };

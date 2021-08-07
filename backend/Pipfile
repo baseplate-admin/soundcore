@@ -14,3 +14,8 @@ djangorestframework-simplejwt = "*"
 
 [requires]
 python_version = "3.9"
+
+[scripts]
+dev = "python manage.py runserver"
+sync = "python manage.py migrate"
+mksync = "python manage.py makemigrations"

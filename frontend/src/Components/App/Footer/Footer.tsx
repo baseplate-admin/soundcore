@@ -4,24 +4,43 @@ import {
     IoPlayCircleOutline,
     IoPlaySkipForwardCircleOutline,
 } from 'react-icons/io5';
-import { useState } from 'react';
 import { createUseStyles } from 'react-jss';
-import { useAppSelector } from '../../../Hooks/Store/Hooks';
+import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import { selectHowlerState } from '../../../Store/Slices/HowlerSlice';
+import {
+    selectFooterState,
+    updatePlayStatus,
+} from '../../../Store/Slices/FooterSlice';
+import { Howl } from 'howler';
 
 export const Footer = () => {
+    const dispatch = useAppDispatch();
     const classes = useStyles();
+
     const howlerState = useAppSelector(selectHowlerState);
-    const [playPauseButtonClicked, setPlayPauseButtonClicked] = useState(false);
+    const footerState = useAppSelector(selectFooterState);
 
     const handlePlayPauseClick = () => {
-        const howl: any = howlerState.howler;
+        dispatch(updatePlayStatus());
 
-        if (howl.playing() && playPauseButtonClicked) {
-            howl.pause();
-        } else if (!howl.playing() && !playPauseButtonClicked) {
-            howl.play();
-        }
+        // Create a new howler object
+        let sound = new Howl({});
+
+        // The id in Number
+        let song = howlerState.howler[0];
+
+        // console.log(song);
+
+        // // Song might be null if User didn't click anything
+        // if (song !== undefined) {
+        //     if (footerState.playing) {
+        //         // Means playing
+        //         sound.pause(song);
+        //     } else if (!footerState.playing) {
+        //         // Means paused
+        //         sound.play(song);
+        //     }
+        // }
     };
 
     return (
@@ -76,12 +95,11 @@ export const Footer = () => {
                             />
                         </div>
                         <div className="column is-1 is-offset-1 has-text-centered  footer_control_column_items">
-                            {playPauseButtonClicked ? (
+                            {footerState.playing ? (
                                 <IoPauseCircleOutline
                                     color="white"
                                     style={{ transform: 'scale(2)' }}
                                     onClick={() => {
-                                        setPlayPauseButtonClicked((v) => !v);
                                         handlePlayPauseClick();
                                     }}
                                 />
@@ -90,7 +108,6 @@ export const Footer = () => {
                                     color="white"
                                     style={{ transform: 'scale(2)' }}
                                     onClick={() => {
-                                        setPlayPauseButtonClicked((v) => !v);
                                         handlePlayPauseClick();
                                     }}
                                 />

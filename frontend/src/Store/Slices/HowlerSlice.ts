@@ -1,9 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Howl } from 'howler';
 import { RootState } from '../Store';
 
 interface IHowlerState {
-    howler: Array<object>;
+    howler: Array<number>;
 }
 
 const initialState: IHowlerState = {
@@ -14,13 +13,16 @@ export const howlerSlice = createSlice({
     name: 'howler',
     initialState,
     reducers: {
-        setHowlerObject: (state, action: PayloadAction<Howl>) => {
+        clearHowlerObjects: (state) => {
+            state = initialState;
+        },
+        setHowlerObject: (state, action: PayloadAction<number>) => {
             state.howler.push(action.payload);
         },
     },
 });
 
-export const { setHowlerObject } = howlerSlice.actions;
+export const { setHowlerObject, clearHowlerObjects } = howlerSlice.actions;
 
 export const selectHowlerState = (state: RootState) => state.howlerState;
 

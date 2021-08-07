@@ -14,7 +14,7 @@ import {
     selectLeftMenuState,
 } from '../../../Store/Slices/NavbarSlice';
 import { useMediaQuery } from 'react-responsive';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useGetUserQuery } from '../../../Store/Services/GetUserService';
 import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/GetImageFromLibravatar';
 import { useSpring, animated } from 'react-spring';
@@ -27,12 +27,18 @@ import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
 import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 
 export const Navbar = () => {
+    const [Logout] = useAuthLogout();
+
     const { data, isLoading } = useGetUserQuery(null);
+
+    useEffect(() => {
+        if (data === undefined) {
+            Logout();
+        }
+    }, [Logout, data]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { height, width } = useWindowDimensions();
-
-    const [Logout] = useAuthLogout();
 
     const history = useHistory();
     const classes = useStyles();
@@ -190,7 +196,7 @@ export const Navbar = () => {
                                         className={`button is-rounded ${classes.button}`}
                                         to={RoutingPath.LOGIN_PAGE}
                                     >
-                                        Login
+                                        Log in
                                     </Link>
                                 </div>
                             </div>
