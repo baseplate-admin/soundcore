@@ -13,7 +13,6 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';
 
 import prettyBytes from 'pretty-bytes';
-import { getAlbumArtFromBlob } from '../../../Functions/Helpers/ExtractSongMetadata';
 
 // Child Components
 import { PromiseSuccessChildComponent } from './Components/PromiseSuccess/PromiseSuccess';
@@ -21,6 +20,7 @@ import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
 import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
+import { ImFileMusic } from 'react-icons/im';
 
 interface IUploadFiles {
     file: File;
@@ -131,7 +131,6 @@ export const UploadSongPage = () => {
     });
 
     const mappedSongs = files.map((file, index) => {
-        getAlbumArtFromBlob(file.file, index, imageRefArray);
         return (
             <>
                 <div
@@ -147,12 +146,7 @@ export const UploadSongPage = () => {
                                         'translateY(10px) translateX(15px)',
                                 }}
                             >
-                                <img
-                                    className="is-rounded"
-                                    src=""
-                                    alt="Icon"
-                                    ref={addRef}
-                                />
+                                <ImFileMusic color="white" />
                             </figure>
                         </figure>
                         <div className="media-content">
