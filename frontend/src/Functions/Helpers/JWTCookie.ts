@@ -1,10 +1,16 @@
 import axios from 'axios';
 import { APIPath, APIUrl, JWTTokenExpireTime } from '../../Routes';
 
-// Access -> Longer Token
-// Refresh -> Shorter Token.
-// Access -> Expires
-// Refresh -> Stays
+/*
+    Helper:
+        Token Type:
+            • Access -> Longer Token
+            • Refresh -> Shorter Token.
+        
+        Status:
+            • Access -> Expires
+            • Refresh -> Stays
+*/
 
 export const SetJWTTokenInLocalStorage = async (
     access: string,

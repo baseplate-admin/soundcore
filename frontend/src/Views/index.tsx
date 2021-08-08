@@ -26,6 +26,7 @@ export const App = () => {
     robotoFontStyle();
 
     //  Lazy Import for Pages
+
     const HomePage = lazy(() =>
         import('./Home/Root/HomeApp').then(({ HomePage }) => ({
             default: HomePage,

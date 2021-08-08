@@ -20,6 +20,7 @@ import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/animations/shift-away.css';
+
 import { ApplicationName } from '../../../Routes';
 import { createUseStyles } from 'react-jss';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';

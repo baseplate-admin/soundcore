@@ -275,7 +275,7 @@ export const LoginPage = () => {
                     <div className="level-right">
                         <div className="level-item is-size-7 ">
                             <p className={`heading ${classes.new_here_tag}`}>
-                                New here?{' '}
+                                New here{'? | '}
                                 <span className="has-text-link">
                                     <Link
                                         to={RoutingPath.REGISTER_PAGE}

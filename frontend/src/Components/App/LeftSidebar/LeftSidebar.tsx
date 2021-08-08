@@ -110,7 +110,8 @@ export const LeftSidebar = () => {
 const useStyles = createUseStyles({
     'left-menu': {
         backgroundColor: '#161616 !important',
-        height: '100vh',
+        minHeight: '100vh',
+        height: '105%',
     },
     icons: {
         borderBottom: '1px solid #313131',

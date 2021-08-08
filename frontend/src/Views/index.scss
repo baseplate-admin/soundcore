@@ -1,9 +1,18 @@
 html {
     scrollbar-width: none; /* Firefox */
+    overscroll-behavior: 'none';
 
     &::-webkit-scrollbar {
         /* WebKit */
-        width: 0;
-        height: 0;
+        display: 'none';
+    }
+
+    body {
+        overflow: hidden;
+        min-height: 100vh;
+
+        @media screen and (max-width: 767px) {
+            position: relative;
+        }
     }
 }

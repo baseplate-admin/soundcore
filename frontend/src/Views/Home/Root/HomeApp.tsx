@@ -3,9 +3,6 @@ import { Helmet } from 'react-helmet';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
-import './scss/HomeApp.scss';
-import './scss/HomeApp.responsive.scss';
-
 import { Navbar } from '../../../Components/App/Navbar/Navbar';
 import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
@@ -17,11 +14,14 @@ import { useAppDispatch } from '../../../Hooks/Store/Hooks';
 import { Howl } from 'howler';
 import { Link } from 'react-router-dom';
 import { updatePlayStatus } from '../../../Store/Slices/FooterSlice';
+import { createUseStyles } from 'react-jss';
 
 export const HomePage = () => {
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
+    const classes = useStyles();
+
     const dispatch = useAppDispatch();
     const [howlerState, setHowlerState] = useState<Array<Object>>([]);
 
@@ -101,12 +101,14 @@ export const HomePage = () => {
                 <title> {ApplicationName} </title>
             </Helmet>
             <Navbar />
-            <div className="columns is-mobile main__body">
-                <div className="column is-narrow left_menu_wrapper">
+            <div className={`columns is-mobile ${classes.main__body}`}>
+                <div
+                    className={`column is-narrow ${classes.left_menu_wrapper}`}
+                >
                     <LeftSidebar />
                 </div>
-                <div className="column right-column">
-                    <div className="grid-container">
+                <div className={`column ${classes['right-column']}`}>
+                    <div className={classes['grid-container']}>
                         {isLoading ? (
                             <Fragment></Fragment>
                         ) : (
@@ -116,9 +118,13 @@ export const HomePage = () => {
                                         {data.map(
                                             (music: any, index: number) => {
                                                 return (
-                                                    <div className="grid-item">
+                                                    <div
+                                                        className={
+                                                            classes['grid-item']
+                                                        }
+                                                    >
                                                         <div
-                                                            className="box grid-box"
+                                                            className={`box ${classes['grid-box']}`}
                                                             onMouseEnter={() => {
                                                                 handleBoxMouseEnter(
                                                                     index
@@ -140,7 +146,11 @@ export const HomePage = () => {
                                                                     <LazyLoadImage
                                                                         src={`${MediaUrl}${music.album_art}`}
                                                                         effect="blur"
-                                                                        className="song-image-figure"
+                                                                        className={
+                                                                            classes[
+                                                                                'song-image-figure'
+                                                                            ]
+                                                                        }
                                                                         width={
                                                                             200
                                                                         }
@@ -150,7 +160,13 @@ export const HomePage = () => {
                                                                     />
                                                                 </div>
                                                             </figure>
-                                                            <div className="song-description">
+                                                            <div
+                                                                className={
+                                                                    classes[
+                                                                        'song-description'
+                                                                    ]
+                                                                }
+                                                            >
                                                                 <div
                                                                     className="columns is-mobile"
                                                                     style={{
@@ -166,12 +182,16 @@ export const HomePage = () => {
                                                                                 paddingRight: 0,
                                                                             }}
                                                                         >
-                                                                            <p className="title is-size-5 song-title">
+                                                                            <p
+                                                                                className={`title is-size-5 ${classes['song-title']}`}
+                                                                            >
                                                                                 {
                                                                                     music.song_name
                                                                                 }
                                                                             </p>
-                                                                            <p className="subtitle is-size-6 song-artist">
+                                                                            <p
+                                                                                className={`subtitle is-size-6 ${classes['song-artist']}`}
+                                                                            >
                                                                                 {
                                                                                     music.artist
                                                                                 }
@@ -183,7 +203,7 @@ export const HomePage = () => {
                                                                             ref={
                                                                                 addDropDownRef
                                                                             }
-                                                                            className="dropdown is-right "
+                                                                            className="dropdown is-right"
                                                                         >
                                                                             <div
                                                                                 className="dropdown-trigger"
@@ -202,10 +222,7 @@ export const HomePage = () => {
                                                                                     }}
                                                                                     className="is-hidden"
                                                                                 >
-                                                                                    <IoEllipsisVerticalSharp
-                                                                                        color="white"
-                                                                                        className="dropdown__icon"
-                                                                                    />
+                                                                                    <IoEllipsisVerticalSharp color="white" />
                                                                                 </span>
                                                                             </div>
                                                                             <div
@@ -286,3 +303,62 @@ export const HomePage = () => {
         </Fragment>
     );
 };
+
+const useStyles = createUseStyles({
+    main__body: {
+        minHeight: 'calc(100vh - 140px)',
+        marginBottom: '0',
+        maxHeight: '1vh',
+    },
+    left_menu_wrapper: {
+        transform: 'translateY(-12px)',
+    },
+
+    'right-column': {
+        backgroundColor: '#060606',
+        transform: 'translateX(-12px)',
+        overflowX: 'hidden',
+        overflowY: 'scroll',
+        msOverflowStyle: 'none',
+        scrollbarWidth: 'none',
+    },
+    'grid-container': {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(12em, 1fr))',
+        gap: '1em',
+        paddingTop: '1em',
+    },
+    'grid-item': {
+        fontSize: '30px',
+        verticalAlign: 'middle',
+        display: 'flex',
+        justifyContent: 'center',
+    },
+    'grid-box': {
+        backgroundColor: 'transparent',
+        color: 'white',
+    },
+    'song-image-figure': {
+        height: '200px',
+        width: '200px',
+    },
+    'song-description': {
+        backgroundColor: 'transparent',
+    },
+    'song-title': {
+        whiteSpace: 'nowrap',
+        width: '8em',
+        height: '1.3em',
+        color: '#e0e0ec',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    },
+    'song-artist': {
+        whiteSpace: 'nowrap',
+        width: '8em',
+        height: '1.3em',
+        color: '#a1a1a2',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+    },
+});
