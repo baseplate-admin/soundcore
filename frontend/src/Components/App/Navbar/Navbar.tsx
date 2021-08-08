@@ -32,10 +32,10 @@ export const Navbar = () => {
     const { data, isLoading } = useGetUserQuery(null);
 
     useEffect(() => {
-        if (data === undefined) {
+        if (!isLoading && data === undefined) {
             Logout();
         }
-    }, [Logout, data]);
+    }, [Logout, data, isLoading]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { height, width } = useWindowDimensions();

@@ -5,3 +5,4 @@ backend/Pipfile.lock
 *.mp3
 *.flac
 *.png
+*.webp
