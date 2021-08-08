@@ -1,30 +1,78 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../Store';
 
-export interface IForgetPasswordState {
-    volume: number;
-    playing: boolean;
+interface IForgetPasswordState {
+    song: {
+        name: string;
+        artist: string;
+        image: string | undefined; // Base64
+        sampleRate: string;
+
+        control: {
+            total: number; // <-- Means song total duration (seconds)
+            current: number; // <-- Means song Current duration (seconds)
+        };
+        // Song global attars such as play/pause and volume
+        global: {
+            playing: boolean;
+            volume: number;
+        };
+    };
 }
 
 const initialState: IForgetPasswordState = {
-    volume: 1.0,
-    playing: false,
+    song: {
+        name: 'Song Name',
+        artist: 'Song Artist',
+        image: '',
+        sampleRate: 'Sample Rate',
+
+        control: {
+            total: 0,
+            current: 0,
+        },
+        global: {
+            playing: false,
+            volume: 0.5, // Half Volume
+        },
+    },
 };
+
+interface ISongAdd {
+    name: string;
+    artist: string;
+    image: string | undefined;
+    sampleRate: string;
+}
 
 export const footerSlice = createSlice({
     name: 'footer/modifyControls',
     initialState,
     reducers: {
-        updatePlayStatus: (state) => {
-            state.playing = !state.playing;
+        updateStatusToPlay: (state) => {
+            state.song.global.playing = true;
+        },
+        updateStatusToPause: (state) => {
+            state.song.global.playing = false;
         },
         updateVolume: (state, action: PayloadAction<number>) => {
-            state.volume = action.payload;
+            state.song.global.volume = action.payload;
+        },
+        updateSongState: (state, action: PayloadAction<ISongAdd>) => {
+            state.song.name = action.payload.name;
+            state.song.artist = action.payload.artist;
+            state.song.sampleRate = action.payload.sampleRate;
+            state.song.image = action.payload.image;
         },
     },
 });
 
-export const { updatePlayStatus, updateVolume } = footerSlice.actions;
+export const {
+    updateStatusToPlay,
+    updateStatusToPause,
+    updateVolume,
+    updateSongState,
+} = footerSlice.actions;
 
 export const selectFooterState = (state: RootState) => state.footerState;
 

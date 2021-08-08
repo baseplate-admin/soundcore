@@ -13,13 +13,18 @@ import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
 import { useAppDispatch } from '../../../Hooks/Store/Hooks';
 import { Howl } from 'howler';
 import { Link } from 'react-router-dom';
-import { updatePlayStatus } from '../../../Store/Slices/FooterSlice';
+import {
+    updateSongState,
+    updateStatusToPlay,
+} from '../../../Store/Slices/FooterSlice';
 import { createUseStyles } from 'react-jss';
 
 export const HomePage = () => {
+    // We dont need Polling For now
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
+
     const classes = useStyles();
 
     const dispatch = useAppDispatch();
@@ -28,6 +33,7 @@ export const HomePage = () => {
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
     const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { data, error, isLoading } = useGetSongsQuery(null);
 
     const addDropDownRef = (el: never) => {
@@ -68,7 +74,12 @@ export const HomePage = () => {
         }
     };
 
-    const handleBoxClick = (src: string) => {
+    const handleBoxClick = (src: string, index: number) => {
+        const name: string = data[index].song_name;
+        const artist: string = data[index].artist;
+        const image: string = `${MediaUrl}${data[index].album_art}`;
+        const sampleRate: string = data[index].sample_rate;
+
         if (howlerState.length === 0) {
             const sound = new Howl({
                 src: src,
@@ -77,8 +88,10 @@ export const HomePage = () => {
                 autoplay: false,
             });
             sound.play();
+
             setHowlerState([sound]);
-            dispatch(updatePlayStatus());
+            dispatch(updateSongState({ name, artist, image, sampleRate }));
+            dispatch(updateStatusToPlay());
         } else {
             const previousSound: any = howlerState;
             previousSound[0].pause();
@@ -92,6 +105,8 @@ export const HomePage = () => {
             });
             sound.play();
             setHowlerState([sound]);
+            dispatch(updateSongState({ name, artist, image, sampleRate }));
+            dispatch(updateStatusToPlay());
         }
     };
 
@@ -137,7 +152,8 @@ export const HomePage = () => {
                                                             }}
                                                             onClick={() => {
                                                                 handleBoxClick(
-                                                                    `${MediaUrl}${music.song_file}`
+                                                                    `${MediaUrl}${music.song_file}`,
+                                                                    index
                                                                 );
                                                             }}
                                                         >
@@ -329,8 +345,7 @@ const useStyles = createUseStyles({
         paddingTop: '1em',
     },
     'grid-item': {
-        fontSize: '30px',
-        verticalAlign: 'middle',
+        fontSize: 30,
         display: 'flex',
         justifyContent: 'center',
     },
@@ -339,8 +354,8 @@ const useStyles = createUseStyles({
         color: 'white',
     },
     'song-image-figure': {
-        height: '200px',
-        width: '200px',
+        height: '200px !important',
+        width: '200px !important',
     },
     'song-description': {
         backgroundColor: 'transparent',

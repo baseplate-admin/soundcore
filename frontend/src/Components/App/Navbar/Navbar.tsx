@@ -5,7 +5,6 @@ import {
 } from 'react-icons/io5';
 import { createUseStyles } from 'react-jss';
 import { Link, useHistory } from 'react-router-dom';
-import brandLogo from '../../../Assets/Images/brand_logo.png';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import { RoutingPath } from '../../../Routes';
 import {
@@ -19,12 +18,16 @@ import { useGetUserQuery } from '../../../Store/Services/GetUserService';
 import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/GetImageFromLibravatar';
 import { useSpring, animated } from 'react-spring';
 import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
+
 import voca from 'voca';
+
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
 
 import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
+
 import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
+import brandLogo from '../../../Assets/Images/brand_logo.png';
 
 export const Navbar = () => {
     const [Logout] = useAuthLogout();

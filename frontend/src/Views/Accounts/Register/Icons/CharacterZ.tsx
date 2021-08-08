@@ -1,5 +1,9 @@
-import { IconProps } from './icons';
-
+interface IconProps extends React.SVGAttributes<SVGElement> {
+    children?: React.ReactNode;
+    size?: string | number;
+    color?: string;
+    title?: string;
+}
 export const CharacterZIcon = (props: IconProps) => {
     return (
         <svg

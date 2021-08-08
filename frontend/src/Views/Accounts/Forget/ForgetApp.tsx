@@ -12,6 +12,7 @@ export const ForgetPage = () => {
             .required('Please Enter Email'),
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { handleSubmit, handleChange, errors } = useFormik({
         initialValues: {
             email: '',

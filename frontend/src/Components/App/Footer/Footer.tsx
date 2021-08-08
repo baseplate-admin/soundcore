@@ -1,37 +1,54 @@
+import { Fragment } from 'react';
 import {
     IoPauseCircleOutline,
     IoPlaySkipBackCircleOutline,
     IoPlayCircleOutline,
     IoPlaySkipForwardCircleOutline,
 } from 'react-icons/io5';
+
+import { useMediaQuery } from 'react-responsive';
 import { createUseStyles } from 'react-jss';
+import { prettifySecondsToMinutes } from '../../../Functions/Helpers/TimeFunction';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     selectFooterState,
-    updatePlayStatus,
+    updateStatusToPlay,
+    updateStatusToPause,
 } from '../../../Store/Slices/FooterSlice';
+import voca from 'voca';
+import numeral from 'numeral';
+
 interface IFooterProps {
     howlerState: Array<object>;
 }
 export const Footer = (props: IFooterProps) => {
-    const dispatch = useAppDispatch();
     const classes = useStyles();
+    const dispatch = useAppDispatch();
+
+    const isMobile = useMediaQuery({
+        query: '(max-width: 767px)',
+    });
+
+    const isTablet = useMediaQuery({
+        query: '(max-width: 768px)',
+    });
 
     const footerState = useAppSelector(selectFooterState);
 
     const handlePlayPauseClick = () => {
-        dispatch(updatePlayStatus());
-
         // Create a new howler object
         let sound: any = props.howlerState[0];
         // Song might be null if User didn't click anything
-        if (footerState.playing && sound.playing()) {
-            // Means playing
-
-            sound.pause();
-        } else if (!footerState.playing && !sound.playing()) {
-            // Means paused
-            sound.play();
+        if (sound !== undefined) {
+            if (footerState.song.global.playing && sound.playing()) {
+                // Means playing
+                dispatch(updateStatusToPause());
+                sound.pause();
+            } else if (!footerState.song.global.playing && !sound.playing()) {
+                // Means paused
+                dispatch(updateStatusToPlay());
+                sound.play();
+            }
         }
     };
 
@@ -46,30 +63,205 @@ export const Footer = (props: IFooterProps) => {
                                     id="footer-song-image"
                                     className={classes.song_image}
                                     alt=""
-                                    src="https://bulma.io/images/placeholders/128x128.png"
+                                    src={footerState.song.image}
                                 />
                             </p>
                         </figure>
                         <div className="media-content">
                             <div className="content">
                                 <p className={classes.footer_info}>
-                                    <strong
-                                        className={classes['footer-song-info']}
-                                    >
-                                        Song Name
-                                    </strong>{' '}
-                                    |{' '}
-                                    <small
-                                        className={classes['footer-song-info']}
-                                    >
-                                        Artist
-                                    </small>{' '}
-                                    |{' '}
-                                    <small
-                                        className={classes['footer-song-info']}
-                                    >
-                                        Sample Rate{' '}
-                                    </small>
+                                    {isMobile ? (
+                                        // Mobile Version
+                                        <Fragment>
+                                            <strong
+                                                className={
+                                                    classes['footer-song-info']
+                                                }
+                                            >
+                                                {voca
+                                                    .chain(
+                                                        footerState.song.name
+                                                    )
+                                                    .trimRight()
+                                                    .truncate(20)
+                                                    .value()}
+                                            </strong>
+                                            <span
+                                                className={
+                                                    classes['footer-song-info']
+                                                }
+                                            >
+                                                {' | '}
+                                            </span>
+                                            <small
+                                                className={
+                                                    classes['footer-song-info']
+                                                }
+                                            >
+                                                {voca
+                                                    .chain(
+                                                        footerState.song.artist
+                                                    )
+                                                    .trimRight()
+                                                    .truncate(35)
+                                                    .value()}
+                                            </small>
+                                            <span
+                                                className={
+                                                    classes['footer-song-info']
+                                                }
+                                            >
+                                                {' | '}
+                                            </span>
+                                            <small
+                                                className={
+                                                    classes['footer-song-info']
+                                                }
+                                            >
+                                                {numeral(
+                                                    footerState.song.sampleRate
+                                                ).format('0 a')}
+                                                Hz
+                                            </small>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {isTablet ? (
+                                                // Tablet Version
+                                                <Fragment>
+                                                    <strong
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
+                                                            .chain(
+                                                                footerState.song
+                                                                    .name
+                                                            )
+                                                            .trimRight()
+                                                            .truncate(10)
+                                                            .value()}
+                                                    </strong>
+                                                    <span
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {' | '}
+                                                    </span>
+                                                    <small
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
+                                                            .chain(
+                                                                footerState.song
+                                                                    .artist
+                                                            )
+                                                            .trimRight()
+                                                            .truncate(10)
+                                                            .value()}
+                                                    </small>
+                                                    <span
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {' | '}
+                                                    </span>
+                                                    <small
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {numeral(
+                                                            footerState.song
+                                                                .sampleRate
+                                                        ).format('0 a')}
+                                                        Hz
+                                                    </small>
+                                                </Fragment>
+                                            ) : (
+                                                <Fragment>
+                                                    <strong
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
+                                                            .chain(
+                                                                footerState.song
+                                                                    .name
+                                                            )
+                                                            .trimRight()
+                                                            .truncate(30)
+                                                            .value()}
+                                                    </strong>
+                                                    <span
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {' | '}
+                                                    </span>
+                                                    <small
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
+                                                            .chain(
+                                                                footerState.song
+                                                                    .artist
+                                                            )
+                                                            .trimRight()
+                                                            .truncate(35)
+                                                            .value()}
+                                                    </small>
+                                                    <span
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {' | '}
+                                                    </span>
+                                                    <small
+                                                        className={
+                                                            classes[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {numeral(
+                                                            footerState.song
+                                                                .sampleRate
+                                                        ).format('0 a')}
+                                                        Hz
+                                                    </small>
+                                                </Fragment>
+                                            )}
+                                        </Fragment>
+                                    )}
                                 </p>
                             </div>
                         </div>
@@ -87,7 +279,7 @@ export const Footer = (props: IFooterProps) => {
                             />
                         </div>
                         <div className="column is-1 is-offset-1 has-text-centered  footer_control_column_items">
-                            {footerState.playing ? (
+                            {footerState.song.global.playing ? (
                                 <IoPauseCircleOutline
                                     color="white"
                                     style={{ transform: 'scale(2)' }}
@@ -119,7 +311,9 @@ export const Footer = (props: IFooterProps) => {
                         <div
                             className={`column is-narrow ${classes.pre_input}`}
                         >
-                            0:00
+                            {prettifySecondsToMinutes(
+                                footerState.song.control.current
+                            )}
                         </div>
                         <div className="column ">
                             <div className={classes.footer_input_anchor}>
@@ -142,9 +336,10 @@ export const Footer = (props: IFooterProps) => {
                         </div>
                         <div
                             className={`column is-narrow ${classes.post_input}`}
-                            id="total_duration"
                         >
-                            0:00
+                            {prettifySecondsToMinutes(
+                                footerState.song.control.total
+                            )}
                         </div>
                     </div>
                 </div>
