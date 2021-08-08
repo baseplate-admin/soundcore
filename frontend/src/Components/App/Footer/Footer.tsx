@@ -102,6 +102,7 @@ export const Footer = (props: IFooterProps) => {
                                                     .chain(
                                                         footerState.song.artist
                                                     )
+                                                    .titleCase()
                                                     .trimRight()
                                                     .truncate(35)
                                                     .value()}
@@ -166,6 +167,7 @@ export const Footer = (props: IFooterProps) => {
                                                                 footerState.song
                                                                     .artist
                                                             )
+                                                            .titleCase()
                                                             .trimRight()
                                                             .truncate(10)
                                                             .value()}
@@ -232,6 +234,7 @@ export const Footer = (props: IFooterProps) => {
                                                                 footerState.song
                                                                     .artist
                                                             )
+                                                            .titleCase()
                                                             .trimRight()
                                                             .truncate(35)
                                                             .value()}
