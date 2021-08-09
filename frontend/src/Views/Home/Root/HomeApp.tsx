@@ -14,7 +14,13 @@ import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import { ApplicationName, MediaUrl, RoutingPath } from '../../../Config/Routes';
+import {
+    APIPath,
+    APIUrl,
+    ApplicationName,
+    MediaUrl,
+    RoutingPath,
+} from '../../../Config/Routes';
 import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
 import { useAppDispatch } from '../../../Hooks/Store/Hooks';
 import {
@@ -29,6 +35,7 @@ import {
 } from '../../../Components/Spinners/Spinners';
 import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
 import { CreateHowlObject } from '../../../Functions/Helpers/Howler/CreateHowl';
+import axios from 'axios';
 
 export const HomePage = () => {
     // We dont need Polling For now
@@ -88,14 +95,28 @@ export const HomePage = () => {
     };
 
     const handleBoxClick = (src: string, index: number) => {
-        const name: string = data[index].song_name;
-        const artist: string = data[index].artist;
-        const image: string = `${MediaUrl}${data[index].album_art}`;
-        const sampleRate: string = data[index].sample_rate;
+        const newData = data[index];
+        howlerJsPlay(src, newData);
+    };
+
+    const howlerJsPlay = (
+        src: string,
+        data: {
+            song_name: string;
+            artist: string;
+            album_art: string;
+            sample_rate: string;
+        }
+    ) => {
+        const name: string = data.song_name;
+        const artist: string = data.artist;
+        const image: string = `${MediaUrl}${data.album_art}`;
+        const sampleRate: string = data.sample_rate;
 
         if (howlerState.length === 0) {
             const sound = CreateHowlObject({ src });
             sound.play();
+
             sound.on('load', async () => {
                 dispatch(updateTotalSeconds(sound.duration()));
             });
@@ -116,17 +137,23 @@ export const HomePage = () => {
             setHowlerState([sound]);
 
             sound.play();
+
             sound.on('load', async () => {
                 dispatch(updateTotalSeconds(sound.duration()));
             });
             sound.on('play', async () => {
                 await howlerJsPlayInterval(sound, customInterval);
             });
+            sound.on('end', async () => {
+                console.log('Finised');
+                howlerJsOnFinish();
+            });
 
             dispatch(updateSongState({ name, artist, image, sampleRate }));
             dispatch(updateStatusToPlay());
         }
     };
+
     const howlerJsPlayInterval = async (
         sound: Howl,
         customInterval: ReturnType<typeof setInterval>
@@ -137,10 +164,31 @@ export const HomePage = () => {
                     let currentPos = sound.seek();
                     dispatch(updateCurrentSeconds(Number(currentPos)));
                 }
-            }, 1);
+            }, 1000);
         };
         clearInterval(customInterval);
         await startInterval();
+    };
+
+    const howlerJsOnFinish = () => {
+        dispatch(updateCurrentSeconds(0));
+        clearInterval(customInterval);
+
+        const url = `${APIUrl}${APIPath.RANDOM_SONG_ENDPOINT}`;
+        axios.get(url).then((res: any) => {
+            console.log(res);
+            const song_name = res.data.song_name;
+            const artist = res.data.artist;
+            const album_art = res.data.album_art;
+            const sample_rate = res.data.sample_rate;
+
+            howlerJsPlay(`${MediaUrl}${res.song_file}`, {
+                song_name,
+                artist,
+                album_art,
+                sample_rate,
+            });
+        });
     };
 
     return (

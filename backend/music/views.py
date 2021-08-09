@@ -28,3 +28,11 @@ class MusicView(APIView):
             pass
 
         return Response(status=201)
+
+
+class GetRandomMusicView(APIView):
+    def get(self, request):
+        # This will be powered by an AI.
+        database = Upload.objects.order_by("?").first()
+        serializer = MusicSerializer(database)
+        return Response(serializer.data, 200)

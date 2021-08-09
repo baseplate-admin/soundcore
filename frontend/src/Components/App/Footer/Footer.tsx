@@ -18,6 +18,7 @@ import {
     selectFooterState,
     updateStatusToPlay,
     updateStatusToPause,
+    updateCurrentSeconds,
 } from '../../../Store/Slices/FooterSlice';
 import { Howler } from 'howler';
 import {
@@ -73,6 +74,17 @@ export const Footer = (props: IFooterProps) => {
     const handleVolumeInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         setVolume(Number(e.currentTarget.value));
         SetVolumeInLocalStorage(Number(e.currentTarget.value) / 100);
+    };
+    const handleSongSeekInputChange = (
+        e: React.FormEvent<HTMLInputElement>
+    ) => {
+        // Create a new howler object
+        let sound: any = props.howlerState[0];
+        // Means playing
+        const sliderValue = e.currentTarget.value;
+        const duration = (sound.duration() * Number(sliderValue)) / 100;
+        sound.seek(duration);
+        dispatch(updateCurrentSeconds(duration));
     };
 
     return (
@@ -357,8 +369,8 @@ export const Footer = (props: IFooterProps) => {
                                     max="100"
                                 />
                                 <input
-                                    //    onchange="handleSliderInputChange(this.value)"
-                                    //    oninput="handleSliderInputChange(this.value)"
+                                    onChange={handleSongSeekInputChange}
+                                    onInput={handleSongSeekInputChange}
                                     className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
                                     step=".01"
                                     min="0"
