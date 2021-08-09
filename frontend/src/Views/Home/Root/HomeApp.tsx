@@ -115,7 +115,7 @@ export const HomePage = () => {
 
         if (howlerState.length === 0) {
             const sound = CreateHowlObject({ src });
-            console.log(sound);
+
             sound.play();
 
             sound.on('load', async () => {
@@ -125,7 +125,6 @@ export const HomePage = () => {
                 await howlerJsPlayInterval(sound, customInterval);
             });
             sound.on('end', () => {
-                console.log('Finised');
                 howlerJsOnFinish();
             });
 
@@ -150,7 +149,6 @@ export const HomePage = () => {
                 await howlerJsPlayInterval(sound, customInterval);
             });
             sound.on('end', () => {
-                console.log('Finised');
                 howlerJsOnFinish();
             });
 
