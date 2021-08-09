@@ -2,7 +2,7 @@ import prettyBytes from 'pretty-bytes';
 import { Fragment } from 'react';
 import { IoCloudDoneOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { RoutingPath } from '../../../../../Routes';
+import { RoutingPath } from '../../../../../Config/Routes';
 import { createUseStyles } from 'react-jss';
 import { UploadSongVariables } from '../../variables';
 

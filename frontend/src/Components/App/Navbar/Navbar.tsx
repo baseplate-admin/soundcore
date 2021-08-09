@@ -6,7 +6,7 @@ import {
 import { createUseStyles } from 'react-jss';
 import { Link, useHistory } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
-import { RoutingPath } from '../../../Routes';
+import { RoutingPath } from '../../../Config/Routes';
 import {
     leftMenuHidden,
     leftMenuShown,
@@ -15,7 +15,7 @@ import {
 import { useMediaQuery } from 'react-responsive';
 import { Fragment, useEffect, useState } from 'react';
 import { useGetUserQuery } from '../../../Store/Services/GetUserService';
-import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/GetImageFromLibravatar';
+import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/Libravatar/GetImage';
 import { useSpring, animated } from 'react-spring';
 import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
 

@@ -1,4 +1,10 @@
-import { Fragment } from 'react';
+import { createUseStyles } from 'react-jss';
+import { useMediaQuery } from 'react-responsive';
+import { Fragment, useEffect, useState } from 'react';
+
+import voca from 'voca';
+import numeral from 'numeral';
+
 import {
     IoPauseCircleOutline,
     IoPlaySkipBackCircleOutline,
@@ -6,24 +12,31 @@ import {
     IoPlaySkipForwardCircleOutline,
 } from 'react-icons/io5';
 
-import { useMediaQuery } from 'react-responsive';
-import { createUseStyles } from 'react-jss';
-import { prettifySecondsToMinutes } from '../../../Functions/Helpers/TimeFunction';
+import { prettifySecondsToMinutes } from '../../../Functions/Helpers/Prettifier/TimeFunction';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     selectFooterState,
     updateStatusToPlay,
     updateStatusToPause,
 } from '../../../Store/Slices/FooterSlice';
-import voca from 'voca';
-import numeral from 'numeral';
+import { Howler } from 'howler';
+import {
+    GetVolumeInLocalStorage,
+    SetVolumeInLocalStorage,
+} from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
 
 interface IFooterProps {
     howlerState: Array<object>;
 }
+
 export const Footer = (props: IFooterProps) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
+
+    const [volume, setVolume] = useState(
+        // Need to multiply by hundred because we store it in a range from 0.0 to 1.0
+        Number(GetVolumeInLocalStorage()) * 100
+    );
 
     const isMobile = useMediaQuery({
         query: '(max-width: 767px)',
@@ -50,6 +63,16 @@ export const Footer = (props: IFooterProps) => {
                 sound.play();
             }
         }
+    };
+
+    useEffect(() => {
+        // Sync Volume and howler Volume
+        Howler.volume(Number(GetVolumeInLocalStorage()));
+    }, [volume]);
+
+    const handleVolumeInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+        setVolume(Number(e.currentTarget.value));
+        SetVolumeInLocalStorage(Number(e.currentTarget.value) / 100);
     };
 
     return (
@@ -271,7 +294,9 @@ export const Footer = (props: IFooterProps) => {
                     </article>
                 </div>
                 <div className={`column ${classes.footer_control_column}`}>
-                    <div className="columns is-mobile is-centered footer_control_column_wrapper">
+                    <div
+                        className={`columns is-mobile is-centered ${classes.footer_control_column_wrapper}`}
+                    >
                         <div
                             className={`column is-1 has-text-centered ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
@@ -281,7 +306,9 @@ export const Footer = (props: IFooterProps) => {
                                 style={{ transform: 'scale(2)' }}
                             />
                         </div>
-                        <div className="column is-1 is-offset-1 has-text-centered  footer_control_column_items">
+                        <div
+                            className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
+                        >
                             {footerState.song.global.playing ? (
                                 <IoPauseCircleOutline
                                     color="white"
@@ -301,7 +328,7 @@ export const Footer = (props: IFooterProps) => {
                             )}
                         </div>
                         <div
-                            className="column is-1 is-offset-1 next_song_wrapper has-text-centered footer_control_column_items"
+                            className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')"
                         >
                             <IoPlaySkipForwardCircleOutline
@@ -322,7 +349,11 @@ export const Footer = (props: IFooterProps) => {
                             <div className={classes.footer_input_anchor}>
                                 <progress
                                     className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
-                                    value="0"
+                                    value={
+                                        (100 *
+                                            footerState.song.control.current) /
+                                        footerState.song.control.total
+                                    }
                                     max="100"
                                 />
                                 <input
@@ -332,7 +363,11 @@ export const Footer = (props: IFooterProps) => {
                                     step=".01"
                                     min="0"
                                     max="100"
-                                    value="0"
+                                    value={
+                                        (100 *
+                                            footerState.song.control.current) /
+                                        footerState.song.control.total
+                                    }
                                     type="range"
                                 />
                             </div>
@@ -366,17 +401,17 @@ export const Footer = (props: IFooterProps) => {
                             <div className={classes.volume_anchor}>
                                 <progress
                                     className={`progress is-small is-info ${classes.volume_progress} ${classes.progress_item}`}
-                                    value="0"
+                                    value={volume}
                                     max="100"
                                 />
                                 <input
                                     className={`${classes.slider} ${classes.volume_slider}  slider`}
-                                    // oninput="handleVolumeInputChange(this.value)"
-                                    //    onchange="handleVolumeInputChange(this.value)"
+                                    onInput={handleVolumeInputChange}
+                                    onChange={handleVolumeInputChange}
                                     step="1"
                                     min="0"
                                     max="100"
-                                    value="0"
+                                    value={volume}
                                     type="range"
                                 />
                             </div>
@@ -488,7 +523,11 @@ const useStyles = createUseStyles({
         position: 'absolute',
         transform: 'translateY(-4px)',
     },
-
+    footer_control_column_wrapper: {
+        '@media screen and (max-width: 767px)': {
+            transform: 'translateY(7px)',
+        },
+    },
     footer_control_column: {
         '@media screen and (max-width: 767px)': {
             marginRight: '1em !important',

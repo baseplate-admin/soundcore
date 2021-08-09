@@ -1,33 +1,46 @@
 import { Fragment, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { createUseStyles } from 'react-jss';
+import { Link } from 'react-router-dom';
+
 import 'react-lazy-load-image-component/src/effects/blur.css';
+
+import voca from 'voca';
+import { Howl } from 'howler';
 
 import { Navbar } from '../../../Components/App/Navbar/Navbar';
 import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import { ApplicationName, MediaUrl, RoutingPath } from '../../../Routes';
+import { ApplicationName, MediaUrl, RoutingPath } from '../../../Config/Routes';
 import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
 import { useAppDispatch } from '../../../Hooks/Store/Hooks';
-import { Howl } from 'howler';
-import { Link } from 'react-router-dom';
 import {
+    updateCurrentSeconds,
     updateSongState,
     updateStatusToPlay,
+    updateTotalSeconds,
 } from '../../../Store/Slices/FooterSlice';
-import { createUseStyles } from 'react-jss';
+import {
+    randomSpinnerPicker,
+    SpinnerComponent,
+} from '../../../Components/Spinners/Spinners';
+import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
+import { CreateHowlObject } from '../../../Functions/Helpers/Howler/CreateHowl';
 
 export const HomePage = () => {
     // We dont need Polling For now
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
+    let customInterval: ReturnType<typeof setInterval>;
 
     const classes = useStyles();
 
     const dispatch = useAppDispatch();
+
     const [howlerState, setHowlerState] = useState<Array<Object>>([]);
 
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
@@ -81,13 +94,14 @@ export const HomePage = () => {
         const sampleRate: string = data[index].sample_rate;
 
         if (howlerState.length === 0) {
-            const sound = new Howl({
-                src: src,
-                html5: true,
-                preload: true,
-                autoplay: false,
-            });
+            const sound = CreateHowlObject({ src });
             sound.play();
+            sound.on('load', async () => {
+                dispatch(updateTotalSeconds(sound.duration()));
+            });
+            sound.on('play', async () => {
+                await howlerJsPlayInterval(sound, customInterval);
+            });
 
             setHowlerState([sound]);
             dispatch(updateSongState({ name, artist, image, sampleRate }));
@@ -97,17 +111,36 @@ export const HomePage = () => {
             previousSound[0].pause();
             setHowlerState([]);
 
-            const sound = new Howl({
-                src: src,
-                html5: true,
-                preload: true,
-                autoplay: false,
-            });
-            sound.play();
+            const sound = CreateHowlObject({ src });
+
             setHowlerState([sound]);
+
+            sound.play();
+            sound.on('load', async () => {
+                dispatch(updateTotalSeconds(sound.duration()));
+            });
+            sound.on('play', async () => {
+                await howlerJsPlayInterval(sound, customInterval);
+            });
+
             dispatch(updateSongState({ name, artist, image, sampleRate }));
             dispatch(updateStatusToPlay());
         }
+    };
+    const howlerJsPlayInterval = async (
+        sound: Howl,
+        customInterval: ReturnType<typeof setInterval>
+    ) => {
+        const startInterval = async () => {
+            customInterval = setInterval(async () => {
+                if (sound.playing()) {
+                    let currentPos = sound.seek();
+                    dispatch(updateCurrentSeconds(Number(currentPos)));
+                }
+            }, 1);
+        };
+        clearInterval(customInterval);
+        await startInterval();
     };
 
     return (
@@ -125,7 +158,32 @@ export const HomePage = () => {
                 <div className={`column ${classes['right-column']}`}>
                     <div className={classes['grid-container']}>
                         {isLoading ? (
-                            <Fragment></Fragment>
+                            <Fragment>
+                                <section className="hero is-large">
+                                    <div className="hero-body">
+                                        <p className="subtitle">
+                                            <div className="columns is-centered">
+                                                <div className="column is-mobile is-narrow">
+                                                    <SpinnerComponent
+                                                        type={randomSpinnerPicker().toString()}
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="columns is-centered">
+                                                <div className="column is-mobile is-narrow">
+                                                    <p
+                                                        style={{
+                                                            color: 'white',
+                                                        }}
+                                                    >
+                                                        Loading. {randomEmoji()}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </p>
+                                    </div>
+                                </section>
+                            </Fragment>
                         ) : (
                             <Fragment>
                                 {data ? (
@@ -134,6 +192,7 @@ export const HomePage = () => {
                                             (music: any, index: number) => {
                                                 return (
                                                     <div
+                                                        key={index}
                                                         className={
                                                             classes['grid-item']
                                                         }
@@ -201,16 +260,30 @@ export const HomePage = () => {
                                                                             <p
                                                                                 className={`title is-size-5 ${classes['song-title']}`}
                                                                             >
-                                                                                {
-                                                                                    music.song_name
-                                                                                }
+                                                                                {voca
+                                                                                    .chain(
+                                                                                        music.song_name
+                                                                                    )
+                                                                                    .trimRight()
+                                                                                    .truncate(
+                                                                                        20
+                                                                                    )
+                                                                                    .value()}
                                                                             </p>
                                                                             <p
                                                                                 className={`subtitle is-size-6 ${classes['song-artist']}`}
                                                                             >
-                                                                                {
-                                                                                    music.artist
-                                                                                }
+                                                                                {voca
+                                                                                    .chain(
+                                                                                        music.artist
+                                                                                    )
+                                                                                    .trim()
+                                                                                    .titleCase()
+                                                                                    .trimRight()
+                                                                                    .truncate(
+                                                                                        19
+                                                                                    )
+                                                                                    .value()}
                                                                             </p>
                                                                         </div>
                                                                     </div>

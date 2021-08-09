@@ -13,7 +13,7 @@ import { Fragment, lazy, Suspense } from 'react';
 import { Route, Switch, HashRouter } from 'react-router-dom';
 
 // Routing Enum Function
-import { RoutingPath } from '../Routes';
+import { RoutingPath } from '../Config/Routes';
 
 // Loaders
 import { HomePageLoaderApp } from '../Components/Loaders/HomePageLoader/HomePageLoader';

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { GetJWTTokenInLocalStorage } from '../../Functions/Helpers/JWTCookie';
-import { APIPath, APIUrl } from '../../Routes';
+import { GetJWTTokenInLocalStorage } from '../../Functions/Helpers/LocalStorage/JWTCookie';
+import { APIPath, APIUrl } from '../../Config/Routes';
 
 export const userApi = createApi({
     reducerPath: 'user',

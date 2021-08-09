@@ -12,7 +12,7 @@ import {
     selectLeftMenuState,
 } from '../../../Store/Slices/NavbarSlice';
 
-import { RoutingPath } from '../../../Routes';
+import { RoutingPath } from '../../../Config/Routes';
 import { createUseStyles } from 'react-jss';
 
 export const LeftSidebar = () => {

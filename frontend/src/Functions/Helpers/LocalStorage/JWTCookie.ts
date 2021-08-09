@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIPath, APIUrl, JWTTokenExpireTime } from '../../Routes';
+import { APIPath, APIUrl, JWTTokenExpireTime } from '../../../Config/Routes';
 
 /*
     Helper:

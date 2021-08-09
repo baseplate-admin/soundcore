@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { APIPath, APIUrl } from '../../Routes';
+import { APIPath, APIUrl } from '../../Config/Routes';
 import FormData from 'form-data';
 // import { SetJWTTokenInLocalStorage } from '../../Helpers/JWTCookie';
 

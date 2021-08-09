@@ -15,7 +15,7 @@ interface IForgetPasswordState {
         // Song global attars such as play/pause and volume
         global: {
             playing: boolean;
-            volume: number;
+            // volume: number;
         };
     };
 }
@@ -33,7 +33,7 @@ const initialState: IForgetPasswordState = {
         },
         global: {
             playing: false,
-            volume: 0.5, // Half Volume
+            // volume: 0.5, // Half Volume
         },
     },
 };
@@ -55,14 +55,20 @@ export const footerSlice = createSlice({
         updateStatusToPause: (state) => {
             state.song.global.playing = false;
         },
-        updateVolume: (state, action: PayloadAction<number>) => {
-            state.song.global.volume = action.payload;
-        },
+        // updateVolume: (state, action: PayloadAction<number>) => {
+        //     state.song.global.volume = action.payload;
+        // },
         updateSongState: (state, action: PayloadAction<ISongAdd>) => {
             state.song.name = action.payload.name;
             state.song.artist = action.payload.artist;
             state.song.sampleRate = action.payload.sampleRate;
             state.song.image = action.payload.image;
+        },
+        updateTotalSeconds: (state, action: PayloadAction<number>) => {
+            state.song.control.total = action.payload;
+        },
+        updateCurrentSeconds: (state, action: PayloadAction<number>) => {
+            state.song.control.current = action.payload;
         },
     },
 });
@@ -70,8 +76,10 @@ export const footerSlice = createSlice({
 export const {
     updateStatusToPlay,
     updateStatusToPause,
-    updateVolume,
+    // updateVolume,
     updateSongState,
+    updateTotalSeconds,
+    updateCurrentSeconds,
 } = footerSlice.actions;
 
 export const selectFooterState = (state: RootState) => state.footerState;

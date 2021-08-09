@@ -20,6 +20,7 @@ export const MainUploadChildComponent = (
     props: IMainUploadChildComponentProps
 ) => {
     const classes = useStyles();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { height, width } = useWindowDimensions();
 
     const isMobile = useMediaQuery({

@@ -1,18 +1,16 @@
-// CSS Variables
+import prettyBytes from 'pretty-bytes';
+
 import { UploadSongVariables } from './variables';
 
-import { Fragment, useState, useCallback, useRef, useEffect } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { Fragment, useState, useCallback, useEffect } from 'react';
 import { useMusicUpload } from '../../../Hooks/Upload/MusicUpload';
 
 import { createUseStyles } from 'react-jss';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
-import { ApplicationName } from '../../../Routes';
+import { ApplicationName } from '../../../Config/Routes';
 
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';
-
-import prettyBytes from 'pretty-bytes';
 
 // Child Components
 import { PromiseSuccessChildComponent } from './Components/PromiseSuccess/PromiseSuccess';
@@ -30,9 +28,6 @@ interface IUploadFiles {
 export const UploadSongPage = () => {
     const classes = useStyles();
 
-    const imageRefArray = useRef([]);
-    const uploadBoxRef = useRef<HTMLDivElement>(null);
-
     const [MusicUploadSingle] = useMusicUpload();
 
     const [isFileDropped, setIsFileDropped] = useState(false);
@@ -49,11 +44,6 @@ export const UploadSongPage = () => {
             setUploadDone(true);
         }
     }, [doneArray, files, isUploading]);
-
-    const uploadBoxStyle = useSpring({
-        width: uploadBoxRef.current?.clientWidth,
-        minWidth: isFileDropped ? 650 : 490,
-    });
 
     const onDrop = useCallback(
         (acceptedFiles: File[], rejectedFile: FileRejection[]) => {
@@ -120,12 +110,6 @@ export const UploadSongPage = () => {
         setTotalSongSize((currentValue) => currentValue - file.size);
     };
 
-    const addRef = (el: never) => {
-        if (el && !imageRefArray.current.includes(el)) {
-            imageRefArray.current.push(el);
-        }
-    };
-
     const { getRootProps, getInputProps } = useDropzone({
         onDrop,
     });
@@ -143,10 +127,13 @@ export const UploadSongPage = () => {
                                 className="image is-48x48"
                                 style={{
                                     transform:
-                                        'translateY(10px) translateX(15px)',
+                                        'translateY(20px) translateX(20px)',
                                 }}
                             >
-                                <ImFileMusic color="white" />
+                                <ImFileMusic
+                                    color="white"
+                                    style={{ transform: 'scale(1.5)' }}
+                                />
                             </figure>
                         </figure>
                         <div className="media-content">

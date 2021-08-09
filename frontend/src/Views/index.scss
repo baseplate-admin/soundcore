@@ -1,7 +1,8 @@
 html {
     scrollbar-width: none; /* Firefox */
     overscroll-behavior: 'none';
-
+    background-color: black;
+    
     &::-webkit-scrollbar {
         /* WebKit */
         display: 'none';

@@ -24,7 +24,7 @@ import {
 import { MdLockOutline } from 'react-icons/md';
 
 import { Link, useHistory } from 'react-router-dom';
-import { ApplicationName, RoutingPath } from '../../../Routes';
+import { ApplicationName, RoutingPath } from '../../../Config/Routes';
 import { useAppSelector } from '../../../Hooks/Store/Hooks';
 import { selectLoginFormState } from '../../../Store/Slices/LoginSlice';
 
@@ -34,7 +34,7 @@ import {
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
-import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/JWTCookie';
+import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/LocalStorage/JWTCookie';
 
 // Yup for form validation
 import * as Yup from 'yup';

@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { APIPath, APIUrl } from '../../Routes';
+import { APIPath, APIUrl } from '../../Config/Routes';
 import { useAppDispatch } from '../Store/Hooks';
-import { SetJWTTokenInLocalStorage } from '../../Functions/Helpers/JWTCookie';
+import { SetJWTTokenInLocalStorage } from '../../Functions/Helpers/LocalStorage/JWTCookie';
 import {
     postLoginFormErrorAndHasErrorMessage,
     postLoginFormSuccess,

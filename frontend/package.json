@@ -1,6 +1,6 @@
 {
     "name": "soundcore_frontend",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "license": "GPL-3.0-only",
     "dependencies": {
         "@reduxjs/toolkit": "^1.6.1",
@@ -55,6 +55,7 @@
         "start": "react-scripts start",
         "build": "react-scripts build",
         "test": "react-scripts test",
+        "update": "ncu -u",
         "postbuild": "purgecss --css build/static/css/*.css --content build/index.html build/static/js/*.js --output build/static/css",
         "serve": "serve -s ./build",
         "bundle-wizard": "npx bundle-wizard localhost:5000"
