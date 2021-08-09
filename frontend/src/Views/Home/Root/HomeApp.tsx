@@ -115,6 +115,7 @@ export const HomePage = () => {
 
         if (howlerState.length === 0) {
             const sound = CreateHowlObject({ src });
+            console.log(sound);
             sound.play();
 
             sound.on('load', async () => {
@@ -122,6 +123,10 @@ export const HomePage = () => {
             });
             sound.on('play', async () => {
                 await howlerJsPlayInterval(sound, customInterval);
+            });
+            sound.on('end', () => {
+                console.log('Finised');
+                howlerJsOnFinish();
             });
 
             setHowlerState([sound]);
@@ -144,7 +149,7 @@ export const HomePage = () => {
             sound.on('play', async () => {
                 await howlerJsPlayInterval(sound, customInterval);
             });
-            sound.on('end', async () => {
+            sound.on('end', () => {
                 console.log('Finised');
                 howlerJsOnFinish();
             });
@@ -175,6 +180,7 @@ export const HomePage = () => {
         clearInterval(customInterval);
 
         const url = `${APIUrl}${APIPath.RANDOM_SONG_ENDPOINT}`;
+
         axios.get(url).then((res: any) => {
             console.log(res);
             const song_name = res.data.song_name;
@@ -182,7 +188,7 @@ export const HomePage = () => {
             const album_art = res.data.album_art;
             const sample_rate = res.data.sample_rate;
 
-            howlerJsPlay(`${MediaUrl}${res.song_file}`, {
+            howlerJsPlay(`${MediaUrl}${res.data.song_file}`, {
                 song_name,
                 artist,
                 album_art,
