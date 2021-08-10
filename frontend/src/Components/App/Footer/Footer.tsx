@@ -25,6 +25,7 @@ import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
 } from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
+import Tippy from '@tippyjs/react';
 
 interface IFooterProps {
     howlerState: Array<object>;
@@ -313,40 +314,68 @@ export const Footer = (props: IFooterProps) => {
                             className={`column is-1 has-text-centered ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
-                            <IoPlaySkipBackCircleOutline
-                                color="white"
-                                style={{ transform: 'scale(2)' }}
-                            />
+                            <Fragment>
+                                <Tippy content="Previous Song">
+                                    <span>
+                                        <IoPlaySkipBackCircleOutline
+                                            color="white"
+                                            style={{ transform: 'scale(2)' }}
+                                        />
+                                    </span>
+                                </Tippy>
+                            </Fragment>
                         </div>
                         <div
                             className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
                         >
                             {footerState.song.global.playing ? (
-                                <IoPauseCircleOutline
-                                    color="white"
-                                    style={{ transform: 'scale(2)' }}
-                                    onClick={() => {
-                                        handlePlayPauseClick();
-                                    }}
-                                />
+                                <Fragment>
+                                    <Tippy content="Play">
+                                        <span>
+                                            <IoPauseCircleOutline
+                                                color="white"
+                                                style={{
+                                                    transform: 'scale(2)',
+                                                }}
+                                                onClick={() => {
+                                                    handlePlayPauseClick();
+                                                }}
+                                            />
+                                        </span>
+                                    </Tippy>
+                                </Fragment>
                             ) : (
-                                <IoPlayCircleOutline
-                                    color="white"
-                                    style={{ transform: 'scale(2)' }}
-                                    onClick={() => {
-                                        handlePlayPauseClick();
-                                    }}
-                                />
+                                <Fragment>
+                                    <Tippy content="Pause">
+                                        <span>
+                                            <IoPlayCircleOutline
+                                                color="white"
+                                                style={{
+                                                    transform: 'scale(2)',
+                                                }}
+                                                onClick={() => {
+                                                    handlePlayPauseClick();
+                                                }}
+                                            />
+                                        </span>
+                                    </Tippy>
+                                </Fragment>
                             )}
                         </div>
                         <div
                             className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')"
                         >
-                            <IoPlaySkipForwardCircleOutline
-                                color="white"
-                                style={{ transform: 'scale(2)' }}
-                            />
+                            <Fragment>
+                                <Tippy content="Next Song">
+                                    <span>
+                                        <IoPlaySkipForwardCircleOutline
+                                            color="white"
+                                            style={{ transform: 'scale(2)' }}
+                                        />
+                                    </span>
+                                </Tippy>
+                            </Fragment>
                         </div>
                     </div>
                     <div className="columns is-mobile">

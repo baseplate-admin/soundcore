@@ -295,6 +295,9 @@ export const Navbar = () => {
                                                                             }
                                                                         >
                                                                             <Tippy
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
                                                                                 placement="left"
                                                                                 content={`${data.first_name} ${data.last_name}`}
                                                                             >
@@ -308,6 +311,9 @@ export const Navbar = () => {
                                                                                 </p>
                                                                             </Tippy>
                                                                             <Tippy
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
                                                                                 placement="left"
                                                                                 content={
                                                                                     data.username
@@ -323,6 +329,9 @@ export const Navbar = () => {
                                                                                 </p>
                                                                             </Tippy>
                                                                             <Tippy
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
                                                                                 placement="left"
                                                                                 content={
                                                                                     data.email
