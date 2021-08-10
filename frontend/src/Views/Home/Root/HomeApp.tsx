@@ -48,7 +48,7 @@ export const HomePage = () => {
 
     const dispatch = useAppDispatch();
 
-    const [howlerState, setHowlerState] = useState<Array<Object>>([]);
+    const [howlerState, setHowlerState] = useState<Array<Howl>>([]);
 
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
     const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);

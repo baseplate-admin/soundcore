@@ -20,7 +20,7 @@ import {
     updateStatusToPause,
     updateCurrentSeconds,
 } from '../../../Store/Slices/FooterSlice';
-import { Howler } from 'howler';
+import { Howl, Howler } from 'howler';
 import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
@@ -28,7 +28,7 @@ import {
 import Tippy from '@tippyjs/react';
 
 interface IFooterProps {
-    howlerState: Array<object>;
+    howlerState: Array<Howl>;
 }
 
 export const Footer = (props: IFooterProps) => {
@@ -80,12 +80,20 @@ export const Footer = (props: IFooterProps) => {
         e: React.FormEvent<HTMLInputElement>
     ) => {
         // Create a new howler object
-        let sound: any = props.howlerState[0];
-        // Means playing
-        const sliderValue = e.currentTarget.value;
-        const duration = (sound.duration() * Number(sliderValue)) / 100;
-        sound.seek(duration);
-        dispatch(updateCurrentSeconds(duration));
+        let sound: Howl = props.howlerState[0];
+        switch (sound) {
+            case undefined: {
+                console.error('No song is playing');
+                break;
+            }
+            default: {
+                // Means playing
+                const sliderValue = e.currentTarget.value;
+                const duration = (sound.duration() * Number(sliderValue)) / 100;
+                sound.seek(duration);
+                dispatch(updateCurrentSeconds(duration));
+            }
+        }
     };
 
     return (
