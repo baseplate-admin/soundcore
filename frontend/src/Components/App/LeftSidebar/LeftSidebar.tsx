@@ -76,7 +76,10 @@ export const LeftSidebar = () => {
                             <div className="column is-2 is-offset-1">
                                 <MdLibraryMusic
                                     color="white"
-                                    style={{ transform: 'scale(1.4)' }}
+                                    style={{
+                                        transform:
+                                            'scale(1.4) translateY(1.5px)',
+                                    }}
                                 />
                             </div>
                             <div className={`column ${classes.icon_text}`}>
@@ -123,6 +126,7 @@ const useStyles = createUseStyles({
         userSelect: 'none',
         height: '10px',
         borderRadius: '0',
+        transition: '0.1s',
 
         '&:hover': {
             backgroundColor: '#404040 !important',

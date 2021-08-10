@@ -54,6 +54,8 @@ export const Footer = (props: IFooterProps) => {
         // Need to multiply by hundred because we store it in a range from 0.0 to 1.0
         Number(GetVolumeInLocalStorage()) * 100
     );
+    const [isMuted, setIsMuted] = useState(false);
+    const [unmutedValue, setUnmutedValue] = useState(0);
 
     const [volumeSeekTippyVisible, setVolumeSeekTippyVisible] = useState(false);
     const [volumeSeekTippyContent, setVolumeSeekTippyContent] = useState('');
@@ -105,6 +107,10 @@ export const Footer = (props: IFooterProps) => {
                 setShowLowVolume(false);
                 setShowVolumeOff(false);
                 setShowMute(true);
+
+                // If volume is 0 set volume to 10
+                setIsMuted(true);
+                setUnmutedValue(10);
                 break;
             }
         }
@@ -120,7 +126,7 @@ export const Footer = (props: IFooterProps) => {
 
     useEffect(() => {
         // Sync Volume and howler Volume
-        Howler.volume(Number(GetVolumeInLocalStorage()));
+        Howler.volume(Number(volume / 100));
     }, [volume]);
 
     const calcSliderPos = (e: React.MouseEvent<HTMLInputElement>) => {
@@ -166,9 +172,10 @@ export const Footer = (props: IFooterProps) => {
         const sound: Howl = props.howlerState[0];
 
         // Make the tippy container visible.
+
         switch (sound) {
             case undefined: {
-                console.log('No song is playing');
+                // console.log('No song is playing');
                 break;
             }
             default: {
@@ -222,6 +229,18 @@ export const Footer = (props: IFooterProps) => {
             }
         }
     };
+    const handleMuteIconClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!isMuted) {
+            setUnmutedValue(volume);
+            setIsMuted(true);
+            setVolume(0);
+        } else if (isMuted) {
+            setVolume(unmutedValue);
+            setIsMuted(false);
+            setUnmutedValue(0);
+        }
+    };
+    const iconColor = '#e6e6e6';
 
     return (
         <footer className={classes.footer_item}>
@@ -453,10 +472,11 @@ export const Footer = (props: IFooterProps) => {
                                 content={<span>Previous Song</span>}
                                 animateFill={true}
                                 plugins={[animateFill]}
+                                placement="top"
                             >
                                 <span>
                                     <IoPlaySkipBackCircleOutline
-                                        color="white"
+                                        color={iconColor}
                                         style={{ transform: 'scale(2)' }}
                                     />
                                 </span>
@@ -471,10 +491,11 @@ export const Footer = (props: IFooterProps) => {
                                         content={<span>Play</span>}
                                         animateFill={true}
                                         plugins={[animateFill]}
+                                        placement="top"
                                     >
                                         <span>
                                             <IoPauseCircleOutline
-                                                color="white"
+                                                color={iconColor}
                                                 style={{
                                                     transform: 'scale(2)',
                                                 }}
@@ -491,10 +512,11 @@ export const Footer = (props: IFooterProps) => {
                                         content={<span>Pause</span>}
                                         animateFill={true}
                                         plugins={[animateFill]}
+                                        placement="top"
                                     >
                                         <span>
                                             <IoPlayCircleOutline
-                                                color="white"
+                                                color={iconColor}
                                                 style={{
                                                     transform: 'scale(2)',
                                                 }}
@@ -515,10 +537,11 @@ export const Footer = (props: IFooterProps) => {
                                 content={<span>Next Song</span>}
                                 animateFill={true}
                                 plugins={[animateFill]}
+                                placement="top"
                             >
                                 <span>
                                     <IoPlaySkipForwardCircleOutline
-                                        color="white"
+                                        color={iconColor}
                                         style={{ transform: 'scale(2)' }}
                                     />
                                 </span>
@@ -549,9 +572,10 @@ export const Footer = (props: IFooterProps) => {
                                         <span>{songSeekTippyContent}</span>
                                     }
                                     visible={songSeekTippyVisible}
-                                    followCursor={'horizontal'}
+                                    followCursor="horizontal"
                                     animateFill={true}
                                     plugins={[followCursor, animateFill]}
+                                    placement="top"
                                 >
                                     <span>
                                         <progress
@@ -600,39 +624,87 @@ export const Footer = (props: IFooterProps) => {
                         className={`columns is-mobile ${classes.volume_control_column}`}
                     >
                         <div className="column is-2 is-offset-2">
-                            {showHighVolume &&
-                            !showMediumVolume &&
-                            !showLowVolume &&
-                            !showVolumeOff &&
-                            !showMute ? (
-                                <MdVolumeUp />
-                            ) : showMediumVolume &&
-                              !showHighVolume &&
-                              !showLowVolume &&
-                              !showVolumeOff &&
-                              !showMute ? (
-                                <IoVolumeMedium />
-                            ) : showLowVolume &&
-                              !showHighVolume &&
-                              !showMediumVolume &&
-                              !showVolumeOff &&
-                              !showMute ? (
-                                <MdVolumeDown />
-                            ) : showVolumeOff &&
-                              !showHighVolume &&
-                              !showMediumVolume &&
-                              !showLowVolume &&
-                              !showMute ? (
-                                <MdVolumeMute />
-                            ) : !showHighVolume &&
-                              !showMediumVolume &&
-                              !showLowVolume &&
-                              !showVolumeOff &&
-                              showMute ? (
-                                <MdVolumeOff />
-                            ) : (
-                                <></>
-                            )}
+                            <div className="columns is-centered">
+                                <Tippy
+                                    content={
+                                        <span>
+                                            {isMuted ? 'Unmute' : 'Mute'}
+                                        </span>
+                                    }
+                                    animateFill={true}
+                                    plugins={[animateFill]}
+                                    placement="left"
+                                    offset={[-11, -3]}
+                                >
+                                    <span onClick={handleMuteIconClick}>
+                                        <div
+                                            className="column is-narrow is-mobile"
+                                            style={{
+                                                transform: 'translateY(-0.4em)',
+                                            }}
+                                        >
+                                            {showHighVolume &&
+                                            !showMediumVolume &&
+                                            !showLowVolume &&
+                                            !showVolumeOff &&
+                                            !showMute ? (
+                                                <MdVolumeUp
+                                                    style={{
+                                                        transform: 'scale(1.5)',
+                                                    }}
+                                                    color={iconColor}
+                                                />
+                                            ) : showMediumVolume &&
+                                              !showHighVolume &&
+                                              !showLowVolume &&
+                                              !showVolumeOff &&
+                                              !showMute ? (
+                                                <IoVolumeMedium
+                                                    style={{
+                                                        transform: 'scale(1.5)',
+                                                    }}
+                                                    color={iconColor}
+                                                />
+                                            ) : showLowVolume &&
+                                              !showHighVolume &&
+                                              !showMediumVolume &&
+                                              !showVolumeOff &&
+                                              !showMute ? (
+                                                <MdVolumeDown
+                                                    style={{
+                                                        transform: 'scale(1.5)',
+                                                    }}
+                                                    color={iconColor}
+                                                />
+                                            ) : showVolumeOff &&
+                                              !showHighVolume &&
+                                              !showMediumVolume &&
+                                              !showLowVolume &&
+                                              !showMute ? (
+                                                <MdVolumeMute
+                                                    style={{
+                                                        transform: 'scale(1.5)',
+                                                    }}
+                                                    color={iconColor}
+                                                />
+                                            ) : !showHighVolume &&
+                                              !showMediumVolume &&
+                                              !showLowVolume &&
+                                              !showVolumeOff &&
+                                              showMute ? (
+                                                <MdVolumeOff
+                                                    style={{
+                                                        transform: 'scale(1.5)',
+                                                    }}
+                                                    color={iconColor}
+                                                />
+                                            ) : (
+                                                <></>
+                                            )}
+                                        </div>
+                                    </span>
+                                </Tippy>
+                            </div>
                         </div>
                         <div className="column">
                             <div
@@ -649,10 +721,11 @@ export const Footer = (props: IFooterProps) => {
                                         <span>{volumeSeekTippyContent}</span>
                                     }
                                     visible={volumeSeekTippyVisible}
-                                    followCursor={'horizontal'}
+                                    followCursor="horizontal"
                                     animateFill={true}
                                     offset={[0, -10]}
                                     plugins={[followCursor, animateFill]}
+                                    placement="top"
                                 >
                                     <span>
                                         <progress

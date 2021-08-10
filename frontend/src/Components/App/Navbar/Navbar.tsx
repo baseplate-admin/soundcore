@@ -233,7 +233,9 @@ export const Navbar = () => {
                                             style={imageDropDownItem}
                                             className={`dropdown-content ${classes.dropdown_content}`}
                                         >
-                                            <div className="dropdown-item">
+                                            <div
+                                                className={`dropdown-item ${classes['dropdown-item']}`}
+                                            >
                                                 <div className="columns is-mobile">
                                                     <div className="column is-narrow ">
                                                         <figure className="image">
@@ -453,7 +455,9 @@ export const Navbar = () => {
                                                     classes['dropdown-divider']
                                                 }
                                             />
-                                            <div className="dropdown-item">
+                                            <div
+                                                className={`dropdown-item ${classes['dropdown-item']}`}
+                                            >
                                                 <div
                                                     className={`box ${classes['icon-box']}`}
                                                 >
@@ -506,10 +510,10 @@ const useStyles = createUseStyles({
     button: {
         color: ' #e2dfda',
         border: '1px solid #4c5759 !important',
-        transition: '0.4s',
         fontFamily: 'Nunito',
         backgroundColor: '#191b1f !important',
         transform: 'translateY(-5px) translateX(-5px)',
+        transition: '0.4s',
 
         '&:hover': {
             color: '#e2dfda',
@@ -545,6 +549,9 @@ const useStyles = createUseStyles({
         color: '#e2dfda !important',
         userSelect: 'none',
     },
+    'dropdown-item': {
+        cursor: 'pointer',
+    },
     'dropdown-divider': {
         backgroundColor: '#313131',
         border: 'none',
@@ -558,7 +565,6 @@ const useStyles = createUseStyles({
     dropdown_content_text_items_with_icons: {
         transform: 'translateY(-5px)',
         userSelect: 'none',
-        cursor: 'pointer',
     },
     'icon-box-column': {
         transform: 'translateY(-10px)',
@@ -568,6 +574,8 @@ const useStyles = createUseStyles({
         userSelect: 'none',
         borderRadius: '0',
         height: 10,
+        transition: '0.1s',
+
         '&:hover': {
             backgroundColor: '#404040 !important',
         },

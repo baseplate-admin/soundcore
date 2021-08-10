@@ -25,7 +25,7 @@ export const store = configureStore({
         getDefaultMiddleware({
             thunk: { extraArgument: songsApi, userApi },
             // I dont know how to fix this for now. ETA = Unknown
-            serializableCheck: false, // Disable Serializable Check because we are storing howler object in database.
+            serializableCheck: true, // Disable Serializable Check because we are storing howler object in database.
         }),
 });
 
