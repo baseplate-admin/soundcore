@@ -54,6 +54,7 @@ export const Footer = (props: IFooterProps) => {
         // Need to multiply by hundred because we store it in a range from 0.0 to 1.0
         Number(GetVolumeInLocalStorage()) * 100
     );
+
     const [volumeSeekTippyVisible, setVolumeSeekTippyVisible] = useState(false);
     const [volumeSeekTippyContent, setVolumeSeekTippyContent] = useState('');
 
@@ -144,19 +145,17 @@ export const Footer = (props: IFooterProps) => {
                 break;
             }
             default: {
-                if (sound !== undefined) {
-                    if (footerState.song.global.playing && sound.playing()) {
-                        // Means playing
-                        dispatch(updateStatusToPause());
-                        sound.pause();
-                    } else if (
-                        !footerState.song.global.playing &&
-                        !sound.playing()
-                    ) {
-                        // Means paused
-                        dispatch(updateStatusToPlay());
-                        sound.play();
-                    }
+                if (footerState.song.global.playing && sound?.playing()) {
+                    // Means playing
+                    dispatch(updateStatusToPause());
+                    sound?.pause();
+                } else if (
+                    !footerState.song.global.playing &&
+                    !sound?.playing()
+                ) {
+                    // Means paused
+                    dispatch(updateStatusToPlay());
+                    sound?.play();
                 }
             }
         }
@@ -196,8 +195,9 @@ export const Footer = (props: IFooterProps) => {
             default: {
                 // Means playing
                 const sliderValue = e.currentTarget.value;
-                const duration = (sound.duration() * Number(sliderValue)) / 100;
-                sound.seek(duration);
+                const duration =
+                    (sound?.duration() * Number(sliderValue)) / 100;
+                sound?.seek(duration);
                 dispatch(updateCurrentSeconds(duration));
             }
         }
