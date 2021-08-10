@@ -1,8 +1,11 @@
 import { createUseStyles } from 'react-jss';
 import { useMediaQuery } from 'react-responsive';
-import { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 
 import Tippy from '@tippyjs/react';
+import { followCursor, animateFill } from 'tippy.js';
+import 'tippy.js/dist/backdrop.css';
+import 'tippy.js/animations/shift-away.css';
 
 import voca from 'voca';
 import numeral from 'numeral';
@@ -13,6 +16,7 @@ import {
     IoPlaySkipBackCircleOutline,
     IoPlayCircleOutline,
     IoPlaySkipForwardCircleOutline,
+    IoVolumeMedium,
 } from 'react-icons/io5';
 
 import { prettifySecondsToMinutes } from '../../../Functions/Helpers/Prettifier/TimeFunction';
@@ -27,6 +31,12 @@ import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
 } from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
+import {
+    MdVolumeDown,
+    MdVolumeMute,
+    MdVolumeOff,
+    MdVolumeUp,
+} from 'react-icons/md';
 
 interface IFooterProps {
     howlerState: Array<Howl>;
@@ -35,11 +45,17 @@ interface IFooterProps {
 export const Footer = (props: IFooterProps) => {
     const classes = useStyles();
     const dispatch = useAppDispatch();
+    const footerState = useAppSelector(selectFooterState);
+
+    const [songSeekTippyVisible, setSongSeekTippyVisible] = useState(false);
+    const [songSeekTippyContent, setSongSeekTippyContent] = useState('');
 
     const [volume, setVolume] = useState(
         // Need to multiply by hundred because we store it in a range from 0.0 to 1.0
         Number(GetVolumeInLocalStorage()) * 100
     );
+    const [volumeSeekTippyVisible, setVolumeSeekTippyVisible] = useState(false);
+    const [volumeSeekTippyContent, setVolumeSeekTippyContent] = useState('');
 
     const isMobile = useMediaQuery({
         query: '(max-width: 767px)',
@@ -49,11 +65,25 @@ export const Footer = (props: IFooterProps) => {
         query: '(max-width: 768px)',
     });
 
-    const footerState = useAppSelector(selectFooterState);
+    useEffect(() => {
+        // Sync Volume and howler Volume
+        Howler.volume(Number(GetVolumeInLocalStorage()));
+    }, [volume]);
+
+    const calcSliderPos = (e: React.MouseEvent<HTMLInputElement>) => {
+        return (
+            // Enhancement proposals:
+            //      Get Max value from a slider. Currently we are hardcoding 100
+            //      what if a slider has max value of 200?
+
+            (e.nativeEvent.offsetX / e.currentTarget.clientWidth) *
+            parseInt(JSON.stringify(100), 10)
+        );
+    };
 
     const handlePlayPauseClick = () => {
         // Create a new howler object
-        let sound: Howl = props.howlerState[0];
+        const sound: Howl = props.howlerState[0];
 
         // Song might be null if User didn't click anything
         switch (sound) {
@@ -79,24 +109,36 @@ export const Footer = (props: IFooterProps) => {
             }
         }
     };
+    const handleSongSeekInputMouseMove = (
+        e: React.MouseEvent<HTMLInputElement>
+    ) => {
+        const sound: Howl = props.howlerState[0];
 
-    useEffect(() => {
-        // Sync Volume and howler Volume
-        Howler.volume(Number(GetVolumeInLocalStorage()));
-    }, [volume]);
+        // Make the tippy container visible.
+        switch (sound) {
+            case undefined: {
+                console.log('No song is playing');
+                break;
+            }
+            default: {
+                const sliderPos: number = Number(calcSliderPos(e));
+                const duration: number = footerState.song.control.total; // Total seconds
+                const math: number = (duration / 100) * sliderPos; // A little math function
 
-    const handleVolumeInputChange = (e: React.FormEvent<HTMLInputElement>) => {
-        setVolume(Number(e.currentTarget.value));
-        SetVolumeInLocalStorage(Number(e.currentTarget.value) / 100);
+                setSongSeekTippyContent(prettifySecondsToMinutes(math));
+            }
+        }
     };
+
     const handleSongSeekInputChange = (
         e: React.FormEvent<HTMLInputElement>
     ) => {
         // Create a new howler object
-        let sound: Howl = props.howlerState[0];
+        const sound: Howl = props.howlerState[0];
+
         switch (sound) {
             case undefined: {
-                console.error('No song is playing');
+                // console.error('No song is playing'); // <- Too many console.log
                 break;
             }
             default: {
@@ -107,6 +149,23 @@ export const Footer = (props: IFooterProps) => {
                 dispatch(updateCurrentSeconds(duration));
             }
         }
+    };
+
+    const handleVolumeSeekInputChange = (
+        e: React.FormEvent<HTMLInputElement>
+    ) => {
+        const value = e.currentTarget.value;
+
+        setVolume(Number(value));
+        SetVolumeInLocalStorage(Number(value) / 100);
+    };
+
+    const handleVolumeSeekMouseMove = (
+        e: React.MouseEvent<HTMLInputElement>
+    ) => {
+        const value = calcSliderPos(e);
+
+        setVolumeSeekTippyContent(Math.round(Number(value)).toString());
     };
 
     return (
@@ -335,23 +394,29 @@ export const Footer = (props: IFooterProps) => {
                             className={`column is-1 has-text-centered ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
-                            <Fragment>
-                                <Tippy content="Previous Song">
-                                    <span>
-                                        <IoPlaySkipBackCircleOutline
-                                            color="white"
-                                            style={{ transform: 'scale(2)' }}
-                                        />
-                                    </span>
-                                </Tippy>
-                            </Fragment>
+                            <Tippy
+                                content={<span>Previous Song</span>}
+                                animateFill={true}
+                                plugins={[animateFill]}
+                            >
+                                <span>
+                                    <IoPlaySkipBackCircleOutline
+                                        color="white"
+                                        style={{ transform: 'scale(2)' }}
+                                    />
+                                </span>
+                            </Tippy>
                         </div>
                         <div
                             className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
                         >
                             {footerState.song.global.playing ? (
                                 <Fragment>
-                                    <Tippy content="Play">
+                                    <Tippy
+                                        content={<span>Play</span>}
+                                        animateFill={true}
+                                        plugins={[animateFill]}
+                                    >
                                         <span>
                                             <IoPauseCircleOutline
                                                 color="white"
@@ -367,7 +432,11 @@ export const Footer = (props: IFooterProps) => {
                                 </Fragment>
                             ) : (
                                 <Fragment>
-                                    <Tippy content="Pause">
+                                    <Tippy
+                                        content={<span>Pause</span>}
+                                        animateFill={true}
+                                        plugins={[animateFill]}
+                                    >
                                         <span>
                                             <IoPlayCircleOutline
                                                 color="white"
@@ -387,16 +456,18 @@ export const Footer = (props: IFooterProps) => {
                             className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
                             //  onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')"
                         >
-                            <Fragment>
-                                <Tippy content="Next Song">
-                                    <span>
-                                        <IoPlaySkipForwardCircleOutline
-                                            color="white"
-                                            style={{ transform: 'scale(2)' }}
-                                        />
-                                    </span>
-                                </Tippy>
-                            </Fragment>
+                            <Tippy
+                                content={<span>Next Song</span>}
+                                animateFill={true}
+                                plugins={[animateFill]}
+                            >
+                                <span>
+                                    <IoPlaySkipForwardCircleOutline
+                                        color="white"
+                                        style={{ transform: 'scale(2)' }}
+                                    />
+                                </span>
+                            </Tippy>
                         </div>
                     </div>
                     <div className="columns is-mobile">
@@ -407,31 +478,57 @@ export const Footer = (props: IFooterProps) => {
                                 footerState.song.control.current
                             )}
                         </div>
-                        <div className="column ">
+                        <div
+                            className="column"
+                            onMouseEnter={() => {
+                                setSongSeekTippyVisible(true);
+                            }}
+                            onMouseLeave={() => {
+                                setSongSeekTippyVisible(false);
+                            }}
+                        >
                             <div className={classes.footer_input_anchor}>
-                                <progress
-                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
-                                    value={
-                                        (100 *
-                                            footerState.song.control.current) /
-                                        footerState.song.control.total
+                                <Tippy
+                                    offset={[0, -10]}
+                                    content={
+                                        <span>{songSeekTippyContent}</span>
                                     }
-                                    max="100"
-                                />
-                                <input
-                                    onChange={handleSongSeekInputChange}
-                                    onInput={handleSongSeekInputChange}
-                                    className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
-                                    step=".01"
-                                    min="0"
-                                    max="100"
-                                    value={
-                                        (100 *
-                                            footerState.song.control.current) /
-                                        footerState.song.control.total
-                                    }
-                                    type="range"
-                                />
+                                    visible={songSeekTippyVisible}
+                                    followCursor={'horizontal'}
+                                    animateFill={true}
+                                    plugins={[followCursor, animateFill]}
+                                >
+                                    <span>
+                                        <progress
+                                            className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
+                                            value={
+                                                (100 *
+                                                    footerState.song.control
+                                                        .current) /
+                                                footerState.song.control.total
+                                            }
+                                            max="100"
+                                        />
+                                        <input
+                                            onChange={handleSongSeekInputChange}
+                                            onInput={handleSongSeekInputChange}
+                                            onMouseMove={
+                                                handleSongSeekInputMouseMove
+                                            }
+                                            className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
+                                            step={0.01}
+                                            min={0}
+                                            max={100}
+                                            value={
+                                                (100 *
+                                                    footerState.song.control
+                                                        .current) /
+                                                footerState.song.control.total
+                                            }
+                                            type="range"
+                                        />
+                                    </span>
+                                </Tippy>
                             </div>
                         </div>
                         <div
@@ -448,34 +545,97 @@ export const Footer = (props: IFooterProps) => {
                         className={`columns is-mobile ${classes.volume_control_column}`}
                     >
                         <div className="column is-2 is-offset-2">
-                            {/* <ion-icon className="volume__icon" name="volume-high-outline"></ion-icon> */}
-                            {/* <script async>
-                            anime({
-                                targets: '.volume__icon',
-                                color: '#FFFFFF',
-                                translateY: -6,
-                                translateX: 22,
-                                scale: 1.5
-                            })
-                        </script> */}
+                            {volume <= 100 && volume < 75 ? (
+                                // 100 - 75 range
+                                <Fragment>
+                                    <MdVolumeUp />
+                                </Fragment>
+                            ) : (
+                                <Fragment>
+                                    {volume <= 75 && volume < 50 ? (
+                                        // 75 - 50 range
+                                        <Fragment>
+                                            <IoVolumeMedium />
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {volume <= 50 && volume < 25 ? (
+                                                // 50 - 25 range
+                                                <Fragment>
+                                                    <MdVolumeDown />
+                                                </Fragment>
+                                            ) : (
+                                                <Fragment>
+                                                    {volume <= 25 &&
+                                                    volume !== 0 ? (
+                                                        // 25 - 0 range
+                                                        <Fragment>
+                                                            <MdVolumeMute />
+                                                        </Fragment>
+                                                    ) : (
+                                                        <Fragment>
+                                                            {volume === 0 ? (
+                                                                <Fragment>
+                                                                    <MdVolumeOff />
+                                                                </Fragment>
+                                                            ) : (
+                                                                // The end
+                                                                <Fragment></Fragment>
+                                                            )}
+                                                        </Fragment>
+                                                    )}
+                                                </Fragment>
+                                            )}
+                                        </Fragment>
+                                    )}
+                                </Fragment>
+                            )}
                         </div>
-                        <div className="column ">
-                            <div className={classes.volume_anchor}>
-                                <progress
-                                    className={`progress is-small is-info ${classes.volume_progress} ${classes.progress_item}`}
-                                    value={volume}
-                                    max="100"
-                                />
-                                <input
-                                    className={`${classes.slider} ${classes.volume_slider}  slider`}
-                                    onInput={handleVolumeInputChange}
-                                    onChange={handleVolumeInputChange}
-                                    step="1"
-                                    min="0"
-                                    max="100"
-                                    value={volume}
-                                    type="range"
-                                />
+                        <div className="column">
+                            <div
+                                className={classes.volume_anchor}
+                                onMouseEnter={() => {
+                                    setVolumeSeekTippyVisible(true);
+                                }}
+                                onMouseLeave={() => {
+                                    setVolumeSeekTippyVisible(false);
+                                }}
+                            >
+                                <Tippy
+                                    content={
+                                        <span>{volumeSeekTippyContent}</span>
+                                    }
+                                    visible={volumeSeekTippyVisible}
+                                    followCursor={'horizontal'}
+                                    animateFill={true}
+                                    offset={[0, -10]}
+                                    plugins={[followCursor, animateFill]}
+                                >
+                                    <span>
+                                        <progress
+                                            className={`progress is-small is-info ${classes.volume_progress} ${classes.progress_item}`}
+                                            value={volume}
+                                            max="100"
+                                        />
+                                        <input
+                                            className={`${classes.slider} ${classes.volume_slider}  slider`}
+                                            onInput={
+                                                handleVolumeSeekInputChange
+                                            }
+                                            onChange={
+                                                handleVolumeSeekInputChange
+                                            }
+                                            onMouseMove={
+                                                handleVolumeSeekMouseMove
+                                            }
+                                            step={1}
+                                            min={0}
+                                            max={100}
+                                            value={volume}
+                                            type="range"
+                                        />
+                                    </span>
+                                </Tippy>
                             </div>
                         </div>
                         <div className="column is-2 is-offset-1" />

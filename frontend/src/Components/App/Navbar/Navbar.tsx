@@ -23,6 +23,7 @@ import voca from 'voca';
 
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css'; // optional
+import { followCursor, animateFill } from 'tippy.js';
 
 import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
 
@@ -298,6 +299,11 @@ export const Navbar = () => {
                                                                                 animateFill={
                                                                                     true
                                                                                 }
+                                                                                followCursor="vertical"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
                                                                                 placement="left"
                                                                                 content={`${data.first_name} ${data.last_name}`}
                                                                             >
@@ -314,6 +320,11 @@ export const Navbar = () => {
                                                                                 animateFill={
                                                                                     true
                                                                                 }
+                                                                                followCursor="vertical"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
                                                                                 placement="left"
                                                                                 content={
                                                                                     data.username
@@ -332,6 +343,11 @@ export const Navbar = () => {
                                                                                 animateFill={
                                                                                     true
                                                                                 }
+                                                                                followCursor="vertical"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
                                                                                 placement="left"
                                                                                 content={
                                                                                     data.email
@@ -359,6 +375,14 @@ export const Navbar = () => {
                                                                         >
                                                                             <Tippy
                                                                                 placement="left"
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
+                                                                                followCursor="vertical"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
                                                                                 content={`${data.first_name} ${data.last_name}`}
                                                                             >
                                                                                 <p
@@ -371,6 +395,14 @@ export const Navbar = () => {
                                                                                 </p>
                                                                             </Tippy>
                                                                             <Tippy
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
+                                                                                followCursor="vertical"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
                                                                                 placement="left"
                                                                                 content={
                                                                                     data.username
@@ -386,6 +418,14 @@ export const Navbar = () => {
                                                                                 </p>
                                                                             </Tippy>
                                                                             <Tippy
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
+                                                                                followCursor="vertical"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
                                                                                 placement="left"
                                                                                 content={
                                                                                     data.email
