@@ -2,8 +2,11 @@ import { createUseStyles } from 'react-jss';
 import { useMediaQuery } from 'react-responsive';
 import { Fragment, useEffect, useState } from 'react';
 
+import Tippy from '@tippyjs/react';
+
 import voca from 'voca';
 import numeral from 'numeral';
+import { Howl, Howler } from 'howler';
 
 import {
     IoPauseCircleOutline,
@@ -20,12 +23,10 @@ import {
     updateStatusToPause,
     updateCurrentSeconds,
 } from '../../../Store/Slices/FooterSlice';
-import { Howl, Howler } from 'howler';
 import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
 } from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
-import Tippy from '@tippyjs/react';
 
 interface IFooterProps {
     howlerState: Array<Howl>;
@@ -52,17 +53,29 @@ export const Footer = (props: IFooterProps) => {
 
     const handlePlayPauseClick = () => {
         // Create a new howler object
-        let sound: any = props.howlerState[0];
+        let sound: Howl = props.howlerState[0];
+
         // Song might be null if User didn't click anything
-        if (sound !== undefined) {
-            if (footerState.song.global.playing && sound.playing()) {
-                // Means playing
-                dispatch(updateStatusToPause());
-                sound.pause();
-            } else if (!footerState.song.global.playing && !sound.playing()) {
-                // Means paused
-                dispatch(updateStatusToPlay());
-                sound.play();
+        switch (sound) {
+            case undefined: {
+                console.error('No song is playing');
+                break;
+            }
+            default: {
+                if (sound !== undefined) {
+                    if (footerState.song.global.playing && sound.playing()) {
+                        // Means playing
+                        dispatch(updateStatusToPause());
+                        sound.pause();
+                    } else if (
+                        !footerState.song.global.playing &&
+                        !sound.playing()
+                    ) {
+                        // Means paused
+                        dispatch(updateStatusToPlay());
+                        sound.play();
+                    }
+                }
             }
         }
     };
