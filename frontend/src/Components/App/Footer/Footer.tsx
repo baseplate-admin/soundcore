@@ -57,6 +57,58 @@ export const Footer = (props: IFooterProps) => {
     const [volumeSeekTippyVisible, setVolumeSeekTippyVisible] = useState(false);
     const [volumeSeekTippyContent, setVolumeSeekTippyContent] = useState('');
 
+    // Every thing down here is for volume control
+    const [showHighVolume, setShowHighVolume] = useState(false);
+    const [showMediumVolume, setShowMediumVolume] = useState(false);
+    const [showLowVolume, setShowLowVolume] = useState(false);
+    const [showVolumeOff, setShowVolumeOff] = useState(false);
+    const [showMute, setShowMute] = useState(false);
+
+    useEffect(() => {
+        switch (true) {
+            case volume > 75 && volume <= 100: {
+                setShowHighVolume(true);
+                setShowMediumVolume(false);
+                setShowLowVolume(false);
+                setShowVolumeOff(false);
+                setShowMute(false);
+                break;
+            }
+            case volume > 50 && volume <= 75: {
+                setShowHighVolume(false);
+                setShowMediumVolume(true);
+                setShowLowVolume(false);
+                setShowVolumeOff(false);
+                setShowMute(false);
+                break;
+            }
+            case volume > 25 && volume <= 50: {
+                setShowHighVolume(false);
+                setShowMediumVolume(false);
+                setShowLowVolume(true);
+                setShowVolumeOff(false);
+                setShowMute(false);
+                break;
+            }
+            case volume > 0 && volume <= 25: {
+                setShowHighVolume(false);
+                setShowMediumVolume(false);
+                setShowLowVolume(false);
+                setShowVolumeOff(true);
+                setShowMute(false);
+                break;
+            }
+            case volume === 0: {
+                setShowHighVolume(false);
+                setShowMediumVolume(false);
+                setShowLowVolume(false);
+                setShowVolumeOff(false);
+                setShowMute(true);
+                break;
+            }
+        }
+    }, [volume]);
+
     const isMobile = useMediaQuery({
         query: '(max-width: 767px)',
     });
@@ -164,8 +216,11 @@ export const Footer = (props: IFooterProps) => {
         e: React.MouseEvent<HTMLInputElement>
     ) => {
         const value = calcSliderPos(e);
-
-        setVolumeSeekTippyContent(Math.round(Number(value)).toString());
+        switch (true) {
+            case value >= 0 && value <= 100: {
+                setVolumeSeekTippyContent(Math.round(Number(value)).toString());
+            }
+        }
     };
 
     return (
@@ -545,50 +600,38 @@ export const Footer = (props: IFooterProps) => {
                         className={`columns is-mobile ${classes.volume_control_column}`}
                     >
                         <div className="column is-2 is-offset-2">
-                            {volume <= 100 && volume < 75 ? (
-                                // 100 - 75 range
-                                <Fragment>
-                                    <MdVolumeUp />
-                                </Fragment>
+                            {showHighVolume &&
+                            !showMediumVolume &&
+                            !showLowVolume &&
+                            !showVolumeOff &&
+                            !showMute ? (
+                                <MdVolumeUp />
+                            ) : showMediumVolume &&
+                              !showHighVolume &&
+                              !showLowVolume &&
+                              !showVolumeOff &&
+                              !showMute ? (
+                                <IoVolumeMedium />
+                            ) : showLowVolume &&
+                              !showHighVolume &&
+                              !showMediumVolume &&
+                              !showVolumeOff &&
+                              !showMute ? (
+                                <MdVolumeDown />
+                            ) : showVolumeOff &&
+                              !showHighVolume &&
+                              !showMediumVolume &&
+                              !showLowVolume &&
+                              !showMute ? (
+                                <MdVolumeMute />
+                            ) : !showHighVolume &&
+                              !showMediumVolume &&
+                              !showLowVolume &&
+                              !showVolumeOff &&
+                              showMute ? (
+                                <MdVolumeOff />
                             ) : (
-                                <Fragment>
-                                    {volume <= 75 && volume < 50 ? (
-                                        // 75 - 50 range
-                                        <Fragment>
-                                            <IoVolumeMedium />
-                                        </Fragment>
-                                    ) : (
-                                        <Fragment>
-                                            {volume <= 50 && volume < 25 ? (
-                                                // 50 - 25 range
-                                                <Fragment>
-                                                    <MdVolumeDown />
-                                                </Fragment>
-                                            ) : (
-                                                <Fragment>
-                                                    {volume <= 25 &&
-                                                    volume !== 0 ? (
-                                                        // 25 - 0 range
-                                                        <Fragment>
-                                                            <MdVolumeMute />
-                                                        </Fragment>
-                                                    ) : (
-                                                        <Fragment>
-                                                            {volume === 0 ? (
-                                                                <Fragment>
-                                                                    <MdVolumeOff />
-                                                                </Fragment>
-                                                            ) : (
-                                                                // The end
-                                                                <Fragment></Fragment>
-                                                            )}
-                                                        </Fragment>
-                                                    )}
-                                                </Fragment>
-                                            )}
-                                        </Fragment>
-                                    )}
-                                </Fragment>
+                                <></>
                             )}
                         </div>
                         <div className="column">
