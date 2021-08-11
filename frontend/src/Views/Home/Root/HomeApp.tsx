@@ -1,4 +1,8 @@
 import axios from 'axios';
+
+import Tippy from '@tippyjs/react';
+import { followCursor, animateFill } from 'tippy.js';
+
 import { Fragment, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -309,34 +313,88 @@ export const HomePage = () => {
                                                                                 paddingRight: 0,
                                                                             }}
                                                                         >
-                                                                            <p
-                                                                                className={`title is-size-5 ${classes['song-title']}`}
-                                                                            >
-                                                                                {voca
+                                                                            <Tippy
+                                                                                content={voca
                                                                                     .chain(
                                                                                         music.song_name
                                                                                     )
-                                                                                    .trimRight()
-                                                                                    .truncate(
-                                                                                        20
+                                                                                    .replace(
+                                                                                        ',',
+                                                                                        ' '
                                                                                     )
+                                                                                    .trimRight()
                                                                                     .value()}
-                                                                            </p>
-                                                                            <p
-                                                                                className={`subtitle is-size-6 ${classes['song-artist']}`}
+                                                                                placement="top"
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
+                                                                                followCursor="horizontal"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
                                                                             >
-                                                                                {voca
+                                                                                <p
+                                                                                    className={`title is-size-5 ${classes['song-title']}`}
+                                                                                >
+                                                                                    {voca
+                                                                                        .chain(
+                                                                                            music.song_name
+                                                                                        )
+                                                                                        .replace(
+                                                                                            ',',
+                                                                                            ' | '
+                                                                                        )
+                                                                                        .trimRight()
+                                                                                        .truncate(
+                                                                                            20
+                                                                                        )
+                                                                                        .value()}
+                                                                                </p>
+                                                                            </Tippy>
+                                                                            <Tippy
+                                                                                content={voca
                                                                                     .chain(
                                                                                         music.artist
                                                                                     )
                                                                                     .trim()
+                                                                                    .replace(
+                                                                                        ',',
+                                                                                        ' | '
+                                                                                    )
                                                                                     .titleCase()
                                                                                     .trimRight()
-                                                                                    .truncate(
-                                                                                        19
-                                                                                    )
                                                                                     .value()}
-                                                                            </p>
+                                                                                animateFill={
+                                                                                    true
+                                                                                }
+                                                                                placement="bottom"
+                                                                                followCursor="horizontal"
+                                                                                plugins={[
+                                                                                    animateFill,
+                                                                                    followCursor,
+                                                                                ]}
+                                                                            >
+                                                                                <p
+                                                                                    className={`subtitle is-size-6 ${classes['song-artist']}`}
+                                                                                >
+                                                                                    {voca
+                                                                                        .chain(
+                                                                                            music.artist
+                                                                                        )
+                                                                                        .replace(
+                                                                                            ',',
+                                                                                            ' | '
+                                                                                        )
+                                                                                        .trim()
+                                                                                        .titleCase()
+                                                                                        .trimRight()
+                                                                                        .truncate(
+                                                                                            19
+                                                                                        )
+                                                                                        .value()}
+                                                                                </p>
+                                                                            </Tippy>
                                                                         </div>
                                                                     </div>
                                                                     <div className="column is-1">

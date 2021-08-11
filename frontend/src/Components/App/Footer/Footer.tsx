@@ -262,6 +262,7 @@ export const Footer = (props: IFooterProps) => {
             setUnmutedValue(0);
         }
     };
+
     const iconColor = '#e6e6e6';
 
     return (
@@ -620,13 +621,12 @@ export const Footer = (props: IFooterProps) => {
                                     <span>
                                         <progress
                                             className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
-                                            value={Math.round(
+                                            value={
                                                 (100 *
                                                     footerState.song.control
                                                         .current) /
-                                                    footerState.song.control
-                                                        .total
-                                            )}
+                                                footerState.song.control.total
+                                            }
                                             max="100"
                                         />
                                         <input
@@ -639,13 +639,12 @@ export const Footer = (props: IFooterProps) => {
                                             step={0.01}
                                             min={0}
                                             max={100}
-                                            value={Math.round(
+                                            value={
                                                 (100 *
                                                     footerState.song.control
                                                         .current) /
-                                                    footerState.song.control
-                                                        .total
-                                            )}
+                                                footerState.song.control.total
+                                            }
                                             type="range"
                                         />
                                     </span>
