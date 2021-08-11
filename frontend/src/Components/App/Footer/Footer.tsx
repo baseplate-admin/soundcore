@@ -263,7 +263,7 @@ export const Footer = (props: IFooterProps) => {
         }
     };
 
-    const iconColor = '#e6e6e6';
+    const iconColor = '#D5D9DD';
 
     return (
         <footer className={classes.footer_item}>
@@ -882,8 +882,8 @@ const useStyles = createUseStyles({
     },
 
     song_image: {
-        height: '60px',
-        width: '60px',
+        height: '60px !important',
+        width: '60px !important',
     },
 
     'footer-song-info': {
@@ -964,6 +964,7 @@ const useStyles = createUseStyles({
         },
     },
     progress_item: {
+        backgroundColor: '#91979d !important',
         height: '0.35rem !important',
         transform: 'translateY(1px) !important',
     },

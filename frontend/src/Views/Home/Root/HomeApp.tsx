@@ -520,7 +520,7 @@ const useStyles = createUseStyles({
     'grid-container': {
         display: 'grid',
         gridTemplateColumns: 'repeat(auto-fit, minmax(12em, 1fr))',
-        gap: '1em',
+        gap: '1.3em',
         paddingTop: '1em',
     },
     'grid-item': {

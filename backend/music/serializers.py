@@ -6,3 +6,4 @@ class MusicSerializer(serializers.ModelSerializer):
     class Meta:
         model = Upload
         fields = "__all__"
+
