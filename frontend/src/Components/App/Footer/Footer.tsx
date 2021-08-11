@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { useMediaQuery } from 'react-responsive';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, MouseEvent, FormEvent } from 'react';
 
 import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
@@ -136,7 +136,7 @@ export const Footer = (props: IFooterProps) => {
         Howler.volume(Number(volume / 100));
     }, [volume]);
 
-    const calcSliderPos = (e: React.MouseEvent<HTMLInputElement>) => {
+    const calcSliderPos = (e: MouseEvent<HTMLInputElement>) => {
         return (
             // Enhancement proposals:
             //      Get Max value from a slider. Currently we are hardcoding 100
@@ -173,9 +173,7 @@ export const Footer = (props: IFooterProps) => {
             }
         }
     };
-    const handleSongSeekInputMouseMove = (
-        e: React.MouseEvent<HTMLInputElement>
-    ) => {
+    const handleSongSeekInputMouseMove = (e: MouseEvent<HTMLInputElement>) => {
         const sound: Howl = props.howlerState[0];
 
         // Make the tippy container visible.
@@ -195,9 +193,7 @@ export const Footer = (props: IFooterProps) => {
         }
     };
 
-    const handleSongSeekInputChange = (
-        e: React.FormEvent<HTMLInputElement>
-    ) => {
+    const handleSongSeekInputChange = (e: FormEvent<HTMLInputElement>) => {
         // Create a new howler object
         const sound: Howl = props.howlerState[0];
 
@@ -217,9 +213,7 @@ export const Footer = (props: IFooterProps) => {
         }
     };
 
-    const handleVolumeSeekInputChange = (
-        e: React.FormEvent<HTMLInputElement>
-    ) => {
+    const handleVolumeSeekInputChange = (e: FormEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value;
 
         setVolume(Number(value));
@@ -241,9 +235,7 @@ export const Footer = (props: IFooterProps) => {
         }
     };
 
-    const handleVolumeSeekMouseMove = (
-        e: React.MouseEvent<HTMLInputElement>
-    ) => {
+    const handleVolumeSeekMouseMove = (e: MouseEvent<HTMLInputElement>) => {
         const value = calcSliderPos(e);
         switch (true) {
             case value >= 0 && value <= 100: {
@@ -251,7 +243,7 @@ export const Footer = (props: IFooterProps) => {
             }
         }
     };
-    const handleMuteIconClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const handleMuteIconClick = (e: MouseEvent<HTMLDivElement>) => {
         if (!isMuted) {
             setUnmutedValue(volume);
             setIsMuted(true);
