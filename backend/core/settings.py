@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "whitenoise",
     "music",
     "users",
+    "captures",
 ]
 
 MIDDLEWARE = [

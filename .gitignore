@@ -1,8 +1,0 @@
-
-.vscode/settings.json
-backend/.vscode/settings.json
-backend/Pipfile.lock
-*.mp3
-*.flac
-*.png
-*.webp

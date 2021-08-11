@@ -19,10 +19,9 @@ black = "*"
 python_version = "3.9"
 
 [scripts]
-dev-server = "python ./backend/manage.py runserver"
-dev-frontend = "cd frontend && yarn start"
-sync = "python ./backend/manage.py migrate"
-mksync = "python ./backend/manage.py makemigrations"
+dev = "python manage.py runserver"
+sync = "python manage.py migrate"
+mksync = "python manage.py makemigrations"
 
 [pipenv]
 allow_prereleases = true

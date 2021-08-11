@@ -1,4 +1,3 @@
-from rest_framework import serializers
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
@@ -7,7 +6,7 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from users.serializers import UserSerializer, TokenSerializer, CaptureVolumeSerializer
+from users.serializers import UserSerializer, TokenSerializer
 
 # Create your views here.
 
@@ -37,21 +36,3 @@ class UserInfo(APIView):
         data = User.objects.get(id=request.user.id)
         serializer = UserSerializer(data, many=False)
         return Response(serializer.data)
-
-
-class CaptureVolume(generics.CreateAPIView):
-    authentication_classes = [
-        JWTAuthentication,
-    ]
-    serializer_class = CaptureVolumeSerializer
-
-    def post(self, request):
-        serializer = CaptureVolumeSerializer(data=request.data, many=False)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response(200)
-
-        else:
-            print(serializer.errors)
-            return Response(402)
