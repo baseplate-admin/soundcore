@@ -1,30 +1,31 @@
+import json
+
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from users.serializers import UserSerializer, TokenSerializer
+from users.serializers import UserSerializer
 
 # Create your views here.
 
 
-class JailToken(generics.CreateAPIView):
+class JailToken(APIView):
     parser_classes = [JSONParser]
-    serializer_class = TokenSerializer
 
     def post(self, request):
-        serializer = TokenSerializer(data=request.data, many=False)
+        data = json.loads(request.body)
+        print(data["refresh"])
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(200)
+        token = RefreshToken(data["refresh"])
+        token.blacklist()
 
-        else:
-            print(serializer.errors)
-            return Response(402)
+        return Response(201, data=token)
 
 
 class UserInfo(APIView):

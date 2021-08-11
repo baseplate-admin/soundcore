@@ -5,6 +5,7 @@ import { JWTTokenExpireTime } from '../../../Config/JWT';
 
 /*
 == Refresh token is sent to backend ==
+== Access token gets Refreshed ==
 
     Helper:
         Token Type:
@@ -12,8 +13,8 @@ import { JWTTokenExpireTime } from '../../../Config/JWT';
             • Refresh -> Shorter Token.
         
         Status:
-            • Access -> Stays
-            • Refresh -> Expires
+            • Access -> Expires
+            • Refresh -> Stays
 */
 
 export const SetJWTTokenInLocalStorage = async (
@@ -64,7 +65,6 @@ export const GetJWTTokenInLocalStorage = () => {
 
             const refresh = JSON.parse(refreshToken).refresh;
             const data = { refresh: refresh };
-
             axios
                 .post(url, data, config)
                 .then((res) => {

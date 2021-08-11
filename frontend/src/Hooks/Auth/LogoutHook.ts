@@ -1,35 +1,21 @@
-import axios from 'axios';
-
-import { APIUrl } from '../../Config/App';
-import { APIPath } from '../../Config/Api';
+import { blacklistToken } from '../../Functions/Helpers/JWT/Blacklist';
+import { useHistory } from 'react-router';
 
 export const useAuthLogout = () => {
+    const history = useHistory();
+
     const Logout = async () => {
         // localStorage.clear(); // <= Causes Bug
 
+        const accessToken = localStorage.getItem('accessToken');
         const refreshToken = localStorage.getItem('refreshToken');
-        if (refreshToken) {
-            const base = APIUrl;
-            const endPoint = APIPath.REFRESH_ENDPOINT;
-
-            const url = `${base}${endPoint}`;
-
-            const config = {
-                headers: {
-                    'Content-Type': `application/json`,
-                },
-            };
-
+        if (refreshToken && accessToken) {
             const refresh = JSON.parse(refreshToken).refresh;
-            const data = { refresh: refresh };
+            blacklistToken(refresh);
+            history.go(0); // Refresh the page ? (Update Needed)
 
-            axios
-                .post(url, data, config)
-                .then((res) => {
-                    localStorage.setItem('accessToken', JSON.stringify({}));
-                    localStorage.setItem('refreshToken', JSON.stringify({}));
-                })
-                .catch((e) => {});
+            localStorage.setItem('accessToken', JSON.stringify({}));
+            localStorage.setItem('refreshToken', JSON.stringify({}));
         }
     };
 

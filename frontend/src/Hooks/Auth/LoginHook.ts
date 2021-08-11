@@ -26,7 +26,6 @@ export const useAuthLogin = () => {
             .post(url, data)
             .then(async (res) => {
                 dispatch(postLoginFormSuccess());
-                console.log(res);
                 await SetJWTTokenInLocalStorage(
                     res.data.access,
                     res.data.refresh

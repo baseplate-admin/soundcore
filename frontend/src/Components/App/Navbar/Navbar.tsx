@@ -6,7 +6,7 @@ import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
 
 import { createUseStyles } from 'react-jss';
-import { Link, useHistory } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import useWindowDimensions from '../../../Hooks/Responsive/Hooks';
 
 import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
@@ -35,7 +35,6 @@ export const Navbar = () => {
 
     const { width } = useWindowDimensions();
 
-    const history = useHistory();
     const classes = useStyles();
 
     const [imageDropdownShown, setImageDropdownShown] = useState(false);
@@ -82,7 +81,6 @@ export const Navbar = () => {
 
     const handleLogout = () => {
         Logout();
-        history.go(0); // Refresh the page ? (Update Needed)
     };
 
     return (

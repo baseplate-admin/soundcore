@@ -1,7 +1,5 @@
 from rest_framework import serializers
-from rest_framework.serializers import ValidationError
 from django.contrib.auth.models import User
-from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,10 +12,3 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "user_permissions",
         )
-
-
-class TokenSerializer(serializers.Serializer):
-    refresh = serializers.CharField(max_length=210)
-
-    def create(self, validated_data):
-        return RefreshToken(validated_data["refresh"]).blacklist()

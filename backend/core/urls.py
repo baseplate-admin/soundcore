@@ -23,7 +23,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/users/", include("users.urls")),
     path("api/v1/music/", include("music.urls")),
-    path("api/v1/capture/", include("captures.urls")),
 ]
 
 if settings.DEBUG:
