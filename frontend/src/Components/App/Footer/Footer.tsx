@@ -17,6 +17,10 @@ import {
     IoPlayCircleOutline,
     IoPlaySkipForwardCircleOutline,
     IoVolumeMedium,
+    IoVolumeHigh,
+    IoVolumeLow,
+    IoVolumeOff,
+    IoVolumeMute,
 } from 'react-icons/io5';
 
 import { prettifySecondsToMinutes } from '../../../Functions/Helpers/Prettifier/TimeFunction';
@@ -31,12 +35,6 @@ import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
 } from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
-import {
-    MdVolumeDown,
-    MdVolumeMute,
-    MdVolumeOff,
-    MdVolumeUp,
-} from 'react-icons/md';
 
 interface IFooterProps {
     howlerState: Array<Howl>;
@@ -640,7 +638,7 @@ export const Footer = (props: IFooterProps) => {
                                         <div
                                             className="column is-narrow is-mobile"
                                             style={{
-                                                transform: 'translateY(-0.4em)',
+                                                transform: 'translateY(-0.5em)',
                                             }}
                                         >
                                             {showHighVolume &&
@@ -648,7 +646,7 @@ export const Footer = (props: IFooterProps) => {
                                             !showLowVolume &&
                                             !showVolumeOff &&
                                             !showMute ? (
-                                                <MdVolumeUp
+                                                <IoVolumeHigh
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
@@ -670,7 +668,7 @@ export const Footer = (props: IFooterProps) => {
                                               !showMediumVolume &&
                                               !showVolumeOff &&
                                               !showMute ? (
-                                                <MdVolumeDown
+                                                <IoVolumeLow
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
@@ -681,7 +679,7 @@ export const Footer = (props: IFooterProps) => {
                                               !showMediumVolume &&
                                               !showLowVolume &&
                                               !showMute ? (
-                                                <MdVolumeMute
+                                                <IoVolumeOff
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
@@ -692,7 +690,7 @@ export const Footer = (props: IFooterProps) => {
                                               !showLowVolume &&
                                               !showVolumeOff &&
                                               showMute ? (
-                                                <MdVolumeOff
+                                                <IoVolumeMute
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}

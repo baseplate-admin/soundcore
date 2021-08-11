@@ -46,6 +46,7 @@ export const GetJWTTokenInLocalStorage = () => {
         if (now.getTime() > item.expiry) {
             // If the item is expired, delete the item from storage
             // and return null
+            
             const base = APIUrl;
             const endPoint = APIPath.REFRESH_ENDPOINT;
 
@@ -56,6 +57,7 @@ export const GetJWTTokenInLocalStorage = () => {
                     'Content-Type': `application/json`,
                 },
             };
+
             const refresh = JSON.parse(refreshToken).refresh;
             const data = { refresh: refresh };
 

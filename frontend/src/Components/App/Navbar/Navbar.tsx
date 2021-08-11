@@ -1,10 +1,16 @@
-import {
-    IoLogOutOutline,
-    IoMenuOutline,
-    IoSearchOutline,
-} from 'react-icons/io5';
+import voca from 'voca';
+import { useMediaQuery } from 'react-responsive';
+import { useSpring, animated } from 'react-spring';
+
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
+import { followCursor, animateFill } from 'tippy.js';
+
 import { createUseStyles } from 'react-jss';
 import { Link, useHistory } from 'react-router-dom';
+import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
+import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
+
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import { RoutingPath } from '../../../Config/Routes';
 import {
@@ -12,20 +18,14 @@ import {
     leftMenuShown,
     selectLeftMenuState,
 } from '../../../Store/Slices/NavbarSlice';
-import { useMediaQuery } from 'react-responsive';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useState } from 'react';
 import { useGetUserQuery } from '../../../Store/Services/GetUserService';
 import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/Libravatar/GetImage';
-import { useSpring, animated } from 'react-spring';
-import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
-
-import voca from 'voca';
-
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
-import { followCursor, animateFill } from 'tippy.js';
-
-import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
+import {
+    IoLogOutOutline,
+    IoMenuOutline,
+    IoSearchOutline,
+} from 'react-icons/io5';
 
 import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
@@ -35,14 +35,7 @@ export const Navbar = () => {
 
     const { data, isLoading } = useGetUserQuery(null);
 
-    useEffect(() => {
-        if (!isLoading && data === undefined) {
-            Logout();
-        }
-    }, [Logout, data, isLoading]);
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { height, width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
     const history = useHistory();
     const classes = useStyles();
@@ -59,6 +52,10 @@ export const Navbar = () => {
 
     const isFullHD = useMediaQuery({
         query: '(max-width: 1408px)',
+    });
+
+    const isConsoleEnabled = useMediaQuery({
+        query: '(max-width: 1420px)',
     });
 
     const leftMenuState = useAppSelector(selectLeftMenuState);
@@ -78,10 +75,13 @@ export const Navbar = () => {
         opacity: imageDropdownShown ? 1 : 0.0,
         width: isMobile
             ? (width * 53) / 100
+            : isTablet
+            ? (width * 30) / 100
             : isFullHD
-            ? (width * 23) / 100
-            : (width * 15) / 100, // 53vw Mobile | 25vw Low Res Display | 15vw High Res Display
+            ? (width * 25) / 100
+            : (width * 15) / 100, // 53vw Mobile | 30vw Tablet | 25vw Low Res Display | 15vw High Res Display
     });
+
     const handleLogout = () => {
         Logout();
         history.go(0); // Refresh the page ? (Update Needed)
@@ -252,197 +252,348 @@ export const Navbar = () => {
                                                         {isMobile ? (
                                                             // Mobile Version
                                                             <Fragment>
-                                                                <div
-                                                                    className={
-                                                                        imageDropdownShown
-                                                                            ? ''
-                                                                            : 'is-hidden'
-                                                                    }
-                                                                >
-                                                                    <p
-                                                                        className={`${classes.dropdown_content_text_items}`}
-                                                                    >
-                                                                        {voca.truncate(
-                                                                            `${data.first_name} ${data.last_name}`,
-                                                                            10
-                                                                        )}
-                                                                    </p>
-                                                                    <p
-                                                                        className={`is-size-7 ${classes.dropdown_content_text_items}`}
-                                                                    >
-                                                                        {voca.truncate(
-                                                                            data.username,
-                                                                            10
-                                                                        )}
-                                                                    </p>
-                                                                    <p
-                                                                        className={`${classes.dropdown_content_text_items}`}
-                                                                    >
-                                                                        {voca.truncate(
-                                                                            data.email,
-                                                                            10
-                                                                        )}
-                                                                    </p>
-                                                                </div>
-                                                            </Fragment>
-                                                        ) : (
-                                                            // Desktop Version
-                                                            <Fragment>
-                                                                {isTablet ? (
+                                                                {imageDropdownShown ? (
                                                                     <Fragment>
-                                                                        <div
-                                                                            className={
-                                                                                imageDropdownShown
-                                                                                    ? ''
-                                                                                    : 'is-hidden'
-                                                                            }
+                                                                        <p
+                                                                            className={`${classes.dropdown_content_text_items}`}
                                                                         >
-                                                                            <Tippy
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                followCursor="vertical"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                                placement="left"
-                                                                                content={`${data.first_name} ${data.last_name}`}
-                                                                            >
-                                                                                <p
-                                                                                    className={`${classes.dropdown_content_text_items}`}
-                                                                                >
-                                                                                    {voca.truncate(
-                                                                                        `${data.first_name} ${data.last_name}`,
-                                                                                        13
-                                                                                    )}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                            <Tippy
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                followCursor="vertical"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                                placement="left"
-                                                                                content={
-                                                                                    data.username
-                                                                                }
-                                                                            >
-                                                                                <p
-                                                                                    className={`is-size-7 ${classes.dropdown_content_text_items}`}
-                                                                                >
-                                                                                    {voca.truncate(
-                                                                                        data.username,
-                                                                                        13
-                                                                                    )}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                            <Tippy
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                followCursor="vertical"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                                placement="left"
-                                                                                content={
-                                                                                    data.email
-                                                                                }
-                                                                            >
-                                                                                <p
-                                                                                    className={`${classes.dropdown_content_text_items}`}
-                                                                                >
-                                                                                    {voca.truncate(
-                                                                                        data.email,
-                                                                                        13
-                                                                                    )}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                        </div>
+                                                                            {voca.truncate(
+                                                                                `${data.first_name} ${data.last_name}`,
+                                                                                12
+                                                                            )}
+                                                                        </p>
+                                                                        <p
+                                                                            className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                        >
+                                                                            {voca.truncate(
+                                                                                data.username,
+                                                                                12
+                                                                            )}
+                                                                        </p>
+                                                                        <p
+                                                                            className={`${classes.dropdown_content_text_items}`}
+                                                                        >
+                                                                            {voca.truncate(
+                                                                                data.email,
+                                                                                12
+                                                                            )}
+                                                                        </p>
                                                                     </Fragment>
                                                                 ) : (
+                                                                    <Fragment></Fragment>
+                                                                )}
+                                                            </Fragment>
+                                                        ) : (
+                                                            <Fragment>
+                                                                {isTablet ? (
+                                                                    // Tablet | ipad version
                                                                     <Fragment>
-                                                                        <div
-                                                                            className={
-                                                                                imageDropdownShown
-                                                                                    ? ''
-                                                                                    : 'is-hidden'
-                                                                            }
-                                                                        >
-                                                                            <Tippy
-                                                                                placement="left"
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                followCursor="vertical"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                                content={`${data.first_name} ${data.last_name}`}
-                                                                            >
-                                                                                <p
-                                                                                    className={`${classes.dropdown_content_text_items}`}
+                                                                        {imageDropdownShown ? (
+                                                                            <Fragment>
+                                                                                <Tippy
+                                                                                    animateFill={
+                                                                                        true
+                                                                                    }
+                                                                                    followCursor="vertical"
+                                                                                    plugins={[
+                                                                                        animateFill,
+                                                                                        followCursor,
+                                                                                    ]}
+                                                                                    placement="left"
+                                                                                    content={`${data.first_name} ${data.last_name}`}
                                                                                 >
-                                                                                    {voca.truncate(
-                                                                                        `${data.first_name} ${data.last_name}`,
-                                                                                        25
-                                                                                    )}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                            <Tippy
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                followCursor="vertical"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                                placement="left"
-                                                                                content={
-                                                                                    data.username
-                                                                                }
-                                                                            >
-                                                                                <p
-                                                                                    className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                    <p
+                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                    >
+                                                                                        {voca.truncate(
+                                                                                            `${data.first_name} ${data.last_name}`,
+                                                                                            15
+                                                                                        )}
+                                                                                    </p>
+                                                                                </Tippy>
+                                                                                <Tippy
+                                                                                    animateFill={
+                                                                                        true
+                                                                                    }
+                                                                                    followCursor="vertical"
+                                                                                    plugins={[
+                                                                                        animateFill,
+                                                                                        followCursor,
+                                                                                    ]}
+                                                                                    placement="left"
+                                                                                    content={
+                                                                                        data.username
+                                                                                    }
                                                                                 >
-                                                                                    {voca.truncate(
-                                                                                        data.username,
-                                                                                        25
-                                                                                    )}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                            <Tippy
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                followCursor="vertical"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                                placement="left"
-                                                                                content={
-                                                                                    data.email
-                                                                                }
-                                                                            >
-                                                                                <p
-                                                                                    className={`${classes.dropdown_content_text_items}`}
+                                                                                    <p
+                                                                                        className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                    >
+                                                                                        {voca.truncate(
+                                                                                            data.username,
+                                                                                            15
+                                                                                        )}
+                                                                                    </p>
+                                                                                </Tippy>
+                                                                                <Tippy
+                                                                                    animateFill={
+                                                                                        true
+                                                                                    }
+                                                                                    followCursor="vertical"
+                                                                                    plugins={[
+                                                                                        animateFill,
+                                                                                        followCursor,
+                                                                                    ]}
+                                                                                    placement="left"
+                                                                                    content={
+                                                                                        data.email
+                                                                                    }
                                                                                 >
-                                                                                    {voca.truncate(
-                                                                                        data.email,
-                                                                                        25
-                                                                                    )}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                        </div>
+                                                                                    <p
+                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                    >
+                                                                                        {voca.truncate(
+                                                                                            data.email,
+                                                                                            15
+                                                                                        )}
+                                                                                    </p>
+                                                                                </Tippy>
+                                                                            </Fragment>
+                                                                        ) : (
+                                                                            <Fragment></Fragment>
+                                                                        )}
+                                                                    </Fragment>
+                                                                ) : (
+                                                                    // Desktop Version
+                                                                    <Fragment>
+                                                                        {isFullHD ? (
+                                                                            // Low res Display
+                                                                            <Fragment>
+                                                                                {imageDropdownShown ? (
+                                                                                    <Fragment>
+                                                                                        <Tippy
+                                                                                            placement="left"
+                                                                                            animateFill={
+                                                                                                true
+                                                                                            }
+                                                                                            followCursor="vertical"
+                                                                                            plugins={[
+                                                                                                animateFill,
+                                                                                                followCursor,
+                                                                                            ]}
+                                                                                            content={`${data.first_name} ${data.last_name}`}
+                                                                                        >
+                                                                                            <p
+                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                            >
+                                                                                                {voca.truncate(
+                                                                                                    `${data.first_name} ${data.last_name}`,
+                                                                                                    15
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </Tippy>
+                                                                                        <Tippy
+                                                                                            animateFill={
+                                                                                                true
+                                                                                            }
+                                                                                            followCursor="vertical"
+                                                                                            plugins={[
+                                                                                                animateFill,
+                                                                                                followCursor,
+                                                                                            ]}
+                                                                                            placement="left"
+                                                                                            content={
+                                                                                                data.username
+                                                                                            }
+                                                                                        >
+                                                                                            <p
+                                                                                                className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                            >
+                                                                                                {voca.truncate(
+                                                                                                    data.username,
+                                                                                                    15
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </Tippy>
+                                                                                        <Tippy
+                                                                                            animateFill={
+                                                                                                true
+                                                                                            }
+                                                                                            followCursor="vertical"
+                                                                                            plugins={[
+                                                                                                animateFill,
+                                                                                                followCursor,
+                                                                                            ]}
+                                                                                            placement="left"
+                                                                                            content={
+                                                                                                data.email
+                                                                                            }
+                                                                                        >
+                                                                                            <p
+                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                            >
+                                                                                                {voca.truncate(
+                                                                                                    data.email,
+                                                                                                    15
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </Tippy>
+                                                                                    </Fragment>
+                                                                                ) : (
+                                                                                    <Fragment></Fragment>
+                                                                                )}
+                                                                            </Fragment>
+                                                                        ) : (
+                                                                            // High res Display
+                                                                            <Fragment>
+                                                                                {isConsoleEnabled ? (
+                                                                                    <Fragment>
+                                                                                        <Tippy
+                                                                                            placement="left"
+                                                                                            animateFill={
+                                                                                                true
+                                                                                            }
+                                                                                            followCursor="vertical"
+                                                                                            plugins={[
+                                                                                                animateFill,
+                                                                                                followCursor,
+                                                                                            ]}
+                                                                                            content={`${data.first_name} ${data.last_name}`}
+                                                                                        >
+                                                                                            <p
+                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                            >
+                                                                                                {voca.truncate(
+                                                                                                    `${data.first_name} ${data.last_name}`,
+                                                                                                    15
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </Tippy>
+                                                                                        <Tippy
+                                                                                            animateFill={
+                                                                                                true
+                                                                                            }
+                                                                                            followCursor="vertical"
+                                                                                            plugins={[
+                                                                                                animateFill,
+                                                                                                followCursor,
+                                                                                            ]}
+                                                                                            placement="left"
+                                                                                            content={
+                                                                                                data.username
+                                                                                            }
+                                                                                        >
+                                                                                            <p
+                                                                                                className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                            >
+                                                                                                {voca.truncate(
+                                                                                                    data.username,
+                                                                                                    15
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </Tippy>
+                                                                                        <Tippy
+                                                                                            animateFill={
+                                                                                                true
+                                                                                            }
+                                                                                            followCursor="vertical"
+                                                                                            plugins={[
+                                                                                                animateFill,
+                                                                                                followCursor,
+                                                                                            ]}
+                                                                                            placement="left"
+                                                                                            content={
+                                                                                                data.email
+                                                                                            }
+                                                                                        >
+                                                                                            <p
+                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                            >
+                                                                                                {voca.truncate(
+                                                                                                    data.email,
+                                                                                                    15
+                                                                                                )}
+                                                                                            </p>
+                                                                                        </Tippy>
+                                                                                    </Fragment>
+                                                                                ) : (
+                                                                                    <Fragment>
+                                                                                        {imageDropdownShown ? (
+                                                                                            <Fragment>
+                                                                                                <Tippy
+                                                                                                    placement="left"
+                                                                                                    animateFill={
+                                                                                                        true
+                                                                                                    }
+                                                                                                    followCursor="vertical"
+                                                                                                    plugins={[
+                                                                                                        animateFill,
+                                                                                                        followCursor,
+                                                                                                    ]}
+                                                                                                    content={`${data.first_name} ${data.last_name}`}
+                                                                                                >
+                                                                                                    <p
+                                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                                    >
+                                                                                                        {voca.truncate(
+                                                                                                            `${data.first_name} ${data.last_name}`,
+                                                                                                            23
+                                                                                                        )}
+                                                                                                    </p>
+                                                                                                </Tippy>
+                                                                                                <Tippy
+                                                                                                    animateFill={
+                                                                                                        true
+                                                                                                    }
+                                                                                                    followCursor="vertical"
+                                                                                                    plugins={[
+                                                                                                        animateFill,
+                                                                                                        followCursor,
+                                                                                                    ]}
+                                                                                                    placement="left"
+                                                                                                    content={
+                                                                                                        data.username
+                                                                                                    }
+                                                                                                >
+                                                                                                    <p
+                                                                                                        className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                                    >
+                                                                                                        {voca.truncate(
+                                                                                                            data.username,
+                                                                                                            23
+                                                                                                        )}
+                                                                                                    </p>
+                                                                                                </Tippy>
+                                                                                                <Tippy
+                                                                                                    animateFill={
+                                                                                                        true
+                                                                                                    }
+                                                                                                    followCursor="vertical"
+                                                                                                    plugins={[
+                                                                                                        animateFill,
+                                                                                                        followCursor,
+                                                                                                    ]}
+                                                                                                    placement="left"
+                                                                                                    content={
+                                                                                                        data.email
+                                                                                                    }
+                                                                                                >
+                                                                                                    <p
+                                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                                    >
+                                                                                                        {voca.truncate(
+                                                                                                            data.email,
+                                                                                                            23
+                                                                                                        )}
+                                                                                                    </p>
+                                                                                                </Tippy>
+                                                                                            </Fragment>
+                                                                                        ) : (
+                                                                                            <Fragment></Fragment>
+                                                                                        )}
+                                                                                    </Fragment>
+                                                                                )}
+                                                                            </Fragment>
+                                                                        )}
                                                                     </Fragment>
                                                                 )}
                                                             </Fragment>
