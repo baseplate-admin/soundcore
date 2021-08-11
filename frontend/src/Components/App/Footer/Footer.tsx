@@ -620,12 +620,13 @@ export const Footer = (props: IFooterProps) => {
                                     <span>
                                         <progress
                                             className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
-                                            value={
+                                            value={Math.round(
                                                 (100 *
                                                     footerState.song.control
                                                         .current) /
-                                                footerState.song.control.total
-                                            }
+                                                    footerState.song.control
+                                                        .total
+                                            )}
                                             max="100"
                                         />
                                         <input
@@ -638,12 +639,13 @@ export const Footer = (props: IFooterProps) => {
                                             step={0.01}
                                             min={0}
                                             max={100}
-                                            value={
+                                            value={Math.round(
                                                 (100 *
                                                     footerState.song.control
                                                         .current) /
-                                                footerState.song.control.total
-                                            }
+                                                    footerState.song.control
+                                                        .total
+                                            )}
                                             type="range"
                                         />
                                     </span>
