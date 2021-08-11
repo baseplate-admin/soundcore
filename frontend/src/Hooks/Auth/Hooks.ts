@@ -7,10 +7,10 @@ import {
     postLoginFormSuccess,
 } from '../../Store/Slices/LoginSlice';
 
-export const useAuthLogin = () => {
-    const dispatch = useAppDispatch();
-
+export const useAuth = () => {
     const Login = async (username: string, password: string) => {
+        const dispatch = useAppDispatch();
+
         const base = APIUrl;
         const endPoint = APIPath.LOGIN_ENDPOINT;
 
@@ -36,5 +36,11 @@ export const useAuthLogin = () => {
             });
     };
 
-    return [Login];
+    const Logout = async () => {
+        // localStorage.clear(); // <= Causes Bug
+        localStorage.setItem('accessToken', JSON.stringify({}));
+        localStorage.setItem('refreshToken', JSON.stringify({}));
+    };
+
+    return [Login, Logout];
 };

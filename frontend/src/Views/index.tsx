@@ -5,7 +5,7 @@ import 'bulma/bulma.sass';
 import { nunitoFontStyle } from '../Functions/Fonts/Nunito';
 import { robotoFontStyle } from '../Functions/Fonts/Roboto';
 
-// GLobal Scss import
+// Global Scss import
 import './index.scss';
 
 // React import

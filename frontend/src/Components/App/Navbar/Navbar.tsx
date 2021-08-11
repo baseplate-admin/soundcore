@@ -3,14 +3,13 @@ import { useMediaQuery } from 'react-responsive';
 import { useSpring, animated } from 'react-spring';
 
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
 import { followCursor, animateFill } from 'tippy.js';
 
 import { createUseStyles } from 'react-jss';
 import { Link, useHistory } from 'react-router-dom';
-import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
 import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
 
+import { useAuth } from '../../../Hooks/Auth/Hooks';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import { RoutingPath } from '../../../Config/Routes';
 import {
@@ -31,8 +30,7 @@ import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
 
 export const Navbar = () => {
-    const [Logout] = useAuthLogout();
-
+    const [Logout] = useAuth();
     const { data, isLoading } = useGetUserQuery(null);
 
     const { width } = useWindowDimensions();
@@ -83,7 +81,7 @@ export const Navbar = () => {
     });
 
     const handleLogout = () => {
-        Logout();
+        Logout('', '');
         history.go(0); // Refresh the page ? (Update Needed)
     };
 

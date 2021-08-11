@@ -49,20 +49,6 @@ export const FormWithInputBoxComponent = (
 };
 
 const useStyles = createUseStyles({
-    '@global': {
-        ".tippy-box[data-theme~='attention']": {
-            backgroundColor: '#9c3d33 !important',
-            color: 'white',
-        },
-        ".tippy-box[data-theme~='attention'][data-placement^='top'] .tippy-arrow::before":
-            {
-                borderTopColor: '#9c3d33',
-            },
-        ".tippy-box[data-theme~='attention'][data-placement^='bottom'] .tippy-arrow::before":
-            {
-                borderBottomColor: '#9c3d33',
-            },
-    },
     'login-hero': {
         backgroundColor: formWithInputBoxVariables.pageBackgroundColor,
     },

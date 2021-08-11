@@ -1,12 +1,13 @@
 import { Fragment } from 'react';
 import { Helmet } from 'react-helmet';
+import { createUseStyles } from 'react-jss';
 
 // Formik Import
 import { useFormik } from 'formik';
 
 // Icons import
-import { IoMailOutline, IoPersonCircleOutline } from 'react-icons/io5';
 import { MdLockOpen, MdLockOutline } from 'react-icons/md';
+import { IoMailOutline, IoPersonCircleOutline } from 'react-icons/io5';
 
 // SVG React Component
 import { CharacterAIcon } from './Icons/CharacterA';
@@ -17,12 +18,8 @@ import * as yup from 'yup';
 
 // TippyJS import for Form Error Showing
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
-import 'tippy.js/dist/backdrop.css';
-import 'tippy.js/animations/shift-away.css';
 
 import { ApplicationName } from '../../../Config/Routes';
-import { createUseStyles } from 'react-jss';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 
 export const RegisterPage = () => {

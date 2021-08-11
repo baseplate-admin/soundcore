@@ -1,10 +1,40 @@
+// Tippy JS import
+@import 'tippy.js/dist/tippy.css'; // Needed
+@import 'tippy.js/dist/backdrop.css';
+@import 'tippy.js/animations/shift-away.css';
+
+/*==============================================================================*/
+/*                              Tippy attention theme                           */
+
+$attention-theme-background-color: #9c3d33;
+$attention-theme-font-color: rgb(203, 203, 204);
+
+.tippy-box[data-theme~='attention'] {
+    background-color: $attention-theme-background-color !important;
+    color: $attention-theme-font-color;
+}
+
+.tippy-box[data-theme~='attention'][data-placement^='top'] .tippy-arrow {
+    &::before {
+        border-top-color: $attention-theme-background-color;
+    }
+}
+
+.tippy-box[data-theme~='attention'][data-placement^='bottom'] .tippy-arrow {
+    &::before {
+        border-bottom-color: $attention-theme-background-color;
+    }
+}
+
+/*=================================================================================*/
+
 html {
     scrollbar-width: none; /* Firefox */
     overscroll-behavior: 'none';
     background-color: black;
-    
+
     &::-webkit-scrollbar {
-        /* WebKit */
+        /* Chrome */
         display: 'none';
     }
 

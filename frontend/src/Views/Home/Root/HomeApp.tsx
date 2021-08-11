@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { Fragment, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -35,7 +36,6 @@ import {
 } from '../../../Components/Spinners/Spinners';
 import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
 import { CreateHowlObject } from '../../../Functions/Helpers/Howler/CreateHowl';
-import axios from 'axios';
 
 export const HomePage = () => {
     // We dont need Polling For now

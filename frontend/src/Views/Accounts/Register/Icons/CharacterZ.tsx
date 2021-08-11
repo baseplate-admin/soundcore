@@ -4,6 +4,7 @@ interface IconProps extends React.SVGAttributes<SVGElement> {
     color?: string;
     title?: string;
 }
+
 export const CharacterZIcon = (props: IconProps) => {
     return (
         <svg

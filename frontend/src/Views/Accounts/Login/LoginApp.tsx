@@ -11,9 +11,6 @@ import { useSpring, animated } from 'react-spring';
 
 // TippyJS import for Form Error Showing
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
-import 'tippy.js/dist/backdrop.css';
-import 'tippy.js/animations/shift-away.css';
 
 // Icons import
 import {
@@ -28,7 +25,7 @@ import { ApplicationName, RoutingPath } from '../../../Config/Routes';
 import { useAppSelector } from '../../../Hooks/Store/Hooks';
 import { selectLoginFormState } from '../../../Store/Slices/LoginSlice';
 
-import { useAuthLogin } from '../../../Hooks/Auth/LoginHook';
+import { useAuth } from '../../../Hooks/Auth/Hooks';
 import {
     randomSpinnerPicker,
     SpinnerComponent,
@@ -42,7 +39,7 @@ import * as Yup from 'yup';
 export const LoginPage = () => {
     const classes = useStyles();
 
-    const [Login] = useAuthLogin();
+    const [Login] = useAuth();
     const history = useHistory();
 
     const loginFormState = useAppSelector(selectLoginFormState);

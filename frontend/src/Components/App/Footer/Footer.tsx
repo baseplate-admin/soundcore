@@ -4,8 +4,6 @@ import React, { Fragment, useEffect, useState } from 'react';
 
 import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
-import 'tippy.js/dist/backdrop.css';
-import 'tippy.js/animations/shift-away.css';
 
 import voca from 'voca';
 import numeral from 'numeral';
@@ -467,6 +465,7 @@ export const Footer = (props: IFooterProps) => {
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
                             <Tippy
+                                theme="black"
                                 content={<span>Previous Song</span>}
                                 animateFill={true}
                                 plugins={[animateFill]}
