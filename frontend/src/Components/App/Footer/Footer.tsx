@@ -619,34 +619,73 @@ export const Footer = (props: IFooterProps) => {
                                     placement="top"
                                 >
                                     <span>
-                                        <progress
-                                            className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
-                                            value={
-                                                (100 *
-                                                    footerState.song.control
-                                                        .current) /
-                                                footerState.song.control.total
-                                            }
-                                            max="100"
-                                        />
-                                        <input
-                                            onChange={handleSongSeekInputChange}
-                                            onInput={handleSongSeekInputChange}
-                                            onMouseMove={
-                                                handleSongSeekInputMouseMove
-                                            }
-                                            className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
-                                            step={0.01}
-                                            min={0}
-                                            max={100}
-                                            value={
-                                                (100 *
-                                                    footerState.song.control
-                                                        .current) /
-                                                footerState.song.control.total
-                                            }
-                                            type="range"
-                                        />
+                                        {(100 *
+                                            footerState.song.control.current) /
+                                        footerState.song.control.total ? (
+                                            <>
+                                                <progress
+                                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
+                                                    value={
+                                                        (100 *
+                                                            footerState.song
+                                                                .control
+                                                                .current) /
+                                                        footerState.song.control
+                                                            .total
+                                                    }
+                                                    max={100}
+                                                />
+                                                <input
+                                                    onChange={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onInput={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onMouseMove={
+                                                        handleSongSeekInputMouseMove
+                                                    }
+                                                    className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
+                                                    step={0.01}
+                                                    min={0}
+                                                    max={100}
+                                                    value={
+                                                        (100 *
+                                                            footerState.song
+                                                                .control
+                                                                .current) /
+                                                        footerState.song.control
+                                                            .total
+                                                    }
+                                                    type="range"
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <progress
+                                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
+                                                    value={0}
+                                                    max={100}
+                                                />
+                                                <input
+                                                    onChange={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onInput={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onMouseMove={
+                                                        handleSongSeekInputMouseMove
+                                                    }
+                                                    className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
+                                                    step={0.01}
+                                                    min={0}
+                                                    max={100}
+                                                    value={0}
+                                                    type="range"
+                                                />
+                                            </>
+                                        )}
                                     </span>
                                 </Tippy>
                             </div>
@@ -806,7 +845,7 @@ export const Footer = (props: IFooterProps) => {
                                         <progress
                                             className={`progress is-small is-info ${classes.volume_progress} ${classes.progress_item}`}
                                             value={volume}
-                                            max="100"
+                                            max={100}
                                         />
                                         <input
                                             className={`${classes.slider} ${classes.volume_slider}  slider`}
