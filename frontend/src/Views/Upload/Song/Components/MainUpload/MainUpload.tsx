@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { UploadSongVariables } from '../../variables';
 import { animated, useSpring } from 'react-spring';
 import { useMediaQuery } from 'react-responsive';
-import useWindowDimensions from '../../../../../Hooks/Responsive/WindowDimensions';
+import useWindowDimensions from '../../../../../Hooks/Responsive/Hooks';
 
 interface IMainUploadChildComponentProps {
     mappedSongs: Array<Object>;

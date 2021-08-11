@@ -19,21 +19,18 @@ import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
-import {
-    APIPath,
-    APIUrl,
-    ApplicationName,
-    MediaUrl,
-    RoutingPath,
-} from '../../../Config/Routes';
-import { useGetSongsQuery } from '../../../Store/Services/GetSongService';
+import { RoutingPath } from '../../../Config/Routes';
+import { APIUrl, ApplicationName, MediaUrl } from '../../../Config/App';
+import { APIPath } from '../../../Config/Api';
+
+import { useGetSongsQuery } from '../../../Store/Services/GetSong';
 import { useAppDispatch } from '../../../Hooks/Store/Hooks';
 import {
     updateCurrentSeconds,
     updateSongState,
     updateStatusToPlay,
     updateTotalSeconds,
-} from '../../../Store/Slices/FooterSlice';
+} from '../../../Store/Slices/Footer';
 import {
     randomSpinnerPicker,
     SpinnerComponent,
@@ -57,8 +54,7 @@ export const HomePage = () => {
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
     const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { data, error, isLoading } = useGetSongsQuery(null);
+    const { data, isLoading } = useGetSongsQuery(null);
 
     const addDropDownRef = (el: never) => {
         if (el && !dropDownRefArray.current.includes(el)) {
@@ -152,7 +148,7 @@ export const HomePage = () => {
             sound.on('play', async () => {
                 await howlerJsPlayInterval(sound, customInterval);
             });
-            sound.on('end', () => {
+            sound.on('end', async () => {
                 howlerJsOnFinish();
             });
 

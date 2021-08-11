@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "whitenoise",
     "music",
+    "users",
 ]
 
 MIDDLEWARE = [

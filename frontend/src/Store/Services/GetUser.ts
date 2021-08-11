@@ -1,11 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { GetJWTTokenInLocalStorage } from '../../Functions/Helpers/LocalStorage/JWTCookie';
-import { APIPath, APIUrl } from '../../Config/Routes';
+import { APIUrl } from '../../Config/App';
+import { APIPath } from '../../Config/Api';
 
-export const songsApi = createApi({
-    reducerPath: 'music',
+export const userApi = createApi({
+    reducerPath: 'user',
     baseQuery: fetchBaseQuery({
-        baseUrl: `${APIUrl}${APIPath.FETCH_SONG_ENDPOINT}`,
+        baseUrl: `${APIUrl}${APIPath.USER_INFO_ENDPOINT}`,
         prepareHeaders: (headers) => {
             const token = GetJWTTokenInLocalStorage();
             if (!token) {
@@ -19,12 +20,11 @@ export const songsApi = createApi({
             return headers;
         },
     }),
-
     endpoints: (builder) => ({
-        getSongs: builder.query({
+        getUser: builder.query({
             query: () => ``,
         }),
     }),
 });
 
-export const { useGetSongsQuery } = songsApi;
+export const { useGetUserQuery } = userApi;

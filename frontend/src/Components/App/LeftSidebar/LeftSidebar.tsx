@@ -10,7 +10,7 @@ import {
     leftMenuHidden,
     leftMenuShown,
     selectLeftMenuState,
-} from '../../../Store/Slices/NavbarSlice';
+} from '../../../Store/Slices/Navbar';
 
 import { RoutingPath } from '../../../Config/Routes';
 import { createUseStyles } from 'react-jss';

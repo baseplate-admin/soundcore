@@ -7,18 +7,18 @@ import { followCursor, animateFill } from 'tippy.js';
 
 import { createUseStyles } from 'react-jss';
 import { Link, useHistory } from 'react-router-dom';
-import useWindowDimensions from '../../../Hooks/Responsive/WindowDimensions';
+import useWindowDimensions from '../../../Hooks/Responsive/Hooks';
 
-import { useAuth } from '../../../Hooks/Auth/Hooks';
+import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import { RoutingPath } from '../../../Config/Routes';
 import {
     leftMenuHidden,
     leftMenuShown,
     selectLeftMenuState,
-} from '../../../Store/Slices/NavbarSlice';
+} from '../../../Store/Slices/Navbar';
 import { Fragment, useState } from 'react';
-import { useGetUserQuery } from '../../../Store/Services/GetUserService';
+import { useGetUserQuery } from '../../../Store/Services/GetUser';
 import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/Libravatar/GetImage';
 import {
     IoLogOutOutline,
@@ -30,7 +30,7 @@ import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
 
 export const Navbar = () => {
-    const [Logout] = useAuth();
+    const [Logout] = useAuthLogout();
     const { data, isLoading } = useGetUserQuery(null);
 
     const { width } = useWindowDimensions();
@@ -81,7 +81,7 @@ export const Navbar = () => {
     });
 
     const handleLogout = () => {
-        Logout('', '');
+        Logout();
         history.go(0); // Refresh the page ? (Update Needed)
     };
 

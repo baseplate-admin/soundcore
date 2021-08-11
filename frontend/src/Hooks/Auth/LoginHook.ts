@@ -1,16 +1,17 @@
 import axios from 'axios';
-import { APIPath, APIUrl } from '../../Config/Routes';
+import { APIUrl } from '../../Config/App';
+import { APIPath } from '../../Config/Api';
 import { useAppDispatch } from '../Store/Hooks';
 import { SetJWTTokenInLocalStorage } from '../../Functions/Helpers/LocalStorage/JWTCookie';
 import {
     postLoginFormErrorAndHasErrorMessage,
     postLoginFormSuccess,
-} from '../../Store/Slices/LoginSlice';
+} from '../../Store/Slices/Login';
 
-export const useAuth = () => {
+export const useAuthLogin = () => {
+    const dispatch = useAppDispatch();
+
     const Login = async (username: string, password: string) => {
-        const dispatch = useAppDispatch();
-
         const base = APIUrl;
         const endPoint = APIPath.LOGIN_ENDPOINT;
 
@@ -36,11 +37,5 @@ export const useAuth = () => {
             });
     };
 
-    const Logout = async () => {
-        // localStorage.clear(); // <= Causes Bug
-        localStorage.setItem('accessToken', JSON.stringify({}));
-        localStorage.setItem('refreshToken', JSON.stringify({}));
-    };
-
-    return [Login, Logout];
+    return [Login];
 };

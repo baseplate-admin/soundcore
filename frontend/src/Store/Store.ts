@@ -1,14 +1,14 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 
-import navbarReducer from './Slices/NavbarSlice';
-import loginReducer from './Slices/LoginSlice';
-import registerReducer from './Slices/RegisterSlice';
-import forgetReducer from './Slices/ForgetSlice';
-import footerReducer from './Slices/FooterSlice';
+import navbarReducer from './Slices/Navbar';
+import loginReducer from './Slices/Login';
+import registerReducer from './Slices/Register';
+import forgetReducer from './Slices/Forget';
+import footerReducer from './Slices/Footer';
 
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
-import { songsApi } from './Services/GetSongService';
-import { userApi } from './Services/GetUserService';
+import { songsApi } from './Services/GetSong';
+import { userApi } from './Services/GetUser';
 
 export const store = configureStore({
     reducer: {

@@ -3,11 +3,11 @@ import prettyBytes from 'pretty-bytes';
 import { UploadSongVariables } from './variables';
 
 import { Fragment, useState, useCallback, useEffect } from 'react';
-import { useMusicUpload } from '../../../Hooks/Upload/MusicUpload';
+import { useMusicUpload } from '../../../Hooks/Upload/Hooks';
 
 import { createUseStyles } from 'react-jss';
 import { FileError, FileRejection, useDropzone } from 'react-dropzone';
-import { ApplicationName } from '../../../Config/Routes';
+import { ApplicationName } from '../../../Config/App';
 
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';

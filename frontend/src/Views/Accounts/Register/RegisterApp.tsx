@@ -19,7 +19,7 @@ import * as yup from 'yup';
 // TippyJS import for Form Error Showing
 import Tippy from '@tippyjs/react';
 
-import { ApplicationName } from '../../../Config/Routes';
+import { ApplicationName } from '../../../Config/App';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 
 export const RegisterPage = () => {

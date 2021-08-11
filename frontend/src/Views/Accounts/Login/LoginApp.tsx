@@ -21,11 +21,12 @@ import {
 import { MdLockOutline } from 'react-icons/md';
 
 import { Link, useHistory } from 'react-router-dom';
-import { ApplicationName, RoutingPath } from '../../../Config/Routes';
+import { RoutingPath } from '../../../Config/Routes';
+import { ApplicationName } from '../../../Config/App';
 import { useAppSelector } from '../../../Hooks/Store/Hooks';
-import { selectLoginFormState } from '../../../Store/Slices/LoginSlice';
+import { selectLoginFormState } from '../../../Store/Slices/Login';
 
-import { useAuth } from '../../../Hooks/Auth/Hooks';
+import { useAuthLogin } from '../../../Hooks/Auth/LoginHook';
 import {
     randomSpinnerPicker,
     SpinnerComponent,
@@ -39,7 +40,7 @@ import * as Yup from 'yup';
 export const LoginPage = () => {
     const classes = useStyles();
 
-    const [Login] = useAuth();
+    const [Login] = useAuthLogin();
     const history = useHistory();
 
     const loginFormState = useAppSelector(selectLoginFormState);

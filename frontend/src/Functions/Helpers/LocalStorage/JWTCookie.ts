@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { APIPath, APIUrl, JWTTokenExpireTime } from '../../../Config/Routes';
+import { APIPath } from '../../../Config/Api';
+import { APIUrl, JWTTokenExpireTime } from '../../../Config/App';
 
 /*
     Helper:
@@ -46,7 +47,7 @@ export const GetJWTTokenInLocalStorage = () => {
         if (now.getTime() > item.expiry) {
             // If the item is expired, delete the item from storage
             // and return null
-            
+
             const base = APIUrl;
             const endPoint = APIPath.REFRESH_ENDPOINT;
 

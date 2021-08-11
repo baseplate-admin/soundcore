@@ -28,7 +28,7 @@ import {
     updateStatusToPlay,
     updateStatusToPause,
     updateCurrentSeconds,
-} from '../../../Store/Slices/FooterSlice';
+} from '../../../Store/Slices/Footer';
 import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
