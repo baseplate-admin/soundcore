@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { useMediaQuery } from 'react-responsive';
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
@@ -21,7 +21,7 @@ import {
     IoVolumeMute,
 } from 'react-icons/io5';
 
-import { prettifySecondsToMinutes } from '../../../Functions/Helpers/Prettifier/TimeFunction';
+import { humanizeSeconds } from '../../../Functions/Helpers/Prettifier/TimeFunction';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     selectFooterState,
@@ -33,6 +33,10 @@ import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
 } from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
+import {
+    GetReversePlaybackStatus,
+    SetReversePlaybackStatus,
+} from '../../../Functions/Helpers/LocalStorage/IsPlaybackReversed';
 
 interface IFooterProps {
     howlerState: Array<Howl>;
@@ -45,6 +49,9 @@ export const Footer = (props: IFooterProps) => {
 
     const [songSeekTippyVisible, setSongSeekTippyVisible] = useState(false);
     const [songSeekTippyContent, setSongSeekTippyContent] = useState('');
+    const [playbackTotalReversed, setPlaybackTotalReversed] = useState(
+        GetReversePlaybackStatus()
+    );
 
     const [volume, setVolume] = useState(
         // Need to multiply by hundred because we store it in a range from 0.0 to 1.0
@@ -120,6 +127,10 @@ export const Footer = (props: IFooterProps) => {
         query: '(max-width: 768px)',
     });
 
+    const isFullHD = useMediaQuery({
+        query: '(max-width: 1408px)',
+    });
+
     useEffect(() => {
         // Sync Volume and howler Volume
         Howler.volume(Number(volume / 100));
@@ -179,7 +190,7 @@ export const Footer = (props: IFooterProps) => {
                 const duration: number = footerState.song.control.total; // Total seconds
                 const math: number = (duration / 100) * sliderPos; // A little math function
 
-                setSongSeekTippyContent(prettifySecondsToMinutes(math));
+                setSongSeekTippyContent(humanizeSeconds(math));
             }
         }
     };
@@ -213,6 +224,21 @@ export const Footer = (props: IFooterProps) => {
 
         setVolume(Number(value));
         SetVolumeInLocalStorage(Number(value) / 100);
+    };
+
+    const handleTotalTimeClick = () => {
+        switch (playbackTotalReversed) {
+            case true: {
+                SetReversePlaybackStatus(false);
+                setPlaybackTotalReversed(false);
+                break;
+            }
+            case false: {
+                SetReversePlaybackStatus(true);
+                setPlaybackTotalReversed(true);
+                break;
+            }
+        }
     };
 
     const handleVolumeSeekMouseMove = (
@@ -258,7 +284,7 @@ export const Footer = (props: IFooterProps) => {
                                 <p className={classes.footer_info}>
                                     {isMobile ? (
                                         // Mobile Version
-                                        <Fragment>
+                                        <>
                                             <strong
                                                 className={
                                                     classes['footer-song-info']
@@ -310,12 +336,12 @@ export const Footer = (props: IFooterProps) => {
                                                 ).format('0 a')}
                                                 Hz
                                             </small>
-                                        </Fragment>
+                                        </>
                                     ) : (
-                                        <Fragment>
+                                        <>
                                             {isTablet ? (
                                                 // Tablet Version
-                                                <Fragment>
+                                                <>
                                                     <strong
                                                         className={
                                                             classes[
@@ -380,9 +406,9 @@ export const Footer = (props: IFooterProps) => {
                                                         ).format('0 a')}
                                                         Hz
                                                     </small>
-                                                </Fragment>
+                                                </>
                                             ) : (
-                                                <Fragment>
+                                                <>
                                                     <strong
                                                         className={
                                                             classes[
@@ -447,9 +473,9 @@ export const Footer = (props: IFooterProps) => {
                                                         ).format('0 a')}
                                                         Hz
                                                     </small>
-                                                </Fragment>
+                                                </>
                                             )}
-                                        </Fragment>
+                                        </>
                                     )}
                                 </p>
                             </div>
@@ -465,7 +491,6 @@ export const Footer = (props: IFooterProps) => {
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
                             <Tippy
-                                theme="black"
                                 content={<span>Previous Song</span>}
                                 animateFill={true}
                                 plugins={[animateFill]}
@@ -483,7 +508,7 @@ export const Footer = (props: IFooterProps) => {
                             className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
                         >
                             {footerState.song.global.playing ? (
-                                <Fragment>
+                                <>
                                     <Tippy
                                         content={<span>Play</span>}
                                         animateFill={true}
@@ -502,9 +527,9 @@ export const Footer = (props: IFooterProps) => {
                                             />
                                         </span>
                                     </Tippy>
-                                </Fragment>
+                                </>
                             ) : (
-                                <Fragment>
+                                <>
                                     <Tippy
                                         content={<span>Pause</span>}
                                         animateFill={true}
@@ -523,7 +548,7 @@ export const Footer = (props: IFooterProps) => {
                                             />
                                         </span>
                                     </Tippy>
-                                </Fragment>
+                                </>
                             )}
                         </div>
                         <div
@@ -545,13 +570,31 @@ export const Footer = (props: IFooterProps) => {
                             </Tippy>
                         </div>
                     </div>
-                    <div className="columns is-mobile">
+                    <div className="columns is-mobile is-centered">
                         <div
-                            className={`column is-narrow ${classes.pre_input}`}
+                            className={`column is-size-7 ${
+                                isMobile
+                                    ? 'is-2'
+                                    : isTablet
+                                    ? 'is-2'
+                                    : isFullHD
+                                    ? 'is-2'
+                                    : 'is-1'
+                            } ${classes.pre_input}`}
                         >
-                            {prettifySecondsToMinutes(
-                                footerState.song.control.current
-                            )}
+                            <Tippy
+                                content="Current Seconds"
+                                animateFill={true}
+                                followCursor="horizontal"
+                                plugins={[animateFill, followCursor]}
+                                offset={[0, 0]}
+                            >
+                                <span>
+                                    {humanizeSeconds(
+                                        footerState.song.control.current
+                                    )}
+                                </span>
+                            </Tippy>
                         </div>
                         <div
                             className="column"
@@ -608,11 +651,45 @@ export const Footer = (props: IFooterProps) => {
                             </div>
                         </div>
                         <div
-                            className={`column is-narrow ${classes.post_input}`}
+                            className={`column is-size-7 ${
+                                isMobile
+                                    ? 'is-3'
+                                    : isTablet
+                                    ? 'is-2'
+                                    : isFullHD
+                                    ? 'is-2'
+                                    : 'is-1'
+                            } ${classes.post_input} `}
                         >
-                            {prettifySecondsToMinutes(
-                                footerState.song.control.total
-                            )}
+                            <Tippy
+                                offset={[0, 0]}
+                                content="Total Seconds"
+                                followCursor="horizontal"
+                                animateFill={true}
+                                plugins={[followCursor, animateFill]}
+                                placement="top"
+                            >
+                                <span onClick={handleTotalTimeClick}>
+                                    {playbackTotalReversed ? (
+                                        // True and show -0:01
+                                        <>
+                                            {'- '}
+                                            {humanizeSeconds(
+                                                footerState.song.control.total -
+                                                    footerState.song.control
+                                                        .current
+                                            )}
+                                        </>
+                                    ) : (
+                                        // False and show normally
+                                        <>
+                                            {humanizeSeconds(
+                                                footerState.song.control.total
+                                            )}
+                                        </>
+                                    )}
+                                </span>
+                            </Tippy>
                         </div>
                     </div>
                 </div>
@@ -814,9 +891,10 @@ const useStyles = createUseStyles({
     },
 
     pre_input: {
-        transform: 'translateY(-9px)',
+        transform: 'translateY(-5px)',
         color: 'white',
         opacity: 0.85,
+        userSelect: 'none',
     },
 
     footer_input_anchor: {
@@ -830,14 +908,16 @@ const useStyles = createUseStyles({
     },
 
     footer_input_anchor_input: {
+        cursor: 'pointer',
         position: 'absolute',
         transform: 'translateY(-4px) !important',
     },
 
     post_input: {
-        transform: 'translateY(-9px)',
+        transform: 'translateY(-5px)',
         color: 'white',
         opacity: 0.85,
+        userSelect: 'none',
     },
 
     volume_control_column: {

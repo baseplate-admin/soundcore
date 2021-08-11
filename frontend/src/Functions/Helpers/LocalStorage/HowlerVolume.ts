@@ -18,7 +18,7 @@ export const GetVolumeInLocalStorage = () => {
         case null: {
             // This means theres no volume object.
             //  A fresh Browser should have no volume object
-            // localStorage.setItem('Howler_Volume', (0.2).toString());
+            localStorage.setItem('Howler_Volume', (0.2).toString());
             return localStorage.getItem('Howler_Volume');
         }
         case undefined: {
