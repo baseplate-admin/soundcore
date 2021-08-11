@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { APIPath } from '../../../Config/Api';
-import { APIUrl, JWTTokenExpireTime } from '../../../Config/App';
+import { APIUrl } from '../../../Config/App';
+import { JWTTokenExpireTime } from '../../../Config/JWT';
+
 /*
 == Refresh token is sent to backend ==
 

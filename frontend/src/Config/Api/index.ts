@@ -4,9 +4,11 @@ export enum APIPath {
     TOKEN_JAIL_ENDPOINT = '/users/token/blacklist/',
 
     FETCH_SONG_ENDPOINT = '/music/',
-    RANDOM_SONG_ENDPOINT = '/music/random',
+    RANDOM_SONG_ENDPOINT = '/music/random/',
 
     UPLOAD_MUSIC_PATH = '/music/',
 
     USER_INFO_ENDPOINT = '/users/info/',
+
+    CAPTURE_VOLUME = '/capture/volume/',
 }
