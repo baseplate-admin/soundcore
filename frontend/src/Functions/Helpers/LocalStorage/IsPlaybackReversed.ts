@@ -22,6 +22,7 @@ export const GetReversePlaybackStatus = () => {
         }
     }
 };
+
 export const SetReversePlaybackStatus = async (value: boolean) => {
     switch (value) {
         case true: {

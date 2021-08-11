@@ -13,10 +13,7 @@ export const songsApi = createApi({
                 console.error(`Token not Found`);
             }
             // If we have a token set in state, let's assume that we should be passing it.
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-            }
-
+            headers.set('Authorization', `Bearer ${token}`);
             return headers;
         },
     }),

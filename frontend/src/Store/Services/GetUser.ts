@@ -9,14 +9,12 @@ export const userApi = createApi({
         baseUrl: `${APIUrl}${APIPath.USER_INFO_ENDPOINT}`,
         prepareHeaders: (headers) => {
             const token = GetJWTTokenInLocalStorage();
+            
             if (!token) {
                 console.error(`Token not Found`);
             }
             // If we have a token set in state, let's assume that we should be passing it.
-            if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
-            }
-
+            headers.set('Authorization', `Bearer ${token}`);
             return headers;
         },
     }),

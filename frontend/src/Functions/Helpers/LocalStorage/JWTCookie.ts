@@ -1,16 +1,17 @@
 import axios from 'axios';
 import { APIPath } from '../../../Config/Api';
 import { APIUrl, JWTTokenExpireTime } from '../../../Config/App';
-
 /*
+== Refresh token is sent to backend ==
+
     Helper:
         Token Type:
             • Access -> Longer Token
             • Refresh -> Shorter Token.
         
         Status:
-            • Access -> Expires
-            • Refresh -> Stays
+            • Access -> Stays
+            • Refresh -> Expires
 */
 
 export const SetJWTTokenInLocalStorage = async (

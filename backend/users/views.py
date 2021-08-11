@@ -1,19 +1,22 @@
+from rest_framework import serializers
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.parsers import JSONParser
 
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from users.serializers import UserSerializer, TokenSerializer
+from users.serializers import UserSerializer, TokenSerializer, CaptureVolumeSerializer
 
 # Create your views here.
 
 
-class JailToken(APIView):
+class JailToken(generics.CreateAPIView):
     parser_classes = [JSONParser]
+    serializer_class = TokenSerializer
 
-    def put(self, request):
+    def post(self, request):
         serializer = TokenSerializer(data=request.data, many=False)
 
         if serializer.is_valid():
@@ -21,6 +24,7 @@ class JailToken(APIView):
             return Response(200)
 
         else:
+            print(serializer.errors)
             return Response(402)
 
 
@@ -35,14 +39,19 @@ class UserInfo(APIView):
         return Response(serializer.data)
 
 
-class Capture(APIView):
+class CaptureVolume(generics.CreateAPIView):
     authentication_classes = [
         JWTAuthentication,
     ]
+    serializer_class = CaptureVolumeSerializer
 
     def post(self, request):
-        user = request.user
+        serializer = CaptureVolumeSerializer(data=request.data, many=False)
 
-        if request.user.is_anonymous:
-            # If theres no user dont capture anything.
+        if serializer.is_valid():
+            serializer.save()
+            return Response(200)
+
+        else:
+            print(serializer.errors)
             return Response(402)
