@@ -21,7 +21,7 @@ import {
     IoVolumeMute,
 } from 'react-icons/io5';
 
-import { humanizeSeconds } from '../../../Functions/Helpers/Prettifier/TimeFunction';
+import { humanizeSeconds } from '../../../Functions/Helpers/Prettifier/HumanizeTime';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     selectFooterState,
