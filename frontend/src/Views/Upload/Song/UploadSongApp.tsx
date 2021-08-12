@@ -118,6 +118,7 @@ export const UploadSongPage = () => {
         return (
             <>
                 <div
+                    key={index}
                     className={`box ${classes['item-box']}`}
                     style={{ backgroundColor: 'transparent' }}
                 >
@@ -247,16 +248,16 @@ export const UploadSongPage = () => {
                                 />
                             </Fragment>
                         ) : (
+                            //    On upload Done Show the Error Or success page.
+                            //    Current State should be false,
+                            //    Layman's term : True : Show promise page,  False: Show Spinners
                             <Fragment>
-                                {/* On upload Done Show the Error Or success page.
-                                Current State should be false,
-                                Layman's term : True : Show promise page,  False: Show Spinners */}
                                 {uploadDone ? (
                                     <Fragment>
                                         {erroredFiles.length === 0 ? (
+                                            //  If Errored File Length is less than 0,and Upload is Done . Show this element
+                                            //  This means this Div has Success Promise
                                             <Fragment>
-                                                {/* If Errored File Length is less than 0,and Upload is Done . Show this element */}
-                                                {/* This means this Div has Success Promise */}
                                                 <PromiseSuccessChildComponent
                                                     fileLength={files.length}
                                                     totalSongSize={
@@ -265,9 +266,9 @@ export const UploadSongPage = () => {
                                                 />
                                             </Fragment>
                                         ) : (
+                                            // If Errored File Length is greater than 0, and Upload is Done . Show this element.
+                                            // This means this Div has errored files
                                             <Fragment>
-                                                {/* If Errored File Length is greater than 0, and Upload is Done . Show this element.  */}
-                                                {/* This means this Div has errored files */}
                                                 <PromiseErrorChildComponent
                                                     errorFiles={
                                                         mappedErrorFiles
@@ -277,8 +278,8 @@ export const UploadSongPage = () => {
                                         )}
                                     </Fragment>
                                 ) : (
+                                    // Show A Loader When FIles Are Uploading
                                     <Fragment>
-                                        {/* Show A Loader When FIles Are Uploading */}
                                         <PromiseLoaderChildComponent />
                                     </Fragment>
                                 )}

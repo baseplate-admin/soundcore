@@ -1,27 +1,27 @@
+import voca from 'voca';
 import axios from 'axios';
+import { Howl } from 'howler';
 
 import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
 
-import { Fragment, useRef, useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { createUseStyles } from 'react-jss';
 import { Link } from 'react-router-dom';
-
+import { createUseStyles } from 'react-jss';
+import { Fragment, useRef, useState } from 'react';
+import { useSpring, animated } from 'react-spring';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-
-import voca from 'voca';
-import { Howl } from 'howler';
 
 import { Navbar } from '../../../Components/App/Navbar/Navbar';
 import { Footer } from '../../../Components/App/Footer/Footer';
 import { LeftSidebar } from '../../../Components/App/LeftSidebar/LeftSidebar';
 
 import { IoEllipsisVerticalSharp } from 'react-icons/io5';
+
+import { APIPath } from '../../../Config/Api';
 import { RoutingPath } from '../../../Config/Routes';
 import { APIUrl, ApplicationName, MediaUrl } from '../../../Config/App';
-import { APIPath } from '../../../Config/Api';
 
 import { useGetSongsQuery } from '../../../Store/Services/GetSong';
 import { useAppDispatch } from '../../../Hooks/Store/Hooks';
@@ -31,12 +31,15 @@ import {
     updateStatusToPlay,
     updateTotalSeconds,
 } from '../../../Store/Slices/Footer';
+
 import {
     randomSpinnerPicker,
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
-import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
+
 import { CreateHowlObject } from '../../../Functions/Helpers/Howler/CreateHowl';
+import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
+import { MdPlaylistAdd } from 'react-icons/md';
 
 export const HomePage = () => {
     // We dont need Polling For now
@@ -49,6 +52,7 @@ export const HomePage = () => {
 
     const dispatch = useAppDispatch();
 
+    const [activeNavbar, setActiveNavbar] = useState(0);
     const [howlerState, setHowlerState] = useState<Array<Howl>>([]);
 
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
@@ -57,22 +61,30 @@ export const HomePage = () => {
     const { data, isLoading } = useGetSongsQuery(null);
 
     const addDropDownRef = (el: never) => {
-        if (el && !dropDownRefArray.current.includes(el)) {
-            dropDownRefArray.current.push(el);
+        switch (el && !dropDownRefArray.current.includes(el)) {
+            case true: {
+                dropDownRefArray.current.push(el);
+            }
         }
     };
 
     const addDropDownIconRef = (el: never) => {
-        if (el && !dropDownElipsisIconArray.current.includes(el)) {
-            dropDownElipsisIconArray.current.push(el);
+        switch (el && !dropDownElipsisIconArray.current.includes(el)) {
+            case true: {
+                dropDownElipsisIconArray.current.push(el);
+            }
         }
     };
 
     const handleBoxMouseEnter = (id: number) => {
-        if (
-            dropDownElipsisIconArray.current[id].classList.contains('is-hidden')
-        ) {
-            dropDownElipsisIconArray.current[id].classList.remove('is-hidden');
+        switch (true) {
+            case dropDownElipsisIconArray.current[id].classList.contains(
+                'is-hidden'
+            ): {
+                dropDownElipsisIconArray.current[id].classList.remove(
+                    'is-hidden'
+                );
+            }
         }
     };
     const handleBoxMouseLeave = (id: number) => {
@@ -89,8 +101,12 @@ export const HomePage = () => {
     };
 
     const handleDropdownItemClick = (id: number) => {
-        if (!dropDownRefArray.current[id].classList.contains('is-active')) {
-            dropDownRefArray.current[id].classList.add('is-active');
+        switch (true) {
+            case !dropDownRefArray.current[id].classList.contains(
+                'is-active'
+            ): {
+                dropDownRefArray.current[id].classList.add('is-active');
+            }
         }
     };
 
@@ -98,6 +114,8 @@ export const HomePage = () => {
         const newData = data[index];
         howlerJsPlay(src, newData);
     };
+
+    const dropdownItem = useSpring({});
 
     const howlerJsPlay = (
         src: string,
@@ -261,14 +279,16 @@ export const HomePage = () => {
                                                                     index
                                                                 );
                                                             }}
-                                                            onClick={() => {
-                                                                handleBoxClick(
-                                                                    `${MediaUrl}${music.song_file}`,
-                                                                    index
-                                                                );
-                                                            }}
                                                         >
-                                                            <figure className="image song-image-figure">
+                                                            <figure
+                                                                className="image song-image-figure"
+                                                                onClick={() => {
+                                                                    handleBoxClick(
+                                                                        `${MediaUrl}${music.song_file}`,
+                                                                        index
+                                                                    );
+                                                                }}
+                                                            >
                                                                 <div className="song-image preview">
                                                                     <LazyLoadImage
                                                                         src={`${MediaUrl}${music.album_art}`}
@@ -300,7 +320,15 @@ export const HomePage = () => {
                                                                         width: 200,
                                                                     }}
                                                                 >
-                                                                    <div className="column is-11 ">
+                                                                    <div
+                                                                        className="column is-11"
+                                                                        onClick={() => {
+                                                                            handleBoxClick(
+                                                                                `${MediaUrl}${music.song_file}`,
+                                                                                index
+                                                                            );
+                                                                        }}
+                                                                    >
                                                                         <div
                                                                             className="box"
                                                                             style={{
@@ -420,7 +448,10 @@ export const HomePage = () => {
                                                                                     <IoEllipsisVerticalSharp color="white" />
                                                                                 </span>
                                                                             </div>
-                                                                            <div
+                                                                            <animated.div
+                                                                                style={
+                                                                                    dropdownItem
+                                                                                }
                                                                                 className="dropdown-menu"
                                                                                 role="menu"
                                                                             >
@@ -436,7 +467,45 @@ export const HomePage = () => {
                                                                                         style={{
                                                                                             color: '#e0e0ec',
                                                                                         }}
-                                                                                    />
+                                                                                    >
+                                                                                        <div className="columns is-centered">
+                                                                                            <div className="column is-mobile is-narrow">
+                                                                                                <table
+                                                                                                    className="table"
+                                                                                                    style={{
+                                                                                                        backgroundColor:
+                                                                                                            'transparent',
+                                                                                                    }}
+                                                                                                >
+                                                                                                    <tbody>
+                                                                                                        <tr>
+                                                                                                            <th>
+                                                                                                                <MdPlaylistAdd
+                                                                                                                    color="white"
+                                                                                                                    style={{
+                                                                                                                        transform:
+                                                                                                                            'scale(2)',
+                                                                                                                    }}
+                                                                                                                />
+                                                                                                            </th>
+                                                                                                            <th>
+                                                                                                                <p
+                                                                                                                    style={{
+                                                                                                                        color: '#e0e0ec',
+                                                                                                                    }}
+                                                                                                                    className="subtitle is-size-6"
+                                                                                                                >
+                                                                                                                    Save
+                                                                                                                    to
+                                                                                                                    playlist
+                                                                                                                </p>
+                                                                                                            </th>
+                                                                                                        </tr>
+                                                                                                    </tbody>
+                                                                                                </table>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                     <div
                                                                                         className="dropdown-item"
                                                                                         style={{
@@ -446,7 +515,7 @@ export const HomePage = () => {
 
                                                                                     {/* <!--<hr className="dropdown-divider">--> */}
                                                                                 </div>
-                                                                            </div>
+                                                                            </animated.div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
