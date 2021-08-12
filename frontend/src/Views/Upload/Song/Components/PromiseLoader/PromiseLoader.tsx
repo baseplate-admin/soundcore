@@ -14,6 +14,7 @@ export const PromiseLoaderChildComponent = () => {
         setSpinner(randomSpinnerItem.toString());
     }, []);
     const classes = useStyles();
+    
     return (
         <Fragment>
             <div className="columns is-mobile is-centered">

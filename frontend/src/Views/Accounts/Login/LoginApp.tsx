@@ -1,7 +1,9 @@
 // React Import
 import { Fragment, useState, useEffect } from 'react';
-import { useFormik } from 'formik';
 import { Helmet } from 'react-helmet';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
 
 // Main SCSS import
 import { createUseStyles } from 'react-jss';
@@ -35,7 +37,6 @@ import { formWithInputBoxVariables } from '../../../Components/App/FormWithInput
 import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/LocalStorage/JWTCookie';
 
 // Yup for form validation
-import * as Yup from 'yup';
 import { IconColor } from '../../../Config/Colors/Icons';
 
 export const LoginPage = () => {
@@ -224,14 +225,18 @@ export const LoginPage = () => {
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color={IconColor?.WHITE_ICON}
+                                                    color={
+                                                        IconColor?.WHITE_ICON
+                                                    }
                                                 />
                                             ) : (
                                                 <IoEyeOffOutline
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color={IconColor?.WHITE_ICON}
+                                                    color={
+                                                        IconColor?.WHITE_ICON
+                                                    }
                                                 />
                                             )}
                                         </span>
@@ -315,12 +320,9 @@ export const LoginPage = () => {
                                         <div className="columns is-mobile is-centered">
                                             <div className="column is-narrow">
                                                 <div
-                                                    className="box"
-                                                    style={{
-                                                        backgroundColor:
-                                                            'transparent',
-                                                        boxShadow: 'none',
-                                                    }}
+                                                    className={`
+                                                    box 
+                                                    ${classes?.['transparent-box']}`}
                                                 >
                                                     <SpinnerComponent
                                                         type={spinner}
@@ -383,5 +385,9 @@ const useStyles = createUseStyles({
     new_here_tag: {
         fontFamily: formWithInputBoxVariables?.tagFont,
         color: formWithInputBoxVariables?.tagFontColor,
+    },
+    'transparent-box': {
+        backgroundColor: 'transparent',
+        boxShadow: 'none',
     },
 });

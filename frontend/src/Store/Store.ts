@@ -1,4 +1,5 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/dist/query';
 
 import navbarReducer from './Slices/Navbar';
 import loginReducer from './Slices/Login';
@@ -6,7 +7,6 @@ import registerReducer from './Slices/Register';
 import forgetReducer from './Slices/Forget';
 import footerReducer from './Slices/Footer';
 
-import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { songsApi } from './Services/GetSong';
 import { userApi } from './Services/GetUser';
 
@@ -24,8 +24,7 @@ export const store = configureStore({
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
             thunk: { extraArgument: songsApi, userApi },
-            // I dont know how to fix this for now. ETA = Unknown
-            serializableCheck: true, // Disable Serializable Check because we are storing howler object in database.
+            serializableCheck: true, // Enable Serializable Check because we are not storing howler object in database.
         }),
 });
 

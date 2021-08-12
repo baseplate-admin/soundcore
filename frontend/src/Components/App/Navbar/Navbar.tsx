@@ -31,12 +31,15 @@ import brandLogo from '../../../Assets/Images/brand_logo.png';
 import { IconColor } from '../../../Config/Colors/Icons';
 
 export const Navbar = () => {
+    const classes = useStyles();
+
+    const dispatch = useAppDispatch();
+    const leftMenuState = useAppSelector(selectLeftMenuState);
+
     const [Logout] = useAuthLogout();
     const { data, isLoading } = useGetUserQuery(null);
 
     const { width } = useWindowDimensions();
-
-    const classes = useStyles();
 
     const [imageDropdownShown, setImageDropdownShown] = useState(false);
 
@@ -55,9 +58,6 @@ export const Navbar = () => {
     const isConsoleEnabled = useMediaQuery({
         query: '(max-width: 1420px)',
     });
-
-    const leftMenuState = useAppSelector(selectLeftMenuState);
-    const dispatch = useAppDispatch();
 
     const handleHamburgerIconClick = () => {
         // Always returns true

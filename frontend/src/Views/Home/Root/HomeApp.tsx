@@ -62,7 +62,7 @@ export const HomePage = () => {
     const { data, isLoading } = useGetSongsQuery(null);
 
     const addDropDownRef = (el: never) => {
-        switch (el && !dropDownRefArray?.current?.includes(el)) {
+        switch (!dropDownRefArray?.current?.includes(el)) {
             case true: {
                 dropDownRefArray?.current?.push(el);
             }
@@ -70,7 +70,7 @@ export const HomePage = () => {
     };
 
     const addDropDownIconRef = (el: never) => {
-        switch (el && !dropDownElipsisIconArray?.current?.includes(el)) {
+        switch (!dropDownElipsisIconArray?.current?.includes(el)) {
             case true: {
                 dropDownElipsisIconArray?.current?.push(el);
             }
@@ -269,60 +269,66 @@ export const HomePage = () => {
                                             paddingRight: 0,
                                         }}
                                     >
-                                        <Tippy
-                                            content={voca
-                                                ?.chain(music?.song_name)
-                                                ?.replace(',', ' ')
-                                                ?.trimRight()
-                                                ?.value()}
-                                            placement="top"
-                                            animateFill={true}
-                                            followCursor="horizontal"
-                                            plugins={[
-                                                animateFill,
-                                                followCursor,
-                                            ]}
+                                        <p
+                                            className={`title is-size-5 ${classes?.['song-title']}`}
                                         >
-                                            <p
-                                                className={`title is-size-5 ${classes?.['song-title']}`}
-                                            >
-                                                {voca
+                                            <Tippy
+                                                content={voca
                                                     ?.chain(music?.song_name)
-                                                    ?.replace(',', ' | ')
+                                                    ?.replace(',', ' ')
                                                     ?.trimRight()
-                                                    ?.truncate(20)
                                                     ?.value()}
-                                            </p>
-                                        </Tippy>
-                                        <Tippy
-                                            content={voca
-                                                ?.chain(music?.artist)
-                                                ?.trim()
-                                                ?.replace(',', ' | ')
-                                                ?.titleCase()
-                                                ?.trimRight()
-                                                ?.value()}
-                                            animateFill={true}
-                                            placement="bottom"
-                                            followCursor="horizontal"
-                                            plugins={[
-                                                animateFill,
-                                                followCursor,
-                                            ]}
-                                        >
-                                            <p
-                                                className={`subtitle is-size-6 ${classes?.['song-artist']}`}
+                                                placement="top"
+                                                animateFill={true}
+                                                followCursor="horizontal"
+                                                plugins={[
+                                                    animateFill,
+                                                    followCursor,
+                                                ]}
                                             >
-                                                {voca
+                                                <span>
+                                                    {voca
+                                                        ?.chain(
+                                                            music?.song_name
+                                                        )
+                                                        ?.replace(',', ' | ')
+                                                        ?.trimRight()
+                                                        ?.truncate(20)
+                                                        ?.value()}
+                                                </span>
+                                            </Tippy>
+                                        </p>
+                                        <p
+                                            className={`subtitle is-size-6 ${classes?.['song-artist']}`}
+                                        >
+                                            <Tippy
+                                                content={voca
                                                     ?.chain(music?.artist)
-                                                    ?.replace(',', ' | ')
                                                     ?.trim()
+                                                    ?.replace(',', ' | ')
                                                     ?.titleCase()
                                                     ?.trimRight()
-                                                    ?.truncate(19)
                                                     ?.value()}
-                                            </p>
-                                        </Tippy>
+                                                animateFill={true}
+                                                placement="bottom"
+                                                followCursor="horizontal"
+                                                plugins={[
+                                                    animateFill,
+                                                    followCursor,
+                                                ]}
+                                            >
+                                                <span>
+                                                    {voca
+                                                        ?.chain(music?.artist)
+                                                        ?.replace(',', ' | ')
+                                                        ?.trim()
+                                                        ?.titleCase()
+                                                        ?.trimRight()
+                                                        ?.truncate(19)
+                                                        ?.value()}
+                                                </span>
+                                            </Tippy>
+                                        </p>
                                     </div>
                                 </div>
                                 <div className="column is-1">
@@ -345,7 +351,11 @@ export const HomePage = () => {
                                                 }}
                                                 className="is-hidden"
                                             >
-                                                <IoEllipsisVerticalSharp color={IconColor?.WHITE_ICON} />
+                                                <IoEllipsisVerticalSharp
+                                                    color={
+                                                        IconColor?.WHITE_ICON
+                                                    }
+                                                />
                                             </span>
                                         </div>
                                         <animated.div
@@ -378,7 +388,9 @@ export const HomePage = () => {
                                                                     <tr>
                                                                         <th>
                                                                             <MdPlaylistAdd
-                                                                                color={IconColor?.WHITE_ICON}
+                                                                                color={
+                                                                                    IconColor?.WHITE_ICON
+                                                                                }
                                                                                 style={{
                                                                                     transform:
                                                                                         'scale(2)',

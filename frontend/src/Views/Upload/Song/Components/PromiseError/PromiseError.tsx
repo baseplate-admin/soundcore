@@ -3,7 +3,7 @@ import { IoCloudOfflineOutline } from 'react-icons/io5';
 import { IconColor } from '../../../../../Config/Colors/Icons';
 
 interface IPromiseErrorChildComponent {
-    errorFiles: Array<Object>;
+    errorFiles: Object[];
 }
 
 export const PromiseErrorChildComponent = (

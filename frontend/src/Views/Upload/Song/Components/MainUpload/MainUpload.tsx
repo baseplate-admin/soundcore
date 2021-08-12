@@ -9,7 +9,7 @@ import useWindowDimensions from '../../../../../Hooks/Responsive/Hooks';
 import { IconColor } from '../../../../../Config/Colors/Icons';
 
 interface IMainUploadChildComponentProps {
-    mappedSongs: Array<Object>;
+    mappedSongs: Object[];
     getRootProps: Function;
     getInputProps: Function;
     fileLength: number;
@@ -21,8 +21,8 @@ export const MainUploadChildComponent = (
     props: IMainUploadChildComponentProps
 ) => {
     const classes = useStyles();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { height, width } = useWindowDimensions();
+
+    const { height } = useWindowDimensions();
 
     const isMobile = useMediaQuery({
         query: '(max-width: 767px)',
