@@ -265,26 +265,19 @@ export const Footer = (props: IFooterProps) => {
                     <article className="media">
                         <figure className="media-left">
                             <p className="image is-64x64">
-                                {footerState?.song?.image ? (
-                                    <>
-                                        <img
-                                            id="footer-song-image"
-                                            className={classes?.song_image}
-                                            alt=""
-                                            src={footerState?.song?.image}
-                                        />
-                                    </>
-                                ) : (
-                                    <>
-                                        <img
-                                            id="footer-song-image"
-                                            className={classes?.song_image}
-                                            style={{ opacity: 0 }}
-                                            alt=""
-                                            src=""
-                                        />
-                                    </>
-                                )}
+                                <>
+                                    <img
+                                        id="footer-song-image"
+                                        className={
+                                            classes?.song_image &&
+                                            footerState?.song?.image
+                                                ? ''
+                                                : classes?.['opacity-hidden']
+                                        }
+                                        alt=""
+                                        src={footerState?.song?.image ?? ''}
+                                    />
+                                </>
                             </p>
                         </figure>
                         <div className="media-content">
@@ -1030,5 +1023,8 @@ const useStyles = createUseStyles({
         backgroundColor: '#91979d !important',
         height: '0.35rem !important',
         transform: 'translateY(1px) !important',
+    },
+    'opacity-hidden': {
+        opacity: '0.0 !important',
     },
 });

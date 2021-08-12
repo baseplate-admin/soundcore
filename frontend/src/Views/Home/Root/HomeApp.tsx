@@ -61,7 +61,7 @@ export const HomePage = () => {
     const { data, isLoading } = useGetSongsQuery(null);
 
     const addDropDownRef = (el: never) => {
-        switch (el && !dropDownRefArray?.current?.includes(el)) {
+        switch (!dropDownRefArray?.current?.includes(el)) {
             case true: {
                 dropDownRefArray?.current?.push(el);
             }
@@ -69,7 +69,7 @@ export const HomePage = () => {
     };
 
     const addDropDownIconRef = (el: never) => {
-        switch (el && !dropDownElipsisIconArray?.current?.includes(el)) {
+        switch (!dropDownElipsisIconArray?.current?.includes(el)) {
             case true: {
                 dropDownElipsisIconArray?.current?.push(el);
             }
@@ -444,7 +444,7 @@ export const HomePage = () => {
                                             <div className="columns is-centered">
                                                 <div className="column is-mobile is-narrow">
                                                     <SpinnerComponent
-                                                        type={randomSpinnerPicker().toString()}
+                                                        type={randomSpinnerPicker()?.toString()}
                                                     />
                                                 </div>
                                             </div>
