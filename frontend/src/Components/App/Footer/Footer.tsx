@@ -264,6 +264,7 @@ export const Footer = (props: IFooterProps) => {
                 <div className={`column is-3 ${classes?.footer_info_column}`}>
                     <article className="media">
                         <figure className="media-left">
+<<<<<<< HEAD
                             <div className="image is-64x64">
                                 <img
                                     id="footer-song-image"
@@ -277,6 +278,30 @@ export const Footer = (props: IFooterProps) => {
                                     src={footerState?.song?.image ?? ''}
                                 />
                             </div>
+=======
+                            <p className="image is-64x64">
+                                {footerState?.song?.image ? (
+                                    <>
+                                        <img
+                                            id="footer-song-image"
+                                            className={classes?.song_image}
+                                            alt=""
+                                            src={footerState?.song?.image}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <img
+                                            id="footer-song-image"
+                                            className={classes?.song_image}
+                                            style={{ opacity: 0 }}
+                                            alt=""
+                                            src=""
+                                        />
+                                    </>
+                                )}
+                            </p>
+>>>>>>> parent of 844b0b5 (Update: Nullish Operator)
                         </figure>
                         <div className="media-content">
                             <div className="content">
@@ -1136,8 +1161,5 @@ const useStyles = createUseStyles({
         backgroundColor: '#91979d !important',
         height: '0.35rem !important',
         transform: 'translateY(1px) !important',
-    },
-    'opacity-hidden': {
-        opacity: '0.0 !important',
     },
 });
