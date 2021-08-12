@@ -28,6 +28,7 @@ import {
 
 import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 export const Navbar = () => {
     const [Logout] = useAuthLogout();
@@ -104,7 +105,7 @@ export const Navbar = () => {
                                             }
                                         >
                                             <IoMenuOutline
-                                                color="white"
+                                                color={IconColor?.WHITE_ICON}
                                                 onClick={() => {
                                                     handleHamburgerIconClick();
                                                 }}
@@ -132,8 +133,11 @@ export const Navbar = () => {
                                                     }
                                                 >
                                                     <img
-                                                        src={brandLogo}
-                                                        alt=""
+                                                        src={brandLogo ?? ''}
+                                                        alt={
+                                                            brandLogo ??
+                                                            'brand_logo'
+                                                        }
                                                         width="112"
                                                         height="28"
                                                     ></img>
@@ -161,7 +165,7 @@ export const Navbar = () => {
                                 <span className="icon is-small is-left"></span>
                                 <span className="icon is-small is-right">
                                     <IoSearchOutline
-                                        color="white"
+                                        color={IconColor?.WHITE_ICON}
                                         style={{
                                             transform: 'scale(1.5)',
                                         }}
@@ -181,8 +185,8 @@ export const Navbar = () => {
                     >
                         <img
                             className="is-rounded"
-                            src={profilePlaceholder}
-                            alt="profile_picture"
+                            src={profilePlaceholder ?? ''}
+                            alt={profilePlaceholder ?? 'profile_picture'}
                         />
                     </figure>
                 ) : (
@@ -599,7 +603,9 @@ export const Navbar = () => {
                                             </div>
                                             <hr
                                                 className={
-                                                    classes?.['dropdown-divider']
+                                                    classes?.[
+                                                        'dropdown-divider'
+                                                    ]
                                                 }
                                             />
                                             <div
@@ -616,7 +622,9 @@ export const Navbar = () => {
                                                     >
                                                         <div className="column is-narrow">
                                                             <IoLogOutOutline
-                                                                color="white"
+                                                                color={
+                                                                    IconColor?.WHITE_ICON
+                                                                }
                                                                 style={{
                                                                     transform:
                                                                         'scale(2)',

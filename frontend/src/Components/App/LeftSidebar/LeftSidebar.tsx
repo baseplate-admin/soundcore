@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { createUseStyles } from 'react-jss';
 import { useMediaQuery } from 'react-responsive';
 import { useSpring, animated } from 'react-spring';
 
 import { IoHomeOutline } from 'react-icons/io5';
 import { MdLibraryMusic, MdLibraryAdd } from 'react-icons/md';
+
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     leftMenuHidden,
@@ -13,7 +15,7 @@ import {
 } from '../../../Store/Slices/Navbar';
 
 import { RoutingPath } from '../../../Config/Routes';
-import { createUseStyles } from 'react-jss';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 export const LeftSidebar = () => {
     const classes = useStyles();
@@ -57,8 +59,8 @@ export const LeftSidebar = () => {
                         >
                             <div className="column is-2 is-offset-1">
                                 <IoHomeOutline
-                                    color="white"
-                                    style={{ transform: 'scale(1.4)' }}
+                                    color={IconColor?.WHITE_ICON}
+                                    className={classes?.['home-icon-item']}
                                 />
                             </div>
                             <div className={`column ${classes?.icon_text}`}>
@@ -75,11 +77,8 @@ export const LeftSidebar = () => {
                         >
                             <div className="column is-2 is-offset-1">
                                 <MdLibraryMusic
-                                    color="white"
-                                    style={{
-                                        transform:
-                                            'scale(1.4) translateY(1.5px)',
-                                    }}
+                                    color={IconColor?.WHITE_ICON}
+                                    className={classes?.['library-icon-item']}
                                 />
                             </div>
                             <div className={`column ${classes?.icon_text}`}>
@@ -97,10 +96,8 @@ export const LeftSidebar = () => {
                             to={RoutingPath?.CREATE_LIBRARY_PAGE}
                         >
                             <MdLibraryAdd
-                                color="white"
-                                style={{
-                                    transform: 'scale(1.3) translateX(3px)',
-                                }}
+                                color={IconColor?.WHITE_ICON}
+                                className={classes?.['add-icon-item']}
                             />
                         </Link>
                     </div>
@@ -150,5 +147,14 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
         padding: '0.5em',
         transform: 'translateX(-25px)',
+    },
+    'add-icon-item': {
+        transform: 'scale(1.3) translateX(3px)',
+    },
+    'library-icon-item': {
+        transform: 'scale(1.4) translateY(1.5px)',
+    },
+    'home-icon-item': {
+        transform: 'scale(1.4)',
     },
 });

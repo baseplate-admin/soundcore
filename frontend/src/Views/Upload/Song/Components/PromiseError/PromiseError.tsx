@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { IoCloudOfflineOutline } from 'react-icons/io5';
+import { IconColor } from '../../../../../Config/Colors/Icons';
 
 interface IPromiseErrorChildComponent {
     errorFiles: Array<Object>;
@@ -17,7 +18,7 @@ export const PromiseErrorChildComponent = (
                         style={{ backgroundColor: 'transparent' }}
                     >
                         <IoCloudOfflineOutline
-                            color="white"
+                            color={IconColor?.WHITE_ICON}
                             style={{ transform: 'scale(4)' }}
                         />
                     </div>

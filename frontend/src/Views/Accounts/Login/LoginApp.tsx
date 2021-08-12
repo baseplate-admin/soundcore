@@ -36,6 +36,7 @@ import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/LocalStora
 
 // Yup for form validation
 import * as Yup from 'yup';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 export const LoginPage = () => {
     const classes = useStyles();
@@ -167,7 +168,7 @@ export const LoginPage = () => {
                                             style={{
                                                 transform: 'scale(1.5)',
                                             }}
-                                            color="white"
+                                            color={IconColor?.WHITE_ICON}
                                         />
                                     </span>
                                 </p>
@@ -204,7 +205,7 @@ export const LoginPage = () => {
                                             style={{
                                                 transform: 'scale(1.5)',
                                             }}
-                                            color="white"
+                                            color={IconColor?.WHITE_ICON}
                                         />
                                     </span>
                                     {isPasswordFocused ? (
@@ -223,14 +224,14 @@ export const LoginPage = () => {
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color="white"
+                                                    color={IconColor?.WHITE_ICON}
                                                 />
                                             ) : (
                                                 <IoEyeOffOutline
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color="white"
+                                                    color={IconColor?.WHITE_ICON}
                                                 />
                                             )}
                                         </span>

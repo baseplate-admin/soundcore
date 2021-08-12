@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { RoutingPath } from '../../../../../Config/Routes';
 import { createUseStyles } from 'react-jss';
 import { UploadSongVariables } from '../../variables';
+import { IconColor } from '../../../../../Config/Colors/Icons';
 
 interface ISuccessPromiseChildComponentProps {
     fileLength: number;
@@ -31,7 +32,7 @@ export const PromiseSuccessChildComponent = (
                             style={{
                                 transform: 'scale(4)',
                             }}
-                            color="white"
+                            color={IconColor?.WHITE_ICON}
                         />
                     </div>
                 </div>

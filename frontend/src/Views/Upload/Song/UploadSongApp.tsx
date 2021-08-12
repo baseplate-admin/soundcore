@@ -19,6 +19,7 @@ import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseErr
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
 import { ImFileMusic } from 'react-icons/im';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 interface IUploadFiles {
     file: File;
@@ -132,7 +133,7 @@ export const UploadSongPage = () => {
                                 }}
                             >
                                 <ImFileMusic
-                                    color="white"
+                                    color={IconColor?.WHITE_ICON}
                                     style={{ transform: 'scale(1.5)' }}
                                 />
                             </figure>
@@ -155,7 +156,7 @@ export const UploadSongPage = () => {
                         </div>
                         <div className="media-right">
                             <IoCloseCircleOutline
-                                color="white"
+                                color={IconColor?.WHITE_ICON}
                                 onClick={() => {
                                     onDelete(file?.file);
                                 }}
@@ -188,7 +189,7 @@ export const UploadSongPage = () => {
                                 }}
                             >
                                 <BsFileEarmarkArrowUp
-                                    color="white"
+                                    color={IconColor?.WHITE_ICON}
                                     className={classes?.upload_icon}
                                     style={{ transform: 'scale(2)' }}
                                 />
@@ -212,7 +213,7 @@ export const UploadSongPage = () => {
                         </div>
                         <div className="media-right">
                             <IoCloseCircleOutline
-                                color="white"
+                                color={IconColor?.WHITE_ICON}
                                 onClick={() => {
                                     onDelete(file?.file);
                                 }}

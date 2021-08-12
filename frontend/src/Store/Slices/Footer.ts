@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../Store';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IForgetPasswordState {
     song: {
@@ -55,9 +55,7 @@ export const footerSlice = createSlice({
         updateStatusToPause: (state) => {
             state.song.global.playing = false;
         },
-        // updateVolume: (state, action: PayloadAction<number>) => {
-        //     state.song.global.volume = action.payload;
-        // },
+
         updateSongState: (state, action: PayloadAction<ISongAdd>) => {
             state.song.name = action.payload.name;
             state.song.artist = action.payload.artist;
@@ -76,7 +74,6 @@ export const footerSlice = createSlice({
 export const {
     updateStatusToPlay,
     updateStatusToPause,
-    // updateVolume,
     updateSongState,
     updateTotalSeconds,
     updateCurrentSeconds,

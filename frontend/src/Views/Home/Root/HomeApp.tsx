@@ -40,6 +40,7 @@ import {
 import { CreateHowlObject } from '../../../Functions/Helpers/Howler/CreateHowl';
 import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
 import { MdPlaylistAdd } from 'react-icons/md';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 export const HomePage = () => {
     // We dont need Polling For now
@@ -344,7 +345,7 @@ export const HomePage = () => {
                                                 }}
                                                 className="is-hidden"
                                             >
-                                                <IoEllipsisVerticalSharp color="white" />
+                                                <IoEllipsisVerticalSharp color={IconColor?.WHITE_ICON} />
                                             </span>
                                         </div>
                                         <animated.div
@@ -377,7 +378,7 @@ export const HomePage = () => {
                                                                     <tr>
                                                                         <th>
                                                                             <MdPlaylistAdd
-                                                                                color="white"
+                                                                                color={IconColor?.WHITE_ICON}
                                                                                 style={{
                                                                                     transform:
                                                                                         'scale(2)',

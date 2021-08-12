@@ -6,6 +6,7 @@ import { UploadSongVariables } from '../../variables';
 import { animated, useSpring } from 'react-spring';
 import { useMediaQuery } from 'react-responsive';
 import useWindowDimensions from '../../../../../Hooks/Responsive/Hooks';
+import { IconColor } from '../../../../../Config/Colors/Icons';
 
 interface IMainUploadChildComponentProps {
     mappedSongs: Array<Object>;
@@ -69,7 +70,7 @@ export const MainUploadChildComponent = (
                                             }}
                                         >
                                             <IoAddCircleOutline
-                                                color="white"
+                                                color={IconColor?.WHITE_ICON}
                                                 style={{
                                                     transform: 'scale(1.5)',
                                                 }}

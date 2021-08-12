@@ -1,6 +1,5 @@
 import { createUseStyles } from 'react-jss';
-
-const HashColor: string = 'rgba(54, 215, 183, 0.75)';
+import { LoaderColors } from '../../../Config/Colors/Loaders';
 
 export const HashLoader = () => {
     const classes = useStyles();
@@ -18,35 +17,35 @@ const useStyles = createUseStyles({
     '@keyframes animation-1': {
         '0%': {
             width: '10px',
-            boxShadow: `${HashColor} 20px -10px, ${HashColor} -20px 10px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} 20px -10px, ${LoaderColors?.HASH_LOADER} -20px 10px`,
         },
         '35%': {
             width: '50px',
-            boxShadow: `${HashColor} 0px -10px, ${HashColor} 0px 10px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} 0px -10px, ${LoaderColors?.HASH_LOADER} 0px 10px`,
         },
         '70%': {
             width: '10px',
-            boxShadow: `${HashColor} -20px -10px, ${HashColor} 20px 10px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} -20px -10px, ${LoaderColors?.HASH_LOADER} 20px 10px`,
         },
         '100%': {
-            boxShadow: `${HashColor} 20px -10px, ${HashColor} -20px 10px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} 20px -10px, ${LoaderColors?.HASH_LOADER} -20px 10px`,
         },
     },
     '@keyframes animation-2': {
         '0%': {
             height: '10px',
-            boxShadow: `${HashColor} 10px 20px, ${HashColor} -10px -20px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} 10px 20px, ${LoaderColors?.HASH_LOADER} -10px -20px`,
         },
         '35%': {
             height: '50px',
-            boxShadow: `${HashColor} 10px 0px, ${HashColor} -10px 0px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} 10px 0px, ${LoaderColors?.HASH_LOADER} -10px 0px`,
         },
         '70%': {
             height: '10px',
-            boxShadow: `${HashColor} 10px -20px, ${HashColor} -10px 20px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} 10px -20px, ${LoaderColors?.HASH_LOADER} -10px 20px`,
         },
         '100%': {
-            boxShadow: `${HashColor} 10px 20px, ${HashColor} -10px -20px`,
+            boxShadow: `${LoaderColors?.HASH_LOADER} 10px 20px, ${LoaderColors?.HASH_LOADER} -10px -20px`,
         },
     },
     style1: {

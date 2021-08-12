@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { IoMailOutline } from 'react-icons/io5';
 import { createUseStyles } from 'react-jss';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 export const ForgetPage = () => {
     const forgetPasswordEmailSchema = yup?.object()?.shape({
@@ -37,7 +38,7 @@ export const ForgetPage = () => {
                             />
                             <span className="is-left icon">
                                 <IoMailOutline
-                                    color="white"
+                                    color={IconColor?.WHITE_ICON}
                                     style={{ transform: 'scale(1?.5)' }}
                                 />
                             </span>

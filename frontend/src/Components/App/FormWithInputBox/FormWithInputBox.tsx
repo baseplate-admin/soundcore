@@ -14,6 +14,7 @@ export const FormWithInputBoxComponent = (
     props: FormWithInputBoxComponentPropsInterface
 ) => {
     const classes = useStyles();
+
     return (
         <Fragment>
             <section
@@ -27,8 +28,11 @@ export const FormWithInputBoxComponent = (
                                     <div className="columns is-mobile is-centered">
                                         <div className="column is-narrow">
                                             <img
-                                                src={loginLogo}
-                                                alt=""
+                                                src={loginLogo ?? ''}
+                                                alt={
+                                                    loginLogo ??
+                                                    'no_banner_picture'
+                                                }
                                                 width="150"
                                                 height="40"
                                                 className={

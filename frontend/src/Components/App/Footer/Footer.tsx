@@ -37,6 +37,7 @@ import {
     GetReversePlaybackStatus,
     SetReversePlaybackStatus,
 } from '../../../Functions/Helpers/LocalStorage/IsPlaybackReversed';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 interface IFooterProps {
     howlerState: Howl[];
@@ -134,7 +135,7 @@ export const Footer = (props: IFooterProps) => {
 
     useEffect(() => {
         // Sync Volume and howler Volume
-        Howler.volume(Number(volume / 100));
+        Howler?.volume(Number(volume / 100));
     }, [volume]);
 
     const calcSliderPos = (e: MouseEvent<HTMLInputElement>) => {
@@ -255,8 +256,6 @@ export const Footer = (props: IFooterProps) => {
             setUnmutedValue(0);
         }
     };
-
-    const iconColor = '#D5D9DD';
 
     return (
         <footer className={classes?.footer_item}>
@@ -415,7 +414,7 @@ export const Footer = (props: IFooterProps) => {
                                                             ?.chain(
                                                                 footerState
                                                                     ?.song
-                                                                    .artist
+                                                                    ?.artist
                                                             )
                                                             ?.replace(',', ' ')
                                                             ?.titleCase()
@@ -441,7 +440,7 @@ export const Footer = (props: IFooterProps) => {
                                                                     ?.chain(
                                                                         footerState
                                                                             ?.song
-                                                                            .artist
+                                                                            ?.artist
                                                                     )
                                                                     ?.replace(
                                                                         ',',
@@ -539,7 +538,7 @@ export const Footer = (props: IFooterProps) => {
                                                             ?.chain(
                                                                 footerState
                                                                     ?.song
-                                                                    .artist
+                                                                    ?.artist
                                                             )
                                                             ?.replace(',', ' ')
                                                             ?.titleCase()
@@ -626,7 +625,7 @@ export const Footer = (props: IFooterProps) => {
                             >
                                 <span>
                                     <IoPlaySkipBackCircleOutline
-                                        color={iconColor}
+                                        color={IconColor?.NORMAL_ICON}
                                         style={{ transform: 'scale(2)' }}
                                     />
                                 </span>
@@ -645,7 +644,7 @@ export const Footer = (props: IFooterProps) => {
                                     >
                                         <span>
                                             <IoPauseCircleOutline
-                                                color={iconColor}
+                                                color={IconColor?.NORMAL_ICON}
                                                 style={{
                                                     transform: 'scale(2)',
                                                 }}
@@ -666,7 +665,7 @@ export const Footer = (props: IFooterProps) => {
                                     >
                                         <span>
                                             <IoPlayCircleOutline
-                                                color={iconColor}
+                                                color={IconColor?.NORMAL_ICON}
                                                 style={{
                                                     transform: 'scale(2)',
                                                 }}
@@ -691,7 +690,7 @@ export const Footer = (props: IFooterProps) => {
                             >
                                 <span>
                                     <IoPlaySkipForwardCircleOutline
-                                        color={iconColor}
+                                        color={IconColor?.NORMAL_ICON}
                                         style={{ transform: 'scale(2)' }}
                                     />
                                 </span>
@@ -756,10 +755,10 @@ export const Footer = (props: IFooterProps) => {
                                                     value={
                                                         (100 *
                                                             footerState?.song
-                                                                .control
-                                                                .current) /
+                                                                ?.control
+                                                                ?.current) /
                                                         footerState?.song
-                                                            .control?.total
+                                                            ?.control?.total
                                                     }
                                                     max={100}
                                                 />
@@ -844,9 +843,9 @@ export const Footer = (props: IFooterProps) => {
                                             {'- '}
                                             {humanizeSeconds(
                                                 footerState?.song?.control
-                                                    .total -
+                                                    ?.total -
                                                     footerState?.song?.control
-                                                        .current
+                                                        ?.current
                                             )}
                                         </>
                                     ) : (
@@ -896,7 +895,9 @@ export const Footer = (props: IFooterProps) => {
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color={iconColor}
+                                                    color={
+                                                        IconColor?.NORMAL_ICON
+                                                    }
                                                 />
                                             ) : showMediumVolume &&
                                               !showHighVolume &&
@@ -907,7 +908,9 @@ export const Footer = (props: IFooterProps) => {
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color={iconColor}
+                                                    color={
+                                                        IconColor?.NORMAL_ICON
+                                                    }
                                                 />
                                             ) : showLowVolume &&
                                               !showHighVolume &&
@@ -918,7 +921,9 @@ export const Footer = (props: IFooterProps) => {
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color={iconColor}
+                                                    color={
+                                                        IconColor?.NORMAL_ICON
+                                                    }
                                                 />
                                             ) : showVolumeOff &&
                                               !showHighVolume &&
@@ -929,7 +934,9 @@ export const Footer = (props: IFooterProps) => {
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color={iconColor}
+                                                    color={
+                                                        IconColor?.NORMAL_ICON
+                                                    }
                                                 />
                                             ) : !showHighVolume &&
                                               !showMediumVolume &&
@@ -940,7 +947,9 @@ export const Footer = (props: IFooterProps) => {
                                                     style={{
                                                         transform: 'scale(1.5)',
                                                     }}
-                                                    color={iconColor}
+                                                    color={
+                                                        IconColor?.NORMAL_ICON
+                                                    }
                                                 />
                                             ) : (
                                                 <></>

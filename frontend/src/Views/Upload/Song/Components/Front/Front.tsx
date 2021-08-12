@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 import { createUseStyles } from 'react-jss';
 import { ImFileMusic } from 'react-icons/im';
 import { UploadSongVariables } from '../../variables';
+import { IconColor } from '../../../../../Config/Colors/Icons';
 
 interface IFrontPageChildComponentProps {
     getRootProps: Function;
@@ -33,7 +34,7 @@ export const FrontPageChildComponent = (
                                     <span className="file-icon">
                                         <i>
                                             <ImFileMusic
-                                                color="white"
+                                                color={IconColor?.WHITE_ICON}
                                                 style={{
                                                     transform: 'scale(1.5)',
                                                 }}

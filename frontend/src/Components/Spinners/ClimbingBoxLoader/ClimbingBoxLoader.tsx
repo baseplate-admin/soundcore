@@ -1,31 +1,55 @@
 import { createUseStyles } from 'react-jss';
-
-const climbingBoxLoaderColor: string = '#00d1b2';
+import { LoaderColors } from '../../../Config/Colors/Loaders';
 
 export const ClimbingBoxLoader = () => {
     const classes = useStyles();
+
     return (
-        <span className={`container ${classes?.container}`}>
-            <span className={`${classes?.wrapper}`}>
-                <span className={`${classes?.style}`} />
-                <span className={`${classes?.hill}`} />
+        <div className="container">
+            <span className={classes?.container}>
+                <span className={classes?.wrapper}>
+                    <span className={classes?.style} />
+                    <span className={classes?.hill} />
+                </span>
             </span>
-        </span>
+        </div>
     );
 };
 const useStyles = createUseStyles({
     '@keyframes climbing-object': {
-        '0%': { transform: 'translate(0, -1em) rotate(-45deg)' },
-        '5%': { transform: 'translate(0, -1em) rotate(-50deg)' },
-        '20%': { transform: 'translate(1em, -2em) rotate(47deg)' },
-        '25%': { transform: 'translate(1em, -2em) rotate(45deg)' },
-        '30%': { transform: 'translate(1em, -2em) rotate(40deg)' },
-        '45%': { transform: 'translate(2em, -3em) rotate(137deg)' },
-        '50%': { transform: 'translate(2em, -3em) rotate(135deg)' },
-        '55%': { transform: 'translate(2em, -3em) rotate(130deg)' },
-        '70%': { transform: 'translate(3em, -4em) rotate(217deg)' },
-        '75%': { transform: 'translate(3em, -4em) rotate(220deg)' },
-        '100%': { transform: 'translate(0, -1em) rotate(-225deg)' },
+        '0%': {
+            transform: 'translate(0, -1em) rotate(-45deg)',
+        },
+        '5%': {
+            transform: 'translate(0, -1em) rotate(-50deg)',
+        },
+        '20%': {
+            transform: 'translate(1em, -2em) rotate(47deg)',
+        },
+        '25%': {
+            transform: 'translate(1em, -2em) rotate(45deg)',
+        },
+        '30%': {
+            transform: 'translate(1em, -2em) rotate(40deg)',
+        },
+        '45%': {
+            transform: 'translate(2em, -3em) rotate(137deg)',
+        },
+        '50%': {
+            transform: 'translate(2em, -3em) rotate(135deg)',
+        },
+        '55%': {
+            transform: 'translate(2em, -3em) rotate(130deg)',
+        },
+        '70%': {
+            transform: 'translate(3em, -4em) rotate(217deg)',
+        },
+        '75%': {
+            transform: 'translate(3em, -4em) rotate(220deg)',
+        },
+        '100%': {
+            transform: 'translate(0, -1em) rotate(-225deg)',
+        },
     },
     style: {
         position: 'absolute',
@@ -36,7 +60,7 @@ const useStyles = createUseStyles({
         backgroundColor: 'transparent',
         borderRadius: '15%',
         border: '0.25em solid',
-        borderColor: `${climbingBoxLoaderColor} !important`,
+        borderColor: `${LoaderColors?.CLIMBING_BOX} !important`,
         transform: 'translate(0px, -1em) rotate(-45deg)',
         animation:
             '2.5s cubic-bezier(0.79, 0, 0.47, 0.97) 0s infinite normal none running $climbing-object',
@@ -48,7 +72,7 @@ const useStyles = createUseStyles({
         top: '1.7em',
         left: '1.7em',
         borderLeft: '0.25em solid',
-        borderColor: `${climbingBoxLoaderColor} !important`,
+        borderColor: `${LoaderColors?.CLIMBING_BOX} !important`,
         transform: 'rotate(45deg)',
     },
     wrapper: {

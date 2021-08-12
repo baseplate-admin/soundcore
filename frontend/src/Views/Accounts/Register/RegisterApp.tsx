@@ -21,6 +21,7 @@ import Tippy from '@tippyjs/react';
 
 import { ApplicationName } from '../../../Config/App';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 export const RegisterPage = () => {
     const classes = useStyles();
@@ -161,7 +162,7 @@ export const RegisterPage = () => {
                                         className={`icon is-small is-left ${classes?.icon}`}
                                     >
                                         <IoPersonCircleOutline
-                                            color="white"
+                                            color={IconColor?.WHITE_ICON}
                                             style={{
                                                 transform: 'scale(1.6)',
                                             }}
@@ -195,7 +196,7 @@ export const RegisterPage = () => {
                                         className={`icon is-small is-left ${classes?.icon}`}
                                     >
                                         <IoMailOutline
-                                            color="white"
+                                            color={IconColor?.WHITE_ICON}
                                             style={{
                                                 transform: 'scale(1.4)',
                                             }}
@@ -232,7 +233,7 @@ export const RegisterPage = () => {
                                             style={{
                                                 transform: 'scale(1.5)',
                                             }}
-                                            color="white"
+                                            color={IconColor?.WHITE_ICON}
                                         />
                                     </span>
                                 </p>
@@ -265,7 +266,7 @@ export const RegisterPage = () => {
                                             style={{
                                                 transform: 'scale(1.5)',
                                             }}
-                                            color="white"
+                                            color={IconColor?.WHITE_ICON}
                                         />
                                     </span>
                                 </p>
