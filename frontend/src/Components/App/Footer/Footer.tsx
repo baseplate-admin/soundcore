@@ -264,12 +264,26 @@ export const Footer = (props: IFooterProps) => {
                     <article className="media">
                         <figure className="media-left">
                             <p className="image is-64x64">
-                                <img
-                                    id="footer-song-image"
-                                    className={classes.song_image}
-                                    alt=""
-                                    src={footerState.song.image}
-                                />
+                                {footerState.song.image ? (
+                                    <>
+                                        <img
+                                            id="footer-song-image"
+                                            className={classes.song_image}
+                                            alt=""
+                                            src={footerState.song.image}
+                                        />
+                                    </>
+                                ) : (
+                                    <>
+                                        <img
+                                            id="footer-song-image"
+                                            className={classes.song_image}
+                                            style={{ opacity: 0 }}
+                                            alt=""
+                                            src=""
+                                        />
+                                    </>
+                                )}
                             </p>
                         </figure>
                         <div className="media-content">

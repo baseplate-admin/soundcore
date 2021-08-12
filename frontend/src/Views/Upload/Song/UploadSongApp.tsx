@@ -114,9 +114,9 @@ export const UploadSongPage = () => {
         onDrop,
     });
 
-    const mappedSongs = files.map((file, index) => {
+    const mappedSongs = files?.map((file, index) => {
         return (
-            <>
+            <Fragment>
                 <div
                     key={index}
                     className={`box ${classes['item-box']}`}
@@ -167,61 +167,64 @@ export const UploadSongPage = () => {
                         </div>
                     </article>
                 </div>
-            </>
+            </Fragment>
         );
     });
 
-    const mappedErrorFiles = erroredFiles.map((file) => {
+    const mappedErrorFiles = erroredFiles?.map((file) => {
         return (
-            <div
-                className={`box ${classes['item-box']}`}
-                style={{ backgroundColor: 'transparent' }}
-            >
-                <article className={`media ${classes['song-item']}`}>
-                    <figure className="media-left">
-                        <figure
-                            className="image is-48x48"
-                            style={{
-                                transform: 'translateY(10px) translateX(15px)',
-                            }}
-                        >
-                            <BsFileEarmarkArrowUp
-                                color="white"
-                                className={classes.upload_icon}
-                                style={{ transform: 'scale(2)' }}
-                            />
+            <Fragment>
+                <div
+                    className={`box ${classes['item-box']}`}
+                    style={{ backgroundColor: 'transparent' }}
+                >
+                    <article className={`media ${classes['song-item']}`}>
+                        <figure className="media-left">
+                            <figure
+                                className="image is-48x48"
+                                style={{
+                                    transform:
+                                        'translateY(10px) translateX(15px)',
+                                }}
+                            >
+                                <BsFileEarmarkArrowUp
+                                    color="white"
+                                    className={classes.upload_icon}
+                                    style={{ transform: 'scale(2)' }}
+                                />
+                            </figure>
                         </figure>
-                    </figure>
-                    <div className="media-content">
-                        <div className="content">
-                            <p className=" has-text-centered">
-                                <span
-                                    className={`title is-size-6 ${classes.file_uploaded_text} ${classes.song_name}`}
-                                >
-                                    {file.file.name}
-                                </span>
-                                <span
-                                    className={`heading  ${classes.song_item_size} ${classes.file_uploaded_text}`}
-                                >
-                                    Size : {prettyBytes(file.file.size)}
-                                </span>
-                            </p>
+                        <div className="media-content">
+                            <div className="content">
+                                <p className=" has-text-centered">
+                                    <span
+                                        className={`title is-size-6 ${classes.file_uploaded_text} ${classes.song_name}`}
+                                    >
+                                        {file.file.name}
+                                    </span>
+                                    <span
+                                        className={`heading  ${classes.song_item_size} ${classes.file_uploaded_text}`}
+                                    >
+                                        Size : {prettyBytes(file.file.size)}
+                                    </span>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div className="media-right">
-                        <IoCloseCircleOutline
-                            color="white"
-                            onClick={() => {
-                                onDelete(file.file);
-                            }}
-                            style={{
-                                transform:
-                                    'translateY(20px) translateX(-10px) scale(1.7)',
-                            }}
-                        />
-                    </div>
-                </article>
-            </div>
+                        <div className="media-right">
+                            <IoCloseCircleOutline
+                                color="white"
+                                onClick={() => {
+                                    onDelete(file.file);
+                                }}
+                                style={{
+                                    transform:
+                                        'translateY(20px) translateX(-10px) scale(1.7)',
+                                }}
+                            />
+                        </div>
+                    </article>
+                </div>
+            </Fragment>
         );
     });
 

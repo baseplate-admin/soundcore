@@ -46,13 +46,13 @@ export const HomePage = () => {
     // const { data, error, isLoading } = useGetSongsQuery(null, {
     //     pollingInterval: 1,
     // });
+
     let customInterval: ReturnType<typeof setInterval>;
 
     const classes = useStyles();
 
     const dispatch = useAppDispatch();
 
-    const [activeNavbar, setActiveNavbar] = useState(0);
     const [howlerState, setHowlerState] = useState<Array<Howl>>([]);
 
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
@@ -213,6 +213,215 @@ export const HomePage = () => {
         });
     };
 
+    const mappedSong = data?.map((music: any, index: number) => {
+        return (
+            <Fragment>
+                <div key={index} className={classes['grid-item']}>
+                    <div
+                        className={`box ${classes['grid-box']}`}
+                        onMouseEnter={() => {
+                            handleBoxMouseEnter(index);
+                        }}
+                        onMouseLeave={() => {
+                            handleBoxMouseLeave(index);
+                        }}
+                    >
+                        <figure
+                            className="image song-image-figure"
+                            onClick={() => {
+                                handleBoxClick(
+                                    `${MediaUrl}${music.song_file}`,
+                                    index
+                                );
+                            }}
+                        >
+                            <div className="song-image preview">
+                                <LazyLoadImage
+                                    src={`${MediaUrl}${music.album_art}`}
+                                    effect="blur"
+                                    className={classes['song-image-figure']}
+                                    width={200}
+                                    height={200}
+                                />
+                            </div>
+                        </figure>
+                        <div className={classes['song-description']}>
+                            <div
+                                className="columns is-mobile"
+                                style={{
+                                    width: 200,
+                                }}
+                            >
+                                <div
+                                    className="column is-11"
+                                    onClick={() => {
+                                        handleBoxClick(
+                                            `${MediaUrl}${music.song_file}`,
+                                            index
+                                        );
+                                    }}
+                                >
+                                    <div
+                                        className="box"
+                                        style={{
+                                            backgroundColor: 'transparent',
+                                            paddingRight: 0,
+                                        }}
+                                    >
+                                        <Tippy
+                                            content={voca
+                                                .chain(music.song_name)
+                                                .replace(',', ' ')
+                                                .trimRight()
+                                                .value()}
+                                            placement="top"
+                                            animateFill={true}
+                                            followCursor="horizontal"
+                                            plugins={[
+                                                animateFill,
+                                                followCursor,
+                                            ]}
+                                        >
+                                            <p
+                                                className={`title is-size-5 ${classes['song-title']}`}
+                                            >
+                                                {voca
+                                                    .chain(music.song_name)
+                                                    .replace(',', ' | ')
+                                                    .trimRight()
+                                                    .truncate(20)
+                                                    .value()}
+                                            </p>
+                                        </Tippy>
+                                        <Tippy
+                                            content={voca
+                                                .chain(music.artist)
+                                                .trim()
+                                                .replace(',', ' | ')
+                                                .titleCase()
+                                                .trimRight()
+                                                .value()}
+                                            animateFill={true}
+                                            placement="bottom"
+                                            followCursor="horizontal"
+                                            plugins={[
+                                                animateFill,
+                                                followCursor,
+                                            ]}
+                                        >
+                                            <p
+                                                className={`subtitle is-size-6 ${classes['song-artist']}`}
+                                            >
+                                                {voca
+                                                    .chain(music.artist)
+                                                    .replace(',', ' | ')
+                                                    .trim()
+                                                    .titleCase()
+                                                    .trimRight()
+                                                    .truncate(19)
+                                                    .value()}
+                                            </p>
+                                        </Tippy>
+                                    </div>
+                                </div>
+                                <div className="column is-1">
+                                    <div
+                                        ref={addDropDownRef}
+                                        className="dropdown is-right"
+                                    >
+                                        <div
+                                            className="dropdown-trigger"
+                                            style={{
+                                                paddingTop: 16,
+                                            }}
+                                        >
+                                            <span
+                                                ref={addDropDownIconRef}
+                                                onClick={() => {
+                                                    handleDropdownItemClick(
+                                                        index
+                                                    );
+                                                }}
+                                                className="is-hidden"
+                                            >
+                                                <IoEllipsisVerticalSharp color="white" />
+                                            </span>
+                                        </div>
+                                        <animated.div
+                                            style={dropdownItem}
+                                            className="dropdown-menu"
+                                            role="menu"
+                                        >
+                                            <div
+                                                className="dropdown-content"
+                                                style={{
+                                                    backgroundColor: '#161616',
+                                                }}
+                                            >
+                                                <div
+                                                    className="dropdown-item"
+                                                    style={{
+                                                        color: '#e0e0ec',
+                                                    }}
+                                                >
+                                                    <div className="columns is-centered">
+                                                        <div className="column is-mobile is-narrow">
+                                                            <table
+                                                                className="table"
+                                                                style={{
+                                                                    backgroundColor:
+                                                                        'transparent',
+                                                                }}
+                                                            >
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <MdPlaylistAdd
+                                                                                color="white"
+                                                                                style={{
+                                                                                    transform:
+                                                                                        'scale(2)',
+                                                                                }}
+                                                                            />
+                                                                        </th>
+                                                                        <th>
+                                                                            <p
+                                                                                style={{
+                                                                                    color: '#e0e0ec',
+                                                                                }}
+                                                                                className="subtitle is-size-6"
+                                                                            >
+                                                                                Save
+                                                                                to
+                                                                                playlist
+                                                                            </p>
+                                                                        </th>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    className="dropdown-item"
+                                                    style={{
+                                                        color: '#e0e0ec',
+                                                    }}
+                                                />
+
+                                                {/* <!--<hr className="dropdown-divider">--> */}
+                                            </div>
+                                        </animated.div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </Fragment>
+        );
+    });
+
     return (
         <Fragment>
             <Helmet>
@@ -257,278 +466,10 @@ export const HomePage = () => {
                         ) : (
                             <Fragment>
                                 {data ? (
-                                    <Fragment>
-                                        {data.map(
-                                            (music: any, index: number) => {
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className={
-                                                            classes['grid-item']
-                                                        }
-                                                    >
-                                                        <div
-                                                            className={`box ${classes['grid-box']}`}
-                                                            onMouseEnter={() => {
-                                                                handleBoxMouseEnter(
-                                                                    index
-                                                                );
-                                                            }}
-                                                            onMouseLeave={() => {
-                                                                handleBoxMouseLeave(
-                                                                    index
-                                                                );
-                                                            }}
-                                                        >
-                                                            <figure
-                                                                className="image song-image-figure"
-                                                                onClick={() => {
-                                                                    handleBoxClick(
-                                                                        `${MediaUrl}${music.song_file}`,
-                                                                        index
-                                                                    );
-                                                                }}
-                                                            >
-                                                                <div className="song-image preview">
-                                                                    <LazyLoadImage
-                                                                        src={`${MediaUrl}${music.album_art}`}
-                                                                        effect="blur"
-                                                                        className={
-                                                                            classes[
-                                                                                'song-image-figure'
-                                                                            ]
-                                                                        }
-                                                                        width={
-                                                                            200
-                                                                        }
-                                                                        height={
-                                                                            200
-                                                                        }
-                                                                    />
-                                                                </div>
-                                                            </figure>
-                                                            <div
-                                                                className={
-                                                                    classes[
-                                                                        'song-description'
-                                                                    ]
-                                                                }
-                                                            >
-                                                                <div
-                                                                    className="columns is-mobile"
-                                                                    style={{
-                                                                        width: 200,
-                                                                    }}
-                                                                >
-                                                                    <div
-                                                                        className="column is-11"
-                                                                        onClick={() => {
-                                                                            handleBoxClick(
-                                                                                `${MediaUrl}${music.song_file}`,
-                                                                                index
-                                                                            );
-                                                                        }}
-                                                                    >
-                                                                        <div
-                                                                            className="box"
-                                                                            style={{
-                                                                                backgroundColor:
-                                                                                    'transparent',
-                                                                                paddingRight: 0,
-                                                                            }}
-                                                                        >
-                                                                            <Tippy
-                                                                                content={voca
-                                                                                    .chain(
-                                                                                        music.song_name
-                                                                                    )
-                                                                                    .replace(
-                                                                                        ',',
-                                                                                        ' '
-                                                                                    )
-                                                                                    .trimRight()
-                                                                                    .value()}
-                                                                                placement="top"
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                followCursor="horizontal"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                            >
-                                                                                <p
-                                                                                    className={`title is-size-5 ${classes['song-title']}`}
-                                                                                >
-                                                                                    {voca
-                                                                                        .chain(
-                                                                                            music.song_name
-                                                                                        )
-                                                                                        .replace(
-                                                                                            ',',
-                                                                                            ' | '
-                                                                                        )
-                                                                                        .trimRight()
-                                                                                        .truncate(
-                                                                                            20
-                                                                                        )
-                                                                                        .value()}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                            <Tippy
-                                                                                content={voca
-                                                                                    .chain(
-                                                                                        music.artist
-                                                                                    )
-                                                                                    .trim()
-                                                                                    .replace(
-                                                                                        ',',
-                                                                                        ' | '
-                                                                                    )
-                                                                                    .titleCase()
-                                                                                    .trimRight()
-                                                                                    .value()}
-                                                                                animateFill={
-                                                                                    true
-                                                                                }
-                                                                                placement="bottom"
-                                                                                followCursor="horizontal"
-                                                                                plugins={[
-                                                                                    animateFill,
-                                                                                    followCursor,
-                                                                                ]}
-                                                                            >
-                                                                                <p
-                                                                                    className={`subtitle is-size-6 ${classes['song-artist']}`}
-                                                                                >
-                                                                                    {voca
-                                                                                        .chain(
-                                                                                            music.artist
-                                                                                        )
-                                                                                        .replace(
-                                                                                            ',',
-                                                                                            ' | '
-                                                                                        )
-                                                                                        .trim()
-                                                                                        .titleCase()
-                                                                                        .trimRight()
-                                                                                        .truncate(
-                                                                                            19
-                                                                                        )
-                                                                                        .value()}
-                                                                                </p>
-                                                                            </Tippy>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div className="column is-1">
-                                                                        <div
-                                                                            ref={
-                                                                                addDropDownRef
-                                                                            }
-                                                                            className="dropdown is-right"
-                                                                        >
-                                                                            <div
-                                                                                className="dropdown-trigger"
-                                                                                style={{
-                                                                                    paddingTop: 16,
-                                                                                }}
-                                                                            >
-                                                                                <span
-                                                                                    ref={
-                                                                                        addDropDownIconRef
-                                                                                    }
-                                                                                    onClick={() => {
-                                                                                        handleDropdownItemClick(
-                                                                                            index
-                                                                                        );
-                                                                                    }}
-                                                                                    className="is-hidden"
-                                                                                >
-                                                                                    <IoEllipsisVerticalSharp color="white" />
-                                                                                </span>
-                                                                            </div>
-                                                                            <animated.div
-                                                                                style={
-                                                                                    dropdownItem
-                                                                                }
-                                                                                className="dropdown-menu"
-                                                                                role="menu"
-                                                                            >
-                                                                                <div
-                                                                                    className="dropdown-content"
-                                                                                    style={{
-                                                                                        backgroundColor:
-                                                                                            '#161616',
-                                                                                    }}
-                                                                                >
-                                                                                    <div
-                                                                                        className="dropdown-item"
-                                                                                        style={{
-                                                                                            color: '#e0e0ec',
-                                                                                        }}
-                                                                                    >
-                                                                                        <div className="columns is-centered">
-                                                                                            <div className="column is-mobile is-narrow">
-                                                                                                <table
-                                                                                                    className="table"
-                                                                                                    style={{
-                                                                                                        backgroundColor:
-                                                                                                            'transparent',
-                                                                                                    }}
-                                                                                                >
-                                                                                                    <tbody>
-                                                                                                        <tr>
-                                                                                                            <th>
-                                                                                                                <MdPlaylistAdd
-                                                                                                                    color="white"
-                                                                                                                    style={{
-                                                                                                                        transform:
-                                                                                                                            'scale(2)',
-                                                                                                                    }}
-                                                                                                                />
-                                                                                                            </th>
-                                                                                                            <th>
-                                                                                                                <p
-                                                                                                                    style={{
-                                                                                                                        color: '#e0e0ec',
-                                                                                                                    }}
-                                                                                                                    className="subtitle is-size-6"
-                                                                                                                >
-                                                                                                                    Save
-                                                                                                                    to
-                                                                                                                    playlist
-                                                                                                                </p>
-                                                                                                            </th>
-                                                                                                        </tr>
-                                                                                                    </tbody>
-                                                                                                </table>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div
-                                                                                        className="dropdown-item"
-                                                                                        style={{
-                                                                                            color: '#e0e0ec',
-                                                                                        }}
-                                                                                    />
-
-                                                                                    {/* <!--<hr className="dropdown-divider">--> */}
-                                                                                </div>
-                                                                            </animated.div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                );
-                                            }
-                                        )}
-                                    </Fragment>
+                                    <Fragment>{mappedSong}</Fragment>
                                 ) : (
+                                    // If user is not logged in show a prompt to login
                                     <Fragment>
-                                        {/* If user is not logged in show a prompt to login */}
                                         <section className="hero is-large">
                                             <div className="hero-body">
                                                 <div className="columns is-mobile is-centered">
