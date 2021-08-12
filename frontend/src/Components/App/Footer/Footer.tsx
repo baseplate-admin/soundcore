@@ -142,14 +142,14 @@ export const Footer = (props: IFooterProps) => {
             //      Get Max value from a slider. Currently we are hardcoding 100
             //      what if a slider has max value of 200?
 
-            (e.nativeEvent.offsetX / e.currentTarget.clientWidth) *
+            (e?.nativeEvent?.offsetX / e?.currentTarget?.clientWidth) *
             parseInt(JSON.stringify(100), 10)
         );
     };
 
     const handlePlayPauseClick = () => {
         // Create a new howler object
-        const sound: Howl = props.howlerState[0];
+        const sound: Howl = props?.howlerState[0];
 
         // Song might be null if User didn't click anything
         switch (sound) {
@@ -158,12 +158,12 @@ export const Footer = (props: IFooterProps) => {
                 break;
             }
             default: {
-                if (footerState.song.global.playing && sound?.playing()) {
+                if (footerState?.song?.global?.playing && sound?.playing()) {
                     // Means playing
                     dispatch(updateStatusToPause());
                     sound?.pause();
                 } else if (
-                    !footerState.song.global.playing &&
+                    !footerState?.song?.global?.playing &&
                     !sound?.playing()
                 ) {
                     // Means paused
@@ -174,7 +174,7 @@ export const Footer = (props: IFooterProps) => {
         }
     };
     const handleSongSeekInputMouseMove = (e: MouseEvent<HTMLInputElement>) => {
-        const sound: Howl = props.howlerState[0];
+        const sound: Howl = props?.howlerState[0];
 
         // Make the tippy container visible.
 
@@ -195,7 +195,7 @@ export const Footer = (props: IFooterProps) => {
 
     const handleSongSeekInputChange = (e: FormEvent<HTMLInputElement>) => {
         // Create a new howler object
-        const sound: Howl = props.howlerState[0];
+        const sound: Howl = props?.howlerState[0];
 
         switch (sound) {
             case undefined: {
