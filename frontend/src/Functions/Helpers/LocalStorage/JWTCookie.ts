@@ -48,7 +48,7 @@ export const GetJWTTokenInLocalStorage = () => {
     if (accessToken && refreshToken) {
         const item = JSON.parse(accessToken);
 
-        if (now.getTime() > item.expiry) {
+        if (now.getTime() > item?.expiry) {
             // If the item is expired, delete the item from storage
             // and return null
 
@@ -71,8 +71,8 @@ export const GetJWTTokenInLocalStorage = () => {
                     localStorage.setItem(
                         'accessToken',
                         JSON.stringify({
-                            access: res.data.access,
-                            expiry: now.getTime() + JWTTokenExpireTime,
+                            access: res?.data?.access,
+                            expiry: now?.getTime() + JWTTokenExpireTime,
                         })
                     );
                 })
@@ -80,6 +80,7 @@ export const GetJWTTokenInLocalStorage = () => {
         }
 
         const newAccessToken = localStorage.getItem('accessToken');
+
         if (newAccessToken) {
             return JSON.parse(newAccessToken).access;
         }

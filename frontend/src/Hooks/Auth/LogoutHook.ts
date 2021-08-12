@@ -12,7 +12,7 @@ export const useAuthLogout = () => {
         if (refreshToken && accessToken) {
             const refresh = JSON.parse(refreshToken).refresh;
             blacklistToken(refresh);
-            history.go(0); // Refresh the page ? (Update Needed)
+            history?.go(0); // Refresh the page ? (Update Needed)
 
             localStorage.setItem('accessToken', JSON.stringify({}));
             localStorage.setItem('refreshToken', JSON.stringify({}));

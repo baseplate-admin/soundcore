@@ -19,16 +19,16 @@ export const FrontPageChildComponent = (
                     <div className="container">
                         <div className="is-justify-content-center file is-large is-boxed has-name">
                             <label
-                                className={`file-label ${classes['file-label']}`}
-                                {...props.getRootProps()}
+                                className={`file-label ${classes?.['file-label']}`}
+                                {...props?.getRootProps()}
                             >
                                 <input
                                     type="file"
                                     name="file_field"
-                                    {...props.getInputProps()}
+                                    {...props?.getInputProps()}
                                 />
                                 <span
-                                    className={`file-cta ${classes['file-cta']}`}
+                                    className={`file-cta ${classes?.['file-cta']}`}
                                 >
                                     <span className="file-icon">
                                         <i>
@@ -41,7 +41,7 @@ export const FrontPageChildComponent = (
                                         </i>
                                     </span>
                                     <span
-                                        className={`is-size-5 file-label ${classes['file-label']}`}
+                                        className={`is-size-5 file-label ${classes?.['file-label']}`}
                                     >
                                         <br />
 
@@ -61,15 +61,15 @@ const useStyle = createUseStyles({
     file: {
         transform: 'translateY(-0.8em)',
     },
-    'file-label': { color: `${UploadSongVariables.mainFontColor} !important` },
+    'file-label': { color: `${UploadSongVariables?.mainFontColor} !important` },
     'file-cta': {
-        backgroundColor: UploadSongVariables.uploadHeroColor,
-        color: UploadSongVariables.mainFontColor,
-        border: `2px dotted ${UploadSongVariables.uploadHeroBorderColor} !important`,
+        backgroundColor: UploadSongVariables?.uploadHeroColor,
+        color: UploadSongVariables?.mainFontColor,
+        border: `2px dotted ${UploadSongVariables?.uploadHeroBorderColor} !important`,
         transition: '0.3s',
 
         '&:hover': {
-            backgroundColor: `${UploadSongVariables.heroHoverColor} !important`,
+            backgroundColor: `${UploadSongVariables?.heroHoverColor} !important`,
             borderColor: 'transparent',
             color: '#e2dfda',
         },

@@ -31,7 +31,7 @@ export const PromiseLoaderChildComponent = () => {
             </div>
             <div className="columns is-mobile is-centered">
                 <div className="column is-narrow">
-                    <p className={`heading ${classes['file_uploaded_text']}`}>
+                    <p className={`heading ${classes?.['file_uploaded_text']}`}>
                         Uploading Songs
                     </p>
                 </div>
@@ -42,6 +42,6 @@ export const PromiseLoaderChildComponent = () => {
 
 const useStyles = createUseStyles({
     file_uploaded_text: {
-        color: UploadSongVariables.mainFontColor,
+        color: UploadSongVariables?.mainFontColor,
     },
 });

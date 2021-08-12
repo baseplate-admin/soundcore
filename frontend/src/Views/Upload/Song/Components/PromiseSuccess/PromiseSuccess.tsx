@@ -15,6 +15,7 @@ export const PromiseSuccessChildComponent = (
     props: ISuccessPromiseChildComponentProps
 ) => {
     const classes = useStyle();
+    
     return (
         <Fragment>
             <div className="columns is-mobile is-centered">
@@ -54,47 +55,47 @@ export const PromiseSuccessChildComponent = (
                                 <tr>
                                     <td>
                                         <span
-                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                            className={`heading has-text-centered ${classes?.file_uploaded_text}`}
                                         >
                                             Total Songs &nbsp;
                                         </span>
                                     </td>
                                     <td>
                                         <span
-                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                            className={`heading has-text-centered ${classes?.file_uploaded_text}`}
                                         >
                                             :
                                         </span>
                                     </td>
                                     <td>
                                         <span
-                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                            className={`heading has-text-centered ${classes?.file_uploaded_text}`}
                                         >
-                                            {props.fileLength}
+                                            {props?.fileLength}
                                         </span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <span
-                                            className={`heading ${classes.file_uploaded_text}`}
+                                            className={`heading ${classes?.file_uploaded_text}`}
                                         >
                                             Total Payload &nbsp;
                                         </span>
                                     </td>
                                     <td>
                                         <span
-                                            className={`heading ${classes.file_uploaded_text}`}
+                                            className={`heading ${classes?.file_uploaded_text}`}
                                         >
                                             :
                                         </span>
                                     </td>
                                     <td>
                                         <span
-                                            className={`heading has-text-centered ${classes.file_uploaded_text}`}
+                                            className={`heading has-text-centered ${classes?.file_uploaded_text}`}
                                         >
                                             &nbsp; &nbsp;
-                                            {prettyBytes(props.totalSongSize)}
+                                            {prettyBytes(props?.totalSongSize)}
                                         </span>
                                     </td>
                                 </tr>
@@ -104,8 +105,8 @@ export const PromiseSuccessChildComponent = (
                     <div className="columns is-mobile is-centered">
                         <div className="column is-narrow">
                             <Link
-                                className={`${classes['href_tag']}`}
-                                to={RoutingPath.HOME_PAGE}
+                                className={`${classes?.['href_tag']}`}
+                                to={RoutingPath?.HOME_PAGE}
                             >
                                 Return to home?
                             </Link>
@@ -121,11 +122,11 @@ const useStyle = createUseStyles({
         textDecoration: 'none',
 
         '&:hover': {
-            color: UploadSongVariables.tagHrefHoverColor,
+            color: UploadSongVariables?.tagHrefHoverColor,
         },
     },
 
     file_uploaded_text: {
-        color: UploadSongVariables.mainFontColor,
+        color: UploadSongVariables?.mainFontColor,
     },
 });

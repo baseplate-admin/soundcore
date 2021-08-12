@@ -270,10 +270,10 @@ export const HomePage = () => {
                                     >
                                         <Tippy
                                             content={voca
-                                                .chain(music?.song_name)
-                                                .replace(',', ' ')
-                                                .trimRight()
-                                                .value()}
+                                                ?.chain(music?.song_name)
+                                                ?.replace(',', ' ')
+                                                ?.trimRight()
+                                                ?.value()}
                                             placement="top"
                                             animateFill={true}
                                             followCursor="horizontal"
@@ -286,21 +286,21 @@ export const HomePage = () => {
                                                 className={`title is-size-5 ${classes?.['song-title']}`}
                                             >
                                                 {voca
-                                                    .chain(music?.song_name)
-                                                    .replace(',', ' | ')
-                                                    .trimRight()
-                                                    .truncate(20)
-                                                    .value()}
+                                                    ?.chain(music?.song_name)
+                                                    ?.replace(',', ' | ')
+                                                    ?.trimRight()
+                                                    ?.truncate(20)
+                                                    ?.value()}
                                             </p>
                                         </Tippy>
                                         <Tippy
                                             content={voca
-                                                .chain(music?.artist)
-                                                .trim()
-                                                .replace(',', ' | ')
-                                                .titleCase()
-                                                .trimRight()
-                                                .value()}
+                                                ?.chain(music?.artist)
+                                                ?.trim()
+                                                ?.replace(',', ' | ')
+                                                ?.titleCase()
+                                                ?.trimRight()
+                                                ?.value()}
                                             animateFill={true}
                                             placement="bottom"
                                             followCursor="horizontal"
@@ -313,13 +313,13 @@ export const HomePage = () => {
                                                 className={`subtitle is-size-6 ${classes?.['song-artist']}`}
                                             >
                                                 {voca
-                                                    .chain(music?.artist)
-                                                    .replace(',', ' | ')
-                                                    .trim()
-                                                    .titleCase()
-                                                    .trimRight()
-                                                    .truncate(19)
-                                                    .value()}
+                                                    ?.chain(music?.artist)
+                                                    ?.replace(',', ' | ')
+                                                    ?.trim()
+                                                    ?.titleCase()
+                                                    ?.trimRight()
+                                                    ?.truncate(19)
+                                                    ?.value()}
                                             </p>
                                         </Tippy>
                                     </div>

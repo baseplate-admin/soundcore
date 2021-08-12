@@ -37,8 +37,8 @@ export const LeftSidebar = () => {
     }, [isMobile]);
 
     const leftMenuItem = useSpring({
-        width: leftMenuState.isHidden ? 0 : 240,
-        transform: leftMenuState.isHidden
+        width: leftMenuState?.isHidden ? 0 : 240,
+        transform: leftMenuState?.isHidden
             ? 'translateX(-500px)'
             : 'translateX(0)',
     });

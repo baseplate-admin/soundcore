@@ -23,7 +23,7 @@ export const PromiseErrorChildComponent = (
                     </div>
                 </div>
             </div>
-            <div>{props.errorFiles}</div>
+            <div>{props?.errorFiles}</div>
         </Fragment>
     );
 };

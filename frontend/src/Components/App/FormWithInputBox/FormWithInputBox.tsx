@@ -16,7 +16,9 @@ export const FormWithInputBoxComponent = (
     const classes = useStyles();
     return (
         <Fragment>
-            <section className={`hero is-fullheight ${classes?.['login-box']}`}>
+            <section
+                className={`hero is-fullheight ${classes?.['login-hero']}`}
+            >
                 <div className="hero-body">
                     <div className="container">
                         <div className="columns is-centered is-desktop">
@@ -29,9 +31,9 @@ export const FormWithInputBoxComponent = (
                                                 alt=""
                                                 width="150"
                                                 height="40"
-                                                style={{
-                                                    userSelect: 'none',
-                                                }}
+                                                className={
+                                                    classes?.['no-select']
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -52,13 +54,16 @@ export const FormWithInputBoxComponent = (
 
 const useStyles = createUseStyles({
     'login-hero': {
-        backgroundColor: formWithInputBoxVariables.pageBackgroundColor,
+        backgroundColor: formWithInputBoxVariables?.pageBackgroundColor,
     },
     'icon-box': {
         backgroundColor: 'transparent',
     },
     'login-box': {
-        backgroundColor: formWithInputBoxVariables.loginBoxColor,
-        border: `1px solid ${formWithInputBoxVariables.loginHeroBorderColor}`,
+        backgroundColor: formWithInputBoxVariables?.loginBoxColor,
+        border: `1px solid ${formWithInputBoxVariables?.loginHeroBorderColor}`,
+    },
+    'no-select': {
+        userSelect: 'none',
     },
 });

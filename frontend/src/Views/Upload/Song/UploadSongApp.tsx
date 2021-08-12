@@ -40,31 +40,31 @@ export const UploadSongPage = () => {
     const [totalSongSize, setTotalSongSize] = useState(0);
 
     useEffect(() => {
-        if (isUploading && doneArray.length === files.length) {
+        if (isUploading && doneArray.length === files?.length) {
             setUploadDone(true);
         }
     }, [doneArray, files, isUploading]);
 
     const onDrop = useCallback(
-        (acceptedFiles: File[], rejectedFile: FileRejection[]) => {
+        (acceptedfiles: File[], rejectedFile: FileRejection[]) => {
             // Do something with the files
 
-            acceptedFiles.forEach((file) => {
-                const binarySize = file.size;
+            acceptedfiles?.forEach((file) => {
+                const binarySize = file?.size;
                 setTotalSongSize((currentValue) => currentValue + binarySize);
             });
 
-            const mappedAcceptedFiles = acceptedFiles.map((file) => ({
+            const mappedacceptedfiles = acceptedfiles?.map((file) => ({
                 file,
                 errors: [],
             }));
-            const mappedRejectedFiles = rejectedFile.map((r) => ({
+            const mappedrejectedFiles = rejectedFile?.map((r) => ({
                 ...r,
             }));
             setFiles((currentFiles) => [
                 ...currentFiles,
-                ...mappedAcceptedFiles,
-                ...mappedRejectedFiles,
+                ...mappedacceptedfiles,
+                ...mappedrejectedFiles,
             ]);
             if (!isFileDropped) {
                 setIsFileDropped(true);
@@ -74,9 +74,9 @@ export const UploadSongPage = () => {
     );
 
     const handleSubmit = async () => {
-        files.forEach(async (file) => {
+        files?.forEach(async (file) => {
             try {
-                const data = await MusicUploadSingle(file.file);
+                const data = await MusicUploadSingle(file?.file);
 
                 switch (data.status) {
                     case 201: {
@@ -103,11 +103,11 @@ export const UploadSongPage = () => {
     };
     const onDelete = (file: File) => {
         setFiles((currentFile) => {
-            return currentFile.filter(
-                (fileWrapper) => fileWrapper.file !== file
+            return currentFile?.filter(
+                (fileWrapper) => fileWrapper?.file !== file
             );
         });
-        setTotalSongSize((currentValue) => currentValue - file.size);
+        setTotalSongSize((currentValue) => currentValue - file?.size);
     };
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -119,10 +119,10 @@ export const UploadSongPage = () => {
             <Fragment>
                 <div
                     key={index}
-                    className={`box ${classes['item-box']}`}
+                    className={`box ${classes?.['item-box']}`}
                     style={{ backgroundColor: 'transparent' }}
                 >
-                    <article className={`media ${classes['song-item']}`}>
+                    <article className={`media ${classes?.['song-item']}`}>
                         <figure className="media-left">
                             <figure
                                 className="image is-48x48"
@@ -141,14 +141,14 @@ export const UploadSongPage = () => {
                             <div className="content">
                                 <p className=" has-text-centered">
                                     <span
-                                        className={`title is-size-6 ${classes.file_uploaded_text} ${classes.song_name}`}
+                                        className={`title is-size-6 ${classes?.file_uploaded_text} ${classes?.song_name}`}
                                     >
-                                        {file.file.name}
+                                        {file?.file?.name}
                                     </span>
                                     <span
-                                        className={`heading  ${classes.song_item_size} ${classes.file_uploaded_text}`}
+                                        className={`heading  ${classes?.song_item_size} ${classes?.file_uploaded_text}`}
                                     >
-                                        Size : {prettyBytes(file.file.size)}
+                                        Size : {prettyBytes(file?.file?.size)}
                                     </span>
                                 </p>
                             </div>
@@ -157,7 +157,7 @@ export const UploadSongPage = () => {
                             <IoCloseCircleOutline
                                 color="white"
                                 onClick={() => {
-                                    onDelete(file.file);
+                                    onDelete(file?.file);
                                 }}
                                 style={{
                                     transform:
@@ -175,10 +175,10 @@ export const UploadSongPage = () => {
         return (
             <Fragment>
                 <div
-                    className={`box ${classes['item-box']}`}
+                    className={`box ${classes?.['item-box']}`}
                     style={{ backgroundColor: 'transparent' }}
                 >
-                    <article className={`media ${classes['song-item']}`}>
+                    <article className={`media ${classes?.['song-item']}`}>
                         <figure className="media-left">
                             <figure
                                 className="image is-48x48"
@@ -189,7 +189,7 @@ export const UploadSongPage = () => {
                             >
                                 <BsFileEarmarkArrowUp
                                     color="white"
-                                    className={classes.upload_icon}
+                                    className={classes?.upload_icon}
                                     style={{ transform: 'scale(2)' }}
                                 />
                             </figure>
@@ -198,14 +198,14 @@ export const UploadSongPage = () => {
                             <div className="content">
                                 <p className=" has-text-centered">
                                     <span
-                                        className={`title is-size-6 ${classes.file_uploaded_text} ${classes.song_name}`}
+                                        className={`title is-size-6 ${classes?.file_uploaded_text} ${classes?.song_name}`}
                                     >
-                                        {file.file.name}
+                                        {file?.file?.name}
                                     </span>
                                     <span
-                                        className={`heading  ${classes.song_item_size} ${classes.file_uploaded_text}`}
+                                        className={`heading  ${classes?.song_item_size} ${classes?.file_uploaded_text}`}
                                     >
-                                        Size : {prettyBytes(file.file.size)}
+                                        Size : {prettyBytes(file?.file?.size)}
                                     </span>
                                 </p>
                             </div>
@@ -214,7 +214,7 @@ export const UploadSongPage = () => {
                             <IoCloseCircleOutline
                                 color="white"
                                 onClick={() => {
-                                    onDelete(file.file);
+                                    onDelete(file?.file);
                                 }}
                                 style={{
                                     transform:
@@ -245,7 +245,7 @@ export const UploadSongPage = () => {
                                     mappedSongs={mappedSongs}
                                     getInputProps={getInputProps}
                                     getRootProps={getRootProps}
-                                    fileLength={files.length}
+                                    fileLength={files?.length}
                                     totalSongSize={totalSongSize}
                                     handleSubmit={handleSubmit}
                                 />
@@ -257,12 +257,12 @@ export const UploadSongPage = () => {
                             <Fragment>
                                 {uploadDone ? (
                                     <Fragment>
-                                        {erroredFiles.length === 0 ? (
+                                        {erroredFiles?.length === 0 ? (
                                             //  If Errored File Length is less than 0,and Upload is Done . Show this element
                                             //  This means this Div has Success Promise
                                             <Fragment>
                                                 <PromiseSuccessChildComponent
-                                                    fileLength={files.length}
+                                                    fileLength={files?.length}
                                                     totalSongSize={
                                                         totalSongSize
                                                     }
@@ -335,12 +335,12 @@ const useStyles = createUseStyles({
     },
     'song-item': {
         height: 65,
-        backgroundColor: UploadSongVariables.uploadHeroColor,
-        border: `1px solid ${UploadSongVariables.uploadHeroBorderColor} !important`,
+        backgroundColor: UploadSongVariables?.uploadHeroColor,
+        border: `1px solid ${UploadSongVariables?.uploadHeroBorderColor} !important`,
         borderRadius: 3,
     },
     file_uploaded_text: {
-        color: UploadSongVariables.mainFontColor,
+        color: UploadSongVariables?.mainFontColor,
     },
     song_item_size: {
         transform: 'translateY(-10px)',

@@ -253,7 +253,7 @@ export const Navbar = () => {
                                                                         <p
                                                                             className={`${classes?.dropdown_content_text_items}`}
                                                                         >
-                                                                            {voca.truncate(
+                                                                            {voca?.truncate(
                                                                                 `${data?.first_name} ${data?.last_name}`,
                                                                                 12
                                                                             )}
@@ -261,7 +261,7 @@ export const Navbar = () => {
                                                                         <p
                                                                             className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                         >
-                                                                            {voca.truncate(
+                                                                            {voca?.truncate(
                                                                                 data?.username,
                                                                                 12
                                                                             )}
@@ -269,7 +269,7 @@ export const Navbar = () => {
                                                                         <p
                                                                             className={`${classes?.dropdown_content_text_items}`}
                                                                         >
-                                                                            {voca.truncate(
+                                                                            {voca?.truncate(
                                                                                 data?.email,
                                                                                 12
                                                                             )}
@@ -301,7 +301,7 @@ export const Navbar = () => {
                                                                                     <p
                                                                                         className={`${classes?.dropdown_content_text_items}`}
                                                                                     >
-                                                                                        {voca.truncate(
+                                                                                        {voca?.truncate(
                                                                                             `${data?.first_name} ${data?.last_name}`,
                                                                                             15
                                                                                         )}
@@ -324,7 +324,7 @@ export const Navbar = () => {
                                                                                     <p
                                                                                         className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                     >
-                                                                                        {voca.truncate(
+                                                                                        {voca?.truncate(
                                                                                             data?.username,
                                                                                             15
                                                                                         )}
@@ -347,7 +347,7 @@ export const Navbar = () => {
                                                                                     <p
                                                                                         className={`${classes?.dropdown_content_text_items}`}
                                                                                     >
-                                                                                        {voca.truncate(
+                                                                                        {voca?.truncate(
                                                                                             data?.email,
                                                                                             15
                                                                                         )}
@@ -381,7 +381,7 @@ export const Navbar = () => {
                                                                                             <p
                                                                                                 className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
-                                                                                                {voca.truncate(
+                                                                                                {voca?.truncate(
                                                                                                     `${data?.first_name} ${data?.last_name}`,
                                                                                                     15
                                                                                                 )}
@@ -404,7 +404,7 @@ export const Navbar = () => {
                                                                                             <p
                                                                                                 className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                             >
-                                                                                                {voca.truncate(
+                                                                                                {voca?.truncate(
                                                                                                     data?.username,
                                                                                                     15
                                                                                                 )}
@@ -427,7 +427,7 @@ export const Navbar = () => {
                                                                                             <p
                                                                                                 className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
-                                                                                                {voca.truncate(
+                                                                                                {voca?.truncate(
                                                                                                     data?.email,
                                                                                                     15
                                                                                                 )}
@@ -458,7 +458,7 @@ export const Navbar = () => {
                                                                                             <p
                                                                                                 className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
-                                                                                                {voca.truncate(
+                                                                                                {voca?.truncate(
                                                                                                     `${data?.first_name} ${data?.last_name}`,
                                                                                                     15
                                                                                                 )}
@@ -481,7 +481,7 @@ export const Navbar = () => {
                                                                                             <p
                                                                                                 className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                             >
-                                                                                                {voca.truncate(
+                                                                                                {voca?.truncate(
                                                                                                     data?.username,
                                                                                                     15
                                                                                                 )}
@@ -504,7 +504,7 @@ export const Navbar = () => {
                                                                                             <p
                                                                                                 className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
-                                                                                                {voca.truncate(
+                                                                                                {voca?.truncate(
                                                                                                     data?.email,
                                                                                                     15
                                                                                                 )}
@@ -530,7 +530,7 @@ export const Navbar = () => {
                                                                                                     <p
                                                                                                         className={`${classes?.dropdown_content_text_items}`}
                                                                                                     >
-                                                                                                        {voca.truncate(
+                                                                                                        {voca?.truncate(
                                                                                                             `${data?.first_name} ${data?.last_name}`,
                                                                                                             23
                                                                                                         )}
@@ -553,7 +553,7 @@ export const Navbar = () => {
                                                                                                     <p
                                                                                                         className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                                     >
-                                                                                                        {voca.truncate(
+                                                                                                        {voca?.truncate(
                                                                                                             data?.username,
                                                                                                             23
                                                                                                         )}
@@ -576,7 +576,7 @@ export const Navbar = () => {
                                                                                                     <p
                                                                                                         className={`${classes?.dropdown_content_text_items}`}
                                                                                                     >
-                                                                                                        {voca.truncate(
+                                                                                                        {voca?.truncate(
                                                                                                             data?.email,
                                                                                                             23
                                                                                                         )}

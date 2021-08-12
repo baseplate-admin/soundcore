@@ -1,25 +1,25 @@
 import axios from 'axios';
+import FormData from 'form-data';
+
 import { APIPath } from '../../Config/Api';
 import { APIUrl } from '../../Config/App';
-
-import FormData from 'form-data';
-// import { SetJWTTokenInLocalStorage } from '../../Helpers/JWTCookie';
+import { GetJWTTokenInLocalStorage } from '../../Functions/Helpers/LocalStorage/JWTCookie';
 
 export const useMusicUpload = () => {
-    // const dispatch = useAppDispatch();
-
     const MusicUploadSingle = async (file: File) => {
+        const token = GetJWTTokenInLocalStorage();
+
         const base = APIUrl;
         const endPoint = APIPath.UPLOAD_MUSIC_PATH;
 
         const url = `${base}${endPoint}`;
-        // const url = `https://jsonplaceholder.typicode.com/posts`;
 
         let data = new FormData();
-        data.append('file', file, file.name);
+        data.append('file', file, file?.name);
 
         const config = {
             headers: {
+                Authorization: `Bearer ${token}`,
                 'Content-Type': `multipart/form-data`,
             },
         };

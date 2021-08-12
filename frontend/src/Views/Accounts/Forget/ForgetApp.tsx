@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 
 export const ForgetPage = () => {
-    const forgetPasswordEmailSchema = yup?.object().shape({
+    const forgetPasswordEmailSchema = yup?.object()?.shape({
         email: yup
             ?.string()
             ?.email('Enter a valid Email')
@@ -38,7 +38,7 @@ export const ForgetPage = () => {
                             <span className="is-left icon">
                                 <IoMailOutline
                                     color="white"
-                                    style={{ transform: 'scale(1.5)' }}
+                                    style={{ transform: 'scale(1?.5)' }}
                                 />
                             </span>
                         </div>

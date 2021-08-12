@@ -35,13 +35,13 @@ export const MainUploadChildComponent = (
         <Fragment>
             <section className="hero">
                 <animated.div
-                    className={`${classes['upload-hero']}`}
+                    className={`${classes?.['upload-hero']}`}
                     style={uploadItem}
                 >
                     <span>
                         <div className="container">
                             <div className="is-justify-content-center">
-                                {props.mappedSongs}
+                                {props?.mappedSongs}
                             </div>
                         </div>
                     </span>
@@ -58,7 +58,7 @@ export const MainUploadChildComponent = (
                             <nav className="level">
                                 <div
                                     className="level-item has-text-centered "
-                                    {...props.getRootProps()}
+                                    {...props?.getRootProps()}
                                 >
                                     <div className="columns is-mobile ">
                                         <div
@@ -77,18 +77,18 @@ export const MainUploadChildComponent = (
                                             <input
                                                 type="file"
                                                 name="file_field"
-                                                {...props.getInputProps()}
+                                                {...props?.getInputProps()}
                                             />
                                         </div>
                                         <div className="column is-narrow">
                                             <p
-                                                className={`subtitle is-size-6 ${classes['file_uploaded_text']}`}
+                                                className={`subtitle is-size-6 ${classes?.['file_uploaded_text']}`}
                                             >
                                                 Select files to upload
                                                 <input
                                                     type="file"
                                                     name="file_field"
-                                                    {...props.getInputProps()}
+                                                    {...props?.getInputProps()}
                                                 />
                                             </p>
                                         </div>
@@ -106,47 +106,47 @@ export const MainUploadChildComponent = (
                                             <tr>
                                                 <td>
                                                     <span
-                                                        className={`heading ${classes['file_uploaded_text']}`}
+                                                        className={`heading ${classes?.['file_uploaded_text']}`}
                                                     >
                                                         Total Songs
                                                     </span>
                                                 </td>
                                                 <td>
                                                     <span
-                                                        className={`heading ${classes['file_uploaded_text']}`}
+                                                        className={`heading ${classes?.['file_uploaded_text']}`}
                                                     >
                                                         :
                                                     </span>
                                                 </td>
                                                 <td>
                                                     <span
-                                                        className={`heading ${classes['file_uploaded_text']}`}
+                                                        className={`heading ${classes?.['file_uploaded_text']}`}
                                                     >
-                                                        {props.fileLength}
+                                                        {props?.fileLength}
                                                     </span>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>
                                                     <span
-                                                        className={`heading ${classes['file_uploaded_text']}`}
+                                                        className={`heading ${classes?.['file_uploaded_text']}`}
                                                     >
                                                         Buffer
                                                     </span>
                                                 </td>
                                                 <td>
                                                     <span
-                                                        className={`heading ${classes['file_uploaded_text']}`}
+                                                        className={`heading ${classes?.['file_uploaded_text']}`}
                                                     >
                                                         :
                                                     </span>
                                                 </td>
                                                 <td>
                                                     <span
-                                                        className={`heading ${classes['file_uploaded_text']}`}
+                                                        className={`heading ${classes?.['file_uploaded_text']}`}
                                                     >
                                                         {prettyBytes(
-                                                            props.totalSongSize
+                                                            props?.totalSongSize
                                                         )}
                                                     </span>
                                                 </td>
@@ -162,9 +162,9 @@ export const MainUploadChildComponent = (
                     <div className="column is-narrow">
                         <button
                             onClick={() => {
-                                props.handleSubmit();
+                                props?.handleSubmit();
                             }}
-                            className={`button is-rounded is-centered ${classes['button']}`}
+                            className={`button is-rounded is-centered ${classes?.['button']}`}
                         >
                             Upload
                         </button>
@@ -177,23 +177,23 @@ export const MainUploadChildComponent = (
 
 const useStyles = createUseStyles({
     button: {
-        backgroundColor: UploadSongVariables.buttonBackgroundColor,
-        border: `1px solid ${UploadSongVariables.uploadHeroBorderColor} !important`,
-        color: UploadSongVariables.mainFontColor,
+        backgroundColor: UploadSongVariables?.buttonBackgroundColor,
+        border: `1px solid ${UploadSongVariables?.uploadHeroBorderColor} !important`,
+        color: UploadSongVariables?.mainFontColor,
         transition: '0.4s',
-        fontFamily: UploadSongVariables.buttonFont,
+        fontFamily: UploadSongVariables?.buttonFont,
 
         '&:hover': {
-            backgroundColor: UploadSongVariables.buttonHoverBackgroundColor,
-            color: UploadSongVariables.buttonHoverFontColor,
-            fontFamily: UploadSongVariables.buttonFont,
+            backgroundColor: UploadSongVariables?.buttonHoverBackgroundColor,
+            color: UploadSongVariables?.buttonHoverFontColor,
+            fontFamily: UploadSongVariables?.buttonFont,
         },
     },
     file_uploaded_text: {
-        color: UploadSongVariables.mainFontColor,
+        color: UploadSongVariables?.mainFontColor,
     },
     'upload-hero': {
-        backgroundColor: UploadSongVariables.pageBackgroundColor,
+        backgroundColor: UploadSongVariables?.pageBackgroundColor,
         // maxHeight: '50vh',
         overflowY: 'scroll',
         scrollbarWidth: 'none',

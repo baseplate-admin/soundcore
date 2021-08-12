@@ -8,7 +8,7 @@ export const GetReversePlaybackStatus = () => {
 
             // A little Function to convert to boolean
             if (newItem) {
-                return JSON.parse(newItem.toLowerCase());
+                return JSON.parse(newItem?.toLowerCase());
             } else {
                 break;
             }
@@ -18,7 +18,7 @@ export const GetReversePlaybackStatus = () => {
         }
         default: {
             // return boolean
-            return JSON.parse(isReverse.toLowerCase());
+            return JSON.parse(isReverse?.toLowerCase());
         }
     }
 };

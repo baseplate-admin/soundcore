@@ -39,11 +39,12 @@ import {
 } from '../../../Functions/Helpers/LocalStorage/IsPlaybackReversed';
 
 interface IFooterProps {
-    howlerState: Array<Howl>;
+    howlerState: Howl[];
 }
 
 export const Footer = (props: IFooterProps) => {
     const classes = useStyles();
+
     const dispatch = useAppDispatch();
     const footerState = useAppSelector(selectFooterState);
 
@@ -185,7 +186,7 @@ export const Footer = (props: IFooterProps) => {
             }
             default: {
                 const sliderPos: number = Number(calcSliderPos(e));
-                const duration: number = footerState?.song?.control.total; // Total seconds
+                const duration: number = footerState?.song?.control?.total; // Total seconds
                 const math: number = (duration / 100) * sliderPos; // A little math function
 
                 setSongSeekTippyContent(humanizeSeconds(math));
@@ -294,53 +295,65 @@ export const Footer = (props: IFooterProps) => {
                                         <>
                                             <strong
                                                 className={
-                                                    classes?.['footer-song-info']
+                                                    classes?.[
+                                                        'footer-song-info'
+                                                    ]
                                                 }
                                             >
                                                 {voca
-                                                    .chain(
+                                                    ?.chain(
                                                         footerState?.song?.name
                                                     )
-                                                    .trimRight()
-                                                    .truncate(20)
-                                                    .value()}
+                                                    ?.trimRight()
+                                                    ?.truncate(20)
+                                                    ?.value()}
                                             </strong>
                                             <span
                                                 className={
-                                                    classes?.['footer-song-info']
+                                                    classes?.[
+                                                        'footer-song-info'
+                                                    ]
                                                 }
                                             >
                                                 {' | '}
                                             </span>
                                             <small
                                                 className={
-                                                    classes?.['footer-song-info']
+                                                    classes?.[
+                                                        'footer-song-info'
+                                                    ]
                                                 }
                                             >
                                                 {voca
-                                                    .chain(
-                                                        footerState?.song?.artist
+                                                    ?.chain(
+                                                        footerState?.song
+                                                            ?.artist
                                                     )
-                                                    .titleCase()
-                                                    .trimRight()
-                                                    .truncate(35)
-                                                    .value()}
+                                                    ?.titleCase()
+                                                    ?.trimRight()
+                                                    ?.truncate(35)
+                                                    ?.value()}
                                             </small>
                                             <span
                                                 className={
-                                                    classes?.['footer-song-info']
+                                                    classes?.[
+                                                        'footer-song-info'
+                                                    ]
                                                 }
                                             >
                                                 {' | '}
                                             </span>
                                             <small
                                                 className={
-                                                    classes?.['footer-song-info']
+                                                    classes?.[
+                                                        'footer-song-info'
+                                                    ]
                                                 }
                                             >
                                                 {numeral(
-                                                    footerState?.song?.sampleRate
-                                                ).format('0 a')}
+                                                    footerState?.song
+                                                        ?.sampleRate
+                                                )?.format('0 a')}
                                                 Hz
                                             </small>
                                         </>
@@ -357,13 +370,13 @@ export const Footer = (props: IFooterProps) => {
                                                         }
                                                     >
                                                         {voca
-                                                            .chain(
+                                                            ?.chain(
                                                                 footerState
                                                                     ?.song?.name
                                                             )
-                                                            .trimRight()
-                                                            .truncate(10)
-                                                            .value()}
+                                                            ?.trimRight()
+                                                            ?.truncate(10)
+                                                            ?.value()}
                                                     </strong>
                                                     <span
                                                         className={
@@ -382,15 +395,15 @@ export const Footer = (props: IFooterProps) => {
                                                         }
                                                     >
                                                         {voca
-                                                            .chain(
+                                                            ?.chain(
                                                                 footerState
                                                                     ?.song
                                                                     .artist
                                                             )
-                                                            .titleCase()
-                                                            .trimRight()
-                                                            .truncate(10)
-                                                            .value()}
+                                                            ?.titleCase()
+                                                            ?.trimRight()
+                                                            ?.truncate(10)
+                                                            ?.value()}
                                                     </small>
                                                     <span
                                                         className={
@@ -411,7 +424,7 @@ export const Footer = (props: IFooterProps) => {
                                                         {numeral(
                                                             footerState?.song
                                                                 .sampleRate
-                                                        ).format('0 a')}
+                                                        )?.format('0 a')}
                                                         Hz
                                                     </small>
                                                 </>
@@ -425,13 +438,13 @@ export const Footer = (props: IFooterProps) => {
                                                         }
                                                     >
                                                         {voca
-                                                            .chain(
+                                                            ?.chain(
                                                                 footerState
                                                                     ?.song?.name
                                                             )
-                                                            .trimRight()
-                                                            .truncate(30)
-                                                            .value()}
+                                                            ?.trimRight()
+                                                            ?.truncate(30)
+                                                            ?.value()}
                                                     </strong>
                                                     <span
                                                         className={
@@ -450,15 +463,15 @@ export const Footer = (props: IFooterProps) => {
                                                         }
                                                     >
                                                         {voca
-                                                            .chain(
+                                                            ?.chain(
                                                                 footerState
                                                                     ?.song
                                                                     .artist
                                                             )
-                                                            .titleCase()
-                                                            .trimRight()
-                                                            .truncate(35)
-                                                            .value()}
+                                                            ?.titleCase()
+                                                            ?.trimRight()
+                                                            ?.truncate(35)
+                                                            ?.value()}
                                                     </small>
                                                     <span
                                                         className={
@@ -478,8 +491,8 @@ export const Footer = (props: IFooterProps) => {
                                                     >
                                                         {numeral(
                                                             footerState?.song
-                                                                .sampleRate
-                                                        ).format('0 a')}
+                                                                ?.sampleRate
+                                                        )?.format('0 a')}
                                                         Hz
                                                     </small>
                                                 </>
@@ -600,7 +613,7 @@ export const Footer = (props: IFooterProps) => {
                             >
                                 <span>
                                     {humanizeSeconds(
-                                        footerState?.song?.control.current
+                                        footerState?.song?.control?.current
                                     )}
                                 </span>
                             </Tippy>
@@ -628,8 +641,9 @@ export const Footer = (props: IFooterProps) => {
                                 >
                                     <span>
                                         {(100 *
-                                            footerState?.song?.control.current) /
-                                        footerState?.song?.control.total ? (
+                                            footerState?.song?.control
+                                                ?.current) /
+                                        footerState?.song?.control?.total ? (
                                             <>
                                                 <progress
                                                     className={`progress is-small is-info ${classes?.footer_input_anchor_progress} ${classes?.progress_item}`}
@@ -639,7 +653,7 @@ export const Footer = (props: IFooterProps) => {
                                                                 .control
                                                                 .current) /
                                                         footerState?.song
-                                                            .control.total
+                                                            .control?.total
                                                     }
                                                     max={100}
                                                 />
@@ -660,10 +674,10 @@ export const Footer = (props: IFooterProps) => {
                                                     value={
                                                         (100 *
                                                             footerState?.song
-                                                                .control
-                                                                .current) /
+                                                                ?.control
+                                                                ?.current) /
                                                         footerState?.song
-                                                            .control.total
+                                                            ?.control?.total
                                                     }
                                                     type="range"
                                                 />
@@ -733,7 +747,8 @@ export const Footer = (props: IFooterProps) => {
                                         // False and show normally
                                         <>
                                             {humanizeSeconds(
-                                                footerState?.song?.control.total
+                                                footerState?.song?.control
+                                                    ?.total
                                             )}
                                         </>
                                     )}
