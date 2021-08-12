@@ -1,5 +1,6 @@
-import { ClimbingBoxLoader } from './ClimbingBoxLoader/ClimbingBoxLoader';
+import { Fragment } from 'react';
 import { HashLoader } from './HashLoader/HashLoader';
+import { ClimbingBoxLoader } from './ClimbingBoxLoader/ClimbingBoxLoader';
 
 enum SpinnerTypes {
     climbingbox = 'ClimbingBoxLoader',
@@ -9,7 +10,7 @@ enum SpinnerTypes {
 export const randomSpinnerPicker = () => {
     const spinnerArray = Object.values(SpinnerTypes);
 
-    return spinnerArray[Math.floor(Math.random() * spinnerArray.length)];
+    return spinnerArray?.[Math.floor(Math.random() * spinnerArray?.length)];
 };
 
 interface SpinnerProps {
@@ -17,15 +18,15 @@ interface SpinnerProps {
 }
 
 export const SpinnerComponent = (props: SpinnerProps) => {
-    switch (props.type) {
-        case SpinnerTypes.climbingbox: {
+    switch (props?.type) {
+        case SpinnerTypes?.climbingbox: {
             return <ClimbingBoxLoader />;
         }
-        case SpinnerTypes.hash: {
+        case SpinnerTypes?.hash: {
             return <HashLoader />;
         }
         default: {
-            return null;
+            return <Fragment></Fragment>;
         }
     }
 };

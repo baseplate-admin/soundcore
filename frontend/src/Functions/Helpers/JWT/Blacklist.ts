@@ -16,8 +16,8 @@ export const blacklistToken = async (token: string) => {
 
     await axios
         .post(url, data, config)
-        .then((res) => {
-            console.log(res);
+        .then(async () => {
+            console.log('Token Blacklisted');
         })
         .catch((e) => {
             console.error(`Token Can't be blacklisted | Reason : ${e}`);

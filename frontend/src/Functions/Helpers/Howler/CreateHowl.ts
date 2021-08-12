@@ -6,7 +6,7 @@ interface IHowlCreateObject {
 
 export const CreateHowlObject = (props: IHowlCreateObject) => {
     const sound = new Howl({
-        src: props.src,
+        src: props?.src,
         html5: true,
         preload: true,
         autoplay: false,
@@ -14,8 +14,8 @@ export const CreateHowlObject = (props: IHowlCreateObject) => {
         onplayerror: () => {
             // HowlerJS might not play correctly on Chrome Mobile.
             // A little hack to make it work
-            sound.once('unlock', () => {
-                sound.play();
+            sound?.once('unlock', () => {
+                sound?.play();
             });
         },
         onload: () => {
