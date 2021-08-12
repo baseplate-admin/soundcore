@@ -264,44 +264,21 @@ export const Footer = (props: IFooterProps) => {
                 <div className={`column is-3 ${classes?.footer_info_column}`}>
                     <article className="media">
                         <figure className="media-left">
-<<<<<<< HEAD
-                            <div className="image is-64x64">
-                                <img
-                                    id="footer-song-image"
-                                    className={
-                                        classes?.song_image &&
-                                        footerState?.song?.image
-                                            ? ''
-                                            : classes?.['opacity-hidden']
-                                    }
-                                    alt=""
-                                    src={footerState?.song?.image ?? ''}
-                                />
-                            </div>
-=======
                             <p className="image is-64x64">
-                                {footerState?.song?.image ? (
-                                    <>
-                                        <img
-                                            id="footer-song-image"
-                                            className={classes?.song_image}
-                                            alt=""
-                                            src={footerState?.song?.image}
-                                        />
-                                    </>
-                                ) : (
-                                    <>
-                                        <img
-                                            id="footer-song-image"
-                                            className={classes?.song_image}
-                                            style={{ opacity: 0 }}
-                                            alt=""
-                                            src=""
-                                        />
-                                    </>
-                                )}
+                                <>
+                                    <img
+                                        id="footer-song-image"
+                                        className={
+                                            classes?.song_image &&
+                                            footerState?.song?.image
+                                                ? ''
+                                                : classes?.['opacity-hidden']
+                                        }
+                                        alt=""
+                                        src={footerState?.song?.image ?? ''}
+                                    />
+                                </>
                             </p>
->>>>>>> parent of 844b0b5 (Update: Nullish Operator)
                         </figure>
                         <div className="media-content">
                             <div className="content">
@@ -320,8 +297,6 @@ export const Footer = (props: IFooterProps) => {
                                                     ?.chain(
                                                         footerState?.song?.name
                                                     )
-                                                    ?.replace(',', ' ')
-                                                    ?.titleCase()
                                                     ?.trimRight()
                                                     ?.truncate(20)
                                                     ?.value()}
@@ -347,7 +322,6 @@ export const Footer = (props: IFooterProps) => {
                                                         footerState?.song
                                                             ?.artist
                                                     )
-                                                    ?.replace(',', ' ')
                                                     ?.titleCase()
                                                     ?.trimRight()
                                                     ?.truncate(35)
@@ -381,51 +355,22 @@ export const Footer = (props: IFooterProps) => {
                                             {isTablet ? (
                                                 // Tablet Version
                                                 <>
-                                                    <Tippy
-                                                        content={voca
+                                                    <strong
+                                                        className={
+                                                            classes?.[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
                                                             ?.chain(
                                                                 footerState
                                                                     ?.song?.name
                                                             )
-                                                            ?.replace(',', ' ')
-                                                            ?.titleCase()
                                                             ?.trimRight()
+                                                            ?.truncate(10)
                                                             ?.value()}
-                                                        placement="top"
-                                                        followCursor="horizontal"
-                                                        animateFill={true}
-                                                        plugins={[
-                                                            animateFill,
-                                                            followCursor,
-                                                        ]}
-                                                    >
-                                                        <span>
-                                                            <strong
-                                                                className={
-                                                                    classes?.[
-                                                                        'footer-song-info'
-                                                                    ]
-                                                                }
-                                                            >
-                                                                {voca
-                                                                    ?.chain(
-                                                                        footerState
-                                                                            ?.song
-                                                                            ?.name
-                                                                    )
-                                                                    ?.replace(
-                                                                        ',',
-                                                                        ' '
-                                                                    )
-                                                                    ?.titleCase()
-                                                                    ?.trimRight()
-                                                                    ?.truncate(
-                                                                        10
-                                                                    )
-                                                                    ?.value()}
-                                                            </strong>
-                                                        </span>
-                                                    </Tippy>
+                                                    </strong>
                                                     <span
                                                         className={
                                                             classes?.[
@@ -435,52 +380,24 @@ export const Footer = (props: IFooterProps) => {
                                                     >
                                                         {' | '}
                                                     </span>
-                                                    <Tippy
-                                                        content={voca
+                                                    <small
+                                                        className={
+                                                            classes?.[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
                                                             ?.chain(
                                                                 footerState
                                                                     ?.song
                                                                     .artist
                                                             )
-                                                            ?.replace(',', ' ')
                                                             ?.titleCase()
                                                             ?.trimRight()
+                                                            ?.truncate(10)
                                                             ?.value()}
-                                                        placement="top"
-                                                        followCursor="horizontal"
-                                                        animateFill={true}
-                                                        plugins={[
-                                                            animateFill,
-                                                            followCursor,
-                                                        ]}
-                                                    >
-                                                        <span>
-                                                            <small
-                                                                className={
-                                                                    classes?.[
-                                                                        'footer-song-info'
-                                                                    ]
-                                                                }
-                                                            >
-                                                                {voca
-                                                                    ?.chain(
-                                                                        footerState
-                                                                            ?.song
-                                                                            .artist
-                                                                    )
-                                                                    ?.replace(
-                                                                        ',',
-                                                                        ' '
-                                                                    )
-                                                                    ?.titleCase()
-                                                                    ?.trimRight()
-                                                                    ?.truncate(
-                                                                        10
-                                                                    )
-                                                                    ?.value()}
-                                                            </small>
-                                                        </span>
-                                                    </Tippy>
+                                                    </small>
                                                     <span
                                                         className={
                                                             classes?.[
@@ -499,57 +416,29 @@ export const Footer = (props: IFooterProps) => {
                                                     >
                                                         {numeral(
                                                             footerState?.song
-                                                                ?.sampleRate
+                                                                .sampleRate
                                                         )?.format('0 a')}
                                                         Hz
                                                     </small>
                                                 </>
                                             ) : (
                                                 <>
-                                                    <Tippy
-                                                        content={voca
+                                                    <strong
+                                                        className={
+                                                            classes?.[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
                                                             ?.chain(
                                                                 footerState
                                                                     ?.song?.name
                                                             )
-                                                            ?.replace(',', ' ')
-                                                            ?.titleCase()
                                                             ?.trimRight()
+                                                            ?.truncate(30)
                                                             ?.value()}
-                                                        followCursor="horizontal"
-                                                        animateFill={true}
-                                                        plugins={[
-                                                            animateFill,
-                                                            followCursor,
-                                                        ]}
-                                                    >
-                                                        <span>
-                                                            <strong
-                                                                className={
-                                                                    classes?.[
-                                                                        'footer-song-info'
-                                                                    ]
-                                                                }
-                                                            >
-                                                                {voca
-                                                                    ?.chain(
-                                                                        footerState
-                                                                            ?.song
-                                                                            ?.name
-                                                                    )
-                                                                    ?.replace(
-                                                                        ',',
-                                                                        ' '
-                                                                    )
-                                                                    ?.titleCase()
-                                                                    ?.trimRight()
-                                                                    ?.truncate(
-                                                                        30
-                                                                    )
-                                                                    ?.value()}
-                                                            </strong>
-                                                        </span>
-                                                    </Tippy>
+                                                    </strong>
                                                     <span
                                                         className={
                                                             classes?.[
@@ -559,51 +448,24 @@ export const Footer = (props: IFooterProps) => {
                                                     >
                                                         {' | '}
                                                     </span>
-                                                    <Tippy
-                                                        content={voca
+                                                    <small
+                                                        className={
+                                                            classes?.[
+                                                                'footer-song-info'
+                                                            ]
+                                                        }
+                                                    >
+                                                        {voca
                                                             ?.chain(
                                                                 footerState
                                                                     ?.song
                                                                     .artist
                                                             )
-                                                            ?.replace(',', ' ')
                                                             ?.titleCase()
                                                             ?.trimRight()
+                                                            ?.truncate(35)
                                                             ?.value()}
-                                                        followCursor="horizontal"
-                                                        animateFill={true}
-                                                        plugins={[
-                                                            animateFill,
-                                                            followCursor,
-                                                        ]}
-                                                    >
-                                                        <span>
-                                                            <small
-                                                                className={
-                                                                    classes?.[
-                                                                        'footer-song-info'
-                                                                    ]
-                                                                }
-                                                            >
-                                                                {voca
-                                                                    ?.chain(
-                                                                        footerState
-                                                                            ?.song
-                                                                            .artist
-                                                                    )
-                                                                    ?.replace(
-                                                                        ',',
-                                                                        ' '
-                                                                    )
-                                                                    ?.titleCase()
-                                                                    ?.trimRight()
-                                                                    ?.truncate(
-                                                                        35
-                                                                    )
-                                                                    ?.value()}
-                                                            </small>
-                                                        </span>
-                                                    </Tippy>
+                                                    </small>
                                                     <span
                                                         className={
                                                             classes?.[
@@ -1161,5 +1023,8 @@ const useStyles = createUseStyles({
         backgroundColor: '#91979d !important',
         height: '0.35rem !important',
         transform: 'translateY(1px) !important',
+    },
+    'opacity-hidden': {
+        opacity: '0.0 !important',
     },
 });
