@@ -25,12 +25,12 @@ export const ForgetPage = () => {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className={`field is-horizontal ${classes.items}`}>
+            <div className={`field is-horizontal ${classes?.items}`}>
                 <div className="field-body">
                     <div className="field">
                         <div className="control is-expanded has-icons-left">
                             <input
-                                className={`input ${classes.input}`}
+                                className={`input ${classes?.input}`}
                                 name="email"
                                 onChange={handleChange}
                                 placeholder="Enter your email"
@@ -48,7 +48,7 @@ export const ForgetPage = () => {
             <div className="items columns is-mobile is-centered">
                 <div className="column is-narrow">
                     <button
-                        className={`button is-rounded is-centered ${classes.button}`}
+                        className={`button is-rounded is-centered ${classes?.button}`}
                     >
                         Reset Password
                     </button>

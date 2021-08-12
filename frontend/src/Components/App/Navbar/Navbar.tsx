@@ -6,7 +6,7 @@ import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
 
 import { createUseStyles } from 'react-jss';
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useWindowDimensions from '../../../Hooks/Responsive/Hooks';
 
 import { useAuthLogout } from '../../../Hooks/Auth/LogoutHook';
@@ -60,9 +60,9 @@ export const Navbar = () => {
 
     const handleHamburgerIconClick = () => {
         // Always returns true
-        if (!leftMenuState.isHidden) {
+        if (!leftMenuState?.isHidden) {
             dispatch(leftMenuShown());
-        } else if (leftMenuState.isHidden) {
+        } else if (leftMenuState?.isHidden) {
             dispatch(leftMenuHidden());
         }
     };
@@ -85,7 +85,7 @@ export const Navbar = () => {
 
     return (
         <Fragment>
-            <div className={`columns is-mobile is-centered ${classes.navbar}`}>
+            <div className={`columns is-mobile is-centered ${classes?.navbar}`}>
                 <div
                     className="column is-narrow
 "
@@ -100,7 +100,7 @@ export const Navbar = () => {
                                     <td>
                                         <div
                                             className={
-                                                classes.items_translated_nav
+                                                classes?.items_translated_nav
                                             }
                                         >
                                             <IoMenuOutline
@@ -123,12 +123,12 @@ export const Navbar = () => {
                                         ) : (
                                             <div
                                                 className={
-                                                    classes.image_wrapper
+                                                    classes?.image_wrapper
                                                 }
                                             >
                                                 <div
                                                     className={
-                                                        classes.items_translated_nav
+                                                        classes?.items_translated_nav
                                                     }
                                                 >
                                                     <img
@@ -148,13 +148,13 @@ export const Navbar = () => {
                 </div>
                 <div className="column"></div>
                 <div className="column is-two-fifths">
-                    <div className={classes.items_translated_nav}>
+                    <div className={classes?.items_translated_nav}>
                         <div className="field">
                             <div
-                                className={`control has-icons-left has-icons-right ${classes.input_item_reverse_translate}`}
+                                className={`control has-icons-left has-icons-right ${classes?.input_item_reverse_translate}`}
                             >
                                 <input
-                                    className={`input ${classes.input_item}`}
+                                    className={`input ${classes?.input_item}`}
                                     type="text"
                                     placeholder="Search "
                                 />
@@ -190,11 +190,11 @@ export const Navbar = () => {
                         {data === undefined ? (
                             <div className="column is-narrow">
                                 <div
-                                    className={`${classes.items_translated_nav}`}
+                                    className={`${classes?.items_translated_nav}`}
                                 >
                                     <Link
-                                        className={`button is-rounded ${classes.button}`}
-                                        to={RoutingPath.LOGIN_PAGE}
+                                        className={`button is-rounded ${classes?.button}`}
+                                        to={RoutingPath?.LOGIN_PAGE}
                                     >
                                         Log in
                                     </Link>
@@ -219,7 +219,7 @@ export const Navbar = () => {
                                             className="is-rounded"
                                             alt="profile_picture"
                                             src={GetImageFromLibravatarByEmail(
-                                                data.email
+                                                data?.email
                                             )}
                                         />
                                     </figure>
@@ -227,10 +227,10 @@ export const Navbar = () => {
                                     <div className="dropdown-menu" role="menu">
                                         <animated.div
                                             style={imageDropDownItem}
-                                            className={`dropdown-content ${classes.dropdown_content}`}
+                                            className={`dropdown-content ${classes?.dropdown_content}`}
                                         >
                                             <div
-                                                className={`dropdown-item ${classes['dropdown-item']}`}
+                                                className={`dropdown-item ${classes?.['dropdown-item']}`}
                                             >
                                                 <div className="columns is-mobile">
                                                     <div className="column is-narrow ">
@@ -238,7 +238,7 @@ export const Navbar = () => {
                                                             <img
                                                                 alt="profile_picture"
                                                                 src={GetImageFromLibravatarByEmail(
-                                                                    data.email
+                                                                    data?.email
                                                                 )}
                                                             />
                                                         </figure>
@@ -251,26 +251,26 @@ export const Navbar = () => {
                                                                 {imageDropdownShown ? (
                                                                     <Fragment>
                                                                         <p
-                                                                            className={`${classes.dropdown_content_text_items}`}
+                                                                            className={`${classes?.dropdown_content_text_items}`}
                                                                         >
                                                                             {voca.truncate(
-                                                                                `${data.first_name} ${data.last_name}`,
+                                                                                `${data?.first_name} ${data?.last_name}`,
                                                                                 12
                                                                             )}
                                                                         </p>
                                                                         <p
-                                                                            className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                            className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                         >
                                                                             {voca.truncate(
-                                                                                data.username,
+                                                                                data?.username,
                                                                                 12
                                                                             )}
                                                                         </p>
                                                                         <p
-                                                                            className={`${classes.dropdown_content_text_items}`}
+                                                                            className={`${classes?.dropdown_content_text_items}`}
                                                                         >
                                                                             {voca.truncate(
-                                                                                data.email,
+                                                                                data?.email,
                                                                                 12
                                                                             )}
                                                                         </p>
@@ -296,13 +296,13 @@ export const Navbar = () => {
                                                                                         followCursor,
                                                                                     ]}
                                                                                     placement="left"
-                                                                                    content={`${data.first_name} ${data.last_name}`}
+                                                                                    content={`${data?.first_name} ${data?.last_name}`}
                                                                                 >
                                                                                     <p
-                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                        className={`${classes?.dropdown_content_text_items}`}
                                                                                     >
                                                                                         {voca.truncate(
-                                                                                            `${data.first_name} ${data.last_name}`,
+                                                                                            `${data?.first_name} ${data?.last_name}`,
                                                                                             15
                                                                                         )}
                                                                                     </p>
@@ -318,14 +318,14 @@ export const Navbar = () => {
                                                                                     ]}
                                                                                     placement="left"
                                                                                     content={
-                                                                                        data.username
+                                                                                        data?.username
                                                                                     }
                                                                                 >
                                                                                     <p
-                                                                                        className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                        className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                     >
                                                                                         {voca.truncate(
-                                                                                            data.username,
+                                                                                            data?.username,
                                                                                             15
                                                                                         )}
                                                                                     </p>
@@ -341,14 +341,14 @@ export const Navbar = () => {
                                                                                     ]}
                                                                                     placement="left"
                                                                                     content={
-                                                                                        data.email
+                                                                                        data?.email
                                                                                     }
                                                                                 >
                                                                                     <p
-                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                        className={`${classes?.dropdown_content_text_items}`}
                                                                                     >
                                                                                         {voca.truncate(
-                                                                                            data.email,
+                                                                                            data?.email,
                                                                                             15
                                                                                         )}
                                                                                     </p>
@@ -376,13 +376,13 @@ export const Navbar = () => {
                                                                                                 animateFill,
                                                                                                 followCursor,
                                                                                             ]}
-                                                                                            content={`${data.first_name} ${data.last_name}`}
+                                                                                            content={`${data?.first_name} ${data?.last_name}`}
                                                                                         >
                                                                                             <p
-                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                                className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
                                                                                                 {voca.truncate(
-                                                                                                    `${data.first_name} ${data.last_name}`,
+                                                                                                    `${data?.first_name} ${data?.last_name}`,
                                                                                                     15
                                                                                                 )}
                                                                                             </p>
@@ -398,14 +398,14 @@ export const Navbar = () => {
                                                                                             ]}
                                                                                             placement="left"
                                                                                             content={
-                                                                                                data.username
+                                                                                                data?.username
                                                                                             }
                                                                                         >
                                                                                             <p
-                                                                                                className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                                className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                             >
                                                                                                 {voca.truncate(
-                                                                                                    data.username,
+                                                                                                    data?.username,
                                                                                                     15
                                                                                                 )}
                                                                                             </p>
@@ -421,14 +421,14 @@ export const Navbar = () => {
                                                                                             ]}
                                                                                             placement="left"
                                                                                             content={
-                                                                                                data.email
+                                                                                                data?.email
                                                                                             }
                                                                                         >
                                                                                             <p
-                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                                className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
                                                                                                 {voca.truncate(
-                                                                                                    data.email,
+                                                                                                    data?.email,
                                                                                                     15
                                                                                                 )}
                                                                                             </p>
@@ -453,13 +453,13 @@ export const Navbar = () => {
                                                                                                 animateFill,
                                                                                                 followCursor,
                                                                                             ]}
-                                                                                            content={`${data.first_name} ${data.last_name}`}
+                                                                                            content={`${data?.first_name} ${data?.last_name}`}
                                                                                         >
                                                                                             <p
-                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                                className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
                                                                                                 {voca.truncate(
-                                                                                                    `${data.first_name} ${data.last_name}`,
+                                                                                                    `${data?.first_name} ${data?.last_name}`,
                                                                                                     15
                                                                                                 )}
                                                                                             </p>
@@ -475,14 +475,14 @@ export const Navbar = () => {
                                                                                             ]}
                                                                                             placement="left"
                                                                                             content={
-                                                                                                data.username
+                                                                                                data?.username
                                                                                             }
                                                                                         >
                                                                                             <p
-                                                                                                className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                                className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                             >
                                                                                                 {voca.truncate(
-                                                                                                    data.username,
+                                                                                                    data?.username,
                                                                                                     15
                                                                                                 )}
                                                                                             </p>
@@ -498,14 +498,14 @@ export const Navbar = () => {
                                                                                             ]}
                                                                                             placement="left"
                                                                                             content={
-                                                                                                data.email
+                                                                                                data?.email
                                                                                             }
                                                                                         >
                                                                                             <p
-                                                                                                className={`${classes.dropdown_content_text_items}`}
+                                                                                                className={`${classes?.dropdown_content_text_items}`}
                                                                                             >
                                                                                                 {voca.truncate(
-                                                                                                    data.email,
+                                                                                                    data?.email,
                                                                                                     15
                                                                                                 )}
                                                                                             </p>
@@ -525,13 +525,13 @@ export const Navbar = () => {
                                                                                                         animateFill,
                                                                                                         followCursor,
                                                                                                     ]}
-                                                                                                    content={`${data.first_name} ${data.last_name}`}
+                                                                                                    content={`${data?.first_name} ${data?.last_name}`}
                                                                                                 >
                                                                                                     <p
-                                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                                        className={`${classes?.dropdown_content_text_items}`}
                                                                                                     >
                                                                                                         {voca.truncate(
-                                                                                                            `${data.first_name} ${data.last_name}`,
+                                                                                                            `${data?.first_name} ${data?.last_name}`,
                                                                                                             23
                                                                                                         )}
                                                                                                     </p>
@@ -547,14 +547,14 @@ export const Navbar = () => {
                                                                                                     ]}
                                                                                                     placement="left"
                                                                                                     content={
-                                                                                                        data.username
+                                                                                                        data?.username
                                                                                                     }
                                                                                                 >
                                                                                                     <p
-                                                                                                        className={`is-size-7 ${classes.dropdown_content_text_items}`}
+                                                                                                        className={`is-size-7 ${classes?.dropdown_content_text_items}`}
                                                                                                     >
                                                                                                         {voca.truncate(
-                                                                                                            data.username,
+                                                                                                            data?.username,
                                                                                                             23
                                                                                                         )}
                                                                                                     </p>
@@ -570,14 +570,14 @@ export const Navbar = () => {
                                                                                                     ]}
                                                                                                     placement="left"
                                                                                                     content={
-                                                                                                        data.email
+                                                                                                        data?.email
                                                                                                     }
                                                                                                 >
                                                                                                     <p
-                                                                                                        className={`${classes.dropdown_content_text_items}`}
+                                                                                                        className={`${classes?.dropdown_content_text_items}`}
                                                                                                     >
                                                                                                         {voca.truncate(
-                                                                                                            data.email,
+                                                                                                            data?.email,
                                                                                                             23
                                                                                                         )}
                                                                                                     </p>
@@ -599,17 +599,17 @@ export const Navbar = () => {
                                             </div>
                                             <hr
                                                 className={
-                                                    classes['dropdown-divider']
+                                                    classes?.['dropdown-divider']
                                                 }
                                             />
                                             <div
-                                                className={`dropdown-item ${classes['dropdown-item']}`}
+                                                className={`dropdown-item ${classes?.['dropdown-item']}`}
                                             >
                                                 <div
-                                                    className={`box ${classes['icon-box']}`}
+                                                    className={`box ${classes?.['icon-box']}`}
                                                 >
                                                     <div
-                                                        className={`columns is-mobile ${classes['icon-box-column']}`}
+                                                        className={`columns is-mobile ${classes?.['icon-box-column']}`}
                                                         onClick={() => {
                                                             handleLogout();
                                                         }}
@@ -626,8 +626,8 @@ export const Navbar = () => {
                                                         <div className="column">
                                                             <p
                                                                 className={`is-size-6 
-                                                                    ${classes.dropdown_content_text_items} 
-                                                                    ${classes.dropdown_content_text_items_with_icons}
+                                                                    ${classes?.dropdown_content_text_items} 
+                                                                    ${classes?.dropdown_content_text_items_with_icons}
                                                                 `}
                                                             >
                                                                 Log Out

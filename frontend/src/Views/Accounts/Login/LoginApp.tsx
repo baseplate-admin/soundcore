@@ -107,10 +107,10 @@ export const LoginPage = () => {
     }, [history]);
 
     useEffect(() => {
-        if (loginFormState.promise.success.value) {
+        if (loginFormState?.promise?.success?.value) {
             history.push(RoutingPath.HOME_PAGE);
         }
-    }, [history, loginFormState.promise.success.value]);
+    }, [history, loginFormState?.promise?.success?.value]);
 
     const modalStyle = useSpring({
         backgroundColor: '#191b1f',
@@ -125,8 +125,8 @@ export const LoginPage = () => {
         validationSchema: loginSchema,
         onSubmit(values) {
             const randomSpinnerItem = randomSpinnerPicker();
-            setSpinner(randomSpinnerItem.toString());
-            if (!errors.username && !errors.password) {
+            setSpinner(randomSpinnerItem?.toString());
+            if (!errors?.username && !errors?.password) {
                 setModalShown(true);
             }
 
@@ -143,22 +143,22 @@ export const LoginPage = () => {
                 <title> {ApplicationName} | Login </title>
             </Helmet>
             <form onSubmit={handleSubmit}>
-                <div className={`field is-horizontal ${classes.items}`}>
+                <div className={`field is-horizontal ${classes?.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
                                 offset={[0, 9]}
                                 theme="attention"
                                 placement="top"
-                                content={errors.username}
-                                visible={errors.username ? true : false}
+                                content={errors?.username}
+                                visible={errors?.username ? true : false}
                             >
                                 <p className="control is-expanded has-icons-left">
                                     <input
                                         type="text"
                                         name="username"
                                         onChange={handleChange}
-                                        className={`input ${classes.input}`}
+                                        className={`input ${classes?.input}`}
                                         placeholder="Username"
                                         required
                                     />
@@ -175,14 +175,14 @@ export const LoginPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className={`field is-horizontal ${classes.items}`}>
+                <div className={`field is-horizontal ${classes?.items}`}>
                     <div className="field-body">
                         <div className="field">
                             <Tippy
                                 theme="attention"
                                 placement="top"
-                                content={errors.password}
-                                visible={errors.password ? true : false}
+                                content={errors?.password}
+                                visible={errors?.password ? true : false}
                             >
                                 <p className="control is-expanded has-icons-left has-icons-right">
                                     <input
@@ -195,7 +195,7 @@ export const LoginPage = () => {
                                         onFocus={handlePasswordInputFocus}
                                         onBlur={handlePasswordInputBlur}
                                         name="password"
-                                        className={`input ${classes.input}`}
+                                        className={`input ${classes?.input}`}
                                         placeholder="Password"
                                         required
                                     />
@@ -243,14 +243,14 @@ export const LoginPage = () => {
                     </div>
                 </div>
                 <div
-                    className={`columns is-mobile is-centered ${classes.items}`}
+                    className={`columns is-mobile is-centered ${classes?.items}`}
                 >
                     <div className="column is-narrow">
                         <div className="control">
                             <button
                                 id="button"
                                 type="submit"
-                                className={`button is-rounded is-dark is-centered ${classes.button}`}
+                                className={`button is-rounded is-dark is-centered ${classes?.button}`}
                             >
                                 Sign in
                             </button>
@@ -263,7 +263,7 @@ export const LoginPage = () => {
                             <span className="has-text-link heading">
                                 <Link
                                     to={RoutingPath.FORGET_PASSWORD_PAGE}
-                                    className={classes.href_tag}
+                                    className={classes?.href_tag}
                                 >
                                     Forgot password?
                                 </Link>
@@ -272,12 +272,12 @@ export const LoginPage = () => {
                     </div>
                     <div className="level-right">
                         <div className="level-item is-size-7 ">
-                            <p className={`heading ${classes.new_here_tag}`}>
+                            <p className={`heading ${classes?.new_here_tag}`}>
                                 New here{'? | '}
                                 <span className="has-text-link">
                                     <Link
                                         to={RoutingPath.REGISTER_PAGE}
-                                        className={classes.href_tag}
+                                        className={classes?.href_tag}
                                     >
                                         Register an account
                                     </Link>
@@ -341,14 +341,14 @@ export const LoginPage = () => {
 };
 const useStyles = createUseStyles({
     input: {
-        backgroundColor: `${formWithInputBoxVariables.inputFieldColor} !important`,
-        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
-        color: `${formWithInputBoxVariables.mainFontColor} !important`,
+        backgroundColor: `${formWithInputBoxVariables?.inputFieldColor} !important`,
+        border: `1px solid ${formWithInputBoxVariables?.inputBorderColor} !important`,
+        color: `${formWithInputBoxVariables?.mainFontColor} !important`,
 
         '&::placeholder': {
-            color: formWithInputBoxVariables.mainFontColor,
+            color: formWithInputBoxVariables?.mainFontColor,
             opacity: 0.5,
-            fontFamily: formWithInputBoxVariables.inputPlaceholderFont,
+            fontFamily: formWithInputBoxVariables?.inputPlaceholderFont,
         },
     },
 
@@ -357,30 +357,30 @@ const useStyles = createUseStyles({
     },
 
     button: {
-        backgroundColor: `${formWithInputBoxVariables.buttonBackgroundColor} !important`,
-        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
-        color: formWithInputBoxVariables.mainFontColor,
+        backgroundColor: `${formWithInputBoxVariables?.buttonBackgroundColor} !important`,
+        border: `1px solid ${formWithInputBoxVariables?.inputBorderColor} !important`,
+        color: formWithInputBoxVariables?.mainFontColor,
         transition: '0.4s',
-        fontFamily: formWithInputBoxVariables.buttonFont,
+        fontFamily: formWithInputBoxVariables?.buttonFont,
 
         '&:hover': {
-            backgroundColor: `${formWithInputBoxVariables.buttonHoverBackgroundColor} !important`,
-            color: formWithInputBoxVariables.buttonHoverFontColor,
-            fontFamily: formWithInputBoxVariables.buttonFont,
+            backgroundColor: `${formWithInputBoxVariables?.buttonHoverBackgroundColor} !important`,
+            color: formWithInputBoxVariables?.buttonHoverFontColor,
+            fontFamily: formWithInputBoxVariables?.buttonFont,
         },
     },
 
     href_tag: {
         textDecoration: 'none',
-        fontFamily: formWithInputBoxVariables.tagFont,
+        fontFamily: formWithInputBoxVariables?.tagFont,
 
         '&:hover': {
-            color: formWithInputBoxVariables.tagHrefHoverColor,
+            color: formWithInputBoxVariables?.tagHrefHoverColor,
         },
     },
 
     new_here_tag: {
-        fontFamily: formWithInputBoxVariables.tagFont,
-        color: formWithInputBoxVariables.tagFontColor,
+        fontFamily: formWithInputBoxVariables?.tagFont,
+        color: formWithInputBoxVariables?.tagFontColor,
     },
 });

@@ -7,12 +7,12 @@ export const FormWithInputBoxLoader = () => {
 
     return (
         <Fragment>
-            <section className={`hero is-fullheight ${classes['login-hero']}`}>
+            <section className={`hero is-fullheight ${classes?.login_hero}`}>
                 <div className="hero-body">
                     <div className="container">
                         <div className="columns is-centered is-desktop">
                             <div className="column is-half-desktop is-full-mobile is-narrow-tablet">
-                                <div className={`box ${classes['icon-box']}`}>
+                                <div className={`box ${classes?.icon_box}`}>
                                     <div className="columns is-mobile is-centered">
                                         <div className="column is-narrow">
                                             {/* <img
@@ -43,8 +43,8 @@ export const FormWithInputBoxLoader = () => {
     );
 };
 const useStyles = createUseStyles({
-    'login-hero': {
+    login_hero: {
         backgroundColor: formWithInputBoxVariables.pageBackgroundColor,
     },
-    'icon-box': { backgroundColor: 'transparent' },
+    icon_box: { backgroundColor: 'transparent' },
 });

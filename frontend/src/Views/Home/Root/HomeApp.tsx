@@ -61,27 +61,27 @@ export const HomePage = () => {
     const { data, isLoading } = useGetSongsQuery(null);
 
     const addDropDownRef = (el: never) => {
-        switch (el && !dropDownRefArray.current.includes(el)) {
+        switch (el && !dropDownRefArray?.current?.includes(el)) {
             case true: {
-                dropDownRefArray.current.push(el);
+                dropDownRefArray?.current?.push(el);
             }
         }
     };
 
     const addDropDownIconRef = (el: never) => {
-        switch (el && !dropDownElipsisIconArray.current.includes(el)) {
+        switch (el && !dropDownElipsisIconArray?.current?.includes(el)) {
             case true: {
-                dropDownElipsisIconArray.current.push(el);
+                dropDownElipsisIconArray?.current?.push(el);
             }
         }
     };
 
     const handleBoxMouseEnter = (id: number) => {
         switch (true) {
-            case dropDownElipsisIconArray.current[id].classList.contains(
+            case dropDownElipsisIconArray?.current[id]?.classList?.contains(
                 'is-hidden'
             ): {
-                dropDownElipsisIconArray.current[id].classList.remove(
+                dropDownElipsisIconArray?.current[id]?.classList?.remove(
                     'is-hidden'
                 );
             }
@@ -89,29 +89,29 @@ export const HomePage = () => {
     };
     const handleBoxMouseLeave = (id: number) => {
         if (
-            !dropDownElipsisIconArray.current[id].classList.contains(
+            !dropDownElipsisIconArray?.current[id]?.classList?.contains(
                 'is-hidden'
             )
         ) {
-            dropDownElipsisIconArray.current[id].classList.add('is-hidden');
+            dropDownElipsisIconArray?.current[id]?.classList?.add('is-hidden');
         }
-        if (dropDownRefArray.current[id].classList.contains('is-active')) {
-            dropDownRefArray.current[id].classList.remove('is-active');
+        if (dropDownRefArray?.current[id]?.classList?.contains('is-active')) {
+            dropDownRefArray?.current[id]?.classList?.remove('is-active');
         }
     };
 
     const handleDropdownItemClick = (id: number) => {
         switch (true) {
-            case !dropDownRefArray.current[id].classList.contains(
+            case !dropDownRefArray?.current[id]?.classList?.contains(
                 'is-active'
             ): {
-                dropDownRefArray.current[id].classList.add('is-active');
+                dropDownRefArray?.current[id]?.classList?.add('is-active');
             }
         }
     };
 
     const handleBoxClick = (src: string, index: number) => {
-        const newData = data[index];
+        const newData = data?.[index];
         howlerJsPlay(src, newData);
     };
 
@@ -126,23 +126,23 @@ export const HomePage = () => {
             sample_rate: string;
         }
     ) => {
-        const name: string = data.song_name;
-        const artist: string = data.artist;
-        const image: string = `${MediaUrl}${data.album_art}`;
-        const sampleRate: string = data.sample_rate;
+        const name: string = data?.song_name;
+        const artist: string = data?.artist;
+        const image: string = `${MediaUrl}${data?.album_art}`;
+        const sampleRate: string = data?.sample_rate;
 
         if (howlerState.length === 0) {
             const sound = CreateHowlObject({ src });
 
-            sound.play();
+            sound?.play();
 
-            sound.on('load', async () => {
-                dispatch(updateTotalSeconds(sound.duration()));
+            sound?.on('load', async () => {
+                dispatch(updateTotalSeconds(sound?.duration()));
             });
-            sound.on('play', async () => {
+            sound?.on('play', async () => {
                 await howlerJsPlayInterval(sound, customInterval);
             });
-            sound.on('end', () => {
+            sound?.on('end', () => {
                 howlerJsOnFinish();
             });
 
@@ -151,22 +151,22 @@ export const HomePage = () => {
             dispatch(updateStatusToPlay());
         } else {
             const previousSound: any = howlerState;
-            previousSound[0].pause();
+            previousSound[0]?.pause();
             setHowlerState([]);
 
             const sound = CreateHowlObject({ src });
 
             setHowlerState([sound]);
 
-            sound.play();
+            sound?.play();
 
-            sound.on('load', async () => {
-                dispatch(updateTotalSeconds(sound.duration()));
+            sound?.on('load', async () => {
+                dispatch(updateTotalSeconds(sound?.duration()));
             });
-            sound.on('play', async () => {
+            sound?.on('play', async () => {
                 await howlerJsPlayInterval(sound, customInterval);
             });
-            sound.on('end', async () => {
+            sound?.on('end', async () => {
                 howlerJsOnFinish();
             });
 
@@ -181,8 +181,8 @@ export const HomePage = () => {
     ) => {
         const startInterval = async () => {
             customInterval = setInterval(async () => {
-                if (sound.playing()) {
-                    let currentPos = sound.seek();
+                if (sound?.playing()) {
+                    let currentPos = sound?.seek();
                     dispatch(updateCurrentSeconds(Number(currentPos)));
                 }
             }, 1000);
@@ -199,12 +199,12 @@ export const HomePage = () => {
 
         axios.get(url).then((res: any) => {
             console.log(res);
-            const song_name = res.data.song_name;
-            const artist = res.data.artist;
-            const album_art = res.data.album_art;
-            const sample_rate = res.data.sample_rate;
+            const song_name = res?.data?.song_name;
+            const artist = res?.data?.artist;
+            const album_art = res?.data?.album_art;
+            const sample_rate = res?.data?.sample_rate;
 
-            howlerJsPlay(`${MediaUrl}${res.data.song_file}`, {
+            howlerJsPlay(`${MediaUrl}${res?.data?.song_file}`, {
                 song_name,
                 artist,
                 album_art,
@@ -216,9 +216,9 @@ export const HomePage = () => {
     const mappedSong = data?.map((music: any, index: number) => {
         return (
             <Fragment>
-                <div key={index} className={classes['grid-item']}>
+                <div key={index} className={classes?.['grid-item']}>
                     <div
-                        className={`box ${classes['grid-box']}`}
+                        className={`box ${classes?.['grid-box']}`}
                         onMouseEnter={() => {
                             handleBoxMouseEnter(index);
                         }}
@@ -230,22 +230,22 @@ export const HomePage = () => {
                             className="image song-image-figure"
                             onClick={() => {
                                 handleBoxClick(
-                                    `${MediaUrl}${music.song_file}`,
+                                    `${MediaUrl}${music?.song_file}`,
                                     index
                                 );
                             }}
                         >
                             <div className="song-image preview">
                                 <LazyLoadImage
-                                    src={`${MediaUrl}${music.album_art}`}
+                                    src={`${MediaUrl}${music?.album_art}`}
                                     effect="blur"
-                                    className={classes['song-image-figure']}
+                                    className={classes?.['song-image-figure']}
                                     width={200}
                                     height={200}
                                 />
                             </div>
                         </figure>
-                        <div className={classes['song-description']}>
+                        <div className={classes?.['song-description']}>
                             <div
                                 className="columns is-mobile"
                                 style={{
@@ -256,7 +256,7 @@ export const HomePage = () => {
                                     className="column is-11"
                                     onClick={() => {
                                         handleBoxClick(
-                                            `${MediaUrl}${music.song_file}`,
+                                            `${MediaUrl}${music?.song_file}`,
                                             index
                                         );
                                     }}
@@ -270,7 +270,7 @@ export const HomePage = () => {
                                     >
                                         <Tippy
                                             content={voca
-                                                .chain(music.song_name)
+                                                .chain(music?.song_name)
                                                 .replace(',', ' ')
                                                 .trimRight()
                                                 .value()}
@@ -283,10 +283,10 @@ export const HomePage = () => {
                                             ]}
                                         >
                                             <p
-                                                className={`title is-size-5 ${classes['song-title']}`}
+                                                className={`title is-size-5 ${classes?.['song-title']}`}
                                             >
                                                 {voca
-                                                    .chain(music.song_name)
+                                                    .chain(music?.song_name)
                                                     .replace(',', ' | ')
                                                     .trimRight()
                                                     .truncate(20)
@@ -295,7 +295,7 @@ export const HomePage = () => {
                                         </Tippy>
                                         <Tippy
                                             content={voca
-                                                .chain(music.artist)
+                                                .chain(music?.artist)
                                                 .trim()
                                                 .replace(',', ' | ')
                                                 .titleCase()
@@ -310,10 +310,10 @@ export const HomePage = () => {
                                             ]}
                                         >
                                             <p
-                                                className={`subtitle is-size-6 ${classes['song-artist']}`}
+                                                className={`subtitle is-size-6 ${classes?.['song-artist']}`}
                                             >
                                                 {voca
-                                                    .chain(music.artist)
+                                                    .chain(music?.artist)
                                                     .replace(',', ' | ')
                                                     .trim()
                                                     .titleCase()
@@ -428,14 +428,14 @@ export const HomePage = () => {
                 <title> {ApplicationName} </title>
             </Helmet>
             <Navbar />
-            <div className={`columns is-mobile ${classes.main__body}`}>
+            <div className={`columns is-mobile ${classes?.main__body}`}>
                 <div
-                    className={`column is-narrow ${classes.left_menu_wrapper}`}
+                    className={`column is-narrow ${classes?.left_menu_wrapper}`}
                 >
                     <LeftSidebar />
                 </div>
-                <div className={`column ${classes['right-column']}`}>
-                    <div className={classes['grid-container']}>
+                <div className={`column ${classes?.['right-column']}`}>
+                    <div className={classes?.['grid-container']}>
                         {isLoading ? (
                             <Fragment>
                                 <section className="hero is-large">
@@ -485,7 +485,7 @@ export const HomePage = () => {
                                                                 <div className="subtitle">
                                                                     <Link
                                                                         to={
-                                                                            RoutingPath.LOGIN_PAGE
+                                                                            RoutingPath?.LOGIN_PAGE
                                                                         }
                                                                     >
                                                                         Log-in?

@@ -45,15 +45,15 @@ export const LeftSidebar = () => {
 
     return (
         <animated.aside
-            className={`menu ${classes['left-menu']}`}
+            className={`menu ${classes?.['left-menu']}`}
             style={leftMenuItem}
         >
-            <div className={classes.icons}>
-                <Link to={RoutingPath.HOME_PAGE}>
-                    <div className={`box ${classes.icon_box}`}>
+            <div className={classes?.icons}>
+                <Link to={RoutingPath?.HOME_PAGE}>
+                    <div className={`box ${classes?.icon_box}`}>
                         {/* Add is_icon_active */}
                         <div
-                            className={`columns is-mobile ${classes.icon_box_column}`}
+                            className={`columns is-mobile ${classes?.icon_box_column}`}
                         >
                             <div className="column is-2 is-offset-1">
                                 <IoHomeOutline
@@ -61,17 +61,17 @@ export const LeftSidebar = () => {
                                     style={{ transform: 'scale(1.4)' }}
                                 />
                             </div>
-                            <div className={`column ${classes.icon_text}`}>
+                            <div className={`column ${classes?.icon_text}`}>
                                 Home
                             </div>
                         </div>
                     </div>
                 </Link>
-                <Link to={RoutingPath.LIBRARY_PAGE}>
-                    <div className={`box ${classes.icon_box}`}>
+                <Link to={RoutingPath?.LIBRARY_PAGE}>
+                    <div className={`box ${classes?.icon_box}`}>
                         {/* Add is_icon_active */}
                         <div
-                            className={`columns is-mobile ${classes.icon_box_column}`}
+                            className={`columns is-mobile ${classes?.icon_box_column}`}
                         >
                             <div className="column is-2 is-offset-1">
                                 <MdLibraryMusic
@@ -82,19 +82,19 @@ export const LeftSidebar = () => {
                                     }}
                                 />
                             </div>
-                            <div className={`column ${classes.icon_text}`}>
+                            <div className={`column ${classes?.icon_text}`}>
                                 Library
                             </div>
                         </div>
                     </div>
                 </Link>
             </div>
-            <div className={classes['playlist-wrapper']}>
+            <div className={classes?.['playlist-wrapper']}>
                 <div className="columns is-centered">
                     <div className="column">
                         <Link
-                            className={classes['add-icon-wrapper']}
-                            to={RoutingPath.CREATE_LIBRARY_PAGE}
+                            className={classes?.['add-icon-wrapper']}
+                            to={RoutingPath?.CREATE_LIBRARY_PAGE}
                         >
                             <MdLibraryAdd
                                 color="white"

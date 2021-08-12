@@ -185,7 +185,7 @@ export const Footer = (props: IFooterProps) => {
             }
             default: {
                 const sliderPos: number = Number(calcSliderPos(e));
-                const duration: number = footerState.song.control.total; // Total seconds
+                const duration: number = footerState?.song?.control.total; // Total seconds
                 const math: number = (duration / 100) * sliderPos; // A little math function
 
                 setSongSeekTippyContent(humanizeSeconds(math));
@@ -204,7 +204,7 @@ export const Footer = (props: IFooterProps) => {
             }
             default: {
                 // Means playing
-                const sliderValue = e.currentTarget.value;
+                const sliderValue = e?.currentTarget?.value;
                 const duration =
                     (sound?.duration() * Number(sliderValue)) / 100;
                 sound?.seek(duration);
@@ -214,7 +214,7 @@ export const Footer = (props: IFooterProps) => {
     };
 
     const handleVolumeSeekInputChange = (e: FormEvent<HTMLInputElement>) => {
-        const value = e.currentTarget.value;
+        const value = e?.currentTarget?.value;
 
         setVolume(Number(value));
         SetVolumeInLocalStorage(Number(value) / 100);
@@ -258,26 +258,26 @@ export const Footer = (props: IFooterProps) => {
     const iconColor = '#D5D9DD';
 
     return (
-        <footer className={classes.footer_item}>
+        <footer className={classes?.footer_item}>
             <div className="columns is-mobile footer_column">
-                <div className={`column is-3 ${classes.footer_info_column}`}>
+                <div className={`column is-3 ${classes?.footer_info_column}`}>
                     <article className="media">
                         <figure className="media-left">
                             <p className="image is-64x64">
-                                {footerState.song.image ? (
+                                {footerState?.song?.image ? (
                                     <>
                                         <img
                                             id="footer-song-image"
-                                            className={classes.song_image}
+                                            className={classes?.song_image}
                                             alt=""
-                                            src={footerState.song.image}
+                                            src={footerState?.song?.image}
                                         />
                                     </>
                                 ) : (
                                     <>
                                         <img
                                             id="footer-song-image"
-                                            className={classes.song_image}
+                                            className={classes?.song_image}
                                             style={{ opacity: 0 }}
                                             alt=""
                                             src=""
@@ -288,18 +288,18 @@ export const Footer = (props: IFooterProps) => {
                         </figure>
                         <div className="media-content">
                             <div className="content">
-                                <p className={classes.footer_info}>
+                                <p className={classes?.footer_info}>
                                     {isMobile ? (
                                         // Mobile Version
                                         <>
                                             <strong
                                                 className={
-                                                    classes['footer-song-info']
+                                                    classes?.['footer-song-info']
                                                 }
                                             >
                                                 {voca
                                                     .chain(
-                                                        footerState.song.name
+                                                        footerState?.song?.name
                                                     )
                                                     .trimRight()
                                                     .truncate(20)
@@ -307,19 +307,19 @@ export const Footer = (props: IFooterProps) => {
                                             </strong>
                                             <span
                                                 className={
-                                                    classes['footer-song-info']
+                                                    classes?.['footer-song-info']
                                                 }
                                             >
                                                 {' | '}
                                             </span>
                                             <small
                                                 className={
-                                                    classes['footer-song-info']
+                                                    classes?.['footer-song-info']
                                                 }
                                             >
                                                 {voca
                                                     .chain(
-                                                        footerState.song.artist
+                                                        footerState?.song?.artist
                                                     )
                                                     .titleCase()
                                                     .trimRight()
@@ -328,18 +328,18 @@ export const Footer = (props: IFooterProps) => {
                                             </small>
                                             <span
                                                 className={
-                                                    classes['footer-song-info']
+                                                    classes?.['footer-song-info']
                                                 }
                                             >
                                                 {' | '}
                                             </span>
                                             <small
                                                 className={
-                                                    classes['footer-song-info']
+                                                    classes?.['footer-song-info']
                                                 }
                                             >
                                                 {numeral(
-                                                    footerState.song.sampleRate
+                                                    footerState?.song?.sampleRate
                                                 ).format('0 a')}
                                                 Hz
                                             </small>
@@ -351,15 +351,15 @@ export const Footer = (props: IFooterProps) => {
                                                 <>
                                                     <strong
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
                                                     >
                                                         {voca
                                                             .chain(
-                                                                footerState.song
-                                                                    .name
+                                                                footerState
+                                                                    ?.song?.name
                                                             )
                                                             .trimRight()
                                                             .truncate(10)
@@ -367,7 +367,7 @@ export const Footer = (props: IFooterProps) => {
                                                     </strong>
                                                     <span
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
@@ -376,14 +376,15 @@ export const Footer = (props: IFooterProps) => {
                                                     </span>
                                                     <small
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
                                                     >
                                                         {voca
                                                             .chain(
-                                                                footerState.song
+                                                                footerState
+                                                                    ?.song
                                                                     .artist
                                                             )
                                                             .titleCase()
@@ -393,7 +394,7 @@ export const Footer = (props: IFooterProps) => {
                                                     </small>
                                                     <span
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
@@ -402,13 +403,13 @@ export const Footer = (props: IFooterProps) => {
                                                     </span>
                                                     <small
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
                                                     >
                                                         {numeral(
-                                                            footerState.song
+                                                            footerState?.song
                                                                 .sampleRate
                                                         ).format('0 a')}
                                                         Hz
@@ -418,15 +419,15 @@ export const Footer = (props: IFooterProps) => {
                                                 <>
                                                     <strong
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
                                                     >
                                                         {voca
                                                             .chain(
-                                                                footerState.song
-                                                                    .name
+                                                                footerState
+                                                                    ?.song?.name
                                                             )
                                                             .trimRight()
                                                             .truncate(30)
@@ -434,7 +435,7 @@ export const Footer = (props: IFooterProps) => {
                                                     </strong>
                                                     <span
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
@@ -443,14 +444,15 @@ export const Footer = (props: IFooterProps) => {
                                                     </span>
                                                     <small
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
                                                     >
                                                         {voca
                                                             .chain(
-                                                                footerState.song
+                                                                footerState
+                                                                    ?.song
                                                                     .artist
                                                             )
                                                             .titleCase()
@@ -460,7 +462,7 @@ export const Footer = (props: IFooterProps) => {
                                                     </small>
                                                     <span
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
@@ -469,13 +471,13 @@ export const Footer = (props: IFooterProps) => {
                                                     </span>
                                                     <small
                                                         className={
-                                                            classes[
+                                                            classes?.[
                                                                 'footer-song-info'
                                                             ]
                                                         }
                                                     >
                                                         {numeral(
-                                                            footerState.song
+                                                            footerState?.song
                                                                 .sampleRate
                                                         ).format('0 a')}
                                                         Hz
@@ -489,12 +491,12 @@ export const Footer = (props: IFooterProps) => {
                         </div>
                     </article>
                 </div>
-                <div className={`column ${classes.footer_control_column}`}>
+                <div className={`column ${classes?.footer_control_column}`}>
                     <div
-                        className={`columns is-mobile is-centered ${classes.footer_control_column_wrapper}`}
+                        className={`columns is-mobile is-centered ${classes?.footer_control_column_wrapper}`}
                     >
                         <div
-                            className={`column is-1 has-text-centered ${classes.footer_control_column_items}`}
+                            className={`column is-1 has-text-centered ${classes?.footer_control_column_items}`}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
                             <Tippy
@@ -512,9 +514,9 @@ export const Footer = (props: IFooterProps) => {
                             </Tippy>
                         </div>
                         <div
-                            className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
+                            className={`column is-1 has-text-centered is-offset-1 ${classes?.footer_control_column_items}`}
                         >
-                            {footerState.song.global.playing ? (
+                            {footerState?.song?.global?.playing ? (
                                 <>
                                     <Tippy
                                         content={<span>Play</span>}
@@ -559,7 +561,7 @@ export const Footer = (props: IFooterProps) => {
                             )}
                         </div>
                         <div
-                            className={`column is-1 has-text-centered is-offset-1 ${classes.footer_control_column_items}`}
+                            className={`column is-1 has-text-centered is-offset-1 ${classes?.footer_control_column_items}`}
                             //  onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')"
                         >
                             <Tippy
@@ -587,7 +589,7 @@ export const Footer = (props: IFooterProps) => {
                                     : isFullHD
                                     ? 'is-2'
                                     : 'is-1'
-                            } ${classes.pre_input}`}
+                            } ${classes?.pre_input}`}
                         >
                             <Tippy
                                 content="Current Seconds"
@@ -598,7 +600,7 @@ export const Footer = (props: IFooterProps) => {
                             >
                                 <span>
                                     {humanizeSeconds(
-                                        footerState.song.control.current
+                                        footerState?.song?.control.current
                                     )}
                                 </span>
                             </Tippy>
@@ -612,7 +614,7 @@ export const Footer = (props: IFooterProps) => {
                                 setSongSeekTippyVisible(false);
                             }}
                         >
-                            <div className={classes.footer_input_anchor}>
+                            <div className={classes?.footer_input_anchor}>
                                 <Tippy
                                     offset={[0, -10]}
                                     content={
@@ -626,18 +628,18 @@ export const Footer = (props: IFooterProps) => {
                                 >
                                     <span>
                                         {(100 *
-                                            footerState.song.control.current) /
-                                        footerState.song.control.total ? (
+                                            footerState?.song?.control.current) /
+                                        footerState?.song?.control.total ? (
                                             <>
                                                 <progress
-                                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
+                                                    className={`progress is-small is-info ${classes?.footer_input_anchor_progress} ${classes?.progress_item}`}
                                                     value={
                                                         (100 *
-                                                            footerState.song
+                                                            footerState?.song
                                                                 .control
                                                                 .current) /
-                                                        footerState.song.control
-                                                            .total
+                                                        footerState?.song
+                                                            .control.total
                                                     }
                                                     max={100}
                                                 />
@@ -651,17 +653,17 @@ export const Footer = (props: IFooterProps) => {
                                                     onMouseMove={
                                                         handleSongSeekInputMouseMove
                                                     }
-                                                    className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
+                                                    className={`${classes?.slider} ${classes?.footer_input_anchor_input} slider`}
                                                     step={0.01}
                                                     min={0}
                                                     max={100}
                                                     value={
                                                         (100 *
-                                                            footerState.song
+                                                            footerState?.song
                                                                 .control
                                                                 .current) /
-                                                        footerState.song.control
-                                                            .total
+                                                        footerState?.song
+                                                            .control.total
                                                     }
                                                     type="range"
                                                 />
@@ -669,7 +671,7 @@ export const Footer = (props: IFooterProps) => {
                                         ) : (
                                             <>
                                                 <progress
-                                                    className={`progress is-small is-info ${classes.footer_input_anchor_progress} ${classes.progress_item}`}
+                                                    className={`progress is-small is-info ${classes?.footer_input_anchor_progress} ${classes?.progress_item}`}
                                                     value={0}
                                                     max={100}
                                                 />
@@ -683,7 +685,7 @@ export const Footer = (props: IFooterProps) => {
                                                     onMouseMove={
                                                         handleSongSeekInputMouseMove
                                                     }
-                                                    className={`${classes.slider} ${classes.footer_input_anchor_input} slider`}
+                                                    className={`${classes?.slider} ${classes?.footer_input_anchor_input} slider`}
                                                     step={0.01}
                                                     min={0}
                                                     max={100}
@@ -705,7 +707,7 @@ export const Footer = (props: IFooterProps) => {
                                     : isFullHD
                                     ? 'is-2'
                                     : 'is-1'
-                            } ${classes.post_input} `}
+                            } ${classes?.post_input} `}
                         >
                             <Tippy
                                 offset={[0, 0]}
@@ -721,8 +723,9 @@ export const Footer = (props: IFooterProps) => {
                                         <>
                                             {'- '}
                                             {humanizeSeconds(
-                                                footerState.song.control.total -
-                                                    footerState.song.control
+                                                footerState?.song?.control
+                                                    .total -
+                                                    footerState?.song?.control
                                                         .current
                                             )}
                                         </>
@@ -730,7 +733,7 @@ export const Footer = (props: IFooterProps) => {
                                         // False and show normally
                                         <>
                                             {humanizeSeconds(
-                                                footerState.song.control.total
+                                                footerState?.song?.control.total
                                             )}
                                         </>
                                     )}
@@ -741,7 +744,7 @@ export const Footer = (props: IFooterProps) => {
                 </div>
                 <div className="column is-hidden-mobile is-3 ">
                     <div
-                        className={`columns is-mobile ${classes.volume_control_column}`}
+                        className={`columns is-mobile ${classes?.volume_control_column}`}
                     >
                         <div className="column is-2 is-offset-2">
                             <div className="columns is-centered">
@@ -828,7 +831,7 @@ export const Footer = (props: IFooterProps) => {
                         </div>
                         <div className="column">
                             <div
-                                className={classes.volume_anchor}
+                                className={classes?.volume_anchor}
                                 onMouseEnter={() => {
                                     setVolumeSeekTippyVisible(true);
                                 }}
@@ -849,12 +852,12 @@ export const Footer = (props: IFooterProps) => {
                                 >
                                     <span>
                                         <progress
-                                            className={`progress is-small is-info ${classes.volume_progress} ${classes.progress_item}`}
+                                            className={`progress is-small is-info ${classes?.volume_progress} ${classes?.progress_item}`}
                                             value={volume}
                                             max={100}
                                         />
                                         <input
-                                            className={`${classes.slider} ${classes.volume_slider}  slider`}
+                                            className={`${classes?.slider} ${classes?.volume_slider}  slider`}
                                             onInput={
                                                 handleVolumeSeekInputChange
                                             }

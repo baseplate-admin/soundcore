@@ -5,10 +5,10 @@ const climbingBoxLoaderColor: string = '#00d1b2';
 export const ClimbingBoxLoader = () => {
     const classes = useStyles();
     return (
-        <span className={`container ${classes.container}`}>
-            <span className={`${classes.wrapper}`}>
-                <span className={`${classes.style}`} />
-                <span className={`${classes.hill}`} />
+        <span className={`container ${classes?.container}`}>
+            <span className={`${classes?.wrapper}`}>
+                <span className={`${classes?.style}`} />
+                <span className={`${classes?.hill}`} />
             </span>
         </span>
     );

@@ -16,12 +16,12 @@ export const FormWithInputBoxComponent = (
     const classes = useStyles();
     return (
         <Fragment>
-            <section className={`hero is-fullheight ${classes['login-hero']}`}>
+            <section className={`hero is-fullheight ${classes?.['login-box']}`}>
                 <div className="hero-body">
                     <div className="container">
                         <div className="columns is-centered is-desktop">
                             <div className="column is-half-desktop is-full-mobile is-narrow-tablet">
-                                <div className={`box ${classes['icon-box']}`}>
+                                <div className={`box ${classes?.['icon-box']}`}>
                                     <div className="columns is-mobile is-centered">
                                         <div className="column is-narrow">
                                             <img
@@ -36,7 +36,9 @@ export const FormWithInputBoxComponent = (
                                         </div>
                                     </div>
                                 </div>
-                                <div className={`box ${classes['login-box']}`}>
+                                <div
+                                    className={`box ${classes?.['login-box']}`}
+                                >
                                     {<props.children />}
                                 </div>
                             </div>
