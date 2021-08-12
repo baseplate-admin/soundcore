@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 
 export const ForgetPage = () => {
-    const forgetPasswordEmailSchema = yup.object().shape({
+    const forgetPasswordEmailSchema = yup?.object().shape({
         email: yup
             .string()
             .email('Enter a valid Email')
@@ -64,28 +64,28 @@ const useStyles = createUseStyles({
     },
 
     input: {
-        backgroundColor: formWithInputBoxVariables.inputFieldColor,
-        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
-        color: formWithInputBoxVariables.mainFontColor,
+        backgroundColor: formWithInputBoxVariables?.inputFieldColor,
+        border: `1px solid ${formWithInputBoxVariables?.inputBorderColor} !important`,
+        color: formWithInputBoxVariables?.mainFontColor,
 
         '&::placeholder': {
-            color: formWithInputBoxVariables.mainFontColor,
+            color: formWithInputBoxVariables?.mainFontColor,
             opacity: 0.3,
-            fontFamily: formWithInputBoxVariables.buttonFont,
+            fontFamily: formWithInputBoxVariables?.buttonFont,
         },
     },
 
     button: {
-        backgroundColor: `${formWithInputBoxVariables.buttonBackgroundColor} !important`,
-        border: `1px solid ${formWithInputBoxVariables.inputBorderColor} !important`,
-        color: `${formWithInputBoxVariables.mainFontColor} !important`,
+        backgroundColor: `${formWithInputBoxVariables?.buttonBackgroundColor} !important`,
+        border: `1px solid ${formWithInputBoxVariables?.inputBorderColor} !important`,
+        color: `${formWithInputBoxVariables?.mainFontColor} !important`,
         transition: '0.4s',
-        fontFamily: `${formWithInputBoxVariables.buttonFont} !important`,
+        fontFamily: `${formWithInputBoxVariables?.buttonFont} !important`,
 
         '&:hover': {
-            backgroundColor: `${formWithInputBoxVariables.buttonHoverBackgroundColor} !important`,
-            color: formWithInputBoxVariables.buttonHoverFontColor,
-            fontFamily: formWithInputBoxVariables.buttonFont,
+            backgroundColor: `${formWithInputBoxVariables?.buttonHoverBackgroundColor} !important`,
+            color: formWithInputBoxVariables?.buttonHoverFontColor,
+            fontFamily: formWithInputBoxVariables?.buttonFont,
         },
     },
 });
