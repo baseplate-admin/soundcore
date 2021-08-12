@@ -84,15 +84,15 @@ export const LoginPage = () => {
         }
     };
 
-    const loginSchema = Yup.object().shape({
-        username: Yup.string()
-            .required('Username is required.')
-            .min(0)
-            .max(50, 'Username must be less than 50 characters'),
-        password: Yup.string()
-            .required('Password is required.')
-            .min(8, 'Password must be more than 8 characters')
-            .max(1024, 'Password must be less than 1024 characters'),
+    const loginSchema = Yup?.object()?.shape({
+        username: Yup?.string()
+            ?.required('Username is required.')
+            ?.min(0)
+            ?.max(50, 'Username must be less than 50 characters'),
+        password: Yup?.string()
+            ?.required('Password is required.')
+            ?.min(8, 'Password must be more than 8 characters')
+            ?.max(1024, 'Password must be less than 1024 characters'),
         // .matches(
         //     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
         //     'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
@@ -102,13 +102,13 @@ export const LoginPage = () => {
     useEffect(() => {
         const data = GetJWTTokenInLocalStorage();
         if (data) {
-            history.push(RoutingPath.HOME_PAGE);
+            history?.push(RoutingPath?.HOME_PAGE);
         }
     }, [history]);
 
     useEffect(() => {
         if (loginFormState?.promise?.success?.value) {
-            history.push(RoutingPath.HOME_PAGE);
+            history?.push(RoutingPath?.HOME_PAGE);
         }
     }, [history, loginFormState?.promise?.success?.value]);
 
@@ -130,8 +130,8 @@ export const LoginPage = () => {
                 setModalShown(true);
             }
 
-            const username = values.username;
-            const password = values.password;
+            const username = values?.username;
+            const password = values?.password;
 
             Login(username, password);
         },
@@ -262,7 +262,7 @@ export const LoginPage = () => {
                         <div className="level-item is-size-7">
                             <span className="has-text-link heading">
                                 <Link
-                                    to={RoutingPath.FORGET_PASSWORD_PAGE}
+                                    to={RoutingPath?.FORGET_PASSWORD_PAGE}
                                     className={classes?.href_tag}
                                 >
                                     Forgot password?
@@ -276,7 +276,7 @@ export const LoginPage = () => {
                                 New here{'? | '}
                                 <span className="has-text-link">
                                     <Link
-                                        to={RoutingPath.REGISTER_PAGE}
+                                        to={RoutingPath?.REGISTER_PAGE}
                                         className={classes?.href_tag}
                                     >
                                         Register an account

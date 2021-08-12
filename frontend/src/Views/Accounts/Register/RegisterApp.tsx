@@ -24,35 +24,35 @@ import { formWithInputBoxVariables } from '../../../Components/App/FormWithInput
 
 export const RegisterPage = () => {
     const classes = useStyles();
-    const registerSchema = yup.object().shape({
+    const registerSchema = yup?.object()?.shape({
         firstName: yup
-            .string()
-            .required('Please Enter First Name')
-            .max(20, 'First name must be less than 20 Characters'),
+            ?.string()
+            ?.required('Please Enter First Name')
+            ?.max(20, 'First name must be less than 20 Characters'),
         lastName: yup
-            .string()
-            .required('Please Enter Last Name')
-            .max(20, 'Last name must be less than 20 Characters'),
+            ?.string()
+            ?.required('Please Enter Last Name')
+            ?.max(20, 'Last name must be less than 20 Characters'),
         userName: yup
-            .string()
-            .required('Please Enter User Name')
-            .min(0)
-            .max(50, 'User name must be less than 50 Characters'),
+            ?.string()
+            ?.required('Please Enter User Name')
+            ?.min(0)
+            ?.max(50, 'User name must be less than 50 Characters'),
         email: yup
-            .string()
-            .email('Enter a valid Email')
-            .required('Please Enter Email'),
+            ?.string()
+            ?.email('Enter a valid Email')
+            ?.required('Please Enter Email'),
         password: yup
-            .string()
-            .min(8, 'Password must be more than 8 Characters')
-            .matches(
+            ?.string()
+            ?.min(8, 'Password must be more than 8 Characters')
+            ?.matches(
                 /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
                 'Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character'
             )
-            .max(1024, 'Password must be less than 1024 Characters'),
+            ?.max(1024, 'Password must be less than 1024 Characters'),
         confirmPassword: yup
-            .string()
-            .oneOf([yup.ref('password'), null], 'Passwords are not the same'),
+            ?.string()
+            ?.oneOf([yup.ref('password'), null], 'Passwords are not the same'),
     });
 
     const { handleSubmit, errors, handleChange } = useFormik({

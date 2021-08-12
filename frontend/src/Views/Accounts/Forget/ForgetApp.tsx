@@ -7,9 +7,9 @@ import { formWithInputBoxVariables } from '../../../Components/App/FormWithInput
 export const ForgetPage = () => {
     const forgetPasswordEmailSchema = yup?.object().shape({
         email: yup
-            .string()
-            .email('Enter a valid Email')
-            .required('Please Enter Email'),
+            ?.string()
+            ?.email('Enter a valid Email')
+            ?.required('Please Enter Email'),
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
