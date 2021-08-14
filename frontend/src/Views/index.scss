@@ -1,3 +1,6 @@
+// Bulma Import
+@import 'bulma/bulma.sass';
+
 // Tippy JS import
 @import 'tippy.js/dist/tippy.css'; // Needed
 @import 'tippy.js/dist/backdrop.css';
@@ -44,6 +47,15 @@ html {
 
         @media screen and (max-width: 767px) {
             position: relative;
+        }
+        // A little Hack to allow transparent Dropdown Items
+        .is-transparent {
+            background-color: transparent;
+            border: none;
+
+            &:focus {
+                box-shadow: none !important;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ import {
 
 import { RoutingPath } from '../../../Config/Routes';
 import { IconColor } from '../../../Config/Colors/Icons';
+import { Box, Columns, Element } from 'react-bulma-components';
 
 export const LeftSidebar = () => {
     const classes = useStyles();
@@ -50,47 +51,57 @@ export const LeftSidebar = () => {
             className={`menu ${classes?.['left-menu']}`}
             style={leftMenuItem}
         >
-            <div className={classes?.icons}>
+            <Element className={classes?.icons}>
                 <Link to={RoutingPath?.HOME_PAGE}>
-                    <div className={`box ${classes?.icon_box}`}>
+                    <Box className={classes?.icon_box}>
                         {/* Add is_icon_active */}
-                        <div
-                            className={`columns is-mobile ${classes?.icon_box_column}`}
+                        <Columns
+                            breakpoint="mobile"
+                            multiline={false}
+                            className={classes?.icon_box_column}
                         >
-                            <div className="column is-2 is-offset-1">
+                            <Columns.Column size={2} offset={1}>
                                 <IoHomeOutline
                                     color={IconColor?.WHITE_ICON}
                                     className={classes?.['home-icon-item']}
                                 />
-                            </div>
-                            <div className={`column ${classes?.icon_text}`}>
+                            </Columns.Column>
+                            <Columns.Column
+                                narrow
+                                className={classes?.icon_text}
+                            >
                                 Home
-                            </div>
-                        </div>
-                    </div>
+                            </Columns.Column>
+                        </Columns>
+                    </Box>
                 </Link>
                 <Link to={RoutingPath?.LIBRARY_PAGE}>
-                    <div className={`box ${classes?.icon_box}`}>
+                    <Box className={classes?.icon_box}>
                         {/* Add is_icon_active */}
-                        <div
-                            className={`columns is-mobile ${classes?.icon_box_column}`}
+                        <Columns
+                            breakpoint="mobile"
+                            multiline={false}
+                            className={classes?.icon_box_column}
                         >
-                            <div className="column is-2 is-offset-1">
+                            <Columns.Column size={2} offset={1}>
                                 <MdLibraryMusic
                                     color={IconColor?.WHITE_ICON}
                                     className={classes?.['library-icon-item']}
                                 />
-                            </div>
-                            <div className={`column ${classes?.icon_text}`}>
+                            </Columns.Column>
+                            <Columns.Column
+                                narrow
+                                className={classes?.icon_text}
+                            >
                                 Library
-                            </div>
-                        </div>
-                    </div>
+                            </Columns.Column>
+                        </Columns>
+                    </Box>
                 </Link>
-            </div>
-            <div className={classes?.['playlist-wrapper']}>
-                <div className="columns is-centered">
-                    <div className="column">
+            </Element>
+            <Element className={classes?.['playlist-wrapper']}>
+                <Columns centered>
+                    <Columns.Column>
                         <Link
                             className={classes?.['add-icon-wrapper']}
                             to={RoutingPath?.CREATE_LIBRARY_PAGE}
@@ -100,10 +111,10 @@ export const LeftSidebar = () => {
                                 className={classes?.['add-icon-item']}
                             />
                         </Link>
-                    </div>
-                </div>
+                    </Columns.Column>
+                </Columns>
                 {/* {% get_total_playlist %} */}
-            </div>
+            </Element>
         </animated.aside>
     );
 };

@@ -29,6 +29,15 @@ import {
 import profilePlaceholder from '../../../Assets/Images/placeholder-90x90.png';
 import brandLogo from '../../../Assets/Images/brand_logo.png';
 import { IconColor } from '../../../Config/Colors/Icons';
+import {
+    Columns,
+    Table,
+    Element,
+    Image,
+    Form,
+    Icon,
+    Box,
+} from 'react-bulma-components';
 
 export const Navbar = () => {
     const classes = useStyles();
@@ -86,20 +95,14 @@ export const Navbar = () => {
 
     return (
         <Fragment>
-            <div className={`columns is-mobile is-centered ${classes?.navbar}`}>
-                <div
-                    className="column is-narrow
-"
-                >
-                    <div className="columns is-mobile is-centered">
-                        <table
-                            className="table"
-                            style={{ backgroundColor: 'transparent' }}
-                        >
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div
+            <Columns breakpoint="mobile" centered className={classes?.navbar}>
+                <Columns.Column narrow>
+                    <Columns breakpoint="mobile" centered>
+                        <Table style={{ backgroundColor: 'transparent' }}>
+                            <Element renderAs="tbody">
+                                <Element renderAs="tr">
+                                    <Element renderAs="td">
+                                        <Element
                                             className={
                                                 classes?.items_translated_nav
                                             }
@@ -114,86 +117,88 @@ export const Navbar = () => {
                                                         'scale(2) translateX(8px) translateY(2px)',
                                                 }}
                                             />
-                                        </div>
-                                    </td>
-                                    <td>
+                                        </Element>
+                                    </Element>
+                                    <Element renderAs="td">
                                         {/* If mobile Hide the Brand Logo */}
                                         {/* Else Show empty div  */}
                                         {isMobile ? (
                                             <Fragment></Fragment>
                                         ) : (
-                                            <div
+                                            <Element
                                                 className={
                                                     classes?.image_wrapper
                                                 }
                                             >
-                                                <div
+                                                <Element
                                                     className={
                                                         classes?.items_translated_nav
                                                     }
                                                 >
-                                                    <img
+                                                    <Image
                                                         src={brandLogo ?? ''}
                                                         alt={
                                                             brandLogo ??
                                                             'brand_logo'
                                                         }
-                                                        width="112"
-                                                        height="28"
-                                                    ></img>
-                                                </div>
-                                            </div>
+                                                        className={
+                                                            classes?.[
+                                                                'brand-image'
+                                                            ]
+                                                        }
+                                                    />
+                                                </Element>
+                                            </Element>
                                         )}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div className="column"></div>
-                <div className="column is-two-fifths">
-                    <div className={classes?.items_translated_nav}>
-                        <div className="field">
-                            <div
-                                className={`control has-icons-left has-icons-right ${classes?.input_item_reverse_translate}`}
+                                    </Element>
+                                </Element>
+                            </Element>
+                        </Table>
+                    </Columns>
+                </Columns.Column>
+                <Columns.Column></Columns.Column>
+                <Columns.Column size="two-fifths">
+                    <Element className={classes?.items_translated_nav}>
+                        <Form.Field>
+                            <Form.Control
+                                className={
+                                    classes?.input_item_reverse_translate
+                                }
                             >
-                                <input
-                                    className={`input ${classes?.input_item}`}
+                                <Form.Input
+                                    className={classes?.input_item}
                                     type="text"
-                                    placeholder="Search "
+                                    placeholder="Search"
                                 />
-                                <span className="icon is-small is-left"></span>
-                                <span className="icon is-small is-right">
+                                <Icon size="small" align="left"></Icon>
+                                <Icon size="small" align="right">
                                     <IoSearchOutline
                                         color={IconColor?.WHITE_ICON}
                                         style={{
                                             transform: 'scale(1.5)',
                                         }}
                                     />
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="column"></div>
+                                </Icon>
+                            </Form.Control>
+                        </Form.Field>
+                    </Element>
+                </Columns.Column>
+                <Columns.Column></Columns.Column>
                 {isLoading ? (
-                    <figure
-                        className="image is-48x48"
+                    <Image
+                        size={48}
                         style={{
                             transform: 'translateX(-20px) translateY(15px)',
                         }}
-                    >
-                        <img
-                            className="is-rounded"
-                            src={profilePlaceholder ?? ''}
-                            alt={profilePlaceholder ?? 'profile_picture'}
-                        />
-                    </figure>
+                        src={profilePlaceholder ?? ''}
+                        alt={profilePlaceholder ?? 'profile_picture'}
+                        rounded
+                    />
                 ) : (
                     <Fragment>
                         {data === undefined ? (
-                            <div className="column is-narrow">
-                                <div
+                            <Columns.Column narrow>
+                                <Element
                                     className={`${classes?.items_translated_nav}`}
                                 >
                                     <Link
@@ -202,31 +207,30 @@ export const Navbar = () => {
                                     >
                                         Log in
                                     </Link>
-                                </div>
-                            </div>
+                                </Element>
+                            </Columns.Column>
                         ) : (
-                            <div className="column is-narrow">
+                            <Columns.Column narrow>
                                 <div className="dropdown is-right is-active">
-                                    <figure
-                                        className="image is-48x48 dropdown-trigger"
+                                    <Image
+                                        rounded
+                                        size={48}
+                                        onClick={() => {
+                                            setImageDropdownShown((v) => !v);
+                                        }}
+                                        alt={
+                                            GetImageFromLibravatarByEmail(
+                                                data?.email
+                                            ) ?? 'profile_picture'
+                                        }
+                                        src={GetImageFromLibravatarByEmail(
+                                            data?.email
+                                        )}
                                         style={{
                                             transform:
                                                 'translateX(-10px) translateY(2px)',
                                         }}
-                                    >
-                                        <img
-                                            onClick={() => {
-                                                setImageDropdownShown(
-                                                    (v) => !v
-                                                );
-                                            }}
-                                            className="is-rounded"
-                                            alt="profile_picture"
-                                            src={GetImageFromLibravatarByEmail(
-                                                data?.email
-                                            )}
-                                        />
-                                    </figure>
+                                    ></Image>
 
                                     <div className="dropdown-menu" role="menu">
                                         <animated.div
@@ -611,16 +615,23 @@ export const Navbar = () => {
                                             <div
                                                 className={`dropdown-item ${classes?.['dropdown-item']}`}
                                             >
-                                                <div
-                                                    className={`box ${classes?.['icon-box']}`}
+                                                <Box
+                                                    className={
+                                                        classes?.['icon-box']
+                                                    }
                                                 >
-                                                    <div
-                                                        className={`columns is-mobile ${classes?.['icon-box-column']}`}
+                                                    <Columns
+                                                        breakpoint="mobile"
                                                         onClick={() => {
                                                             handleLogout();
                                                         }}
+                                                        className={
+                                                            classes?.[
+                                                                'icon-box-column'
+                                                            ]
+                                                        }
                                                     >
-                                                        <div className="column is-narrow">
+                                                        <Columns.Column narrow>
                                                             <IoLogOutOutline
                                                                 color={
                                                                     IconColor?.WHITE_ICON
@@ -630,28 +641,29 @@ export const Navbar = () => {
                                                                         'scale(2)',
                                                                 }}
                                                             />
-                                                        </div>
-                                                        <div className="column">
-                                                            <p
-                                                                className={`is-size-6 
+                                                        </Columns.Column>
+                                                        <Columns.Column>
+                                                            <Element
+                                                                textSize={6}
+                                                                className={`
                                                                     ${classes?.dropdown_content_text_items} 
                                                                     ${classes?.dropdown_content_text_items_with_icons}
                                                                 `}
                                                             >
                                                                 Log Out
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                            </Element>
+                                                        </Columns.Column>
+                                                    </Columns>
+                                                </Box>
                                             </div>
                                         </animated.div>
                                     </div>
                                 </div>
-                            </div>
+                            </Columns.Column>
                         )}
                     </Fragment>
                 )}
-            </div>
+            </Columns>
         </Fragment>
     );
 };
@@ -734,5 +746,9 @@ const useStyles = createUseStyles({
         '&:hover': {
             backgroundColor: '#404040 !important',
         },
+    },
+    'brand-image': {
+        width: '112px !important',
+        height: '28px !important',
     },
 });

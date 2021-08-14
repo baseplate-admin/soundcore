@@ -1,5 +1,4 @@
 // React Import
-import React from 'react';
 import ReactDOM from 'react-dom';
 
 // Main app import
@@ -11,13 +10,15 @@ import { Provider } from 'react-redux';
 // Store import
 import { store } from './Store/Store';
 
+const element = document.getElementById('root');
+
+// const root = ReactDOM.createRoot(container); // Not implemented
+
 ReactDOM.render(
-    <React.StrictMode>
-        <Provider store={store}>
-            <App />
-        </Provider>
-    </React.StrictMode>,
-    document.getElementById('root')
+    <Provider store={store}>
+        <App />
+    </Provider>,
+    element
 );
 
 // If you want to start measuring performance in your app, pass a function

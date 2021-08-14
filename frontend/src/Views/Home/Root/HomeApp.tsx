@@ -9,7 +9,6 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 import { Fragment, useRef, useState } from 'react';
-import { useSpring, animated } from 'react-spring';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
@@ -39,8 +38,19 @@ import {
 
 import { CreateHowlObject } from '../../../Functions/Helpers/Howler/CreateHowl';
 import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
-import { MdPlaylistAdd } from 'react-icons/md';
+// import { MdPlaylistAdd } from 'react-icons/md';
 import { IconColor } from '../../../Config/Colors/Icons';
+import {
+    Box,
+    Columns,
+    Dropdown,
+    Element,
+    Heading,
+    Hero,
+    Icon,
+    Block,
+    Button,
+} from 'react-bulma-components';
 
 export const HomePage = () => {
     // We dont need Polling For now
@@ -56,58 +66,15 @@ export const HomePage = () => {
 
     const [howlerState, setHowlerState] = useState<Array<Howl>>([]);
 
-    const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
-    const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);
+    const dropDownRefArray = useRef<Array<any>>([]);
 
     const { data, isLoading } = useGetSongsQuery(null);
 
-    const addDropDownRef = (el: never) => {
-        switch (!dropDownRefArray?.current?.includes(el)) {
-            case true: {
-                dropDownRefArray?.current?.push(el);
-            }
-        }
-    };
+    const handleBoxMouseEnter = (id: number) => {};
 
-    const addDropDownIconRef = (el: never) => {
-        switch (!dropDownElipsisIconArray?.current?.includes(el)) {
-            case true: {
-                dropDownElipsisIconArray?.current?.push(el);
-            }
-        }
-    };
-
-    const handleBoxMouseEnter = (id: number) => {
-        switch (true) {
-            case dropDownElipsisIconArray?.current[id]?.classList?.contains(
-                'is-hidden'
-            ): {
-                dropDownElipsisIconArray?.current[id]?.classList?.remove(
-                    'is-hidden'
-                );
-            }
-        }
-    };
     const handleBoxMouseLeave = (id: number) => {
-        if (
-            !dropDownElipsisIconArray?.current[id]?.classList?.contains(
-                'is-hidden'
-            )
-        ) {
-            dropDownElipsisIconArray?.current[id]?.classList?.add('is-hidden');
-        }
         if (dropDownRefArray?.current[id]?.classList?.contains('is-active')) {
             dropDownRefArray?.current[id]?.classList?.remove('is-active');
-        }
-    };
-
-    const handleDropdownItemClick = (id: number) => {
-        switch (true) {
-            case !dropDownRefArray?.current[id]?.classList?.contains(
-                'is-active'
-            ): {
-                dropDownRefArray?.current[id]?.classList?.add('is-active');
-            }
         }
     };
 
@@ -115,8 +82,6 @@ export const HomePage = () => {
         const newData = data?.[index];
         howlerJsPlay(src, newData);
     };
-
-    const dropdownItem = useSpring({});
 
     const howlerJsPlay = (
         src: string,
@@ -216,222 +181,153 @@ export const HomePage = () => {
 
     const mappedSong = data?.map((music: any, index: number) => {
         return (
-            <Fragment>
-                <div key={index} className={classes?.['grid-item']}>
-                    <div
-                        className={`box ${classes?.['grid-box']}`}
-                        onMouseEnter={() => {
-                            handleBoxMouseEnter(index);
-                        }}
-                        onMouseLeave={() => {
-                            handleBoxMouseLeave(index);
+            <Element key={index} className={classes?.['grid-item']}>
+                <Box
+                    className={classes?.['grid-box']}
+                    onMouseEnter={() => {
+                        handleBoxMouseEnter(index);
+                    }}
+                    onMouseLeave={() => {
+                        handleBoxMouseLeave(index);
+                    }}
+                >
+                    <Element
+                        renderAs="figure"
+                        className="image"
+                        onClick={() => {
+                            handleBoxClick(
+                                `${MediaUrl}${music?.song_file}`,
+                                index
+                            );
                         }}
                     >
-                        <figure
-                            className="image song-image-figure"
-                            onClick={() => {
-                                handleBoxClick(
-                                    `${MediaUrl}${music?.song_file}`,
-                                    index
-                                );
+                        <div className="song-image preview">
+                            <LazyLoadImage
+                                src={`${MediaUrl}${music?.album_art}`}
+                                effect="blur"
+                                className={classes?.['song-image-figure']}
+                                width={200}
+                                height={200}
+                            />
+                        </div>
+                    </Element>
+                    <Element className={classes?.['song-description']}>
+                        <Columns
+                            multiline={false}
+                            style={{
+                                width: 200,
                             }}
+                            breakpoint="mobile"
                         >
-                            <div className="song-image preview">
-                                <LazyLoadImage
-                                    src={`${MediaUrl}${music?.album_art}`}
-                                    effect="blur"
-                                    className={classes?.['song-image-figure']}
-                                    width={200}
-                                    height={200}
-                                />
-                            </div>
-                        </figure>
-                        <div className={classes?.['song-description']}>
-                            <div
-                                className="columns is-mobile"
-                                style={{
-                                    width: 200,
+                            <Columns.Column
+                                size={11}
+                                onClick={() => {
+                                    handleBoxClick(
+                                        `${MediaUrl}${music?.song_file}`,
+                                        index
+                                    );
                                 }}
                             >
-                                <div
-                                    className="column is-11"
-                                    onClick={() => {
-                                        handleBoxClick(
-                                            `${MediaUrl}${music?.song_file}`,
-                                            index
-                                        );
+                                <Box
+                                    style={{
+                                        backgroundColor: 'transparent',
+                                        paddingRight: 0,
                                     }}
                                 >
-                                    <div
-                                        className="box"
-                                        style={{
-                                            backgroundColor: 'transparent',
-                                            paddingRight: 0,
-                                        }}
+                                    <Heading
+                                        textSize={5}
+                                        className={classes?.['song-title']}
                                     >
-                                        <p
-                                            className={`title is-size-5 ${classes?.['song-title']}`}
+                                        <Tippy
+                                            content={voca
+                                                ?.chain(music?.song_name)
+                                                ?.replace(',', ' ')
+                                                ?.trimRight()
+                                                ?.value()}
+                                            placement="top"
+                                            animateFill={true}
+                                            followCursor="horizontal"
+                                            plugins={[
+                                                animateFill,
+                                                followCursor,
+                                            ]}
                                         >
-                                            <Tippy
-                                                content={voca
+                                            <span>
+                                                {voca
                                                     ?.chain(music?.song_name)
-                                                    ?.replace(',', ' ')
-                                                    ?.trimRight()
-                                                    ?.value()}
-                                                placement="top"
-                                                animateFill={true}
-                                                followCursor="horizontal"
-                                                plugins={[
-                                                    animateFill,
-                                                    followCursor,
-                                                ]}
-                                            >
-                                                <span>
-                                                    {voca
-                                                        ?.chain(
-                                                            music?.song_name
-                                                        )
-                                                        ?.replace(',', ' | ')
-                                                        ?.trimRight()
-                                                        ?.truncate(20)
-                                                        ?.value()}
-                                                </span>
-                                            </Tippy>
-                                        </p>
-                                        <p
-                                            className={`subtitle is-size-6 ${classes?.['song-artist']}`}
-                                        >
-                                            <Tippy
-                                                content={voca
-                                                    ?.chain(music?.artist)
-                                                    ?.trim()
                                                     ?.replace(',', ' | ')
+                                                    ?.trimRight()
+                                                    ?.truncate(20)
+                                                    ?.value()}
+                                            </span>
+                                        </Tippy>
+                                    </Heading>
+                                    <Heading
+                                        subtitle={true}
+                                        textSize={6}
+                                        className={classes?.['song-artist']}
+                                    >
+                                        <Tippy
+                                            content={voca
+                                                ?.chain(music?.artist)
+                                                ?.trim()
+                                                ?.replace(',', ' | ')
+                                                ?.titleCase()
+                                                ?.trimRight()
+                                                ?.value()}
+                                            animateFill={true}
+                                            placement="bottom"
+                                            followCursor="horizontal"
+                                            plugins={[
+                                                animateFill,
+                                                followCursor,
+                                            ]}
+                                        >
+                                            <span>
+                                                {voca
+                                                    ?.chain(music?.artist)
+                                                    ?.replace(',', ' | ')
+                                                    ?.trim()
                                                     ?.titleCase()
                                                     ?.trimRight()
+                                                    ?.truncate(19)
                                                     ?.value()}
-                                                animateFill={true}
-                                                placement="bottom"
-                                                followCursor="horizontal"
-                                                plugins={[
-                                                    animateFill,
-                                                    followCursor,
-                                                ]}
-                                            >
-                                                <span>
-                                                    {voca
-                                                        ?.chain(music?.artist)
-                                                        ?.replace(',', ' | ')
-                                                        ?.trim()
-                                                        ?.titleCase()
-                                                        ?.trimRight()
-                                                        ?.truncate(19)
-                                                        ?.value()}
-                                                </span>
-                                            </Tippy>
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="column is-1">
-                                    <div
-                                        ref={addDropDownRef}
-                                        className="dropdown is-right"
-                                    >
-                                        <div
-                                            className="dropdown-trigger"
-                                            style={{
-                                                paddingTop: 16,
-                                            }}
-                                        >
-                                            <span
-                                                ref={addDropDownIconRef}
-                                                onClick={() => {
-                                                    handleDropdownItemClick(
-                                                        index
-                                                    );
-                                                }}
-                                                className="is-hidden"
-                                            >
-                                                <IoEllipsisVerticalSharp
-                                                    color={
-                                                        IconColor?.WHITE_ICON
-                                                    }
-                                                />
                                             </span>
-                                        </div>
-                                        <animated.div
-                                            style={dropdownItem}
-                                            className="dropdown-menu"
-                                            role="menu"
-                                        >
-                                            <div
-                                                className="dropdown-content"
-                                                style={{
-                                                    backgroundColor: '#161616',
-                                                }}
-                                            >
-                                                <div
-                                                    className="dropdown-item"
-                                                    style={{
-                                                        color: '#e0e0ec',
-                                                    }}
-                                                >
-                                                    <div className="columns is-centered">
-                                                        <div className="column is-mobile is-narrow">
-                                                            <table
-                                                                className="table"
-                                                                style={{
-                                                                    backgroundColor:
-                                                                        'transparent',
-                                                                }}
-                                                            >
-                                                                <tbody>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <MdPlaylistAdd
-                                                                                color={
-                                                                                    IconColor?.WHITE_ICON
-                                                                                }
-                                                                                style={{
-                                                                                    transform:
-                                                                                        'scale(2)',
-                                                                                }}
-                                                                            />
-                                                                        </th>
-                                                                        <th>
-                                                                            <p
-                                                                                style={{
-                                                                                    color: '#e0e0ec',
-                                                                                }}
-                                                                                className="subtitle is-size-6"
-                                                                            >
-                                                                                Save
-                                                                                to
-                                                                                playlist
-                                                                            </p>
-                                                                        </th>
-                                                                    </tr>
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className="dropdown-item"
-                                                    style={{
-                                                        color: '#e0e0ec',
-                                                    }}
-                                                />
+                                        </Tippy>
+                                    </Heading>
+                                </Box>
+                            </Columns.Column>
 
-                                                {/* <!--<hr className="dropdown-divider">--> */}
-                                            </div>
-                                        </animated.div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </Fragment>
+                            <Columns.Column size={1}>
+                                <Columns multiline={false} centered={true}>
+                                    <Columns.Column narrow={true}>
+                                        <Dropdown
+                                            right
+                                            closeOnSelect={false}
+                                            color="transparent"
+                                            icon={
+                                                <Icon>
+                                                    <IoEllipsisVerticalSharp
+                                                        color={
+                                                            IconColor?.WHITE_ICON
+                                                        }
+                                                    />
+                                                </Icon>
+                                            }
+                                            label=""
+                                        >
+                                            <Dropdown.Item
+                                                renderAs="a"
+                                                value="item"
+                                            ></Dropdown.Item>
+                                        </Dropdown>
+                                    </Columns.Column>
+                                </Columns>
+                            </Columns.Column>
+                        </Columns>
+                    </Element>
+                </Box>
+            </Element>
         );
     });
 
@@ -441,40 +337,52 @@ export const HomePage = () => {
                 <title> {ApplicationName} </title>
             </Helmet>
             <Navbar />
-            <div className={`columns is-mobile ${classes?.main__body}`}>
-                <div
-                    className={`column is-narrow ${classes?.left_menu_wrapper}`}
+            <Columns
+                breakpoint="mobile"
+                className={classes?.main__body}
+                multiline={false}
+            >
+                <Columns.Column
+                    narrow={true}
+                    className={classes?.left_menu_wrapper}
                 >
                     <LeftSidebar />
-                </div>
-                <div className={`column ${classes?.['right-column']}`}>
-                    <div className={classes?.['grid-container']}>
+                </Columns.Column>
+
+                <Columns.Column className={classes?.['right-column']}>
+                    <Element className={classes?.['grid-container']}>
                         {isLoading ? (
                             <Fragment>
-                                <section className="hero is-large">
-                                    <div className="hero-body">
-                                        <p className="subtitle">
-                                            <div className="columns is-centered">
-                                                <div className="column is-mobile is-narrow">
+                                <Hero size="large">
+                                    <Hero.Body>
+                                        <Heading subtitle={true}>
+                                            <Columns
+                                                centered={true}
+                                                breakpoint="mobile"
+                                            >
+                                                <Columns.Column narrow={true}>
                                                     <SpinnerComponent
                                                         type={randomSpinnerPicker().toString()}
                                                     />
-                                                </div>
-                                            </div>
-                                            <div className="columns is-centered">
-                                                <div className="column is-mobile is-narrow">
-                                                    <p
+                                                </Columns.Column>
+                                            </Columns>
+                                            <Columns
+                                                centered={true}
+                                                breakpoint="mobile"
+                                            >
+                                                <Columns.Column narrow={true}>
+                                                    <Block
                                                         style={{
                                                             color: 'white',
                                                         }}
                                                     >
                                                         Loading. {randomEmoji()}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </p>
-                                    </div>
-                                </section>
+                                                    </Block>
+                                                </Columns.Column>
+                                            </Columns>
+                                        </Heading>
+                                    </Hero.Body>
+                                </Hero>
                             </Fragment>
                         ) : (
                             <Fragment>
@@ -483,40 +391,66 @@ export const HomePage = () => {
                                 ) : (
                                     // If user is not logged in show a prompt to login
                                     <Fragment>
-                                        <section className="hero is-large">
-                                            <div className="hero-body">
-                                                <div className="columns is-mobile is-centered">
-                                                    <div className="column is-narrow">
-                                                        <div className="title">
-                                                            <p>
-                                                                You are not
-                                                                logged in.
-                                                            </p>
-                                                        </div>
-                                                        <div className="columns is-mobile is-centered">
-                                                            <div className="column is-narrow">
-                                                                <div className="subtitle">
-                                                                    <Link
-                                                                        to={
-                                                                            RoutingPath?.LOGIN_PAGE
-                                                                        }
-                                                                    >
+                                        <Hero size="large">
+                                            <Hero.Body>
+                                                <Columns
+                                                    centered={true}
+                                                    breakpoint="mobile"
+                                                    multiline={false}
+                                                >
+                                                    <Columns.Column
+                                                        narrow={true}
+                                                    >
+                                                        <Heading>
+                                                            <Block>
+                                                                <Heading
+                                                                    style={{
+                                                                        color: 'white',
+                                                                    }}
+                                                                >
+                                                                    You are not
+                                                                    logged in.
+                                                                </Heading>
+                                                            </Block>
+                                                        </Heading>
+                                                    </Columns.Column>
+                                                </Columns>
+                                                <Columns
+                                                    centered={true}
+                                                    breakpoint="mobile"
+                                                    multiline={false}
+                                                >
+                                                    <Columns.Column
+                                                        narrow={true}
+                                                    >
+                                                        <Heading subtitle>
+                                                            <Button
+                                                                color="transparent"
+                                                                to={
+                                                                    RoutingPath?.LOGIN_PAGE
+                                                                }
+                                                                renderAs={Link}
+                                                            >
+                                                                <Heading
+                                                                    subtitle
+                                                                >
+                                                                    <Block className="has-text-link">
                                                                         Log-in?
-                                                                    </Link>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </section>
+                                                                    </Block>
+                                                                </Heading>
+                                                            </Button>
+                                                        </Heading>
+                                                    </Columns.Column>
+                                                </Columns>
+                                            </Hero.Body>
+                                        </Hero>
                                     </Fragment>
                                 )}
                             </Fragment>
                         )}
-                    </div>
-                </div>
-            </div>
+                    </Element>
+                </Columns.Column>
+            </Columns>
             <Footer howlerState={howlerState} />
         </Fragment>
     );
@@ -524,9 +458,9 @@ export const HomePage = () => {
 
 const useStyles = createUseStyles({
     main__body: {
-        minHeight: 'calc(100vh - 140px)',
+        minHeight: 'calc(100vh - 140px) !important',
         marginBottom: '0',
-        maxHeight: '1vh',
+        maxHeight: '1vh !important',
     },
     left_menu_wrapper: {
         transform: 'translateY(-12px)',

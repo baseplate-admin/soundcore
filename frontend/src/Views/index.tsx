@@ -1,7 +1,4 @@
-// Bulma Import
-import 'bulma/bulma.sass';
-
-//Font Import
+// Font Import
 import { nunitoFontStyle } from '../Functions/Fonts/Nunito';
 import { robotoFontStyle } from '../Functions/Fonts/Roboto';
 
