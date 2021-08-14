@@ -1,4 +1,5 @@
 // React Import
+import { StrictMode } from 'react';
 import ReactDOM from 'react-dom';
 
 // Main app import
@@ -15,9 +16,11 @@ const element = document.getElementById('root');
 // const root = ReactDOM.createRoot(container); // Not implemented
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider>,
+    <StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </StrictMode>,
     element
 );
 
