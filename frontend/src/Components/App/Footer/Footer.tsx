@@ -788,7 +788,7 @@ export const Footer = (props: IFooterProps) => {
                                     plugins={[followCursor, animateFill]}
                                     placement="top"
                                 >
-                                    <Element renderAs="span">
+                                    <span>
                                         <Fragment>
                                             <Progress
                                                 size="small"
@@ -848,7 +848,7 @@ export const Footer = (props: IFooterProps) => {
                                                 type="range"
                                             />
                                         </Fragment>
-                                    </Element>
+                                    </span>
                                 </Tippy>
                             </Element>
                         </Columns.Column>

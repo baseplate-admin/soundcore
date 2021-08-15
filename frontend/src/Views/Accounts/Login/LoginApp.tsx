@@ -154,7 +154,7 @@ export const LoginPage = () => {
     return (
         <Fragment>
             <Helmet>
-                <title> {ApplicationName} | Login </title>
+                <title> {ApplicationName ?? ''} | Login </title>
             </Helmet>
             <form onSubmit={handleSubmit}>
                 <BulmaForm.Field className={classes?.items}>

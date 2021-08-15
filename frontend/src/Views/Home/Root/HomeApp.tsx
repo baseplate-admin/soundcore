@@ -5,6 +5,7 @@ import { Howl } from 'howler';
 import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
 
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
@@ -66,15 +67,27 @@ export const HomePage = () => {
 
     const [howlerState, setHowlerState] = useState<Array<Howl>>([]);
 
-    const dropDownRefArray = useRef<Array<any>>([]);
+    const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
 
     const { data, isLoading } = useGetSongsQuery(null);
 
-    const handleBoxMouseEnter = (id: number) => {};
+    const handleBoxMouseEnter = (index: number) => {
+        const element = dropDownRefArray?.current[index];
 
-    const handleBoxMouseLeave = (id: number) => {
-        if (dropDownRefArray?.current[id]?.classList?.contains('is-active')) {
-            dropDownRefArray?.current[id]?.classList?.remove('is-active');
+        switch (element?.classList?.contains('is-invisible')) {
+            default:
+                element?.classList?.remove('is-invisible');
+                break;
+        }
+    };
+
+    const handleBoxMouseLeave = (index: number) => {
+        const element = dropDownRefArray?.current[index];
+
+        switch (element?.classList?.contains('is-invisible')) {
+            default:
+                element?.classList?.add('is-invisible');
+                break;
         }
     };
 
@@ -178,19 +191,27 @@ export const HomePage = () => {
             });
         });
     };
+    const addDropDownRef = (el: never) => {
+        switch (!dropDownRefArray?.current?.includes(el)) {
+            case true: {
+                dropDownRefArray?.current?.push(el);
+            }
+        }
+    };
 
     const mappedSong = data?.map((music: any, index: number) => {
         return (
-            <Element key={index} className={classes?.['grid-item']}>
-                <Box
-                    className={classes?.['grid-box']}
-                    onMouseEnter={() => {
-                        handleBoxMouseEnter(index);
-                    }}
-                    onMouseLeave={() => {
-                        handleBoxMouseLeave(index);
-                    }}
-                >
+            <Element
+                key={index}
+                className={classes?.['grid-item']}
+                onMouseEnter={() => {
+                    handleBoxMouseEnter(index);
+                }}
+                onMouseLeave={() => {
+                    handleBoxMouseLeave(index);
+                }}
+            >
+                <Box className={classes?.['grid-box']}>
                     <Element
                         renderAs="figure"
                         className="image"
@@ -201,7 +222,7 @@ export const HomePage = () => {
                             );
                         }}
                     >
-                        <div className="song-image preview">
+                        <Element className="song-image preview">
                             <LazyLoadImage
                                 src={`${MediaUrl}${music?.album_art}`}
                                 effect="blur"
@@ -209,7 +230,7 @@ export const HomePage = () => {
                                 width={200}
                                 height={200}
                             />
-                        </div>
+                        </Element>
                     </Element>
                     <Element className={classes?.['song-description']}>
                         <Columns
@@ -306,13 +327,22 @@ export const HomePage = () => {
                                             closeOnSelect={false}
                                             color="transparent"
                                             icon={
-                                                <Icon>
-                                                    <IoEllipsisVerticalSharp
-                                                        color={
-                                                            IconColor?.WHITE_ICON
-                                                        }
-                                                    />
-                                                </Icon>
+                                                <div
+                                                    ref={addDropDownRef}
+                                                    className="is-invisible"
+                                                >
+                                                    <Icon>
+                                                        <IoEllipsisVerticalSharp
+                                                            color={
+                                                                IconColor?.WHITE_ICON
+                                                            }
+                                                            style={{
+                                                                transform:
+                                                                    'translateY(10px) scale(2) translateX(3px)',
+                                                            }}
+                                                        />
+                                                    </Icon>
+                                                </div>
                                             }
                                             label=""
                                         >
@@ -334,7 +364,7 @@ export const HomePage = () => {
     return (
         <Fragment>
             <Helmet>
-                <title> {ApplicationName} </title>
+                <title> {ApplicationName ?? ''} | Home </title>
             </Helmet>
             <Navbar />
             <Columns

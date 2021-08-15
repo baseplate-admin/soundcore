@@ -1,12 +1,12 @@
 import prettyBytes from 'pretty-bytes';
+import { createUseStyles } from 'react-jss';
+import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 
 import { UploadSongVariables } from './variables';
 
 import { Fragment, useState, useCallback, useEffect } from 'react';
 import { useMusicUpload } from '../../../Hooks/Upload/Hooks';
 
-import { createUseStyles } from 'react-jss';
-import { FileError, FileRejection, useDropzone } from 'react-dropzone';
 import { ApplicationName } from '../../../Config/App';
 
 import { IoCloseCircleOutline } from 'react-icons/io5';
@@ -18,6 +18,7 @@ import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
 import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
 import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
 import { FrontPageChildComponent } from './Components/Front/Front';
+
 import { ImFileMusic } from 'react-icons/im';
 import { IconColor } from '../../../Config/Colors/Icons';
 
@@ -232,7 +233,7 @@ export const UploadSongPage = () => {
     return (
         <Fragment>
             <Fragment>
-                <title>{ApplicationName} | Upload Songs</title>
+                <title>{ApplicationName ?? ''} | Upload Songs</title>
             </Fragment>
             <Fragment>
                 {/* If Flase Show upload box */}

@@ -71,7 +71,7 @@ export const RegisterPage = () => {
     return (
         <Fragment>
             <Helmet>
-                <title> {ApplicationName} | Register </title>
+                <title> {ApplicationName ?? ''} | Register </title>
             </Helmet>
             <form onSubmit={handleSubmit}>
                 <div className={`field is-horizontal ${classes?.items}`}>
