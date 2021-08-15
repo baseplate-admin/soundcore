@@ -1,18 +1,19 @@
 import { createUseStyles } from 'react-jss';
 import { LoaderColors } from '../../../Config/Colors/Loaders';
+import { Container } from 'react-bulma-components';
 
 export const ClimbingBoxLoader = () => {
     const classes = useStyles();
 
     return (
-        <div className="container">
+        <Container>
             <span className={classes?.container}>
                 <span className={classes?.wrapper}>
                     <span className={classes?.style} />
                     <span className={classes?.hill} />
                 </span>
             </span>
-        </div>
+        </Container>
     );
 };
 const useStyles = createUseStyles({

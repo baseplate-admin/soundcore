@@ -1,15 +1,17 @@
+import { Container } from 'react-bulma-components';
 import { createUseStyles } from 'react-jss';
 import { LoaderColors } from '../../../Config/Colors/Loaders';
 
 export const HashLoader = () => {
     const classes = useStyles();
+
     return (
-        <div className="container">
+        <Container>
             <span className={classes?.wrapper}>
                 <span className={classes?.style1} />
                 <span className={classes?.style2} />
             </span>
-        </div>
+        </Container>
     );
 };
 
