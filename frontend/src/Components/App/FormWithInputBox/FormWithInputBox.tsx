@@ -5,7 +5,6 @@ import { FC, Fragment } from 'react';
 import loginLogo from '../../../Assets/Images/brand_logo.png';
 import { createUseStyles } from 'react-jss';
 import { formWithInputBoxVariables } from './variables';
-import { Columns, Container, Hero, Box, Image } from 'react-bulma-components';
 
 interface FormWithInputBoxComponentPropsInterface {
     children: FC;
@@ -18,39 +17,41 @@ export const FormWithInputBoxComponent = (
 
     return (
         <Fragment>
-            <Hero size="fullheight" className={classes?.['login-hero']}>
-                <Hero.Body>
-                    <Container>
-                        <Columns
-                            centered
-                            // breakpoint="half-desktop full-mobile narrow-tablet"
-                        >
-                            <Columns.Column className="is-half-desktop is-full-mobile is-narrow-tablet">
-                                <Box className={classes?.['icon-box']}>
-                                    <Columns breakpoint="mobile " centered>
-                                        <Columns.Column narrow>
-                                            <Image
+            <section
+                className={`hero is-fullheight ${classes?.['login-hero']}`}
+            >
+                <div className="hero-body">
+                    <div className="container">
+                        <div className="columns is-centered is-desktop">
+                            <div className="column is-half-desktop is-full-mobile is-narrow-tablet">
+                                <div className={`box ${classes?.['icon-box']}`}>
+                                    <div className="columns is-mobile is-centered">
+                                        <div className="column is-narrow">
+                                            <img
                                                 src={loginLogo ?? ''}
                                                 alt={
                                                     loginLogo ??
                                                     'no_banner_picture'
                                                 }
-                                                className={`
-                                                    ${classes?.['no-select']}
-                                                    ${classes?.['brand-logo']}
-                                                `}
+                                                width="150"
+                                                height="40"
+                                                className={
+                                                    classes?.['no-select']
+                                                }
                                             />
-                                        </Columns.Column>
-                                    </Columns>
-                                </Box>
-                                <Box className={classes?.['login-box']}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    className={`box ${classes?.['login-box']}`}
+                                >
                                     {<props.children />}
-                                </Box>
-                            </Columns.Column>
-                        </Columns>
-                    </Container>
-                </Hero.Body>
-            </Hero>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </Fragment>
     );
 };
@@ -68,9 +69,5 @@ const useStyles = createUseStyles({
     },
     'no-select': {
         userSelect: 'none',
-    },
-    'brand-logo': {
-        width: '150px !important',
-        height: '40px  !important',
     },
 });

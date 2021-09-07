@@ -41,7 +41,7 @@ export const forgetSlice = createSlice({
             state,
             action: PayloadAction<IAddForgetFormValues>
         ) => {
-            state.email = action.payload.email;
+            state.email = action?.payload.email;
         },
         clearForgetFormValues: (state) => {
             Object.assign(state, initialState);
@@ -54,7 +54,8 @@ export const forgetSlice = createSlice({
             action: PayloadAction<IForgetPasswordState>
         ) => {
             state.promise.error.value = true;
-            state.promise.error.message = action.payload.promise.error.message;
+            state.promise.error.message =
+                action?.payload?.promise?.error?.message;
         },
     },
 });
@@ -64,8 +65,8 @@ export const {
     clearForgetFormValues,
     postForgetFormValues,
     postForgetFormErrorAndHasErrorMessage,
-} = forgetSlice.actions;
+} = forgetSlice?.actions;
 
-export const selectForgetFormState = (state: RootState) => state.forgetForm;
+export const selectForgetFormState = (state: RootState) => state?.forgetForm;
 
-export default forgetSlice.reducer;
+export default forgetSlice?.reducer;

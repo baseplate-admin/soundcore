@@ -21,14 +21,14 @@ class MusicView(APIView):
         return Response(serailizer.data, 200)
 
     def put(self, request):
-        if request.user.is_superuser:
-            file = request.data["file"]
-            if file.name.endswith(".flac"):
-                flac_upload_handler(file)
-            elif file.name.endswith("mp3"):
-                pass
+        # if request.user.is_superuser:
+        file = request.data["file"]
+        if file.name.endswith(".flac"):
+            flac_upload_handler(file)
+        elif file.name.endswith("mp3"):
+            pass
 
-            return Response(status=201)
+        return Response(status=201)
 
 
 class GetRandomMusicView(APIView):

@@ -26,7 +26,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { RoutingPath } from '../../../Config/Routes';
 import { ApplicationName } from '../../../Config/App';
 import { useAppSelector } from '../../../Hooks/Store/Hooks';
-import { selectLoginFormState } from '../../../Store/Slices/Login';
+import { selectLoginFormState } from '../../../Store/Redux/Slices/Login';
 
 import { useAuthLogin } from '../../../Hooks/Auth/LoginHook';
 import {
@@ -34,21 +34,10 @@ import {
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
-import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/LocalStorage/JWTCookie';
-import {
-    Block,
-    Box,
-    Button,
-    Columns,
-    Form as BulmaForm,
-    Icon,
-    Level,
-    Modal,
-} from 'react-bulma-components';
+import { GetJWTTokenInLocalStorage } from '../../../Functions/LocalStorage/JWTCookie';
 
 // Yup for form validation
 import { IconColor } from '../../../Config/Colors/Icons';
-import { randomEmoji } from '../../../Functions/Helpers/RandomPicker/RandomEmojis';
 
 export const LoginPage = () => {
     const classes = useStyles();
@@ -81,7 +70,6 @@ export const LoginPage = () => {
 
     const handlePasswordInputBlur = () => {
         setIsInputFocued(false);
-
         if (!mouseIsOverEye) {
             setIsPasswordFocused(false);
         }
@@ -154,215 +142,202 @@ export const LoginPage = () => {
     return (
         <Fragment>
             <Helmet>
-                <title> {ApplicationName ?? ''} | Login </title>
+                <title> {ApplicationName} | Login </title>
             </Helmet>
             <form onSubmit={handleSubmit}>
-                <BulmaForm.Field className={classes?.items}>
-                    <Tippy
-                        offset={[0, 9]}
-                        theme="attention"
-                        placement="top"
-                        content={errors?.username}
-                        visible={errors?.username ? true : false}
-                    >
-                        <span>
-                            <BulmaForm.Control>
-                                <BulmaForm.Input
-                                    type="text"
-                                    name="username"
-                                    onChange={handleChange}
-                                    className={`input ${classes?.input}`}
-                                    placeholder="Username"
-                                    required
-                                />
-                                <Icon align="left">
-                                    <IoPersonCircleOutline
-                                        style={{
-                                            transform: 'scale(1.5)',
-                                        }}
-                                        color={IconColor?.WHITE_ICON}
+                <div className={`field is-horizontal ${classes?.items}`}>
+                    <div className="field-body">
+                        <div className="field">
+                            <Tippy
+                                offset={[0, 9]}
+                                theme="attention"
+                                placement="top"
+                                content={errors?.username}
+                                visible={errors?.username ? true : false}
+                            >
+                                <p className="control is-expanded has-icons-left">
+                                    <input
+                                        type="text"
+                                        name="username"
+                                        onChange={handleChange}
+                                        className={`input ${classes?.input}`}
+                                        placeholder="Username"
+                                        required
                                     />
-                                </Icon>
-                            </BulmaForm.Control>
-                        </span>
-                    </Tippy>
-                </BulmaForm.Field>
-                <BulmaForm.Field className={classes?.items}>
-                    <Tippy
-                        theme="attention"
-                        placement="top"
-                        content={errors?.password}
-                        visible={errors?.password ? true : false}
-                    >
-                        <span>
-                            <BulmaForm.Control>
-                                <BulmaForm.Input
-                                    type={isPasswordShown ? 'text' : 'password'}
-                                    onChange={handleChange}
-                                    onFocus={handlePasswordInputFocus}
-                                    onBlur={handlePasswordInputBlur}
-                                    name="password"
-                                    className={`input ${classes?.input}`}
-                                    placeholder="Password"
-                                    required
-                                />
-                                <Icon align="left">
-                                    <MdLockOutline
-                                        style={{
-                                            transform: 'scale(1.5)',
-                                        }}
-                                        color={IconColor?.WHITE_ICON}
-                                    />
-                                </Icon>
-                                <Icon
-                                    align="right"
-                                    style={{ pointerEvents: 'initial' }}
-                                    onMouseEnter={handleMouseEnterEyeIcon}
-                                    onMouseLeave={handleMouseLeaveEyeIcon}
-                                    onClick={handleEyeIconClick}
-                                    className={
-                                        isPasswordFocused ? '' : 'is-hidden'
-                                    }
-                                >
-                                    {/* Eye logic */}
-                                    <IoEyeOutline
-                                        style={{
-                                            transform: 'scale(1.5)',
-                                        }}
-                                        className={
-                                            isPasswordShown ? 'is-hidden' : ''
-                                        }
-                                        color={IconColor?.WHITE_ICON}
-                                    />
-                                    <IoEyeOffOutline
-                                        style={{
-                                            transform: 'scale(1.5)',
-                                        }}
-                                        className={
-                                            isPasswordShown ? '' : 'is-hidden'
-                                        }
-                                        color={IconColor?.WHITE_ICON}
-                                    />
-                                </Icon>
-                            </BulmaForm.Control>
-                        </span>
-                    </Tippy>
-                </BulmaForm.Field>
-                <BulmaForm.Field>
-                    <BulmaForm.Control>
-                        <Columns
-                            breakpoint="mobile"
-                            centered
-                            className={classes?.items}
-                        >
-                            <Columns.Column narrow>
-                                <Button
-                                    type="submit"
-                                    rounded
-                                    color="dark"
-                                    className={classes?.button}
-                                >
-                                    Sign in
-                                </Button>
-                            </Columns.Column>
-                        </Columns>
-                    </BulmaForm.Control>
-                </BulmaForm.Field>
-                <BulmaForm.Field className={classes?.items}>
-                    <BulmaForm.Control>
-                        <Level>
-                            <Level.Side align="left">
-                                <Level.Item textSize={7}>
-                                    <span className="has-text-link heading">
-                                        <Link
-                                            to={
-                                                RoutingPath?.FORGET_PASSWORD_PAGE
-                                            }
-                                            className={classes?.href_tag}
-                                        >
-                                            Forgot password?
-                                        </Link>
+                                    <span className="icon is-small is-left">
+                                        <IoPersonCircleOutline
+                                            style={{
+                                                transform: 'scale(1.5)',
+                                            }}
+                                            color={IconColor?.WHITE_ICON}
+                                        />
                                     </span>
-                                </Level.Item>
-                            </Level.Side>
-
-                            <Level.Side align="right">
-                                <Level.Item textSize={7}>
-                                    <p
-                                        className={`heading ${classes?.new_here_tag}`}
-                                    >
-                                        New here{'? | '}
-                                        <span className="has-text-link">
-                                            <Link
-                                                to={RoutingPath?.REGISTER_PAGE}
-                                                className={classes?.href_tag}
-                                            >
-                                                Register an account
-                                            </Link>
+                                </p>
+                            </Tippy>
+                        </div>
+                    </div>
+                </div>
+                <div className={`field is-horizontal ${classes?.items}`}>
+                    <div className="field-body">
+                        <div className="field">
+                            <Tippy
+                                theme="attention"
+                                placement="top"
+                                content={errors?.password}
+                                visible={errors?.password ? true : false}
+                            >
+                                <p className="control is-expanded has-icons-left has-icons-right">
+                                    <input
+                                        type={
+                                            !isPasswordShown
+                                                ? 'password'
+                                                : 'text'
+                                        }
+                                        onChange={handleChange}
+                                        onFocus={handlePasswordInputFocus}
+                                        onBlur={handlePasswordInputBlur}
+                                        name="password"
+                                        className={`input ${classes?.input}`}
+                                        placeholder="Password"
+                                        required
+                                    />
+                                    <span className="icon is-small is-left">
+                                        <MdLockOutline
+                                            style={{
+                                                transform: 'scale(1.5)',
+                                            }}
+                                            color={IconColor?.WHITE_ICON}
+                                        />
+                                    </span>
+                                    {isPasswordFocused ? (
+                                        <span
+                                            onMouseEnter={
+                                                handleMouseEnterEyeIcon
+                                            }
+                                            onMouseLeave={
+                                                handleMouseLeaveEyeIcon
+                                            }
+                                            className="icon is-small is-right"
+                                            onClick={handleEyeIconClick}
+                                        >
+                                            {!isPasswordShown ? (
+                                                <IoEyeOutline
+                                                    style={{
+                                                        transform: 'scale(1.5)',
+                                                    }}
+                                                    color={
+                                                        IconColor?.WHITE_ICON
+                                                    }
+                                                />
+                                            ) : (
+                                                <IoEyeOffOutline
+                                                    style={{
+                                                        transform: 'scale(1.5)',
+                                                    }}
+                                                    color={
+                                                        IconColor?.WHITE_ICON
+                                                    }
+                                                />
+                                            )}
                                         </span>
-                                    </p>
-                                </Level.Item>
-                            </Level.Side>
-                        </Level>
-                    </BulmaForm.Control>
-                </BulmaForm.Field>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </p>
+                            </Tippy>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className={`columns is-mobile is-centered ${classes?.items}`}
+                >
+                    <div className="column is-narrow">
+                        <div className="control">
+                            <button
+                                id="button"
+                                type="submit"
+                                className={`button is-rounded is-dark is-centered ${classes?.button}`}
+                            >
+                                Sign in
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div className="level">
+                    <div className="level-left">
+                        <div className="level-item is-size-7">
+                            <span className="has-text-link heading">
+                                <Link
+                                    to={RoutingPath?.FORGET_PASSWORD_PAGE}
+                                    className={classes?.href_tag}
+                                >
+                                    Forgot password?
+                                </Link>
+                            </span>
+                        </div>
+                    </div>
+                    <div className="level-right">
+                        <div className="level-item is-size-7 ">
+                            <p className={`heading ${classes?.new_here_tag}`}>
+                                New here{'? | '}
+                                <span className="has-text-link">
+                                    <Link
+                                        to={RoutingPath?.REGISTER_PAGE}
+                                        className={classes?.href_tag}
+                                    >
+                                        Register an account
+                                    </Link>
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
                 {/* If true Show Modal.
                 Else show blank page */}
-
-                <Modal
-                    closeOnBlur={true}
-                    closeOnEsc={true}
-                    onClose={() => {
-                        setModalShown(!modalShown);
-                    }}
-                    show={modalShown}
-                >
-                    <Modal.Content className={classes?.['no-overflow']}>
-                        <Columns
-                            breakpoint="mobile"
-                            centered
-                            // onClick={() => {
-                            //     setModalShown(!modalShown);
-                            // }}
+                {modalShown ? (
+                    <div className="modal is-active">
+                        <div
+                            className="modal-background"
+                            onClick={() => {
+                                if (modalShown) {
+                                    setModalShown(false);
+                                }
+                            }}
+                        />
+                        <div
+                            className="modal-content"
+                            style={{
+                                overflow: 'hidden',
+                            }}
                         >
-                            <Columns.Column narrow>
-                                <animated.div
-                                    className="box"
-                                    style={modalStyle}
-                                >
-                                    <Box
-                                        className={classes?.['transparent-box']}
+                            <div className="columns is-mobile is-centered">
+                                <div className="column is-half-desktop is-half-mobile is-narrow-tablet">
+                                    <animated.div
+                                        className="box"
+                                        style={modalStyle}
                                     >
-                                        <Columns breakpoint="mobile" centered>
-                                            <Columns.Column narrow>
-                                                {/* https://www.davidhu.io/react-spinners/ */}
-                                                <SpinnerComponent
-                                                    type={spinner}
-                                                />
-
-                                                <Columns
-                                                    breakpoint="mobile"
-                                                    centered
+                                        {/* https://www.davidhu.io/react-spinners/ */}
+                                        <div className="columns is-mobile is-centered">
+                                            <div className="column is-narrow">
+                                                <div
+                                                    className={`
+                                                    box 
+                                                    ${classes?.['transparent-box']}`}
                                                 >
-                                                    <Columns.Column narrow>
-                                                        <Block
-                                                            style={{
-                                                                color: 'white',
-                                                            }}
-                                                        >
-                                                            Logging in{' '}
-                                                            {randomEmoji()?.toString()}
-                                                        </Block>
-                                                    </Columns.Column>
-                                                </Columns>
-                                            </Columns.Column>
-                                        </Columns>
-                                    </Box>
-                                </animated.div>
-                            </Columns.Column>
-                        </Columns>
-                    </Modal.Content>
-                </Modal>
+                                                    <SpinnerComponent
+                                                        type={spinner}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </animated.div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <Fragment></Fragment>
+                )}
             </form>
         </Fragment>
     );
@@ -414,8 +389,5 @@ const useStyles = createUseStyles({
     'transparent-box': {
         backgroundColor: 'transparent',
         boxShadow: 'none',
-    },
-    'no-overflow': {
-        overflow: 'hidden',
     },
 });

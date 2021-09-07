@@ -2,11 +2,11 @@ import axios from 'axios';
 import { APIUrl } from '../../Config/App';
 import { APIPath } from '../../Config/Api';
 import { useAppDispatch } from '../Store/Hooks';
-import { SetJWTTokenInLocalStorage } from '../../Functions/Helpers/LocalStorage/JWTCookie';
+import { SetJWTTokenInLocalStorage } from '../../Functions/LocalStorage/JWTCookie';
 import {
     postLoginFormErrorAndHasErrorMessage,
     postLoginFormSuccess,
-} from '../../Store/Slices/Login';
+} from '../../Store/Redux/Slices/Login';
 
 export const useAuthLogin = () => {
     const dispatch = useAppDispatch();

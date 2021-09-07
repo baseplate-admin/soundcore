@@ -39,10 +39,12 @@ const initialState: IForgetPasswordState = {
 };
 
 interface ISongAdd {
-    name: string;
-    artist: string;
-    image: string | undefined;
-    sampleRate: string;
+    data: {
+        name: string;
+        artist: string;
+        image: string | undefined;
+        sampleRate: string;
+    };
 }
 
 export const footerSlice = createSlice({
@@ -57,16 +59,16 @@ export const footerSlice = createSlice({
         },
 
         updateSongState: (state, action: PayloadAction<ISongAdd>) => {
-            state.song.name = action.payload.name;
-            state.song.artist = action.payload.artist;
-            state.song.sampleRate = action.payload.sampleRate;
-            state.song.image = action.payload.image;
+            state.song.name = action?.payload?.data?.name;
+            state.song.artist = action?.payload?.data?.artist;
+            state.song.image = action?.payload?.data?.image;
+            state.song.sampleRate = action?.payload?.data?.sampleRate;
         },
         updateTotalSeconds: (state, action: PayloadAction<number>) => {
-            state.song.control.total = action.payload;
+            state.song.control.total = action?.payload;
         },
         updateCurrentSeconds: (state, action: PayloadAction<number>) => {
-            state.song.control.current = action.payload;
+            state.song.control.current = action?.payload;
         },
     },
 });
@@ -77,8 +79,8 @@ export const {
     updateSongState,
     updateTotalSeconds,
     updateCurrentSeconds,
-} = footerSlice.actions;
+} = footerSlice?.actions;
 
-export const selectFooterState = (state: RootState) => state.footerState;
+export const selectFooterState = (state: RootState) => state?.footerState;
 
-export default footerSlice.reducer;
+export default footerSlice?.reducer;

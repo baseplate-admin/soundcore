@@ -37,14 +37,15 @@ export const loginSlice = createSlice({
             action: PayloadAction<LoginState>
         ) => {
             state.promise.error.value = true;
-            state.promise.error.message = action.payload.promise.error.message;
+            state.promise.error.message =
+                action?.payload?.promise?.error?.message;
         },
     },
 });
 
 export const { postLoginFormSuccess, postLoginFormErrorAndHasErrorMessage } =
-    loginSlice.actions;
+    loginSlice?.actions;
 
-export const selectLoginFormState = (state: RootState) => state.loginForm;
+export const selectLoginFormState = (state: RootState) => state?.loginForm;
 
-export default loginSlice.reducer;
+export default loginSlice?.reducer;

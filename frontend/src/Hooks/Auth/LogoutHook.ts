@@ -1,4 +1,4 @@
-import { blacklistToken } from '../../Functions/Helpers/JWT/Blacklist';
+import { blacklistToken } from '../../Functions/JWT/Blacklist';
 import { useHistory } from 'react-router';
 
 export const useAuthLogout = () => {

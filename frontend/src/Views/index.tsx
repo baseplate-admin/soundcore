@@ -1,6 +1,5 @@
-// Font Import
-import { nunitoFontStyle } from '../Functions/Fonts/Nunito';
-import { robotoFontStyle } from '../Functions/Fonts/Roboto';
+// Bulma Import
+import 'bulma/bulma.sass';
 
 // Global Scss import
 import './index.scss';
@@ -18,12 +17,7 @@ import { FormWithInputBoxLoader } from '../Components/Loaders/FormWithInputBox/F
 import { ForgetPage } from './Accounts/Forget/ForgetApp';
 
 export const App = () => {
-    // Init Font
-    nunitoFontStyle();
-    robotoFontStyle();
-
     //  Lazy Import for Pages
-
     const HomePage = lazy(() =>
         import('./Home/Root/HomeApp').then(({ HomePage }) => ({
             default: HomePage,

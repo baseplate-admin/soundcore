@@ -1,12 +1,9 @@
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { Fragment } from 'react';
 import { IoMailOutline } from 'react-icons/io5';
 import { createUseStyles } from 'react-jss';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
 import { IconColor } from '../../../Config/Colors/Icons';
-import { Helmet } from 'react-helmet';
-import { ApplicationName } from '../../../Config/App';
 
 export const ForgetPage = () => {
     const forgetPasswordEmailSchema = yup?.object()?.shape({
@@ -28,44 +25,37 @@ export const ForgetPage = () => {
     const classes = useStyles();
 
     return (
-        <Fragment>
-            <Fragment>
-                <Helmet>{ApplicationName ?? ''} | Forget Password </Helmet>
-            </Fragment>
-            <Fragment>
-                <form onSubmit={handleSubmit}>
-                    <div className={`field is-horizontal ${classes?.items}`}>
-                        <div className="field-body">
-                            <div className="field">
-                                <div className="control is-expanded has-icons-left">
-                                    <input
-                                        className={`input ${classes?.input}`}
-                                        name="email"
-                                        onChange={handleChange}
-                                        placeholder="Enter your email"
-                                    />
-                                    <span className="is-left icon">
-                                        <IoMailOutline
-                                            color={IconColor?.WHITE_ICON}
-                                            style={{ transform: 'scale(1?.5)' }}
-                                        />
-                                    </span>
-                                </div>
-                            </div>
+        <form onSubmit={handleSubmit}>
+            <div className={`field is-horizontal ${classes?.items}`}>
+                <div className="field-body">
+                    <div className="field">
+                        <div className="control is-expanded has-icons-left">
+                            <input
+                                className={`input ${classes?.input}`}
+                                name="email"
+                                onChange={handleChange}
+                                placeholder="Enter your email"
+                            />
+                            <span className="is-left icon">
+                                <IoMailOutline
+                                    color={IconColor?.WHITE_ICON}
+                                    style={{ transform: 'scale(1?.5)' }}
+                                />
+                            </span>
                         </div>
                     </div>
-                    <div className="items columns is-mobile is-centered">
-                        <div className="column is-narrow">
-                            <button
-                                className={`button is-rounded is-centered ${classes?.button}`}
-                            >
-                                Reset Password
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </Fragment>
-        </Fragment>
+                </div>
+            </div>
+            <div className="items columns is-mobile is-centered">
+                <div className="column is-narrow">
+                    <button
+                        className={`button is-rounded is-centered ${classes?.button}`}
+                    >
+                        Reset Password
+                    </button>
+                </div>
+            </div>
+        </form>
     );
 };
 

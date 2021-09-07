@@ -1,6 +1,6 @@
 import { createUseStyles } from 'react-jss';
 import { useMediaQuery } from 'react-responsive';
-import { useEffect, useState, MouseEvent, FormEvent, Fragment } from 'react';
+import { useEffect, useState, MouseEvent, FormEvent } from 'react';
 
 import Tippy from '@tippyjs/react';
 import { followCursor, animateFill } from 'tippy.js';
@@ -21,39 +21,29 @@ import {
     IoVolumeMute,
 } from 'react-icons/io5';
 
-import { humanizeSeconds } from '../../../Functions/Helpers/Prettifier/HumanizeTime';
+import { humanizeSeconds } from '../../../Functions/Prettifier/HumanizeTime';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     selectFooterState,
     updateStatusToPlay,
     updateStatusToPause,
     updateCurrentSeconds,
-} from '../../../Store/Slices/Footer';
+} from '../../../Store/Redux/Slices/Footer';
 import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
-} from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
+} from '../../../Functions/LocalStorage/HowlerVolume';
 import {
     GetReversePlaybackStatus,
     SetReversePlaybackStatus,
-} from '../../../Functions/Helpers/LocalStorage/IsPlaybackReversed';
+} from '../../../Functions/LocalStorage/IsPlaybackReversed';
 import { IconColor } from '../../../Config/Colors/Icons';
-import {
-    Columns,
-    Content,
-    Image,
-    Media,
-    Block,
-    Progress,
-    Element,
-} from 'react-bulma-components';
+import { useHowler } from '../../../Hooks/Howler/Hooks';
 
-interface IFooterProps {
-    howlerState: Howl[];
-}
-
-export const Footer = (props: IFooterProps) => {
+export const Footer = () => {
     const classes = useStyles();
+    const howlerState: Howl[] = []; // A little hack untill i get context working
+    // const { howlerState } = useHowler();
 
     const dispatch = useAppDispatch();
     const footerState = useAppSelector(selectFooterState);
@@ -160,8 +150,8 @@ export const Footer = (props: IFooterProps) => {
 
     const handlePlayPauseClick = () => {
         // Create a new howler object
-        const sound: Howl = props?.howlerState[0];
-
+        const sound: Howl = howlerState[0];
+        console.log(howlerState);
         // Song might be null if User didn't click anything
         switch (sound) {
             case undefined: {
@@ -185,7 +175,7 @@ export const Footer = (props: IFooterProps) => {
         }
     };
     const handleSongSeekInputMouseMove = (e: MouseEvent<HTMLInputElement>) => {
-        const sound: Howl = props?.howlerState[0];
+        const sound: Howl = howlerState[0];
 
         // Make the tippy container visible.
 
@@ -206,7 +196,7 @@ export const Footer = (props: IFooterProps) => {
 
     const handleSongSeekInputChange = (e: FormEvent<HTMLInputElement>) => {
         // Create a new howler object
-        const sound: Howl = props?.howlerState[0];
+        const sound: Howl = howlerState[0];
 
         switch (sound) {
             case undefined: {
@@ -267,34 +257,32 @@ export const Footer = (props: IFooterProps) => {
     };
 
     return (
-        <Element renderAs="footer" className={classes?.footer_item}>
-            <Columns breakpoint={'mobile'} multiline={false}>
-                <Columns.Column
-                    size={3}
-                    className={classes?.footer_info_column}
-                >
-                    <Media renderAs="article">
-                        <Media.Item align="left">
-                            <Image
-                                size={64}
-                                className={
-                                    classes?.song_image &&
-                                    footerState?.song?.image
-                                        ? ''
-                                        : classes?.['opacity-hidden']
-                                }
-                                alt=""
-                                src={footerState?.song?.image ?? ''}
-                            />
-                        </Media.Item>
-                        <Media.Item>
-                            <Content>
-                                <Block className={classes?.footer_info}>
+        <footer className={classes?.footer_item}>
+            <div className="columns is-mobile footer_column">
+                <div className={`column is-3 ${classes?.footer_info_column}`}>
+                    <article className="media">
+                        <figure className="media-left">
+                            <div className="image is-64x64">
+                                <img
+                                    id="footer-song-image"
+                                    className={
+                                        classes?.song_image &&
+                                        footerState?.song?.image
+                                            ? ''
+                                            : classes?.['opacity-hidden']
+                                    }
+                                    alt=""
+                                    src={footerState?.song?.image ?? ''}
+                                />
+                            </div>
+                        </figure>
+                        <div className="media-content">
+                            <div className="content">
+                                <p className={classes?.footer_info}>
                                     {isMobile ? (
                                         // Mobile Version
-                                        <Fragment>
-                                            <Element
-                                                renderAs="strong"
+                                        <>
+                                            <strong
                                                 className={
                                                     classes?.[
                                                         'footer-song-info'
@@ -310,7 +298,7 @@ export const Footer = (props: IFooterProps) => {
                                                     ?.trimRight()
                                                     ?.truncate(20)
                                                     ?.value()}
-                                            </Element>
+                                            </strong>
                                             <span
                                                 className={
                                                     classes?.[
@@ -320,8 +308,7 @@ export const Footer = (props: IFooterProps) => {
                                             >
                                                 {' | '}
                                             </span>
-                                            <Element
-                                                renderAs="small"
+                                            <small
                                                 className={
                                                     classes?.[
                                                         'footer-song-info'
@@ -338,7 +325,7 @@ export const Footer = (props: IFooterProps) => {
                                                     ?.trimRight()
                                                     ?.truncate(35)
                                                     ?.value()}
-                                            </Element>
+                                            </small>
                                             <span
                                                 className={
                                                     classes?.[
@@ -348,8 +335,7 @@ export const Footer = (props: IFooterProps) => {
                                             >
                                                 {' | '}
                                             </span>
-                                            <Element
-                                                renderAs="small"
+                                            <small
                                                 className={
                                                     classes?.[
                                                         'footer-song-info'
@@ -361,13 +347,13 @@ export const Footer = (props: IFooterProps) => {
                                                         ?.sampleRate
                                                 )?.format('0 a')}
                                                 Hz
-                                            </Element>
-                                        </Fragment>
+                                            </small>
+                                        </>
                                     ) : (
-                                        <Fragment>
+                                        <>
                                             {isTablet ? (
                                                 // Tablet Version
-                                                <Fragment>
+                                                <>
                                                     <Tippy
                                                         content={voca
                                                             ?.chain(
@@ -387,8 +373,7 @@ export const Footer = (props: IFooterProps) => {
                                                         ]}
                                                     >
                                                         <span>
-                                                            <Element
-                                                                renderAs="strong"
+                                                            <strong
                                                                 className={
                                                                     classes?.[
                                                                         'footer-song-info'
@@ -411,11 +396,10 @@ export const Footer = (props: IFooterProps) => {
                                                                         10
                                                                     )
                                                                     ?.value()}
-                                                            </Element>
+                                                            </strong>
                                                         </span>
                                                     </Tippy>
-                                                    <Element
-                                                        renderAs="span"
+                                                    <span
                                                         className={
                                                             classes?.[
                                                                 'footer-song-info'
@@ -423,7 +407,7 @@ export const Footer = (props: IFooterProps) => {
                                                         }
                                                     >
                                                         {' | '}
-                                                    </Element>
+                                                    </span>
                                                     <Tippy
                                                         content={voca
                                                             ?.chain(
@@ -444,8 +428,7 @@ export const Footer = (props: IFooterProps) => {
                                                         ]}
                                                     >
                                                         <span>
-                                                            <Element
-                                                                renderAs="small"
+                                                            <small
                                                                 className={
                                                                     classes?.[
                                                                         'footer-song-info'
@@ -468,11 +451,10 @@ export const Footer = (props: IFooterProps) => {
                                                                         10
                                                                     )
                                                                     ?.value()}
-                                                            </Element>
+                                                            </small>
                                                         </span>
                                                     </Tippy>
-                                                    <Element
-                                                        renderAs="span"
+                                                    <span
                                                         className={
                                                             classes?.[
                                                                 'footer-song-info'
@@ -480,9 +462,8 @@ export const Footer = (props: IFooterProps) => {
                                                         }
                                                     >
                                                         {' | '}
-                                                    </Element>
-                                                    <Element
-                                                        renderAs="small"
+                                                    </span>
+                                                    <small
                                                         className={
                                                             classes?.[
                                                                 'footer-song-info'
@@ -494,10 +475,10 @@ export const Footer = (props: IFooterProps) => {
                                                                 ?.sampleRate
                                                         )?.format('0 a')}
                                                         Hz
-                                                    </Element>
-                                                </Fragment>
+                                                    </small>
+                                                </>
                                             ) : (
-                                                <Fragment>
+                                                <>
                                                     <Tippy
                                                         content={voca
                                                             ?.chain(
@@ -516,8 +497,7 @@ export const Footer = (props: IFooterProps) => {
                                                         ]}
                                                     >
                                                         <span>
-                                                            <Element
-                                                                renderAs="strong"
+                                                            <strong
                                                                 className={
                                                                     classes?.[
                                                                         'footer-song-info'
@@ -540,11 +520,10 @@ export const Footer = (props: IFooterProps) => {
                                                                         30
                                                                     )
                                                                     ?.value()}
-                                                            </Element>
+                                                            </strong>
                                                         </span>
                                                     </Tippy>
-                                                    <Element
-                                                        renderAs="span"
+                                                    <span
                                                         className={
                                                             classes?.[
                                                                 'footer-song-info'
@@ -552,7 +531,7 @@ export const Footer = (props: IFooterProps) => {
                                                         }
                                                     >
                                                         {' | '}
-                                                    </Element>
+                                                    </span>
                                                     <Tippy
                                                         content={voca
                                                             ?.chain(
@@ -572,8 +551,7 @@ export const Footer = (props: IFooterProps) => {
                                                         ]}
                                                     >
                                                         <span>
-                                                            <Element
-                                                                renderAs="small"
+                                                            <small
                                                                 className={
                                                                     classes?.[
                                                                         'footer-song-info'
@@ -596,7 +574,7 @@ export const Footer = (props: IFooterProps) => {
                                                                         35
                                                                     )
                                                                     ?.value()}
-                                                            </Element>
+                                                            </small>
                                                         </span>
                                                     </Tippy>
                                                     <span
@@ -608,8 +586,7 @@ export const Footer = (props: IFooterProps) => {
                                                     >
                                                         {' | '}
                                                     </span>
-                                                    <Element
-                                                        renderAs="small"
+                                                    <small
                                                         className={
                                                             classes?.[
                                                                 'footer-song-info'
@@ -621,34 +598,26 @@ export const Footer = (props: IFooterProps) => {
                                                                 ?.sampleRate
                                                         )?.format('0 a')}
                                                         Hz
-                                                    </Element>
-                                                </Fragment>
+                                                    </small>
+                                                </>
                                             )}
-                                        </Fragment>
+                                        </>
                                     )}
-                                </Block>
-                            </Content>
-                        </Media.Item>
-                    </Media>
-                </Columns.Column>
-                <Columns.Column className={classes?.footer_control_column}>
-                    <Columns
-                        breakpoint="mobile"
-                        centered={true}
-                        multiline={false}
-                        className={classes?.footer_control_column_wrapper}
+                                </p>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                <div className={`column ${classes?.footer_control_column}`}>
+                    <div
+                        className={`columns is-mobile is-centered ${classes?.footer_control_column_wrapper}`}
                     >
-                        <Columns.Column
-                            size={1}
-                            className={classes?.footer_control_column_items}
+                        <div
+                            className={`column is-1 has-text-centered ${classes?.footer_control_column_items}`}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
                             <Tippy
-                                content={
-                                    <Element renderAs="span">
-                                        Previous Song
-                                    </Element>
-                                }
+                                content={<span>Previous Song</span>}
                                 animateFill={true}
                                 plugins={[animateFill]}
                                 placement="top"
@@ -660,21 +629,14 @@ export const Footer = (props: IFooterProps) => {
                                     />
                                 </span>
                             </Tippy>
-                        </Columns.Column>
-
-                        <Columns.Column
-                            size={1}
-                            offset={1}
-                            className={classes?.footer_control_column_items}
+                        </div>
+                        <div
+                            className={`column is-1 has-text-centered is-offset-1 ${classes?.footer_control_column_items}`}
                         >
                             {footerState?.song?.global?.playing ? (
-                                <Fragment>
+                                <>
                                     <Tippy
-                                        content={
-                                            <Element renderAs="span">
-                                                Play
-                                            </Element>
-                                        }
+                                        content={<span>Play</span>}
                                         animateFill={true}
                                         plugins={[animateFill]}
                                         placement="top"
@@ -691,15 +653,11 @@ export const Footer = (props: IFooterProps) => {
                                             />
                                         </span>
                                     </Tippy>
-                                </Fragment>
+                                </>
                             ) : (
-                                <Fragment>
+                                <>
                                     <Tippy
-                                        content={
-                                            <Element renderAs="span">
-                                                Pause
-                                            </Element>
-                                        }
+                                        content={<span>Pause</span>}
                                         animateFill={true}
                                         plugins={[animateFill]}
                                         placement="top"
@@ -716,19 +674,15 @@ export const Footer = (props: IFooterProps) => {
                                             />
                                         </span>
                                     </Tippy>
-                                </Fragment>
+                                </>
                             )}
-                        </Columns.Column>
-                        <Columns.Column
-                            size={1}
-                            offset={1}
-                            className={classes?.footer_control_column_items}
+                        </div>
+                        <div
+                            className={`column is-1 has-text-centered is-offset-1 ${classes?.footer_control_column_items}`}
                             //  onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')"
                         >
                             <Tippy
-                                content={
-                                    <Element renderAs="span">Next Song</Element>
-                                }
+                                content={<span>Next Song</span>}
                                 animateFill={true}
                                 plugins={[animateFill]}
                                 placement="top"
@@ -740,19 +694,19 @@ export const Footer = (props: IFooterProps) => {
                                     />
                                 </span>
                             </Tippy>
-                        </Columns.Column>
-                    </Columns>
-                    <Columns
-                        breakpoint="mobile"
-                        centered={true}
-                        multiline={false}
-                    >
-                        <Columns.Column
-                            size={
-                                isMobile ? 2 : isTablet ? 2 : isFullHD ? 2 : 1
-                            }
-                            className={classes?.pre_input}
-                            textSize={7}
+                        </div>
+                    </div>
+                    <div className="columns is-mobile is-centered">
+                        <div
+                            className={`column is-size-7 ${
+                                isMobile
+                                    ? 'is-2'
+                                    : isTablet
+                                    ? 'is-2'
+                                    : isFullHD
+                                    ? 'is-2'
+                                    : 'is-1'
+                            } ${classes?.pre_input}`}
                         >
                             <Tippy
                                 content="Current Seconds"
@@ -767,8 +721,9 @@ export const Footer = (props: IFooterProps) => {
                                     )}
                                 </span>
                             </Tippy>
-                        </Columns.Column>
-                        <Columns.Column
+                        </div>
+                        <div
+                            className="column"
                             onMouseEnter={() => {
                                 setSongSeekTippyVisible(true);
                             }}
@@ -776,7 +731,7 @@ export const Footer = (props: IFooterProps) => {
                                 setSongSeekTippyVisible(false);
                             }}
                         >
-                            <Element className={classes?.footer_input_anchor}>
+                            <div className={classes?.footer_input_anchor}>
                                 <Tippy
                                     offset={[0, -10]}
                                     content={
@@ -789,75 +744,88 @@ export const Footer = (props: IFooterProps) => {
                                     placement="top"
                                 >
                                     <span>
-                                        <Fragment>
-                                            <Progress
-                                                size="small"
-                                                color="info"
-                                                className={`${classes?.footer_input_anchor_progress} ${classes?.progress_item}`}
-                                                value={
-                                                    // Is Footer Has Song and its NaN show 0
-                                                    isNaN(
+                                        {(100 *
+                                            footerState?.song?.control
+                                                ?.current) /
+                                        footerState?.song?.control?.total ? (
+                                            <>
+                                                <progress
+                                                    className={`progress is-small is-info ${classes?.footer_input_anchor_progress} ${classes?.progress_item}`}
+                                                    value={
                                                         (100 *
                                                             footerState?.song
                                                                 ?.control
                                                                 ?.current) /
-                                                            footerState?.song
-                                                                ?.control?.total
-                                                    )
-                                                        ? 0
-                                                        : (100 *
-                                                              footerState?.song
-                                                                  ?.control
-                                                                  ?.current) /
-                                                          footerState?.song
-                                                              ?.control?.total
-                                                }
-                                                max={100}
-                                            />
-                                            <input
-                                                onChange={
-                                                    handleSongSeekInputChange
-                                                }
-                                                onInput={
-                                                    handleSongSeekInputChange
-                                                }
-                                                onMouseMove={
-                                                    handleSongSeekInputMouseMove
-                                                }
-                                                className={`${classes?.slider} ${classes?.footer_input_anchor_input}`}
-                                                step={0.01}
-                                                min={0}
-                                                max={100}
-                                                value={
-                                                    isNaN(
+                                                        footerState?.song
+                                                            ?.control?.total
+                                                    }
+                                                    max={100}
+                                                />
+                                                <input
+                                                    onChange={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onInput={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onMouseMove={
+                                                        handleSongSeekInputMouseMove
+                                                    }
+                                                    className={`${classes?.slider} ${classes?.footer_input_anchor_input} slider`}
+                                                    step={0.01}
+                                                    min={0}
+                                                    max={100}
+                                                    value={
                                                         (100 *
                                                             footerState?.song
                                                                 ?.control
                                                                 ?.current) /
-                                                            footerState?.song
-                                                                ?.control?.total
-                                                    )
-                                                        ? 0
-                                                        : (100 *
-                                                              footerState?.song
-                                                                  ?.control
-                                                                  ?.current) /
-                                                          footerState?.song
-                                                              ?.control?.total
-                                                }
-                                                type="range"
-                                            />
-                                        </Fragment>
+                                                        footerState?.song
+                                                            ?.control?.total
+                                                    }
+                                                    type="range"
+                                                />
+                                            </>
+                                        ) : (
+                                            <>
+                                                <progress
+                                                    className={`progress is-small is-info ${classes?.footer_input_anchor_progress} ${classes?.progress_item}`}
+                                                    value={0}
+                                                    max={100}
+                                                />
+                                                <input
+                                                    onChange={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onInput={
+                                                        handleSongSeekInputChange
+                                                    }
+                                                    onMouseMove={
+                                                        handleSongSeekInputMouseMove
+                                                    }
+                                                    className={`${classes?.slider} ${classes?.footer_input_anchor_input} slider`}
+                                                    step={0.01}
+                                                    min={0}
+                                                    max={100}
+                                                    value={0}
+                                                    type="range"
+                                                />
+                                            </>
+                                        )}
                                     </span>
                                 </Tippy>
-                            </Element>
-                        </Columns.Column>
-                        <Columns.Column
-                            textSize={7}
-                            size={
-                                isMobile ? 3 : isTablet ? 2 : isFullHD ? 2 : 1
-                            }
-                            className={classes?.post_input}
+                            </div>
+                        </div>
+                        <div
+                            className={`column is-size-7 ${
+                                isMobile
+                                    ? 'is-3'
+                                    : isTablet
+                                    ? 'is-2'
+                                    : isFullHD
+                                    ? 'is-2'
+                                    : 'is-1'
+                            } ${classes?.post_input} `}
                         >
                             <Tippy
                                 offset={[0, 0]}
@@ -870,60 +838,53 @@ export const Footer = (props: IFooterProps) => {
                                 <span onClick={handleTotalTimeClick}>
                                     {playbackTotalReversed ? (
                                         // True and show -0:01
-                                        <Fragment>
+                                        <>
                                             {'- '}
                                             {humanizeSeconds(
                                                 footerState?.song?.control
                                                     ?.total -
                                                     footerState?.song?.control
                                                         ?.current
-                                            ) ?? ''}
-                                        </Fragment>
+                                            )}
+                                        </>
                                     ) : (
                                         // False and show normally
-                                        <Fragment>
+                                        <>
                                             {humanizeSeconds(
                                                 footerState?.song?.control
                                                     ?.total
-                                            ) ?? ''}
-                                        </Fragment>
+                                            )}
+                                        </>
                                     )}
                                 </span>
                             </Tippy>
-                        </Columns.Column>
-                    </Columns>
-                </Columns.Column>
-                <Columns.Column size={3} mobile={{ display: 'hidden' }}>
-                    <Columns
-                        multiline={false}
-                        breakpoint="mobile"
-                        className={classes?.volume_control_column}
+                        </div>
+                    </div>
+                </div>
+                <div className="column is-hidden-mobile is-3 ">
+                    <div
+                        className={`columns is-mobile ${classes?.volume_control_column}`}
                     >
-                        <Columns.Column size={2} offset={2}>
-                            <Columns
-                                multiline={false}
-                                centered={true}
-                                breakpoint="mobile"
-                                className="columns is-centered"
-                            >
-                                <Columns.Column
-                                    narrow={true}
-                                    style={{
-                                        transform: 'translateY(-0.5em)',
-                                    }}
+                        <div className="column is-2 is-offset-2">
+                            <div className="columns is-centered">
+                                <Tippy
+                                    content={
+                                        <span>
+                                            {isMuted ? 'Unmute' : 'Mute'}
+                                        </span>
+                                    }
+                                    animateFill={true}
+                                    plugins={[animateFill]}
+                                    placement="left"
+                                    offset={[-11, -3]}
                                 >
-                                    <Tippy
-                                        content={
-                                            <Element renderAs="span">
-                                                {isMuted ? 'Unmute' : 'Mute'}
-                                            </Element>
-                                        }
-                                        animateFill={true}
-                                        plugins={[animateFill]}
-                                        placement="left"
-                                        offset={[-3, 10]}
-                                    >
-                                        <span onClick={handleMuteIconClick}>
+                                    <span onClick={handleMuteIconClick}>
+                                        <div
+                                            className="column is-narrow is-mobile"
+                                            style={{
+                                                transform: 'translateY(-0.5em)',
+                                            }}
+                                        >
                                             {showHighVolume &&
                                             !showMediumVolume &&
                                             !showLowVolume &&
@@ -990,15 +951,15 @@ export const Footer = (props: IFooterProps) => {
                                                     }
                                                 />
                                             ) : (
-                                                <Fragment></Fragment>
+                                                <></>
                                             )}
-                                        </span>
-                                    </Tippy>
-                                </Columns.Column>
-                            </Columns>
-                        </Columns.Column>
-                        <Columns.Column>
-                            <Element
+                                        </div>
+                                    </span>
+                                </Tippy>
+                            </div>
+                        </div>
+                        <div className="column">
+                            <div
                                 className={classes?.volume_anchor}
                                 onMouseEnter={() => {
                                     setVolumeSeekTippyVisible(true);
@@ -1019,10 +980,8 @@ export const Footer = (props: IFooterProps) => {
                                     placement="top"
                                 >
                                     <span>
-                                        <Progress
-                                            size="small"
-                                            color="info"
-                                            className={`${classes?.volume_progress} ${classes?.progress_item}`}
+                                        <progress
+                                            className={`progress is-small is-info ${classes?.volume_progress} ${classes?.progress_item}`}
                                             value={volume}
                                             max={100}
                                         />
@@ -1045,13 +1004,13 @@ export const Footer = (props: IFooterProps) => {
                                         />
                                     </span>
                                 </Tippy>
-                            </Element>
-                        </Columns.Column>
-                        <Columns.Column size={2} offset={1} />
-                    </Columns>
-                </Columns.Column>
-            </Columns>
-        </Element>
+                            </div>
+                        </div>
+                        <div className="column is-2 is-offset-1" />
+                    </div>
+                </div>
+            </div>
+        </footer>
     );
 };
 
@@ -1177,8 +1136,6 @@ const useStyles = createUseStyles({
     },
 
     footer_control_column_items: {
-        textAlign: 'center',
-
         '@media screen and (max-width: 767px)': {
             width: '50px !important',
         },
