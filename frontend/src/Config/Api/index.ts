@@ -10,5 +10,6 @@ export enum APIPath {
 
     USER_INFO_ENDPOINT = '/users/info/',
 
-    CAPTURE_VOLUME = '/capture/volume/',
+    CAPTURE_VOLUME = '/users/capture/volume/',
+    CAPTURE_PREVIOUS_SONG = '/users/capture/previous_song/',
 }

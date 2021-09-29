@@ -5,7 +5,7 @@ from mutagen.flac import FLAC
 
 from django.core.files.base import ContentFile
 
-from .models import Upload
+from .models import UploadModel
 from django.http import Http404
 
 
@@ -71,7 +71,7 @@ def flac_upload_handler(file):
     length = flac_dict.info.length
     sample_rate = flac_dict.info.sample_rate
 
-    database = Upload.objects.create(
+    database = UploadModel.objects.create(
         song_name=title,
         song_file=file,
         artist=artist,

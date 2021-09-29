@@ -7,6 +7,7 @@ export const SetVolumeInLocalStorage = async (volume: Number) => {
             throw new Error('Volume must be above 0.0');
         }
         case 0 <= Number(volume) && volume <= 1: {
+            // SyncVolume(Number(volume) * 100);
             localStorage.setItem('Howler_Volume', volume?.toString());
         }
     }

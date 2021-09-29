@@ -3,7 +3,7 @@ import FormData from 'form-data';
 
 import { APIPath } from '../../Config/Api';
 import { APIUrl } from '../../Config/App';
-import { GetJWTTokenInLocalStorage } from '../../Functions/LocalStorage/JWTCookie';
+import { GetJWTTokenInLocalStorage } from '../../Functions/Helpers/LocalStorage/JWTCookie';
 
 export const useMusicUpload = () => {
     const MusicUploadSingle = async (file: File) => {

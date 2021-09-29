@@ -1,6 +1,6 @@
 from django.contrib import admin
-from music.models import Upload
+from music.models import UploadModel
 
 # Register your models here.
 
-admin.site.register(Upload)
+admin.site.register(UploadModel)

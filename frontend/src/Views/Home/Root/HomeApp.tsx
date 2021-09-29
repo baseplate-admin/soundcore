@@ -35,7 +35,7 @@ import { useHowler } from '../../../Hooks/Howler/Hooks';
 export const HomePage = () => {
     const classes = useStyles();
 
-    const { CreateHowl } = useHowler();
+    const { CreateHowl, howlerArray } = useHowler();
 
     const dropDownRefArray = useRef<Array<HTMLDivElement>>([]);
     const dropDownElipsisIconArray = useRef<Array<HTMLSpanElement>>([]);
@@ -92,33 +92,34 @@ export const HomePage = () => {
         }
     };
 
-    const handleBoxClick = (src: string, index: number) => {
+    const handleBoxClick = (index: number) => {
         const newData = data?.[index];
-        howlerJsPlay(src, newData);
+        howlerJsPlay(newData);
     };
 
     const dropdownItem = useSpring({});
 
-    const howlerJsPlay = (
-        src: string,
-        data: {
-            song_name: string;
-            artist: string;
-            album_art: string;
-            sample_rate: string;
+    const howlerJsPlay = (data: {
+        song_name: string;
+        artist: string;
+        album_art: string;
+        sample_rate: string;
+        song_file: string;
+    }) => {
+        if (howlerArray.length !== 0) {
+            // Stop the last song and remove it
+            howlerArray[0]?.stop();
+            howlerArray?.shift();
         }
-    ) => {
         const name: string = data?.song_name ?? '';
         const artist: string = data?.artist ?? '';
         const image: string = `${MediaUrl}${data?.album_art}` ?? '';
         const sampleRate: string = data?.sample_rate ?? '';
+        const src: string = `${MediaUrl}${data?.song_file}`;
 
-        const sound = CreateHowl({
-            src,
-            data: { name, artist, image, sampleRate },
+        CreateHowl({
+            data: { name, artist, image, sampleRate, src },
         });
-
-        sound?.play();
     };
 
     const mappedSong = data?.map((music: any, index: number) => {
@@ -137,10 +138,7 @@ export const HomePage = () => {
                         <figure
                             className="image song-image-figure"
                             onClick={() => {
-                                handleBoxClick(
-                                    `${MediaUrl}${music?.song_file}`,
-                                    index
-                                );
+                                handleBoxClick(index);
                             }}
                         >
                             <div className="song-image preview">
@@ -163,10 +161,7 @@ export const HomePage = () => {
                                 <div
                                     className="column is-11"
                                     onClick={() => {
-                                        handleBoxClick(
-                                            `${MediaUrl}${music?.song_file}`,
-                                            index
-                                        );
+                                        handleBoxClick(index);
                                     }}
                                 >
                                     <div

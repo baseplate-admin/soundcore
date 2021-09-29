@@ -34,7 +34,7 @@ import {
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
 import { formWithInputBoxVariables } from '../../../Components/App/FormWithInputBox/variables';
-import { GetJWTTokenInLocalStorage } from '../../../Functions/LocalStorage/JWTCookie';
+import { GetJWTTokenInLocalStorage } from '../../../Functions/Helpers/LocalStorage/JWTCookie';
 
 // Yup for form validation
 import { IconColor } from '../../../Config/Colors/Icons';

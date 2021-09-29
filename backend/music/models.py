@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 
 
-class Upload(models.Model):
+class UploadModel(models.Model):
     song_name = models.CharField(max_length=1024, default="", unique=True)
     song_file = models.FileField(upload_to="songs/")
     artist = models.CharField(max_length=1024, default="", null=True)

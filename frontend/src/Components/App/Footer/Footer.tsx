@@ -25,25 +25,22 @@ import { humanizeSeconds } from '../../../Functions/Prettifier/HumanizeTime';
 import { useAppDispatch, useAppSelector } from '../../../Hooks/Store/Hooks';
 import {
     selectFooterState,
-    updateStatusToPlay,
-    updateStatusToPause,
     updateCurrentSeconds,
 } from '../../../Store/Redux/Slices/Footer';
 import {
     GetVolumeInLocalStorage,
     SetVolumeInLocalStorage,
-} from '../../../Functions/LocalStorage/HowlerVolume';
+} from '../../../Functions/Helpers/LocalStorage/HowlerVolume';
 import {
     GetReversePlaybackStatus,
     SetReversePlaybackStatus,
-} from '../../../Functions/LocalStorage/IsPlaybackReversed';
+} from '../../../Functions/Helpers/LocalStorage/IsPlaybackReversed';
 import { IconColor } from '../../../Config/Colors/Icons';
 import { useHowler } from '../../../Hooks/Howler/Hooks';
 
 export const Footer = () => {
     const classes = useStyles();
-    const howlerState: Howl[] = []; // A little hack untill i get context working
-    // const { howlerState } = useHowler();
+    const { howlerArray, HandlePlayPause, HandlePreviousSong } = useHowler(); // A little hack untill i get context working
 
     const dispatch = useAppDispatch();
     const footerState = useAppSelector(selectFooterState);
@@ -148,34 +145,8 @@ export const Footer = () => {
         );
     };
 
-    const handlePlayPauseClick = () => {
-        // Create a new howler object
-        const sound: Howl = howlerState[0];
-        console.log(howlerState);
-        // Song might be null if User didn't click anything
-        switch (sound) {
-            case undefined: {
-                console.error('No song is playing');
-                break;
-            }
-            default: {
-                if (footerState?.song?.global?.playing && sound?.playing()) {
-                    // Means playing
-                    dispatch(updateStatusToPause());
-                    sound?.pause();
-                } else if (
-                    !footerState?.song?.global?.playing &&
-                    !sound?.playing()
-                ) {
-                    // Means paused
-                    dispatch(updateStatusToPlay());
-                    sound?.play();
-                }
-            }
-        }
-    };
     const handleSongSeekInputMouseMove = (e: MouseEvent<HTMLInputElement>) => {
-        const sound: Howl = howlerState[0];
+        const sound: Howl = howlerArray[0];
 
         // Make the tippy container visible.
 
@@ -196,7 +167,7 @@ export const Footer = () => {
 
     const handleSongSeekInputChange = (e: FormEvent<HTMLInputElement>) => {
         // Create a new howler object
-        const sound: Howl = howlerState[0];
+        const sound: Howl = howlerArray[0];
 
         switch (sound) {
             case undefined: {
@@ -614,6 +585,7 @@ export const Footer = () => {
                     >
                         <div
                             className={`column is-1 has-text-centered ${classes?.footer_control_column_items}`}
+                            onClick={HandlePreviousSong}
                             //  onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')"
                         >
                             <Tippy
@@ -647,9 +619,7 @@ export const Footer = () => {
                                                 style={{
                                                     transform: 'scale(2)',
                                                 }}
-                                                onClick={() => {
-                                                    handlePlayPauseClick();
-                                                }}
+                                                onClick={HandlePlayPause}
                                             />
                                         </span>
                                     </Tippy>
@@ -668,9 +638,7 @@ export const Footer = () => {
                                                 style={{
                                                     transform: 'scale(2)',
                                                 }}
-                                                onClick={() => {
-                                                    handlePlayPauseClick();
-                                                }}
+                                                onClick={HandlePlayPause}
                                             />
                                         </span>
                                     </Tippy>
