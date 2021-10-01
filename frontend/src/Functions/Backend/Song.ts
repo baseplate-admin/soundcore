@@ -27,4 +27,3 @@ export const PostPreviousSong = async (name: string) => {
         console.log('Backend Previous Song Synced');
     }
 };
-

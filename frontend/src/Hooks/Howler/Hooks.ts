@@ -1,3 +1,5 @@
+// MNajor BUG: If i post song previous it will send backend request and it will forever loop
+
 import axios from 'axios';
 import { Howl } from 'howler';
 import { useAppDispatch, useAppSelector } from '../Store/Hooks';
@@ -23,6 +25,7 @@ interface IHowlCreateObject {
         src: string;
     };
 }
+// Global Song Variable
 const howlerArray: Howl[] = [];
 
 export const useHowler = () => {
@@ -89,14 +92,33 @@ export const useHowler = () => {
                 const _sound = CreateHowl({
                     data: { name, artist, image, sampleRate, src },
                 });
-                _sound?.play();
-                PostPreviousSong(name);
-                howlerArray.push(sound);
+                if (howlerArray?.length === 0) {
+                    // No previous song played. So New instance
+                    _sound?.play();
+                    PostPreviousSong(name);
+                    howlerArray?.push(_sound);
+                } else if (howlerArray?.length > 0) {
+                    // The array is not empty. Stop the previous songs and dont post to backend
+                    const previous_song = howlerArray[0];
+                    previous_song?.stop();
+                    howlerArray?.shift();
+                    _sound?.play();
+                }
             },
         });
-        sound?.play();
-        PostPreviousSong(name);
-        howlerArray.push(sound);
+        if (howlerArray?.length === 0) {
+            // No previous song played. So New instance
+            sound?.play();
+            PostPreviousSong(name);
+            howlerArray?.push(sound);
+        } else if (howlerArray?.length > 0) {
+            // The array is not empty. Stop the previous songs and dont post to backend
+            const previous_song = howlerArray[0];
+            previous_song?.stop();
+            howlerArray?.shift();
+
+            sound?.play();
+        }
         return sound;
     };
 
@@ -108,25 +130,43 @@ export const useHowler = () => {
 
         const token = GetJWTTokenInLocalStorage();
 
-        if (!token) {
+        if (token) {
+            const config = {
+                headers: {
+                    'Content-Type': `application/json`,
+                    Authorization: `Bearer ${token}`,
+                },
+            };
+            axios
+                .get(url, config)
+                .then((res) => {
+                    const name: string =
+                        res?.data[0]?.previous_song.song_name ?? '';
+                    const artist: string =
+                        res?.data[0]?.previous_song.artist ?? '';
+                    const image: string =
+                        res?.data[0]?.previous_song.album_art ?? '';
+                    const sampleRate: string =
+                        res?.data[0]?.previous_song.sample_rate ?? '';
+
+                    const src =
+                        `${MediaUrl}${res?.data[0]?.previous_song.song_file}` ??
+                        undefined;
+
+                    const __sound = CreateHowl({
+                        data: { name, artist, image, sampleRate, src },
+                    });
+                    __sound?.play();
+                    howlerArray.push(__sound);
+                })
+                .catch((e) => {
+                    console.error(`Cannot get previous song | Reason : ${e}`);
+                });
+        } else {
             console.error(
                 'Cannot Get Previous Song | Reason : Token Not Found'
             );
         }
-        const config = {
-            headers: {
-                'Content-Type': `application/json`,
-                Authorization: `Bearer ${token}`,
-            },
-        };
-        axios
-            .get(url, config)
-            .then((res) => {
-                console.log(res.data[0]);
-            })
-            .catch((e) => {
-                console.error(`Cannot get previous song | Reason : ${e}`);
-            });
     };
 
     const HandlePlayPause = () => {

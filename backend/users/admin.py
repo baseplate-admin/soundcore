@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import CapturePreviousSongModel
+
+from users.models import UserDatabase
 
 # Register your models here.
-admin.site.register(CapturePreviousSongModel)
+admin.site.register(UserDatabase)

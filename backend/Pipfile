@@ -11,6 +11,7 @@ djangorestframework = "*"
 whitenoise = {extras = ["brotli"], version = "*"}
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
+pytz = "*"
 
 [dev-packages]
 black = "*"
