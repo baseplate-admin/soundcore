@@ -27,7 +27,8 @@ import {
     SpinnerComponent,
 } from '../../../Components/Spinners/Spinners';
 
-import { randomEmoji } from '../../../Functions/RandomPicker/RandomEmojis';
+import { randomEmoji } from '../../../Functions/Helpers/RandomEmojiPicker/RandomEmojis';
+
 import { MdPlaylistAdd } from 'react-icons/md';
 import { IconColor } from '../../../Config/Colors/Icons';
 import { useHowler } from '../../../Hooks/Howler/Hooks';

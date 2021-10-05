@@ -19,7 +19,7 @@ import {
 } from '../../../Store/Redux/Slices/Navbar';
 import { Fragment, useState } from 'react';
 import { useGetUserQuery } from '../../../Store/Redux/Services/GetUser';
-import { GetImageFromLibravatarByEmail } from '../../../Functions/Libravatar/GetImage';
+import { GetImageFromLibravatarByEmail } from '../../../Functions/Helpers/Libravatar/GetImage';
 import {
     IoLogOutOutline,
     IoMenuOutline,
