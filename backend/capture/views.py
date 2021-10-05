@@ -21,19 +21,21 @@ class CapturePreviousSong(APIView):
             database = UserDatabase.objects.get(user=request.user.id)
             index = database.previous_song_index
 
-            if not index > CapturePreviousSongModel.objects.all().count()-1:
+            if not index > CapturePreviousSongModel.objects.all().count() - 1:
                 database.previous_song_index = F("previous_song_index") + 1
                 database.save()
             else:
                 index = CapturePreviousSongModel.objects.all().count() - 1
-            data = CapturePreviousSongModel.objects.filter(user=request.user.id).order_by('-id')[index]
-            serializer = CapturePreviousSongGetSerializer(data, many=False)
+            data = CapturePreviousSongModel.objects.filter(
+                user=request.user.id
+            ).order_by("-id")[index]
+            serializer = CapturePreviousSongSerializer(data, many=False)
             return Response(serializer.data)
 
         return Response(status=402)
 
     def post(self, request):
-        serializer = CapturePreviousSongPostSerializer(
+        serializer = CapturePreviousSongSerializer(
             data=request.data, many=False, context={"request": request}
         )
         if serializer.is_valid():
@@ -50,16 +52,16 @@ class CaptureVolume(APIView):
     def get(self, request):
         if UserDatabase.objects.filter(user=request.user.id).exists():
             data = UserDatabase.objects.get(user=request.user.id)
-            serializer = CaptureVolumeGetSerializer(data)
+            serializer = CaptureVolumeSerializer(data)
             return Response(serializer.data)
 
         return Response(status=402)
 
     def post(self, request):
-        serializer = CaptureVolumePostSerializer(
-            data=request.data, many=False, context={"request": request}
+        serializer = CaptureVolumeSerializer(
+            data=request.data, context={"request": request}
         )
-        
+
         if serializer.is_valid():
             serializer.save()
             return Response(200)

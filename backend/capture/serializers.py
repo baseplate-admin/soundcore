@@ -6,8 +6,13 @@ from users.models import UserDatabase
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class CapturePreviousSongPostSerializer(serializers.Serializer):
-    last_song = serializers.CharField(max_length=1024)  # Max Length from music.models
+class CapturePreviousSongSerializer(serializers.ModelSerializer):
+    previous_song = MusicSerializer(many=False, read_only=True)
+    last_song = serializers.CharField()
+
+    class Meta:
+        model = CapturePreviousSongModel
+        fields = ("previous_song", "last_song")
 
     def create(self, validated_data):
         request = self.context["request"]
@@ -60,20 +65,12 @@ class CapturePreviousSongPostSerializer(serializers.Serializer):
             return database
 
 
-class CapturePreviousSongGetSerializer(serializers.ModelSerializer):
-    previous_song = MusicSerializer(many=False, read_only=True)
+class CaptureVolumeSerializer(serializers.ModelSerializer):
+    volume = serializers.FloatField()  # Float between 1 and 0
 
     class Meta:
-        model = CapturePreviousSongModel
-        fields = ("previous_song",)
-        # exclude = (
-        #     "id",
-        #     "user",
-        # )
-
-
-class CaptureVolumePostSerializer(serializers.Serializer):
-    volume = serializers.FloatField()  # Float between 1 and 0
+        model = UserDatabase
+        fields = ("volume",)
 
     def create(self, validated_data):
         request = self.context["request"]
@@ -86,9 +83,3 @@ class CaptureVolumePostSerializer(serializers.Serializer):
         database.volume = validated_data["volume"]
         database.save()
         return database
-
-
-class CaptureVolumeGetSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UserDatabase
-        fields = ("volume",)
