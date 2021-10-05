@@ -10,7 +10,7 @@ class UserDatabase(models.Model):
         default=1,
         validators=[
             # MaxValueValidator(UploadModel.objects.all().count()), # <- Causes Bug
-            MinValueValidator(1),
+            MinValueValidator(0),
         ],
     )
     volume = models.FloatField(

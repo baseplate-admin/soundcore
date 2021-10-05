@@ -21,15 +21,13 @@ class CapturePreviousSong(APIView):
             database = UserDatabase.objects.get(user=request.user.id)
             index = database.previous_song_index
 
-            if not index > CapturePreviousSongModel.objects.all().count():
+            if not index > CapturePreviousSongModel.objects.all().count()-1:
                 database.previous_song_index = F("previous_song_index") + 1
                 database.save()
             else:
-                index = CapturePreviousSongModel.objects.all().count()
-
-            data = CapturePreviousSongModel.objects.filter(user=request.user.id)[:index]
-            print(data)
-            serializer = CapturePreviousSongGetSerializer(data, many=True)
+                index = CapturePreviousSongModel.objects.all().count() - 1
+            data = CapturePreviousSongModel.objects.filter(user=request.user.id).order_by('-id')[index]
+            serializer = CapturePreviousSongGetSerializer(data, many=False)
             return Response(serializer.data)
 
         return Response(status=402)
@@ -61,6 +59,7 @@ class CaptureVolume(APIView):
         serializer = CaptureVolumePostSerializer(
             data=request.data, many=False, context={"request": request}
         )
+        
         if serializer.is_valid():
             serializer.save()
             return Response(200)

@@ -25,6 +25,7 @@ interface IHowlCreateObject {
         src: string;
     };
 }
+
 // Global Song Variable
 const howlerArray: Howl[] = [];
 
@@ -33,6 +34,86 @@ export const useHowler = () => {
     const footerState = useAppSelector(selectFooterState);
 
     let customInterval: ReturnType<typeof setInterval>;
+
+    const howlerOnEnd = async () => {
+        dispatch(updateCurrentSeconds(0));
+        clearInterval(customInterval);
+
+        const url = `${APIUrl}${APIPath?.RANDOM_SONG_ENDPOINT}`;
+        const res = await axios.get(url);
+
+        const name: string = res?.data?.song_name ?? '';
+        const artist: string = res?.data?.artist ?? '';
+        const image: string = res?.data?.album_art ?? '';
+        const sampleRate: string = res?.data?.sample_rate ?? '';
+
+        dispatch(
+            updateSongState({ data: { name, artist, image, sampleRate } })
+        );
+
+        const _sound = new Howl({
+            src: `${MediaUrl}${res?.data?.song_file}` ?? undefined,
+            html5: true,
+            preload: true,
+            autoplay: false,
+
+            onplayerror: async () => {
+                await howlerOnPlayError(_sound);
+            },
+            onload: async () => {
+                await howlerOnLoad(_sound);
+            },
+            onplay: async () => {
+                await howlerOnPlay(_sound);
+            },
+
+            onend: async () => {
+                await howlerOnEnd();
+            },
+        });
+
+        if (howlerArray?.length === 0) {
+            // No previous song played. So New instance
+            _sound?.play();
+            PostPreviousSong(name);
+            howlerArray?.push(_sound);
+        } else if (howlerArray?.length > 0) {
+            // The array is not empty. Stop the previous songs and dont post to backend
+            const previous_song = howlerArray[0];
+            previous_song?.stop();
+            howlerArray?.shift();
+
+            howlerArray.push(_sound); // Push to array
+            _sound?.play(); // Finally Play the song
+        }
+    };
+
+    const howlerOnPlay = async (sound: Howl) => {
+        dispatch(updateStatusToPlay());
+        const startInterval = async () => {
+            customInterval = setInterval(async () => {
+                if (sound?.playing()) {
+                    let currentPos = sound?.seek();
+                    dispatch(updateCurrentSeconds(Number(currentPos)));
+                }
+            }, 1000);
+        };
+        clearInterval(customInterval);
+        startInterval();
+    };
+
+    const howlerOnLoad = async (sound: Howl) => {
+        // Set total seconds in footer
+        dispatch(updateTotalSeconds(sound?.duration()));
+    };
+
+    const howlerOnPlayError = async (sound: Howl) => {
+        // HowlerJS might not play correctly on Chrome Mobile.
+        // A little hack to make it work
+        sound?.once('unlock', () => {
+            sound?.play();
+        });
+    };
 
     const CreateHowl = (props: IHowlCreateObject) => {
         const name: string = props?.data?.name ?? '';
@@ -50,60 +131,18 @@ export const useHowler = () => {
             preload: true,
             autoplay: false,
 
-            onplayerror: () => {
-                // HowlerJS might not play correctly on Chrome Mobile.
-                // A little hack to make it work
-                sound?.once('unlock', () => {
-                    sound?.play();
-                });
+            onplayerror: async () => {
+                await howlerOnPlayError(sound);
             },
-            onload: () => {
-                // Set total seconds in footer
-                dispatch(updateTotalSeconds(sound?.duration()));
+            onload: async () => {
+                await howlerOnLoad(sound);
             },
-            onplay: () => {
-                dispatch(updateStatusToPlay());
-                const startInterval = async () => {
-                    customInterval = setInterval(async () => {
-                        if (sound?.playing()) {
-                            let currentPos = sound?.seek();
-                            dispatch(updateCurrentSeconds(Number(currentPos)));
-                        }
-                    }, 1000);
-                };
-                clearInterval(customInterval);
-                startInterval();
+            onplay: async () => {
+                await howlerOnPlay(sound);
             },
 
             onend: async () => {
-                dispatch(updateCurrentSeconds(0));
-                clearInterval(customInterval);
-
-                const url = `${APIUrl}${APIPath?.RANDOM_SONG_ENDPOINT}`;
-                const res = await axios.get(url);
-
-                const name: string = res?.data?.song_name ?? '';
-                const artist: string = res?.data?.artist ?? '';
-                const image: string = res?.data?.album_art ?? '';
-                const sampleRate: string = res?.data?.sample_rate ?? '';
-
-                const src = `${MediaUrl}${res?.data?.song_file}` ?? undefined;
-
-                const _sound = CreateHowl({
-                    data: { name, artist, image, sampleRate, src },
-                });
-                if (howlerArray?.length === 0) {
-                    // No previous song played. So New instance
-                    _sound?.play();
-                    PostPreviousSong(name);
-                    howlerArray?.push(_sound);
-                } else if (howlerArray?.length > 0) {
-                    // The array is not empty. Stop the previous songs and dont post to backend
-                    const previous_song = howlerArray[0];
-                    previous_song?.stop();
-                    howlerArray?.shift();
-                    _sound?.play();
-                }
+                await howlerOnEnd();
             },
         });
         if (howlerArray?.length === 0) {
@@ -141,23 +180,55 @@ export const useHowler = () => {
                 .get(url, config)
                 .then((res) => {
                     const name: string =
-                        res?.data[0]?.previous_song.song_name ?? '';
+                        res?.data?.previous_song.song_name ?? '';
                     const artist: string =
-                        res?.data[0]?.previous_song.artist ?? '';
-                    const image: string =
-                        res?.data[0]?.previous_song.album_art ?? '';
+                        res?.data?.previous_song.artist ?? '';
+                    const image: string = `${MediaUrl}${
+                        res?.data?.previous_song.album_art ?? ''
+                    }`;
                     const sampleRate: string =
-                        res?.data[0]?.previous_song.sample_rate ?? '';
+                        res?.data?.previous_song.sample_rate ?? '';
 
-                    const src =
-                        `${MediaUrl}${res?.data[0]?.previous_song.song_file}` ??
-                        undefined;
+                    dispatch(
+                        updateSongState({
+                            data: { name, artist, image, sampleRate },
+                        })
+                    );
 
-                    const __sound = CreateHowl({
-                        data: { name, artist, image, sampleRate, src },
+                    const _sound = new Howl({
+                        src: `${MediaUrl}${res?.data?.previous_song.song_file}`,
+                        html5: true,
+                        preload: true,
+                        autoplay: false,
+
+                        onplayerror: async () => {
+                            await howlerOnPlayError(_sound);
+                        },
+                        onload: async () => {
+                            await howlerOnLoad(_sound);
+                        },
+                        onplay: async () => {
+                            await howlerOnPlay(_sound);
+                        },
+
+                        onend: async () => {
+                            await howlerOnEnd();
+                        },
                     });
-                    __sound?.play();
-                    howlerArray.push(__sound);
+
+                    if (howlerArray?.length === 0) {
+                        // No previous song played. So New instance
+                        howlerArray?.push(_sound);
+                        _sound?.play();
+                    } else if (howlerArray?.length > 0) {
+                        // The array is not empty. Stop the previous songs and dont post to backend
+                        const previous_song = howlerArray[0];
+                        previous_song?.stop();
+                        howlerArray?.shift();
+                        // Finally Play the song
+                        howlerArray.push(_sound);
+                        _sound?.play();
+                    }
                 })
                 .catch((e) => {
                     console.error(`Cannot get previous song | Reason : ${e}`);
