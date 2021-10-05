@@ -112,6 +112,7 @@ export const UploadSongPage = () => {
     };
 
     const { getRootProps, getInputProps } = useDropzone({
+        accept: '.mp3,.flac',
         onDrop,
     });
 
