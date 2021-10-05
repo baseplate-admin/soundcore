@@ -6,13 +6,8 @@ from users.models import UserDatabase
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class CapturePreviousSongSerializer(serializers.ModelSerializer):
-    previous_song = MusicSerializer(many=False, read_only=True)
+class CapturePreviousSongPostSerializer(serializers.Serializer):
     last_song = serializers.CharField()
-
-    class Meta:
-        model = CapturePreviousSongModel
-        fields = ("previous_song", "last_song")
 
     def create(self, validated_data):
         request = self.context["request"]
@@ -63,6 +58,14 @@ class CapturePreviousSongSerializer(serializers.ModelSerializer):
                     ).last()
 
             return database
+
+
+class CapturePreviousSongGetSerializer(serializers.ModelSerializer):
+    previous_song = MusicSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = CapturePreviousSongModel
+        fields = ("previous_song",)
 
 
 class CaptureVolumeSerializer(serializers.ModelSerializer):

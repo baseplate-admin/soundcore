@@ -27,6 +27,8 @@ SECRET_KEY = "django-insecure-n*c!^7bi!!g-_u*i6g(3l@hcs9a9z!9^vd!ua5ze4o(a%4zkxw
 DEBUG = True
 
 ALLOWED_HOSTS = []
+ALLOWED_HOSTS.append("zarif-ahnaf.duckdns.org")
+ALLOWED_HOSTS.append("127.0.0.1")
 
 
 # Application definition
@@ -37,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
@@ -146,6 +149,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:8000",
+    "https://zarif-ahnaf.duckdns.org",
 ]
 
 REST_FRAMEWORK = {

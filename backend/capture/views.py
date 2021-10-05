@@ -29,13 +29,13 @@ class CapturePreviousSong(APIView):
             data = CapturePreviousSongModel.objects.filter(
                 user=request.user.id
             ).order_by("-id")[index]
-            serializer = CapturePreviousSongSerializer(data, many=False)
+            serializer = CapturePreviousSongGetSerializer(data, many=False)
             return Response(serializer.data)
 
         return Response(status=402)
 
     def post(self, request):
-        serializer = CapturePreviousSongSerializer(
+        serializer = CapturePreviousSongPostSerializer(
             data=request.data, many=False, context={"request": request}
         )
         if serializer.is_valid():

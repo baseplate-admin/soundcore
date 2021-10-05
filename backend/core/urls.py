@@ -18,12 +18,14 @@ from django.urls import path
 from django.urls.conf import include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/v1/users/", include("users.urls")),
-    path("api/v1/music/", include("music.urls")),
-    path("api/v1/capture/", include("capture.urls")),
+    path("v1/users/", include("users.urls")),
+    path("v1/music/", include("music.urls")),
+    path("v1/capture/", include("capture.urls")),
 ]
 
 if settings.DEBUG:
