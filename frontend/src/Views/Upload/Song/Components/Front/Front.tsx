@@ -14,14 +14,13 @@ export const FrontPageChildComponent = (
 ) => {
     const classes = useStyle();
     return (
-        <Fragment>
+        <Fragment {...props?.getRootProps()}>
             <section className="hero">
                 <div className="hero-body">
                     <div className="container">
                         <div className="is-justify-content-center file is-large is-boxed has-name">
                             <label
                                 className={`file-label ${classes?.['file-label']}`}
-                                {...props?.getRootProps()}
                             >
                                 <input
                                     type="file"

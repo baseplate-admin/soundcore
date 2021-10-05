@@ -61,7 +61,7 @@ export const MainUploadChildComponent = (
                                     className="level-item has-text-centered "
                                     {...props?.getRootProps()}
                                 >
-                                    <div className="columns is-mobile ">
+                                    <div className="columns is-mobile">
                                         <div
                                             className="column is-narrow"
                                             style={{
