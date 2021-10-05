@@ -1,5 +1,3 @@
-// MNajor BUG: If i post song previous it will send backend request and it will forever loop
-
 import axios from 'axios';
 import { Howl } from 'howler';
 import { useAppDispatch, useAppSelector } from '../Store/Hooks';
@@ -44,7 +42,7 @@ export const useHowler = () => {
 
         const name: string = res?.data?.song_name ?? '';
         const artist: string = res?.data?.artist ?? '';
-        const image: string = res?.data?.album_art ?? '';
+        const image: string = `${MediaUrl}${res?.data?.album_art}` ?? '';
         const sampleRate: string = res?.data?.sample_rate ?? '';
 
         dispatch(
@@ -74,15 +72,17 @@ export const useHowler = () => {
 
         if (howlerArray?.length === 0) {
             // No previous song played. So New instance
-            _sound?.play();
-            PostPreviousSong(name);
             howlerArray?.push(_sound);
+            _sound?.play();
+
+            PostPreviousSong(name);
         } else if (howlerArray?.length > 0) {
             // The array is not empty. Stop the previous songs and dont post to backend
             const previous_song = howlerArray[0];
             previous_song?.stop();
             howlerArray?.shift();
 
+            PostPreviousSong(name);
             howlerArray.push(_sound); // Push to array
             _sound?.play(); // Finally Play the song
         }
