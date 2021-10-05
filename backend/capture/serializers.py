@@ -5,39 +5,59 @@ from rest_framework import serializers
 from users.models import UserDatabase
 from django.core.exceptions import ObjectDoesNotExist
 
+
 class CapturePreviousSongPostSerializer(serializers.Serializer):
     last_song = serializers.CharField(max_length=1024)  # Max Length from music.models
 
     def create(self, validated_data):
         request = self.context["request"]
-        
+
         previous_song = UploadModel.objects.get(
             song_name__exact=validated_data["last_song"]
         )
-        
         try:
-            previous_song_from_database = CapturePreviousSongModel.objects.filter(user=request.user.id).latest()
+            previous_song_from_database = CapturePreviousSongModel.objects.order_by(
+                "-id"
+            ).first()
         except ObjectDoesNotExist:
             previous_song_from_database = None
+        finally:
+            if previous_song_from_database is None:  # No previous object
+                database = CapturePreviousSongModel(
+                    previous_song=previous_song,
+                    user=request.user,
+                )
+                database.save()
 
-        if not previous_song == previous_song_from_database:
-            database = CapturePreviousSongModel(
-            previous_song=previous_song,
-            user=request.user,
-        )
-            database.save()
+                if not UserDatabase.objects.filter(user=request.user).exists():
+                    index = UserDatabase.objects.create(user=request.user)
+                else:
+                    index = UserDatabase.objects.get(user=request.user)
 
-            if not UserDatabase.objects.filter(user=request.user).exists():
-                index = UserDatabase.objects.create(user=request.user)
-            else:
-                index = UserDatabase.objects.get(user=request.user)
+                index.previous_song_index = 0
+                index.save()
 
-            index.previous_song_index = 0
-            index.save()
+            else:  # Previous object exists
+                if not previous_song == previous_song_from_database.previous_song:
+                    database = CapturePreviousSongModel(
+                        previous_song=previous_song,
+                        user=request.user,
+                    )
+                    database.save()
+
+                    if not UserDatabase.objects.filter(user=request.user).exists():
+                        index = UserDatabase.objects.create(user=request.user)
+                    else:
+                        index = UserDatabase.objects.get(user=request.user)
+
+                    index.previous_song_index = 0
+                    index.save()
+                else:
+                    database = CapturePreviousSongModel.objects.filter(
+                        user=request.user.id
+                    ).last()
 
             return database
-        
-        
 
 
 class CapturePreviousSongGetSerializer(serializers.ModelSerializer):

@@ -235,6 +235,11 @@ export const Navbar = () => {
                                         >
                                             <div
                                                 className={`dropdown-item ${classes?.['dropdown-item']}`}
+                                                style={{
+                                                    display: imageDropdownShown
+                                                        ? ''
+                                                        : 'none',
+                                                }}
                                             >
                                                 <div className="columns is-mobile">
                                                     <div className="column is-narrow ">

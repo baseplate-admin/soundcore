@@ -15,9 +15,8 @@ class CapturePreviousSongModel(models.Model):
         # if CapturePreviousSongModel.objects.count() >= (Upload.objects.count() / 4):
         #     CapturePreviousSongModel.objects.first().delete()
         super().save(*args, **kwargs)
-    class Meta:
-        get_latest_by = ('-id')
-        
+
+
 class CaptureTimestampModel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     timestamp = models.FloatField()
