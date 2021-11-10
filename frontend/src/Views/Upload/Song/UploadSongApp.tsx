@@ -13,11 +13,11 @@ import { IoCloseCircleOutline } from 'react-icons/io5';
 import { BsFileEarmarkArrowUp } from 'react-icons/bs';
 
 // Child Components
-import { PromiseSuccessChildComponent } from './Components/PromiseSuccess/PromiseSuccess';
-import { MainUploadChildComponent } from './Components/MainUpload/MainUpload';
-import { PromiseErrorChildComponent } from './Components/PromiseError/PromiseError';
-import { PromiseLoaderChildComponent } from './Components/PromiseLoader/PromiseLoader';
-import { FrontPageChildComponent } from './Components/Front/Front';
+import { PromiseSuccessChildComponent } from './_PromiseSuccess';
+import { MainUploadChildComponent } from './_MainUpload';
+import { PromiseErrorChildComponent } from './_PromiseError';
+import { PromiseLoaderChildComponent } from './_PromiseLoader';
+import { FrontPageChildComponent } from './_Front';
 import { ImFileMusic } from 'react-icons/im';
 import { IconColor } from '../../../Config/Colors/Icons';
 

@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { IoCloudOfflineOutline } from 'react-icons/io5';
-import { IconColor } from '../../../../../Config/Colors/Icons';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 interface IPromiseErrorChildComponent {
     errorFiles: Object[];

@@ -2,10 +2,10 @@ import prettyBytes from 'pretty-bytes';
 import { Fragment } from 'react';
 import { IoCloudDoneOutline } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
-import { RoutingPath } from '../../../../../Config/Routes';
+import { RoutingPath } from '../../../Config/Routes';
 import { createUseStyles } from 'react-jss';
-import { UploadSongVariables } from '../../variables';
-import { IconColor } from '../../../../../Config/Colors/Icons';
+import { UploadSongVariables } from './variables';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 interface ISuccessPromiseChildComponentProps {
     fileLength: number;
@@ -16,7 +16,7 @@ export const PromiseSuccessChildComponent = (
     props: ISuccessPromiseChildComponentProps
 ) => {
     const classes = useStyle();
-    
+
     return (
         <Fragment>
             <div className="columns is-mobile is-centered">

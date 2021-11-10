@@ -3,8 +3,8 @@ import { createUseStyles } from 'react-jss';
 import {
     randomSpinnerPicker,
     SpinnerComponent,
-} from '../../../../../Components/Spinners/Spinners';
-import { UploadSongVariables } from '../../variables';
+} from '../../../Components/Spinners/Spinners';
+import { UploadSongVariables } from './variables';
 
 export const PromiseLoaderChildComponent = () => {
     const [spinner, setSpinner] = useState('');

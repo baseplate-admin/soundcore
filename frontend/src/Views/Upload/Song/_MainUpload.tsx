@@ -2,11 +2,11 @@ import prettyBytes from 'pretty-bytes';
 import { Fragment } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { createUseStyles } from 'react-jss';
-import { UploadSongVariables } from '../../variables';
+import { UploadSongVariables } from './variables';
 import { animated, useSpring } from 'react-spring';
 import { useMediaQuery } from 'react-responsive';
-import useWindowDimensions from '../../../../../Hooks/Responsive/Hooks';
-import { IconColor } from '../../../../../Config/Colors/Icons';
+import useWindowDimensions from '../../../Hooks/Responsive/Hooks';
+import { IconColor } from '../../../Config/Colors/Icons';
 
 interface IMainUploadChildComponentProps {
     mappedSongs: Object[];
