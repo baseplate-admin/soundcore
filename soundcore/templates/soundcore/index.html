@@ -1,0 +1,502 @@
+{% extends 'base.html' %}
+{% load static thumbnail soundcore %}
+
+{% block fontblock %}
+    <link rel="stylesheet" href="{% static 'vendor/progressive-image/progressive-image.css' %}">
+    <!-- Progressive Image Loader for lazy loading images -->
+    <script src="{% static 'vendor/progressive-image/progressive-image.js' %}"></script>
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'soundcore/css/responsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'soundcore/css/main.css' %}"/>
+{% endblock %}
+
+{% block body %}
+    {% include 'components/top_navbar.html' %}
+    <div class="columns is-mobile" style="min-height:calc(100vh - 140px); margin-bottom: 0;max-height: 1vh">
+        <div class="column is-narrow left_menu_wrapper">
+            {% include 'components/left_sidebar.html' with active="home" %}
+        </div>
+        <div class="column right-column">
+            <div class="grid-container">
+                {% for i in musics %}
+                    <div class="grid-item">
+                        <div class="box grid-box" onmouseleave="handleDropdownHide({{ i.id }})"
+                             onmouseenter="handleDropdownShow({{ i.id }})">
+
+                            <figure class="image song-image-figure" onclick="handleSongItemClick({{ i.id }})">
+                                {% thumbnail i.album_art "200x200" crop="center" as im %}
+                                    <a id="song-image-{{ i.id }}"
+                                       href="{{ im.url }}"
+                                       class="progressive replace disabled_link">
+                                {% endthumbnail %}
+                                {% thumbnail i.album_art "20x20" crop="center" as im %}
+
+                                    <img height="{{ im.height }}"
+                                         width="{{ im.width }}" class="song-image preview"
+                                         alt="song-image"
+                                         src="{{ im.url }}">
+                                    </a>
+                                {% endthumbnail %}
+                            </figure>
+                            <div class="song-description">
+                                <div class="columns is-mobile" style="width: 200px">
+                                    <div class="column is-11 ">
+                                        <div class="box"
+                                             style="background-color: transparent;padding-right:0">
+                                            <p class="title is-size-5 song-title"
+                                               id="song-name-{{ i.id }}">{{ i.song_name }}</p>
+                                            <p class="subtitle is-size-6 song-artist"
+                                               id="song-artist-{{ i.id }}">{{ i.artist }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="column is-1 is-hidden dropdown-icon-wrapper-{{ i.id }}">
+                                        <div class="dropdown is-right song-dropdown-{{ i.id }}">
+                                            <div class="dropdown-trigger">
+                                                <span id="dropdown-icon-wrapper-{{ i.id }}"
+                                                      onclick="handleDropdownClick({{ i.id }})">
+                                                    <ion-icon
+                                                            style="pointer-events: none"
+                                                            class="dropdown__icon__{{ i.id }}"
+                                                            name="ellipsis-vertical"
+                                                    ></ion-icon>
+                                                </span>
+                                            </div>
+                                            <div class="dropdown-menu" role="menu">
+                                                <div class="dropdown-content"
+                                                     style="background-color: #161616 ">
+                                                    <div class="dropdown-item" style="color:#e0e0ec"></div>
+                                                    <div class="dropdown-item" style="color:#e0e0ec"></div>
+
+                                                    <!--<hr class="dropdown-divider">-->
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script async>
+                                            anime({
+                                                targets: `.dropdown__icon__{{ i.id }}`,
+                                                color: '#e0e0ec',
+                                                scale: 0.7,
+                                                paddingTop: 30,
+
+                                            })
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="is-hidden" id="song-sample-rate-{{ i.id }}">{{ i.sample_rate }}</div>
+                    <div class="is-hidden" id="song-file-format-{{ i.id }}">{{ i.mime_type }}</div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <footer class="footer_item" style="	transform: translateY(8px);">
+        <div class="columns is-mobile footer_column">
+            <div class="column footer_info_column  is-3">
+                <article class="media">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img id="footer-song-image" alt=""
+                                 src="https://bulma.io/images/placeholders/128x128.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p class="footer_info">
+                                <strong id="footer-song-name">Song Name</strong> | <small
+                                    id="footer-song-artist">Artist</small> | <small
+                                    id="footer-song-sample-rate">
+                                Sample
+                                Rate </small>
+                            </p>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+            <div class="column footer_control_column">
+                <div class="columns is-mobile is-centered footer_control_column_wrapper">
+                    <div class="column is-1 has-text-centered previous_song_wrapper footer_control_column_items"
+                         onclick="axiosGetPreviousSong('{% url 'user_previous_song_capture' %}')">
+                        <ion-icon class="previous_icon" name="play-skip-back-circle-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.previous_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 2,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                    <div class="column is-1 is-offset-1 has-text-centered play_pause_wrapper footer_control_column_items"
+                         onclick="howlerJsPlayPause()">
+                        <ion-icon class="play_icon" id="play_icon"
+                                  name="play-circle-outline"></ion-icon>
+                        <ion-icon name="pause-circle-outline" id="pause_icon"
+                                  class="pause_icon"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.play_icon, .pause_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 2,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                    <div class="column is-1 is-offset-1 next_song_wrapper has-text-centered footer_control_column_items"
+                         onclick="axiosGetRandomSong('{% url 'random_song_generator' %}')">
+                        <ion-icon class="skip_icon" name="play-skip-forward-circle-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.skip_icon',
+                                scale: 2,
+                                color: "#FFFFFF",
+                                duration: 1,
+                                translateY: 2,
+                                easing: 'linear',
+                            })
+                        </script>
+                    </div>
+                </div>
+                <div class="columns is-mobile">
+                    <div class="column is-narrow pre_input">
+                        0:00
+                    </div>
+                    <div class="column ">
+                        <div class="footer_input_anchor">
+                            <progress id='slider_progress' class="progress is-small is-info" value="0"
+                                      max="100"></progress>
+                            <input id="transparent_slider"
+                                   onchange="handleSliderInputChange(this.value)"
+                                   oninput="handleSliderInputChange(this.value)"
+                                   class="slider" step=".01"
+                                   min="0" max="100" value="0"
+                                   type="range">
+                        </div>
+                    </div>
+                    <div class="column is-narrow post_input" id="total_duration">
+                        0:00
+                    </div>
+                </div>
+            </div>
+            <div class="column is-hidden-mobile is-3 ">
+                <div class="columns is-mobile volume_control_column">
+                    <div class="column is-2 is-offset-2">
+                        <ion-icon class="volume__icon" name="volume-high-outline"></ion-icon>
+                        <script async>
+                            anime({
+                                targets: '.volume__icon',
+                                color: '#FFFFFF',
+                                translateY: -6,
+                                translateX: 22,
+                                scale: 1.5
+                            })
+                        </script>
+                    </div>
+                    <div class="column ">
+                        <div class="volume_anchor">
+                            <progress class="progress is-small volume_progress is-info" value="0" max="100"></progress>
+                            <input class="slider volume_slider" oninput="handleVolumeInputChange(this.value)"
+                                   onchange="handleVolumeInputChange(this.value)" step="1"
+                                   min="0" max="100" value="0"
+                                   type="range">
+                        </div>
+                    </div>
+                    <div class="column is-2 is-offset-1">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock %}
+
+{% block afterbody %}
+
+    <!-- Axios for Posting and Getting Data -->
+    <script src="{% static 'vendor/axios/dist/axios.min.js' %}"></script>
+    <script src="{% static 'soundcore/js/axiosHelperFunctions.js' %}"></script>
+
+    <!-- HowlerJS for Playing cross browser audio -->
+    <script src="{% static 'vendor/howler/howler.js' %}"></script>
+    <script async>
+        /*
+            Howler JS functions
+            Powered by lodash
+         */
+        let duration;
+        let customInterval;
+        let sound;
+
+        const howlerArray = [];
+        const howlerJsPlayIntervalArray = [];
+        const howlerJsDurationArray = [];
+
+        const howlerJsPlay = async (id) => {
+            /* Handles the play.
+                So if you call sound.play(). This function should handle that
+           */
+            // Update Footer Items
+            await updateFooterBoilerPlate(id)
+
+            {% if user.is_authenticated %}
+                // Add songs to previous list
+                const previousUrl = '{% url 'user_previous_song_capture' %}'
+                await axiosPostPreviousSong(previousUrl, id)
+            {% endif %}
+            const srcArray = [];
+            const fileFormatArray = [];
+
+            const url = `{% url 'song_generator' %}?id=${id}`
+            const fileFormat = document.getElementById(`song-file-format-${id}`).innerText.toLowerCase()
+
+            // Add files to Array for HowlerJS to play
+            await addOrRemove(srcArray, url)
+            await addOrRemove(fileFormatArray, fileFormat)
+
+            if (_.size(howlerArray) === 0) {
+                soundObject = new Howl({
+                    src: srcArray,
+                    html5: true,
+                    format: fileFormatArray,
+                    preload: true,
+                    autoplay: false,
+                })
+
+                await addOrRemove(howlerArray, soundObject)
+            } else if (_.size(howlerArray) >= 0) {
+                playingSound = howlerArray.shift()
+                playingSound.stop()
+
+                soundObject = new Howl({
+                    src: srcArray,
+                    html5: true,
+                    format: fileFormatArray,
+                    preload: true,
+                    autoplay: false,
+                })
+
+                await addOrRemove(howlerArray, soundObject)
+            }
+            sound = _.first(howlerArray)
+
+            // Set duration
+            sound.on('load', async () => {
+                await howlerJsOnLoad()
+            })
+            // Set Play Speed
+            sound.on('play', async () => {
+                await howlerJsPlayInterval(id)
+            })
+            // Set Player End Event
+            sound.on('end', async () => {
+                await howlerJsOnFinish()
+            })
+            // Play Exception Handler
+            sound.on('loaderror', () => {
+                sound.once('unlock', () => {
+                    sound.play();
+                });
+            })
+            // Play button change Events
+            document.getElementById('play_icon').classList.add('is-hidden')
+            document.getElementById('pause_icon').classList.remove('is-hidden')
+
+            sound.play()
+        }
+
+        // Global Variable for executing a function once
+        let onceFunctionBoolean = false;
+
+        const howlerJsPlayPause = async () => {
+            if (_.size(howlerArray) >= 1) {
+                sound = _.first(howlerArray)
+
+                if (sound.playing()) {
+                    // Song is playing
+                    document.getElementById('play_icon').classList.remove('is-hidden')
+                    document.getElementById('pause_icon').classList.add('is-hidden')
+
+                    sound.pause()
+                } else if (!sound.playing()) {
+                    // Song is not playing
+                    document.getElementById('play_icon').classList.add('is-hidden')
+                    document.getElementById('pause_icon').classList.remove('is-hidden')
+                    {%  if user.is_authenticated %}
+                        // Execute the function only once
+                        const onceFunction = () => {
+                            if (!onceFunctionBoolean) {
+                                // Get sound duration from progress element
+                                const progressElement = document.querySelector('#transparent_slider')
+                                const math = sound.duration() / 100 * progressElement.value
+                                sound.play()
+                                sound.seek(math)
+                            } else if (onceFunctionBoolean) {
+                                sound.play()
+                            }
+                        }
+                        onceFunction()
+                        onceFunctionBoolean = true
+                    {% else %}
+                        sound.play()
+                    {% endif %}
+                }
+            } else if (_.size(howlerArray) < 1) {
+                console.log("No Song Playing")
+            }
+        }
+
+        const howlerJsOnLoad = async () => {
+            sound = _.first(howlerArray)
+            const element = document.getElementById('total_duration');
+            element.innerText = formatTime(sound.duration())
+            await mainProgressTippy(sound)
+
+        }
+
+        const howlerJsPlayInterval = async (id) => {
+            const startInterval = async () => {
+                sound = _.first(howlerArray)
+                customInterval = setInterval(async () => {
+                    if (sound.playing()) {
+                        updateFooterControl()
+                        {% if user.is_authenticated %}
+                            const djangoUrl = '{% url 'user_last_song_capture' %}'
+                            await axiosPostLastSong(djangoUrl, id, sound.seek(), sound.duration())
+                        {% endif %}
+                    }
+                }, 1000)
+            }
+            clearInterval(customInterval);
+            await startInterval()
+            duration = 0;
+        }
+        const howlerJsOnFinish = async () => {
+            sound = _.first(howlerArray)
+            duration = 0;
+            clearInterval(customInterval)
+
+            const preInputElement = document.querySelector('.pre_input')
+            const sliderElement = document.querySelector('#slider_progress')
+            const progressElement = document.querySelector('#transparent_slider')
+
+
+            sliderElement.value = 0
+            progressElement.value = 0
+            preInputElement.innerText = formatTime(0)
+            const djangoUrl = '{% url 'random_song_generator' %}'
+            // Call a random song from the model.
+            await axiosGetRandomSong(djangoUrl)
+        }
+    </script>
+    <!-- Handle Volume Slider Change -->
+    <script src="{% static 'soundcore/js/sliderChangeHandlers.js' %}"></script>
+
+    <!-- Jquery to modern JS -->
+    <script src="{% static 'soundcore/js/jqueryToModern.js' %}"></script>
+
+    <!-- Some useful lodash Functions -->
+    <script src="{% static 'soundcore/js/lodashFunctions.js' %}"></script>
+
+    <!-- On DOM load execute some functions -->
+    <script src="{% static 'soundcore/js/onDomLoad.js' %}"></script>
+
+    <!-- Format Time To H:M:S -->
+    <script src="{% static 'soundcore/js/timeFormatFunction.js' %}"></script>
+
+    <script defer>
+        const handleSongItemClick = async (id) => {
+            await howlerJsPlay(id)
+        }
+    </script>
+    <script src="{% static 'soundcore/js/footerUpdateContent.js' %}"></script>
+
+    <!-- TippyJS Production -->
+    <script src="{% static 'vendor/popper/popper.js' %}"></script>
+    <script src="{% static 'vendor/tippy/tippy-bundle.umd.min.js' %}"></script>
+    <link href="{% static 'vendor/tippy/backdrop.css' %}" rel="stylesheet"/>
+    <link href="{% static 'vendor/tippy/shift_away.css' %}" rel="stylesheet"/>
+    <script src="{% static 'soundcore/js/tippyHelperFunctions.js' %}"></script>
+
+    <script async>
+        const volumeMediaQueryListener = window.matchMedia('(max-width: 767px)')
+
+        const watchMediaQueryFunctionVolume = async (event) => {
+            if (event.matches) {
+                // Mobile Version
+                await handleSliderInputChange(100)
+            } else if (!event.matches) {
+                // Desktop Version
+                // Sets Volume to zero.
+                {% if user.is_authenticated %}
+                    const setHowlerVolumeToZero = () => {
+                        // Sets the volume to 0 on load
+                        Howler.volume(0.00)
+                    }
+                    onDomLoadFunction(setHowlerVolumeToZero)
+
+                    const djangoUrl = '{% url 'user_volume_capture' %}'
+                    await axiosGetVolumeDataAndMapToVolume(djangoUrl)
+                {% endif %}
+            }
+        }
+        // Init the Function Once
+        watchMediaQueryFunctionVolume(volumeMediaQueryListener)
+        // Add listener
+        volumeMediaQueryListener.addListener(watchMediaQueryFunctionVolume)
+    </script>
+    <script>
+        const handleVolumeInputChange = async (value) => {
+
+            const setGlobalVolume = async (input) => {
+                Howler.volume(input / 100)
+            }
+            const volume = value
+
+            const volumeProgressElement = document.querySelector('.volume_progress')
+            volumeProgressElement.value = volume
+            await setGlobalVolume(volume)
+            {% if user.is_authenticated %}
+                const djangoUrl = '{% url 'user_volume_capture' %}'
+                await axiosPostVolumeData(djangoUrl, value)
+            {% endif %}
+        }
+    </script>
+    <script>
+        const handleDropdownShow = (id) => {
+            const element = `.dropdown-icon-wrapper-${id}`
+            document.querySelector(element).classList.remove('is-hidden')
+        }
+        const handleDropdownHide = (id) => {
+            const element = `.dropdown-icon-wrapper-${id}`
+            document.querySelector(element).classList.add('is-hidden')
+            const dropdownElement = `.song-dropdown-${id}`
+
+            document.querySelector(dropdownElement).classList.remove('is-active')
+        }
+
+        const handleDropdownClick = (id) => {
+            const element = `.song-dropdown-${id}`
+
+            document.querySelector(element).classList.add('is-active')
+        }
+    </script>
+    <script>
+        {% if user.is_authenticated %}
+            onDomLoadFunction(() => {
+                const djangoUrl = '{% url 'user_last_song_capture' %}'
+                axiosGetLastSong(djangoUrl)
+            })
+        {% endif %}
+    </script>
+{% endblock %}

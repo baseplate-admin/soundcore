@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static thumbnail soundcore humanize %}
+
+{% block fontblock %}
+    <link rel="stylesheet" href="{% static 'vendor/typeface-nunito/index.css' %}">
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'soundcore_library/css/main.css' %}"/>
+    <link rel="stylesheet" href="{% static 'soundcore_library/css/responsive.css' %}"/>
+{% endblock %}
+
+
+{% block body %}
+    {% include 'components/top_navbar.html' %}
+    <div class="columns is-mobile ">
+        <div class="column is-narrow left_menu_wrapper">
+            {% include 'components/left_sidebar.html' with active='soundcore_library' %}
+        </div>
+        <div class="column right-column">
+            <section class="hero library-hero">
+                <div class="hero-body">
+                    <div class="title user-name">
+                        <div class="columns">
+                            <div class="column title_column" style="width:350px;height:100px">
+                                {% if data.count == 0 %}
+                                    No libraries for {{ request.user }}
+                                {% elif data.count == 1 %}
+                                    Showing library for {{ request.user }}
+                                {% elif data.count >= 2 %}
+                                    Showing libraries for {{ request.user }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="box library_item_wrapper">
+                {% if  data.count > 0 %}
+                    {% for i in data %}
+                        <a href="{% url 'library_item_show' short_url=i.short_form %}">
+                            <div>
+                                <section class="hero library_hero ">
+                                    <div class="columns is-mobile">
+                                        <div class="column is-narrow is-offset-1">
+                                            <div class="masonry">
+                                                {% for x in i.return_four_image %}
+                                                    <div class="masonry_items">
+                                                        {% thumbnail x.album_art "200x200" crop="center" as im %}
+                                                            <img src="{{ im.url }}" alt="{{ x.song_name }}">
+                                                        {% endthumbnail %}
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="column is-6 is-offset-1 library_hero_right_item">
+                                            <div class="item_hero_body">
+                                                <p class="item_title has-text-centered">{{ i.name }}</p>
+                                                <p class="item_subtitle has-text-centered">
+                                                    <strong>Songs:</strong>
+                                                    <small>{{ i.musics.all.count }}</small>
+                                                    |
+                                                    <strong>Time: </strong>
+                                                    <small>{{ i.count_total_length|format_seconds }}</small>
+                                                    |
+                                                    <strong>Last Modified: </strong>
+                                                    <small>{{ i.last_modified | naturaltime }}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                                <hr class="item_hr"/>
+                            </div>
+                        </a>
+                    {% endfor %}
+                {% elif data.count == 0 %}
+                    <div>
+                        <section class="hero has-text-centered" style="color:white">
+                            <p class="has-text-centered">Its Lonely Here. Click <a href="{% url 'library_generator' %}">here</a>
+                                to create a
+                                library.</p>
+                        </section>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block afterbody %}
+
+    <script src="{% static 'soundcore/js/jqueryToModern.js' %}"></script>
+    <script src="{% static 'soundcore_library/js/lodashFunctions.js' %}"></script>
+{% endblock %}

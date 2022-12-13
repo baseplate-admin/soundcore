@@ -1,0 +1,269 @@
+html {
+    background-color: black;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    overscroll-behavior: none; /* Disable Stupid pull to refresh */
+    height: 100%;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.login_button {
+    color: #eaeaea;
+    background-color: transparent;
+    border-color: #3b3838;
+    border-width: 1px;
+    transition: 0.4s;
+}
+
+.login_button:hover {
+    color: #a5a4a4;
+    background-color: #101010;
+    border-color: #3b3838;
+    border-width: 1px;
+}
+
+.left_menu_wrapper {
+    transform: translateY(-12px);
+}
+
+
+.top-navbar {
+    background-color: #161616;
+    color: white
+}
+
+.right-column {
+    background-color: #060606;
+    transform: translateX(-12px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12em, 1fr));
+    gap: 1em;
+    padding-top: 1em;
+}
+
+.grid-item {
+    font-size: 30px;
+    vertical-align: middle;
+    display: flex;
+    justify-content: center;
+}
+
+.grid-box {
+    background-color: transparent;
+    color: white
+}
+
+/*
+For some reason I dont want round soundcore_library_items.
+.song-image {
+    border-radius: 5px;
+}
+*/
+.song-description {
+    background-color: transparent;
+}
+
+.song-title {
+    white-space: nowrap;
+    width: 8em;
+    height: 1.3em;
+    color: #e0e0ec;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-artist {
+    white-space: nowrap;
+    width: 8em;
+    height: 1.3em;
+    color: #a1a1a2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-image-figure {
+    height: 200px;
+    width: 200px;
+}
+
+.login_button_wrapper {
+    transform: translateY(5px) translateX(-5px);
+}
+
+.brand_image > img {
+    transform: translateY(.6em) translateX(30px);
+}
+
+.user_image {
+    transform: translateY(10px) translateX(-10px);
+}
+
+.search_input_div {
+    display: flex;
+    justify-content: center;
+}
+
+.search_input_wrapper {
+    flex-grow: .4;
+    transform: translateY(5px);
+}
+
+.search_input {
+    background-color: #060606;
+    border: transparent;
+    color: white;
+    border-radius: 0;
+}
+
+.search_input::placeholder {
+    color: white;
+    opacity: 0.6;
+}
+
+.search_input_box_right {
+    background-color: #323232;
+    border-radius: 0;
+}
+
+.search_input_box_right_wrapper {
+    overflow: hidden;
+}
+
+/* This is active in outer scope */
+
+
+.footer_item {
+    background-color: #161616;
+}
+
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: transparent;
+    outline: none;
+}
+
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #485fc7;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border: black;
+    border-radius: 50%;
+    background: #485fc7;
+    cursor: pointer;
+}
+
+#slider_progress {
+    width: 98%;
+    transform: translateX(1%);
+}
+
+.footer_input_anchor {
+    position: relative;
+}
+
+.footer_input_anchor > progress {
+    position: absolute;
+}
+
+.footer_input_anchor > input {
+    position: absolute;
+    transform: translateY(-4px);
+}
+
+
+.pre_input {
+    transform: translateY(-9px);
+    color: white;
+    opacity: .4;
+}
+
+.post_input {
+    transform: translateY(-9px);
+    color: white;
+    opacity: .4;
+}
+
+.footer_info_column {
+    margin-left: 3vw;
+}
+
+.footer_info_column > .media > .media-left > p > img {
+    height: 60px;
+    width: 60px;
+}
+
+
+#footer-song-name, #footer-song-artist, #footer-song-sample-rate, .pre_input, .post_input {
+    color: white;
+    opacity: 0.85;
+}
+
+.left-menu {
+    height: 105% !important;
+}
+
+.volume_anchor {
+    position: relative;
+}
+
+.volume_progress {
+    position: absolute;
+    width: 98%;
+    transform: translateX(2%);
+}
+
+.volume_slider {
+    position: absolute;
+    transform: translateY(-2px);
+}
+
+.volume_anchor > .columns {
+    transform: translateY(40px)
+}
+
+.volume_control_column {
+    transform: translateY(40px);
+}
+
+.disabled_link {
+    pointer-events: none;
+}
+
+.progress.is-small {
+    height: 0.50rem;
+    transform: translateY(2px)
+}
+
+
+.play_pause_wrapper_anchor {
+    padding-bottom: 0;
+}

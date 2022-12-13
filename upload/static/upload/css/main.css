@@ -1,0 +1,73 @@
+ html {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            background-color: black;
+        }
+
+        .icon-box {
+            background-color: transparent;
+        }
+
+        .login-hero {
+            background-color: #060606;
+        }
+
+        .login-box {
+            background-color: #191b1f;
+        }
+
+        .file-cta {
+            background-color: #1d2124;
+            color: white;
+            border-color: transparent;
+        }
+
+        .file {
+            transform: translateY(-.8em);
+        }
+
+        .file-label:hover .file-cta {
+            background-color: #292d32;
+            border-color: transparent;
+            color: white
+        }
+
+        .file_list_box {
+            background: #1d2124;
+        }
+
+        #upload_box {
+            max-height: 10em;
+            overflow: scroll;
+            overflow-x: hidden;
+        }
+
+        #upload_box::-webkit-scrollbar {
+            display: none;
+        }
+
+        #upload_box {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+
+        html body .login-hero .hero-body .container .columns .column .login-box .button {
+            background-color: #2f323a;
+            border: none;
+            color: white;
+            transition: 0.4s;
+            font-family: "Nunito";
+            transform: translateY(-1.5em);
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .button:hover {
+            background-color: #24262d;
+            color: gray;
+            font-family: "Nunito";
+        }
+
+        .uploaded_items {
+            color: white;
+            text-align: center;
+        }

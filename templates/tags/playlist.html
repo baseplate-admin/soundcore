@@ -1,0 +1,34 @@
+{% comment %}
+    This HTML is anchored to Soundcore/templatetags/soundcore.py
+{% endcomment %}
+
+{#    "/soundcore/libraries/"|stringformat:"s"|add:i.short_form|stringformat:'s'|add:'/'#}
+
+{% for i in data %}
+    {% url 'library_item_show' short_url=i.short_form as library_url %}
+    {% if  library_url  == request.get_full_path %}
+        <div class="playlist is_icon_active">
+    {% else %}
+        <div class="playlist">
+    {% endif %}
+<a href="{% url 'library_item_show' short_url=i.short_form %}">
+    <div class="box icon_box">
+        <div class="columns is-mobile is-centered icon_box_column">
+            <div class="column is-2 is-offset-1">
+                <ion-icon class="playlist__icon" name="list-outline"></ion-icon>
+                <script async>
+                    anime({
+                        targets: '.playlist__icon',
+                        color: '#FFFFFF',
+                        scale: 1.6
+                    })
+                </script>
+            </div>
+            <div class="column icon_text">
+                {{ i.name }}
+            </div>
+        </div>
+    </div>
+</a>
+</div>
+{% endfor %}

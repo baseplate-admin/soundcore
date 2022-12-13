@@ -1,0 +1,37 @@
+@media screen and ( max-width: 767px) {
+    body {
+        position: relative;
+        overscroll-behavior: contain !important;
+    }
+
+    .search_input_wrapper {
+        display: none;
+    }
+
+    .footer_item {
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        height: 120px;
+    }
+
+    .footer_control_column {
+        margin-right: 1em !important;
+    }
+
+    .footer_control_column_items {
+        width: 50px !important;
+    }
+
+    .footer_info {
+        position: absolute;
+        bottom: 10px;
+        max-height: 3em;
+    }
+
+    .brand_image > img {
+        transform: translateY(.6em) translateX(20px) !important;
+    }
+
+}

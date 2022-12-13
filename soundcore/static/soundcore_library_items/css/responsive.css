@@ -1,0 +1,18 @@
+@media screen and ( max-width: 767px) {
+    .search_input_wrapper {
+        display: none;
+    }
+
+    .item_image {
+        transform: translateX(-3.6em);
+    }
+
+    .item_subtitle {
+        transform: translateY(5px) !important;
+    }
+
+    .library_item_wrapper {
+        transform: translateX(-12px);
+    }
+
+}

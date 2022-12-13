@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load humanize soundcore static thumbnail %}
+
+{% block fontblock %}
+    <link rel="stylesheet" href="{% static 'vendor/typeface-nunito/index.css' %}">
+{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'soundcore_library_create/css/responsive.css' %}"/>
+    <link rel="stylesheet" href="{% static 'soundcore_library_create/css/main.css' %}"/>
+{% endblock %}
+
+
+{% block body %}
+    {% include 'components/top_navbar.html' %}
+    <div class="columns is-mobile ">
+    <div class="column is-narrow left_menu_wrapper">
+        {% include 'components/left_sidebar.html' %}
+    </div>
+    <div class="column right-column">
+    <section class="hero library-hero">
+        <div class="hero-body">
+            <div class="title user-name">
+                <div class="columns">
+                    <div class="column title_column" style="width:350px;height:100px">
+                        <input type="text" class="name_input input" id='name_input' style="width: 80%"
+                               placeholder="Library Name"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="box library_item_wrapper">
+        {% for i in musics %}
+            <div onclick="handleClick({{ i.id }})" id="music_item_{{ i.id }}">
+                <section class="hero library_hero ">
+                    <div class="item_hero_body">
+                        <div class="columns is-mobile">
+                            <div class="column is-one-fifth-desktop is-two-fifths-mobile">
+                                <figure class="image item_image">
+                                    {% thumbnail i.album_art "200x200" crop="center" as im %}
+                                        <img alt="" src="{{ im.url }}">
+                                    {% endthumbnail %}
+                                </figure>
+                            </div>
+                            <div class="column  is-three-fifths-mobile is-four-fifths-desktop">
+                                <div class="item_title">
+                                    {{ i.song_name }}
+                                </div>
+                                <div class="item_subtitle">
+                                    <strong>{{ i.artist }}</strong> | <small
+                                        class="sample_rate">{{ i.sample_rate|intcomma }}KHz</small> |
+                                    <small>{{ i.length|format_seconds }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <hr class="item_hr"/>
+            </div>
+            {% comment %}
+            <!--<hr style="	background-color: #32363e"/>-->
+            {% endcomment %}
+        {% endfor %}
+        <div id="send-icon-wrapper">
+            <ion-icon class="send__icon" name="chevron-forward-circle-outline"></ion-icon>
+        </div>
+        <script>
+            anime({
+                targets: '.send__icon',
+                scale: 2,
+                color: '#00d1b2',
+            })
+        </script>
+    </div>
+
+{% endblock %}
+{% block afterbody %}
+    <script src="{% static 'vendor/axios/dist/axios.min.js' %}"></script>
+    <script>
+        const arr = []
+
+        const addOrRemove = (arr, val) => {
+            if (!_.includes(arr, val)) {
+                arr.push(val);
+            } else {
+                _.remove(arr, item => item === val);
+            }
+            //  console.log(arr);
+        }
+        const url = '{% url 'library_generator' %}'
+
+
+        const handleClick = (id) => {
+            const element = document.getElementById(`music_item_${id}`)
+            if (element.classList.contains('music-selected')) {
+                element.classList.remove('music-selected')
+                addOrRemove(arr, parseInt(id))
+            } else if (!element.classList.contains('music-selected')) {
+                element.classList.add('music-selected')
+                addOrRemove(arr, parseInt(id))
+            }
+        }
+
+        const sendIcon = document.getElementById('send-icon-wrapper')
+        sendIcon.addEventListener("click", async () => {
+            const inputData = document.getElementById('name_input').value
+
+            if (inputData) {
+                const jsonData = JSON.stringify({'array': arr, "name": inputData})
+
+                const res = await axios.post(url, jsonData, {
+                    headers: {
+                        "X-CSRFToken": '{{ csrf_token }}',
+                    }
+                })
+                if (res.status === 200) {
+                    location.reload(true)
+                }
+            }
+        })
+
+    </script>
+{% endblock %}

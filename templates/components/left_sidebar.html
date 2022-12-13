@@ -1,0 +1,87 @@
+{% load soundcore static %}
+<link rel="stylesheet" href="{% static 'left_sidebar/css/main.css' %}"/>
+
+<aside class="menu left-menu">
+    <div class="icons">
+
+        <a href="{% url 'home' %}">
+            {% if active == 'home' %}
+                <div class="box icon_box is_icon_active">
+            {% else %}
+                <div class="box icon_box">
+            {% endif %}
+            <div class="columns is-mobile icon_box_column">
+                <div class="column is-2 is-offset-1">
+                    <ion-icon class="home__icon" name="home-outline"></ion-icon>
+                    <script async>
+                        anime({
+                            targets: '.home__icon',
+                            color: '#FFFFFF',
+                            scale: 1.4
+                        })
+                    </script>
+                </div>
+
+                <div class="column icon_text">
+                    Home
+                </div>
+            </div>
+            </div>
+        </a>
+
+        <a href="{% url 'library_home' %}">
+            {% if active == 'soundcore_library' %}
+                <div class="box icon_box is_icon_active">
+            {% else %}
+                <div class="box icon_box">
+            {% endif %}
+
+            <div class="columns is-mobile icon_box_column">
+                <div class="column is-2 is-offset-1">
+                    <ion-icon class="library__icon" name="library-outline"></ion-icon>
+                    <script async>
+                        anime({
+                            targets: '.library__icon',
+                            color: '#FFFFFF',
+                            scale: 1.4,
+                        })
+                    </script>
+                </div>
+                <div class="column icon_text">
+                    Library
+                </div>
+            </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="playlist-wrapper">
+        <div class="playlist-add">
+            <div class="columns is-centered">
+                <div class="column">
+                    <a href="{% url 'library_generator' %}" class="add-icon-wrapper">
+                        <div class="add-icon-box">
+                            <ion-icon class="add__icon" name="add-outline"></ion-icon>
+                        </div>
+
+                    </a>
+                    <script>
+                        anime({
+                            targets: '.add__icon',
+                            color: '#FFFFFF',
+                            easing: 'linear',
+                            duration: 0,
+                            scale: 1.3,
+                            translateX: 3,
+                        })
+                    </script>
+                </div>
+            </div>
+        </div>
+        {% get_total_playlist %}
+    </div>
+</aside>
+
+<script async src="{% static 'left_sidebar/js/hamburgerEventListener.js' %}"></script>
+
+<script async src="{% static 'left_sidebar/js/eventMatcher.js' %}"></script>

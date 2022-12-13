@@ -1,0 +1,22 @@
+ html {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            background-color: black;
+        }
+
+        .icon-box {
+            background-color: transparent;
+        }
+
+        .login-hero {
+            background-color: #060606;
+        }
+
+        .login-box {
+            background-color: #191b1f;
+        }
+
+        .subtitle {
+            color: #92a3ab;
+            font-family: 'Nunito'
+        }

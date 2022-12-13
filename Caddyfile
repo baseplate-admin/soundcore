@@ -1,15 +1,18 @@
 zarif-ahnaf.duckdns.org {
-    handle /* {
-        reverse_proxy 127.0.0.1:3000
-
-    }
     handle_path /media/* {
         file_server browse {
-            root C:/Programming/soundcore/backend/media
+            hide songs
+            root C:/Programming/soundcore/media
         }
     }
 
-    handle /api/* {
-        reverse_proxy 127.0.0.1:8000
+    handle_path /* {
+        reverse_proxy localhost:8000 {
+        	@sendfile header X-Sendfile *
+            handle_response @sendfile {
+                rewrite {http.reverse_proxy.header.X-Sendfile}
+                file_server
+            }
+        }
     }
 }

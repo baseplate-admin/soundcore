@@ -1,0 +1,190 @@
+html {
+    background-color: black;
+    -ms-overflow-style: none; /* IE  and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+body {
+    height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.login_button {
+    color: #eaeaea;
+    background-color: transparent;
+    border-color: #3b3838;
+    border-width: 1px;
+    transition: 0.4s;
+}
+
+.login_button:hover {
+    color: #a5a4a4;
+    background-color: #101010;
+    border-color: #3b3838;
+    border-width: 1px;
+}
+
+.left_menu_wrapper {
+    transform: translateY(-12px);
+}
+
+
+.top-navbar {
+    background-color: #161616;
+    color: white
+}
+
+.right-column {
+    background-color: #060606;
+    transform: translateX(-12px);
+    height: 100vh;
+}
+
+
+.login_button_wrapper {
+    transform: translateY(10px);
+}
+
+.brand_image > img {
+    transform: translateY(.6em) translateX(30px);
+}
+
+.user_image {
+    transform: translateY(10px) translateX(-10px);
+}
+
+.search_input_div {
+    display: flex;
+    justify-content: center;
+}
+
+.search_input_wrapper {
+    flex-grow: .4;
+    transform: translateY(5px);
+}
+
+.search_input {
+    background-color: #060606;
+    border: transparent;
+    color: white;
+    border-radius: 0;
+}
+
+.search_input::placeholder {
+    color: white;
+    opacity: 0.6;
+}
+
+.search_input_box_right {
+    background-color: #323232;
+    border-radius: 0;
+}
+
+.search_input_box_right_wrapper {
+    overflow: hidden;
+}
+
+
+.library-hero {
+    background-color: transparent;
+    text-align: center;
+}
+
+
+.user-name {
+    color: white;
+    opacity: .9;
+}
+
+.title_column {
+    display: flex;
+    justify-content: center;
+}
+
+.item_hero_body {
+    padding: .6em
+}
+
+
+.library_item_wrapper {
+    background-color: #191b1f;
+    height: 74.5vh;
+    overflow-y: scroll;
+}
+
+.library_hero {
+    background-color: transparent;
+}
+
+.item_title {
+    color: white;
+    opacity: .9;
+    transform: translateY(5px);
+    max-height: 60px;
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: "Nunito", sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+}
+
+.item_subtitle {
+    color: white;
+    opacity: .7;
+    transform: translateY(30px);
+}
+
+.item_image > img {
+    width: 100px;
+    height: 100px;
+    transform: translateX(3.6em) translateY(.5em);
+
+}
+
+.item_subtitle > strong {
+    color: white;
+
+}
+
+.music-selected {
+    background-color: #282c32;
+}
+
+.item_hr {
+    background-color: #32363e;
+}
+
+#send-icon-wrapper {
+    position: absolute;
+    bottom: 65px;
+    right: 50px;
+    cursor: pointer;
+}
+
+.name_input {
+    background-color: transparent;
+    border: none;
+    color: white;
+    opacity: 1;
+}
+
+.name_input::placeholder {
+    color: white;
+    opacity: 0.9;
+    text-align: center;
+}
+
+.name_input:focus {
+    border: none;
+    box-shadow: none;
+}
+
+.name_input:focus::placeholder {
+    opacity: 0
+}

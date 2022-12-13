@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Roboto Font import -->
+    <link rel="stylesheet" href="{% static 'vendor/typeface-roboto/index.css' %}">
+    {% block fontblock %} {% endblock %}
+
+    <!-- Icon Import Before Everything -->
+    <script type="module" src="{% static 'vendor/ionicons/ionicons.esm.js' %}"></script>
+
+    <!-- Ionicons Pointer -->
+    <link rel="stylesheet" href="{% static 'core/css/disable_ionicons_pointer.css' %}"/>
+    <link rel="stylesheet" href="{% static 'core/css/enable_hamburger_pointer.css' %}"/>
+
+    <!-- AnimeJS import for resizing Everything :) -->
+    <script src="{% static 'vendor/anime/anime.min.js' %}"></script>
+
+    <!-- We need Bulma For Everything. So a global import is good -->
+    <link rel="stylesheet" href="{% static 'vendor/bulma/bulma.css' %}">
+
+    <!-- Lodash for state management and superpower -->
+    <script src="{% static 'vendor/lodash/lodash.js' %}"></script>
+
+    {% block head %}{% endblock %}
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+</head>
+<body>
+<!-- This CSRF Token will be called by Axios -->
+{% csrf_token %}
+{% block body %} {% endblock %}
+{% block afterbody %} {% endblock %}
+</body>
+
+</html>

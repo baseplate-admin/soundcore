@@ -1,0 +1,63 @@
+        html {
+            overflow-x: hidden;
+            overflow-y: hidden;
+            background-color: black
+        }
+
+        html body .login-hero {
+            background-color: #060606;
+        }
+
+        html body .login-hero .hero-body .container .columns .column .icon-box {
+            background-color: transparent;
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box {
+            background-color: #191b1f;
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .items {
+            padding: .4em;
+        }
+
+
+        html body .login-hero .hero-body .container .columns .column .login-box .field .field-body .field .control .input {
+            background-color: #2f323a;
+            border: none;
+            color: white;
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .field .field-body .field .control .input::placeholder {
+            color: white;
+            opacity: .3;
+            font-family: "Nunito";
+
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .button {
+            background-color: #2f323a;
+            border: none;
+            color: white;
+            transition: 0.4s;
+            font-family: "Nunito";
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .button:hover {
+            background-color: #24262d;
+            color: gray;
+            font-family: "Nunito";
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .level .level-right .level-item .new_here_tag {
+            font-family: 'Roboto';
+            color: gray;
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .level .level-item .href_tag {
+            text-decoration: none;
+            font-family: "Roboto";
+        }
+
+        html body .login-hero .hero-body .container .columns .column .login-box .level .level-item .href_tag:hover {
+            color: #3273dc
+        }
